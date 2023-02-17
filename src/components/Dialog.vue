@@ -64,7 +64,6 @@ export default defineComponent({
 
     const prompt = ref<string>(props.hasInput ? props.inputAttrs.value : '')
     const isActive = ref<boolean>(false)
-    const validationMessage = ref('')
 
     const { activate, deactivate } = useFocusTrap(dialog, { immediate: true })
 
@@ -75,24 +74,6 @@ export default defineComponent({
           'has-custom-container': props.container !== null,
         },
       ]
-    })
-
-    /**
-     * Icon name (MDI) based on the type.
-     */
-    const iconByType = computed(() => {
-      switch (props.type) {
-        case 'is-info':
-          return 'information'
-        case 'is-success':
-          return 'check-circle'
-        case 'is-warning':
-          return 'alert'
-        case 'is-danger':
-          return 'alert-circle'
-        default:
-          return null
-      }
     })
 
     const cancelOptions = computed(() => {
@@ -147,8 +128,6 @@ export default defineComponent({
       dialog,
       isActive,
       dialogClass,
-      iconByType,
-      validationMessage,
       showCancel,
       confirm,
       close,
@@ -164,65 +143,48 @@ export default defineComponent({
       <div
         v-if="isActive"
         ref="dialog"
-        class="dialog modal is-active"
+        class="dialog"
         :class="dialogClass"
         :role="ariaRole"
         :aria-modal="ariaModal"
       >
-        <div class="modal-background" @click="cancel('outside')" />
-        <div class="modal-card animation-content">
-          <header v-if="title" class="modal-card-head">
-            <p class="modal-card-title">
-              {{ title }}
+        <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
+        <div class=" z-2 fixed top-10% left-1/2 translate-x-2/4 bg-gray-800 p-4 shadow-white">
+          <Heading v-if="title" p styled="h2">
+            {{ title }}
+          </Heading>
+
+          <section>
+            <p class="mb-2">
+              <template v-if="$slots.default">
+                <slot />
+              </template>
+              <template v-else>
+                {{ message }}
+              </template>
             </p>
-          </header>
 
-          <section class="modal-card-body" :class="{ 'is-titleless': !title, 'is-flex': hasIcon }">
-            <div class="media">
-              <div v-if="hasIcon && (icon || iconByType)" class="media-left">
-                <Icon :icon="icon ? icon : iconByType" :type="type" size="is-large" />
-              </div>
-              <div class="media-content">
-                <p>
-                  <template v-if="$slots.default">
-                    <slot />
-                  </template>
-                  <template v-else>
-                    {{ message }}
-                  </template>
-                </p>
-
-                <div v-if="hasInput" class="field">
-                  <div class="control">
-                    <input
-                      v-bind="inputAttrs"
-                      ref="input"
-                      v-model="prompt"
-                      class="input"
-                      :class="{ 'is-danger': validationMessage }"
-                      @keyup.enter="confirm"
-                    >
-                  </div>
-                  <p class="help is-danger">
-                    {{ validationMessage }}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <Field v-if="hasInput">
+              <Input
+                v-bind="inputAttrs"
+                ref="input"
+                v-model="prompt"
+                class="input"
+                @keyup.enter="confirm"
+              />
+            </Field>
           </section>
 
           <footer class="flex justify-between">
             <Button
               v-if="showCancel"
-              ref="cancelButton"
-              class="button"
+              class="mr-2"
               @click="cancel('button')"
               @keyup.enter="cancel('button')"
             >
               {{ cancelText }}
             </Button>
             <Button
-              ref="confirmButton"
               class="button"
               :class="type"
               @click="confirm"

@@ -143,7 +143,7 @@ export default defineComponent({
   <div class="editor bg-gray-800 rounded mb-4">
     <div class="toolbar flex flex-wrap p-2 bg-gray-700">
       <input
-        class="p-0 border-0 mr-2"
+        class="p-0 border-0 mr-2 w-4 h-4 appearance-none"
         type="color"
         :value="editor?.getAttributes('textStyle').color"
         @input="editor?.chain().focus().setColor($event.target.value).run()"
@@ -151,24 +151,11 @@ export default defineComponent({
       <a
         v-for="marker in markers"
         :key="marker.name"
-        class="h-6 w-6 flex items-center cursor-pointer mr-2 last:mr-0"
+        class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
         @click.stop="createMarker(marker)"
       >
         <img class="object-contain w-full h-full" :src="marker.src">
       </a>
-
-      <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-        <span class="i-carbon-undo" />
-      </button>
-      <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-        <span class="i-carbon-redo" />
-      </button>
-      <button
-        :disabled="!editor?.can().chain().focus().clearNodes().unsetAllMarks().run()"
-        @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()"
-      >
-        <span class="i-carbon-text-clear-format text-white" />
-      </button>
 
       <a class="mr-2" href="#" @click.stop="createTimeSnippet">
         Time
@@ -179,6 +166,16 @@ export default defineComponent({
       <a class="mr-2" href="#" @click="openSpellOccurrenceDialog">
         Spell Occurrence
       </a>
+
+      <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
+        <span class="i-carbon-undo w-4 inline-block  mr-2" />
+      </button>
+      <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
+        <span class="i-carbon-redo w-4 inline-block  mr-2" />
+      </button>
+      <button @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
+        <span class="i-carbon-text-clear-format text-white w-4 inline-block  mr-2" />
+      </button>
     </div>
 
     <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0">
@@ -209,36 +206,34 @@ export default defineComponent({
         <section class="modal-card-body is-titleless">
           <div class="media">
             <div class="media-content">
-              <Field label="Enter the Time after spell cast? {00:10}">
+              <Field label="Enter the Time after spell cast? {00:10}" stacked>
                 <Input
                   v-model="spellOccurrence.timeAfterSpellStarted"
                 />
               </Field>
-              <Field label="Enter the spell id?">
+              <Field label="Enter the spell id?" stacked>
                 <Input
                   v-model="spellOccurrence.spellId"
-                  icon-pack="fa"
                 />
               </Field>
-              <Field label="Enter the cast number?">
+              <Field label="Enter the cast number?" stacked>
                 <Input
                   v-model="spellOccurrence.occurrence"
-                  icon-pack="fa"
                 />
               </Field>
             </div>
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" @click="isComponentModalActive = false">
+          <Button class="button mr-2" @click="isComponentModalActive = false">
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             class="button is-primary"
             @click="createSpellOccurrenceSnippet"
           >
             Done
-          </button>
+          </Button>
         </footer>
       </div>
     </Modal>
