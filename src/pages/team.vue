@@ -5,11 +5,12 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="page-homepage section">
-    <h1 class="title">
-      here's your team
-    </h1>
-    {{ players }}
-    <TeamMembers v-model:players="players" />
-  </div>
+  <Page>
+    <Container>
+      <Heading>
+        Team Members
+      </Heading>
+      <TeamMembers />
+    </Container>
+  </Page>
 </template>

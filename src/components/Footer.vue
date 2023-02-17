@@ -1,7 +1,7 @@
 <template>
-  <footer class="footer">
+  <footer class="mt-10">
     <div class="container">
-      <div class="level">
+      <div class="flex items-center justify-between">
         <p>
           Authored by
           <a
@@ -11,32 +11,20 @@
           >Joseph Anson</a>
         </p>
 
-        <div class="level">
-          <p class="guild-text">
+        <div class="flex items-center">
+          <p class=" mr-2">
             Visit our guild at:
           </p>
           <a
             href="http://axionguild.com/"
             target="_blank"
             rel="noopener noreferrer nofollow"
-            class="image guild-logo"
+            class="image w-24 inline-block"
           >
-            <img src="/axion-white.png">
+            <img class="w-full" src="/axion-white.png">
           </a>
         </div>
       </div>
     </div>
   </footer>
 </template>
-
-<style lang="scss">
-.footer {
-  .guild-text {
-    margin-right: 1rem;
-  }
-
-  .guild-logo {
-    width: 8rem;
-  }
-}
-</style>

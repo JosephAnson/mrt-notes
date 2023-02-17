@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import Snackbar from '../Snackbar.vue'
-import { merge } from '~/utils/helpers'
 
 const SnackbarProgrammatic = {
   open(params: Record<string, any> | string): any {
@@ -15,7 +14,7 @@ const SnackbarProgrammatic = {
       position: 'is-bottom-right',
     }
 
-    const propsData = merge(defaultParam, params)
+    const propsData = { ...defaultParam, ...params }
 
     const component = createApp(Snackbar, {
       ...propsData,

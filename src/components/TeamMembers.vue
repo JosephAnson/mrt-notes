@@ -3,10 +3,10 @@ import Draggable from 'vuedraggable'
 import type { Player, WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 import { ref, useAsyncData } from '#imports'
-import { addTeamMember, removeTeamMember } from '~/services/teamMembers'
+import { addTeamMember, getAllTeamMembers, removeTeamMember } from '~/services/teamMembers'
 
 const { data: players } = await useAsyncData('team_members', async () => {
-  const { data } = await client.from('team_members').select('id, name, class').eq('user_id', user.value?.id).order('created_at')
+  const { data } = await getAllTeamMembers()
   return data
 })
 
@@ -14,79 +14,66 @@ const playerName = ref('')
 const playerClass: WowClassesUnion = 'Death Knight'
 
 async function addPlayer(playerName: string, playerClass: WowClassesUnion) {
-  const data = addTeamMember(playerName, playerClass)
-  players.value?.push(data as any)
+  const { data } = await addTeamMember(playerName, playerClass)
+
+  if (data) {
+    players.value?.push({
+      id: data.id,
+      class: data.class,
+      name: data.name,
+    })
+  }
 }
 
 async function removePlayer(player: Player) {
-  const data = removeTeamMember(player)
+  await removeTeamMember(player)
   players.value = players.value?.filter(t => t.id !== player.id) || []
 }
 </script>
 
 <template>
-  <div class=" players">
-    <div class="notification">
-      List all players to show auto complete features
-    </div>
-    <div class="groups__actions buttons">
-      <Field label="Player">
-        <Field grouped>
-          <Field expanded>
-            <Input v-model:value="playerName" expanded />
-          </Field>
-          <Field>
-            <Select v-model:value="playerClass">
-              <option v-for="type in WowClasses" :key="type">
-                {{ type }}
-              </option>
-            </Select>
-          </Field>
-          <Button
-            type="is-primary"
-            @click="addPlayer(playerName, playerClass)"
-          >
-            Add
-          </Button>
+  <Field label-for="player" label="Player">
+    <Input v-model="playerName" class="mr-2" expanded />
+
+    <Select v-model:value="playerClass" class="mr-2">
+      <option v-for="type in WowClasses" :key="type">
+        {{ type }}
+      </option>
+    </Select>
+
+    <Button
+      type="is-primary"
+      @click="addPlayer(playerName, playerClass)"
+    >
+      Add
+    </Button>
+  </Field>
+
+  <Draggable v-model="players" handle=".handle" item-key="id">
+    <template #item="{ element, index }">
+      <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
+        <Icon
+          icon="align-justify"
+          pack="fas"
+          class="handle mr-2"
+        />
+        <Field class="w-full !mb-0 mr-2" :label-for="`player-${index}`" label="Player" horizontal>
+          <Input v-model="element.name" class="w-full mr-2" expanded />
+
+          <Select v-model:value="element.class">
+            <option v-for="type in WowClasses" :key="type">
+              {{ type }}
+            </option>
+          </Select>
         </Field>
-      </Field>
-    </div>
-    <Draggable v-model="players" handle=".handle" item-key="id">
-      <template #item="{ element }">
-        <div
-          class="player__items block is-small"
+
+        <Button
+          class="delete"
+          @click="removePlayer(element)"
         >
-          <article class="media">
-            <div class="media-left">
-              <Icon
-                icon="align-justify"
-                pack="fas"
-                class="handle"
-              />
-            </div>
-            <div class="media-content">
-              <Field label="Player" horizontal>
-                <Field expanded>
-                  <Input v-model:value="element.name" expanded />
-                </Field>
-                <Field>
-                  <Select v-model:value="element.class">
-                    <option v-for="type in WowClasses" :key="type">
-                      {{ type }}
-                    </option>
-                  </Select>
-                </Field>
-              </Field>
-            </div>
-            <div class="media-right">
-              <button
-                class="delete"
-                @click="removePlayer(element)"
-              />
-            </div>
-          </article>
-        </div>
-      </template>
-    </Draggable>
-  </div>
+          Delete
+        </Button>
+      </div>
+    </template>
+  </Draggable>
 </template>

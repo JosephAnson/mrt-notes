@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-const isMenuActive = ref(false)
-
 function tweet(): void {
   const width = 575
   const height = 400
@@ -13,66 +11,28 @@ function tweet(): void {
 
   window.open(url, '', opts)
 }
-
-const client = useSupabaseAuthClient()
-const user = useSupabaseUser()
-const router = useRouter()
-
-// Login method using providers
-const login = async (provider: 'discord' | 'google') => {
-  const { error } = await client.auth.signInWithOAuth({ provider })
-  if (error)
-    return alert('Something went wrong !')
-
-  router.push('/dashboard')
-}
 </script>
 
 <template>
-  <nav class="navbar-main is-dark is-spaced navbar is-fixed-top">
-    <div class="container">
-      <div class="navbar-brand">
+  <nav class="relative bg-primary-100">
+    <Container>
+      <div class="flex items-center justify-between py-2">
         <nuxt-link
           to="/"
-          class="navbar-item"
           title="ERT: ERT Note creator for WoW"
+          class="heading font-secondary font-semibold flex justify-start text-l mr-2"
         >
           ERT Notes
         </nuxt-link>
 
-        <span
-          class="navbar-burger burger"
-          :class="{ 'is-active': isMenuActive }"
-          @click="isMenuActive = !isMenuActive"
-        >
-          <span />
-          <span />
-          <span />
-        </span>
-      </div>
+        <div class="menu flex">
+          <Button class="mr-2" @click="tweet">
+            Tweet
+          </Button>
 
-      <div
-        class="navbar-menu is-shadowless"
-        :class="{ 'is-active': isMenuActive }"
-      >
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <Button v-if="!user" @click="login('discord')">
-              Login with Discord
-            </Button>
-
-            <Button v-if="user" @click="client.auth.signOut()">
-              Logout
-            </Button>
-          </div>
-
-          <div class="navbar-item">
-            <a class="button is-outlined is-fullwidth-mobile" @click="tweet">
-              <span>Tweet</span>
-            </a>
-          </div>
+          <LoginButtons />
         </div>
       </div>
-    </div>
+    </Container>
   </nav>
 </template>

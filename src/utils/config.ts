@@ -1,7 +1,3 @@
-export const config = {
-  mobileBreakpoint: 1087,
-}
-
 export interface Marker {
   name: string
   src: string
