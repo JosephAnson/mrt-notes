@@ -1,7 +1,6 @@
 import type { Database } from '~/supabase.types'
-import type { WowClassesUnion } from '~/types'
 
-const noteColumns = 'id, name, editor_string, editor_json'
+const noteColumns = 'id, name, editor_string'
 export async function createNewNote(name: string, editor_string = '', editor_json = {}) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
@@ -10,7 +9,6 @@ export async function createNewNote(name: string, editor_string = '', editor_jso
   const { data } = await client.from('notes')
     .insert({
       editor_string,
-      editor_json,
       name,
       user_id: user.value?.id,
     })
@@ -27,13 +25,15 @@ export async function getNote(id: string) {
   return client.from('notes').select(noteColumns).match({ id }).eq('user_id', user.value?.id).single()
 }
 
-export async function updateNote(playerName: string, playerClass: WowClassesUnion) {
+export async function updateNote(id: number, name: string, editor_string: string) {
+  console.log('update note')
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
   return client.from('notes')
     .upsert({
-      name: playerName,
-      class: playerClass,
+      editor_string,
+      name,
+      id,
       user_id: user.value?.id,
     })
     .select(noteColumns)

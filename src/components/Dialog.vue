@@ -211,8 +211,8 @@ export default defineComponent({
             </div>
           </section>
 
-          <footer class="modal-card-foot">
-            <button
+          <footer class="flex justify-between">
+            <Button
               v-if="showCancel"
               ref="cancelButton"
               class="button"
@@ -220,8 +220,8 @@ export default defineComponent({
               @keyup.enter="cancel('button')"
             >
               {{ cancelText }}
-            </button>
-            <button
+            </Button>
+            <Button
               ref="confirmButton"
               class="button"
               :class="type"
@@ -229,7 +229,7 @@ export default defineComponent({
               @keyup.enter="confirm"
             >
               {{ confirmText }}
-            </button>
+            </Button>
           </footer>
         </div>
       </div>
