@@ -201,25 +201,29 @@ export default defineComponent({
         :aria-modal="ariaModal"
       >
         <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
-        <div class=" z-2 fixed top-10% left-1/2 translate-x-2/4 bg-gray-800 p-4 shadow-white">
-          <component
-            v-bind="componentProps"
-            :is="component"
-            v-if="component"
-            :can-cancel="canCancel"
-            v-on="componentEvents"
-            @close="close"
-          />
-          <template v-else-if="content">
-            <div v-html="content" />
-          </template>
-          <slot v-else :can-cancel="canCancel" :close="close" />
-          <Button
-            v-if="showX"
-            v-show="!modelState.animating"
-            class="modal-close is-large"
-            @click="cancel('x')"
-          />
+        <div class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex">
+          <div class="relative w-full h-full max-w-2xl md:h-auto">
+            <div class="relative p-4 bg-gray-700 rounded-lg shadow">
+              <component
+                v-bind="componentProps"
+                :is="component"
+                v-if="component"
+                :can-cancel="canCancel"
+                v-on="componentEvents"
+                @close="close"
+              />
+              <template v-else-if="content">
+                <div v-html="content" />
+              </template>
+              <slot v-else :can-cancel="canCancel" :close="close" />
+              <Button
+                v-if="showX"
+                v-show="!modelState.animating"
+                class="modal-close is-large"
+                @click="cancel('x')"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </transition>
