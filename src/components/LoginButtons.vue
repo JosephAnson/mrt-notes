@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { login } from '~/services/user'
-
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
 </script>
 
 <template>
-  <Button v-if="!user" @click="login('discord')">
-    Login with Discord
-  </Button>
+  <nuxt-link v-if="!user" to="login">
+    <Button>
+      Login
+    </Button>
+  </nuxt-link>
   <Button
     v-else
     @click="client.auth.signOut()"

@@ -13,8 +13,6 @@ const { data: note } = await useAsyncData('notes', async () => {
   return data
 })
 
-console.log('note', note.value)
-
 const name = ref(note.value?.name || '')
 
 const editor = reactive<EditorData>({
