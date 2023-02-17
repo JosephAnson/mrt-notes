@@ -1,0 +1,44 @@
+$box-padding-small: 0.5rem !default;
+$box-padding: 1rem !default;
+$box-padding-medium: 2rem !default;
+$box-padding-large: 4rem !default;
+
+.box {
+  box-shadow: none !important;
+  padding: $box-padding;
+
+  &.is-small {
+    font-size: 1rem;
+    padding: $box-padding-small;
+  }
+
+  &.is-medium {
+    padding: $box-padding-medium;
+  }
+
+  &.is-large {
+    padding: $box-padding-large;
+  }
+
+  &.is-bordered {
+    background-color: transparent;
+    border: 1px solid $box-background-color;
+  }
+
+  &.is-white {
+    color: $black;
+    background-color: $white;
+  }
+
+  &.is-light {
+    background-color: $grey-darker;
+  }
+
+  &.is-dark {
+    background-color: $grey-darker;
+  }
+
+  &.is-darker {
+    background-color: $background;
+  }
+}

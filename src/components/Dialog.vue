@@ -1,0 +1,238 @@
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import type { PropType } from 'vue'
+
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
+
+export default defineComponent({
+  // eslint-disable-next-line vue/no-reserved-component-names
+  name: 'Dialog',
+  props: {
+    title: { type: String, default: null },
+    message: { type: String, default: null },
+    icon: { type: String, default: null },
+    size: { type: String, default: null },
+    hasIcon: { type: Boolean, default: false },
+    type: { type: String, default: 'is-primary' },
+    confirmText: { type: String, default: 'OK' },
+    cancelText: { type: String, default: 'Cancel' },
+    hasInput: { type: Boolean, default: false },
+    inputAttrs: {
+      type: Object as PropType<Record<string, any>>,
+      default: () => ({ required: true }),
+    },
+    onConfirm: {
+      type: Function as PropType<(value: string) => boolean>,
+      default: () => {
+        return null
+      },
+    },
+    onCancel: {
+      type: Function as PropType<any>,
+      default: () => {
+        return null
+      },
+    },
+    container: {
+      type: String as PropType<string | null>,
+      default: () => {
+        return null
+      },
+    },
+    ariaRole: {
+      type: String as PropType<string | null>,
+      validator: (value: string) => {
+        return ['dialog', 'alertdialog'].includes(value)
+      },
+      default: null,
+    },
+    canCancel: {
+      type: [Array, Boolean] as PropType<string[] | boolean>,
+      default: () => {
+        return ['escape', 'x', 'outside', 'button']
+      },
+    },
+    ariaModal: { type: Boolean, default: false },
+    animation: {
+      type: String,
+      default: 'zoom-out',
+    },
+  },
+  emits: ['confirm', 'cancel'],
+  setup(props, { emit }) {
+    const dialog = ref(null)
+
+    const prompt = ref<string>(props.hasInput ? props.inputAttrs.value : '')
+    const isActive = ref<boolean>(false)
+    const validationMessage = ref('')
+
+    const { activate, deactivate } = useFocusTrap(dialog, { immediate: true })
+
+    const dialogClass = computed(() => {
+      return [
+        props.size,
+        {
+          'has-custom-container': props.container !== null,
+        },
+      ]
+    })
+
+    /**
+     * Icon name (MDI) based on the type.
+     */
+    const iconByType = computed(() => {
+      switch (props.type) {
+        case 'is-info':
+          return 'information'
+        case 'is-success':
+          return 'check-circle'
+        case 'is-warning':
+          return 'alert'
+        case 'is-danger':
+          return 'alert-circle'
+        default:
+          return null
+      }
+    })
+
+    const cancelOptions = computed(() => {
+      return typeof props.canCancel === 'boolean'
+        ? props.canCancel
+          ? ['escape', 'x', 'outside', 'button']
+          : []
+        : props.canCancel
+    })
+
+    function showCancel() {
+      return cancelOptions.value.includes('button')
+    }
+
+    /**
+     * If it's a prompt Dialog, validate the input.
+     * Call the onConfirm prop (function) and close the Dialog.
+     */
+    function confirm() {
+      props.onConfirm(prompt.value)
+      close()
+    }
+
+    /**
+     * Close the Dialog.
+     */
+    function close() {
+      deactivate()
+      isActive.value = false
+    }
+
+    /**
+     * Close the Modal if canCancel and call the onCancel prop (function).
+     */
+    function cancel(method?: string) {
+      if (method && !cancelOptions.value.includes(method))
+        return
+
+      emit('cancel')
+      props.onCancel()
+      close()
+    }
+
+    onMounted(() => {
+      isActive.value = true
+
+      activate()
+    })
+
+    return {
+      prompt,
+      dialog,
+      isActive,
+      dialogClass,
+      iconByType,
+      validationMessage,
+      showCancel,
+      confirm,
+      close,
+      cancel,
+    }
+  },
+})
+</script>
+
+<template>
+  <teleport to="body">
+    <transition :name="animation">
+      <div
+        v-if="isActive"
+        ref="dialog"
+        class="dialog modal is-active"
+        :class="dialogClass"
+        :role="ariaRole"
+        :aria-modal="ariaModal"
+      >
+        <div class="modal-background" @click="cancel('outside')" />
+        <div class="modal-card animation-content">
+          <header v-if="title" class="modal-card-head">
+            <p class="modal-card-title">
+              {{ title }}
+            </p>
+          </header>
+
+          <section class="modal-card-body" :class="{ 'is-titleless': !title, 'is-flex': hasIcon }">
+            <div class="media">
+              <div v-if="hasIcon && (icon || iconByType)" class="media-left">
+                <Icon :icon="icon ? icon : iconByType" :type="type" size="is-large" />
+              </div>
+              <div class="media-content">
+                <p>
+                  <template v-if="$slots.default">
+                    <slot />
+                  </template>
+                  <template v-else>
+                    {{ message }}
+                  </template>
+                </p>
+
+                <div v-if="hasInput" class="field">
+                  <div class="control">
+                    <input
+                      v-bind="inputAttrs"
+                      ref="input"
+                      v-model="prompt"
+                      class="input"
+                      :class="{ 'is-danger': validationMessage }"
+                      @keyup.enter="confirm"
+                    >
+                  </div>
+                  <p class="help is-danger">
+                    {{ validationMessage }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="modal-card-foot">
+            <button
+              v-if="showCancel"
+              ref="cancelButton"
+              class="button"
+              @click="cancel('button')"
+              @keyup.enter="cancel('button')"
+            >
+              {{ cancelText }}
+            </button>
+            <button
+              ref="confirmButton"
+              class="button"
+              :class="type"
+              @click="confirm"
+              @keyup.enter="confirm"
+            >
+              {{ confirmText }}
+            </button>
+          </footer>
+        </div>
+      </div>
+    </transition>
+  </teleport>
+</template>
