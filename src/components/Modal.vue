@@ -80,7 +80,7 @@ export default defineComponent({
       default: true,
     },
   },
-  emits: ['update:active', 'after-enter', 'after-leave', 'close', 'cancel'],
+  emits: ['update:active', 'afterEnter', 'afterLeave', 'close', 'cancel'],
   setup(props, { emit }) {
     const modal = ref(null)
 

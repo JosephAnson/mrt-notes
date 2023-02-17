@@ -2,13 +2,24 @@
 import Draggable from 'vuedraggable'
 import type { Player, WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
-import { ref, useAsyncData } from '#imports'
 import { addTeamMember, getAllTeamMembers, removeTeamMember } from '~/services/teamMembers'
+import { useTeamMembers } from '~/composables/state'
 
 const { data: players } = await useAsyncData('team_members', async () => {
   const { data } = await getAllTeamMembers()
+
   return data
 })
+
+const teamMembers = useTeamMembers()
+
+if (players.value) {
+  teamMembers.value = players.value.map(item => ({
+    id: item.id,
+    class: item.class as WowClassesUnion,
+    name: item.name,
+  }))
+}
 
 const playerName = ref('')
 const playerClass: WowClassesUnion = 'Death Knight'
@@ -52,11 +63,8 @@ async function removePlayer(player: Player) {
   <Draggable v-model="players" handle=".handle" item-key="id">
     <template #item="{ element, index }">
       <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
-        <Icon
-          icon="align-justify"
-          pack="fas"
-          class="handle mr-2"
-        />
+        <span class="i-carbon-draggable mr-2 text-2xl" />
+
         <Field class="w-full !mb-0 mr-2" :label-for="`player-${index}`" label="Player" horizontal>
           <Input v-model="element.name" class="w-full mr-2" expanded />
 

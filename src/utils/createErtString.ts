@@ -44,8 +44,7 @@ export function createERTString(json?: JSONContent) {
 }
 
 export function createERTGroupString(group: Group) {
-  const ertString = createERTString(group.editor.json)
-  console.log('createERTGroupString', ertString)
+  const ertString = createERTString(group.note.json)
   switch (group.type) {
     case 'Healers':
       return `{H}\n${ertString}{/H}\n`

@@ -7,7 +7,6 @@ const mergeFn = (target: Record<string, any>, source: Record<string, any>, deep 
     const isDeep = (prop: string) =>
       isObject(source[prop])
       && target !== null
-      && target.hasOwnProperty(prop)
       && isObject(target[prop])
 
     const replaced: Record<string, any> = Object.getOwnPropertyNames(source)
@@ -40,9 +39,12 @@ export function getValueByPath(obj: Record<string, any>, path?: string): any {
 }
 
 export function toCss(value: number | string | undefined): null | string {
-  return value === undefined || value === ''
-    ? null
-    : typeof value === 'string'
+  if (value === undefined || value === '') {
+    return null
+  }
+  else {
+    return typeof value === 'string'
       ? value
       : `${value}px`
+  }
 }

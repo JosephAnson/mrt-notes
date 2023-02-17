@@ -6,8 +6,8 @@ import { createERTGroupString, createERTString } from '~/utils/createErtString'
 import type { Group } from '~/types'
 
 const props = defineProps({
-  editorString: String,
-  editorJson: Object as PropType<JSONContent>,
+  noteString: { type: String, default: '' },
+  noteJson: Object as PropType<JSONContent>,
   groups: { type: Array as PropType<Group[]>, required: true },
 })
 
@@ -20,16 +20,16 @@ function copyToClipboard(string: string) {
 }
 
 const preview = computed(() => {
-  let preview = `${props.editorString}\n`
+  let preview = `${props.noteString}\n`
 
   for (const group of props.groups)
-    preview += group.editor.value
+    preview += group.note.value
 
   return preview
 })
 
 const ertString = computed(() => {
-  let ERTNote = createERTString(props.editorJson)
+  let ERTNote = createERTString(props.noteJson)
 
   for (const group of props.groups)
     ERTNote += createERTGroupString(group)
@@ -39,31 +39,28 @@ const ertString = computed(() => {
 </script>
 
 <template>
-  <div class="level">
-    <div class="level-left">
-      <h3 class="title is-4">
-        String Preview
-      </h3>
-    </div>
-    <div class="level-right">
-      <div class="buttons">
-        <Button type="is-primary" @click="copyToClipboard(ertString)">
-          Copy ERT String
-        </Button>
-      </div>
-    </div>
+  <div class="flex justify-between mb-4">
+    <Heading h3>
+      String Preview
+    </Heading>
+
+    <Button @click="copyToClipboard(ertString)">
+      Copy ERT String
+    </Button>
   </div>
-  <div class="preview is-sticky">
-    <pre class="box is-white" v-html="ertString" />
+  <div class="preview bg-white p-4 color-black text-sm mb-4 h-48">
+    <pre v-html="ertString" />
   </div>
-  <div class="level">
-    <div class="level-left">
-      <h3 class="title is-4">
-        Preview
-      </h3>
-    </div>
-  </div>
-  <div class="preview is-sticky">
-    <pre class="box is-white" v-html="preview" />
+  <Heading h3>
+    Preview
+  </Heading>
+  <div class="preview bg-white p-4 color-black text-sm h-48">
+    <pre v-html="preview" />
   </div>
 </template>
+
+<style scoped lang="scss">
+.preview :deep(img) {
+  display: inline-block;
+}
+</style>

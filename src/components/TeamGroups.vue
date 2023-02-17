@@ -37,7 +37,7 @@ function addGroup() {
     id: Guid.create(),
     type: 'Players',
     players: [],
-    editor: {
+    note: {
       value: '',
       json: {},
     },
@@ -62,55 +62,43 @@ function removeGroup(group: Group) {
     </div>
     <Draggable v-model="groups" handle=".handle" item-key="id">
       <template #item="{ element }">
-        <div
-          class="groups__items box is-dark"
-        >
-          <article class="media">
-            <div class="media-left">
-              <Icon
-                icon="align-justify"
-                pack="fa"
-                class="handle"
-              />
-            </div>
-            <div class="media-content">
-              <Field label="Type" horizontal>
-                <Select v-model:value="element.type">
-                  <option v-for="type in GroupType" :key="type">
-                    {{ type }}
-                  </option>
-                </Select>
-              </Field>
-              <Field
-                v-if="element.type === 'Players'"
-                label="Players"
-                horizontal
-              >
-                <Taginput
-                  v-model:tags="element.players"
-                  :data="playerNames"
-                  autocomplete
-                  allow-new
-                  open-on-focus
-                  :confirm-key-codes="[13, 32, 188]"
-                  @typing="getFilteredPlayers"
-                />
-              </Field>
-              <Field label="Tactic" horizontal>
-                <Editor
-                  v-model="element.editor.value"
-                  :players="players"
-                  @update:json="element.editor.json = $event"
-                />
-              </Field>
-            </div>
-            <div class="media-right">
-              <button
-                class="delete"
-                @click="removeGroup(element)"
-              />
-            </div>
-          </article>
+        <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
+          <span class="i-carbon-draggable mr-2 text-2xl" />
+
+          <Field label="Type" horizontal>
+            <Select v-model:value="element.type">
+              <option v-for="type in GroupType" :key="type">
+                {{ type }}
+              </option>
+            </Select>
+          </Field>
+          <Field
+            v-if="element.type === 'Players'"
+            label="Players"
+            horizontal
+          >
+            <Taginput
+              v-model:tags="element.players"
+              :data="playerNames"
+              autocomplete
+              allow-new
+              open-on-focus
+              :confirm-key-codes="[13, 32, 188]"
+              @typing="getFilteredPlayers"
+            />
+          </Field>
+          <Field label="Tactic" horizontal>
+            <Editor
+              v-model="element.note.value"
+              :players="players"
+              @update:json="element.note.json = $event"
+            />
+          </Field>
+
+          <button
+            class="delete"
+            @click="removeGroup(element)"
+          />
         </div>
       </template>
     </Draggable>

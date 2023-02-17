@@ -1,7 +1,10 @@
 <script lang="ts" setup async>
-import LoginButtons from '~/components/LoginButtons.vue'
+import { createNewNote } from '~/services/notes'
+import Input from '~/components/Input.vue'
 
 const user = useSupabaseUser()
+
+const noteName = ref('')
 </script>
 
 <template>
@@ -16,10 +19,14 @@ const user = useSupabaseUser()
         <LoginButtons />
       </div>
       <div v-else>
-        <nuxt-link to="notes">
+        <Input v-model="noteName" />
+        <Button class="mr-2" @click="createNewNote(noteName, '', {})">
+          Create note
+        </Button>
+        <nuxt-link class="mr-2" to="notes">
           <Button>View your notes</Button>
         </nuxt-link>
-        <nuxt-link to="team">
+        <nuxt-link class="mr-2" to="team">
           <Button>View your team</Button>
         </nuxt-link>
       </div>

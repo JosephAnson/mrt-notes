@@ -1,7 +1,4 @@
 <script lang="ts">
-import { computedInject, useVModel } from '@vueuse/core'
-import { computed, defineComponent } from '#imports'
-
 export default defineComponent({
   props: {
     modelValue: { type: [Number, String], default: '' },
@@ -10,7 +7,6 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    console.log('PROPS', props.modelValue)
     const input = useVModel(props, 'modelValue', emit)
     const labelFor = computedInject('labelFor', source => source, '')
     const newId = computed(() => props.id || labelFor.value)

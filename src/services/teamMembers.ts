@@ -1,6 +1,5 @@
 import type { Player, WowClassesUnion } from '~/types'
 import type { Database } from '~/supabase.types'
-import { useSupabaseClient, useSupabaseUser } from '#imports'
 
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
@@ -23,5 +22,5 @@ export async function addTeamMember(playerName: string, playerClass: WowClassesU
 
 export async function removeTeamMember(player: Player) {
   const client = useSupabaseClient<Database>()
-  return await client.from('team_members').delete().match({ id: player.id })
+  return client.from('team_members').delete().match({ id: player.id })
 }

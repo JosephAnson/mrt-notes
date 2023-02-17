@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { computedInject, useVModel } from '@vueuse/core'
-import { computed } from '#imports'
 
 export default defineComponent({
   props: {
@@ -12,7 +11,7 @@ export default defineComponent({
     id: { type: String, default: null },
     placeholder: { type: String, default: null },
   },
-  emits: ['update:value', 'change', 'focus', 'blur'],
+  emits: ['update:value'],
   setup(props, { emit }) {
     const newValue = useVModel(props, 'value', emit)
     const labelFor = computedInject('labelFor', source => source, '')
