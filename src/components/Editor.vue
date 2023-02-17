@@ -58,6 +58,7 @@ export default defineComponent({
         return
 
       editor.value?.commands.setContent(value, false, { preserveWhitespace: 'full' })
+      emit('update:json', editor.value?.getJSON())
     }
 
     function createMarker(marker: Marker) {
@@ -246,7 +247,7 @@ export default defineComponent({
 
 <style lang='scss'>
 .editor-content {
-  background: white;
+  background: #eee;
   color: black;
   border-radius: 2px;
 

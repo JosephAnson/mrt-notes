@@ -33,7 +33,6 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
 export function createERTString(json?: JSONContent) {
   let previewString = ''
 
-  console.log('json', json)
   if (json && json.content) {
     for (const contentItem of json.content) {
       if (contentItem.content) {

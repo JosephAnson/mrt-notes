@@ -7,7 +7,6 @@ import { useTeamMembers } from '~/composables/state'
 
 const { data: asyncTeamMembers } = await useAsyncData('team_members', async () => {
   const { data } = await getAllTeamMembers()
-
   return data
 })
 

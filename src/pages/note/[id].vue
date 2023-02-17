@@ -1,10 +1,7 @@
 <script lang='ts' setup>
-import type { Group, Member, Note, TemplateOption } from '~/types'
-import { getNote, updateNote } from '~/services/notes'
+import type { EditorData, Group, Member } from '~/types'
+import { deleteNote, getNote, updateNote } from '~/services/notes'
 import { getRouterParamsAsString } from '~/utils/getRouterParamsAsString'
-
-const templateOption: TemplateOption = 'Empty'
-const templateOptions: TemplateOption[] = ['Empty', 'Starter']
 
 definePageMeta({
   middleware: 'auth',
@@ -18,7 +15,7 @@ const { data: note } = await useAsyncData('notes', async () => {
 
 const name = ref(note.value?.name || '')
 
-const editor = reactive<Note>({
+const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
   json: {},
 })
@@ -30,19 +27,11 @@ const debouncedUpdateNote = useDebounceFn(() => {
     updateNote(note.value.id, name.value, editor.value)
 }, 2000)
 
-function createSteps(type: TemplateOption) {
-  switch (type) {
-    case 'Starter':
-      editor.value
-        = 'Fight summary<br><br><br>'
-          + 'All Phases<br><br><br>'
-          + 'Phase 1<br><br><br>'
-          + 'Phase 2<br><br><br>'
-          + 'Phase 3<br><br><br>'
-      break
-    case 'Empty':
-      editor.value = ''
-      break
+async function deleteNoteAndRedirect() {
+  if (note.value) {
+    const router = useRouter()
+    await deleteNote(note.value.id)
+    router.push('/notes')
   }
 }
 </script>
@@ -57,6 +46,9 @@ function createSteps(type: TemplateOption) {
 
         <div class="flex">
           <Input v-model="name" class="mr-2" @change="debouncedUpdateNote" />
+          <Button class="bg-red-700" @click="deleteNoteAndRedirect">
+            Delete
+          </Button>
         </div>
       </div>
 
@@ -67,18 +59,6 @@ function createSteps(type: TemplateOption) {
               <Heading h2>
                 General Tactic
               </Heading>
-
-              <Field label="Template">
-                <Select v-model:value="templateOption" @update:value="createSteps">
-                  <option
-                    v-for="(option) in templateOptions"
-                    :key="option"
-                    :value="option"
-                  >
-                    {{ option }}
-                  </option>
-                </Select>
-              </Field>
             </div>
 
             <Editor

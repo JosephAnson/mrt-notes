@@ -1,16 +1,13 @@
 <script lang="ts" setup async>
-import { createNewNote } from '~/services/notes'
-import Input from '~/components/Input.vue'
-
 const user = useSupabaseUser()
-
-const noteName = ref('')
 </script>
 
 <template>
   <Page>
     <Container>
-      <Heading>Homepage</Heading>
+      <Heading h1>
+        Homepage
+      </Heading>
 
       <div v-if="!user">
         <p>
@@ -19,10 +16,12 @@ const noteName = ref('')
         <LoginButtons />
       </div>
       <div v-else>
-        <Input v-model="noteName" />
-        <Button class="mr-2" @click="createNewNote(noteName, '', {})">
-          Create note
-        </Button>
+        <CreateNote />
+
+        <Heading h3>
+          Edit information
+        </Heading>
+
         <nuxt-link class="mr-2" to="notes">
           <Button>View your notes</Button>
         </nuxt-link>

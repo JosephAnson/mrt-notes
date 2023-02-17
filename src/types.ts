@@ -1,8 +1,12 @@
 import type { JSONContent } from '@tiptap/vue-3'
 
-export type TemplateOption = 'Starter' | 'Empty'
-
 export interface Note {
+  id: number
+  name: string
+  editor_string: string
+}
+
+export interface EditorData {
   value: string
   json: JSONContent
 }
@@ -38,5 +42,5 @@ export interface Group {
   id: number
   type: GroupTypeUnion
   players: string[]
-  note: Note
+  note: EditorData
 }
