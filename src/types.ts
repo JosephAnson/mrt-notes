@@ -1,9 +1,9 @@
 import type { JSONContent } from '@tiptap/vue-3'
 import type { Guid } from '~/utils/guid'
 
-export type TemplateOption = 'Default' | 'Empty'
+export type TemplateOption = 'Starter' | 'Empty'
 
-export interface Editor {
+export interface Note {
   value: string
   json: JSONContent
 }
@@ -39,11 +39,5 @@ export interface Group {
   id: Guid
   type: GroupTypeUnion
   players: string[]
-  editor: Editor
-}
-
-export interface SaveDataDTO {
-  editor: Editor
-  groups: Group[]
-  players: Player[]
+  note: Note
 }

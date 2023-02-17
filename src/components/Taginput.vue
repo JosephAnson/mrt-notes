@@ -2,7 +2,6 @@
 import { computed, defineComponent, nextTick, reactive, ref, watch } from 'vue'
 import type { PropType } from 'vue'
 import { getValueByPath } from '~/utils/helpers'
-import { fieldType } from '~/utils/form-helpers'
 
 export default defineComponent({
   props: {
@@ -40,7 +39,7 @@ export default defineComponent({
     autocomplete: { type: String, default: () => 'on' },
     maxlength: { type: [Number, String], default: null },
   },
-  emits: ['input', 'update:tags', 'add', 'remove', 'typing', 'focus', 'blur', 'infinite-scroll'],
+  emits: ['input', 'update:tags', 'add', 'remove', 'typing', 'focus', 'blur', 'infiniteScroll'],
   setup(props, { emit, slots }) {
     const autocompleteRef = ref<HTMLElement | null>(null)
 
@@ -55,6 +54,17 @@ export default defineComponent({
       return {
         'is-expanded': props.expanded,
       }
+    })
+
+    const tagsLength = computed(() => {
+      return state.tags.length
+    })
+
+    /**
+     * Show the input field if a maxtags hasn't been set or reached.
+     */
+    const hasInput = computed(() => {
+      return props.maxtags == null || tagsLength.value < props.maxtags
     })
 
     const containerClasses = computed(() => {
@@ -82,17 +92,6 @@ export default defineComponent({
 
     const hasFooterSlot = computed(() => {
       return !!slots.footer
-    })
-
-    /**
-     * Show the input field if a maxtags hasn't been set or reached.
-     */
-    const hasInput = computed(() => {
-      return props.maxtags == null || tagsLength.value < props.maxtags
-    })
-
-    const tagsLength = computed(() => {
-      return state.tags.length
     })
 
     /**
@@ -235,10 +234,8 @@ export default defineComponent({
     }
 
     function emitInfiniteScroll() {
-      emit('infinite-scroll')
+      emit('infiniteScroll')
     }
-
-    const statusType = computed(() => fieldType())
 
     return {
       rootClasses,
@@ -251,7 +248,6 @@ export default defineComponent({
       hasEmptySlot,
       hasFooterSlot,
       tagsLength,
-      statusType,
       autocompleteRef,
       getNormalizedTagText,
       removeTag,
@@ -271,7 +267,7 @@ export default defineComponent({
   <div class="taginput control" :class="rootClasses">
     <div
       class="taginput-container"
-      :class="[statusType, size, containerClasses]"
+      :class="[size, containerClasses]"
       :disabled="disabled ? true : null"
     >
       <slot name="selected" :tags="state.tags">

@@ -8,7 +8,6 @@ import Image from '@tiptap/extension-image'
 import type { Marker } from '~/utils/config'
 import { markers, wowColors } from '~/utils/config'
 import type { Player } from '~/types'
-import { defineComponent, watch } from '#imports'
 import DialogProgrammatic from '~/components/Programatic/DialogProgramatic'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 
@@ -19,7 +18,7 @@ export default defineComponent({
   props: {
     modelValue: {
       type: String,
-      required: true,
+      default: '',
     },
     players: { type: Array as PropType<Player[]>, default: () => [] },
   },
@@ -55,7 +54,7 @@ export default defineComponent({
       if (value === editor.value?.getHTML())
         return
 
-      editor.value?.commands.setContent(value, false)
+      editor.value?.commands.setContent(value, false, { preserveWhitespace: 'full' })
     }
 
     function createMarker(marker: Marker) {
@@ -137,53 +136,60 @@ export default defineComponent({
 
 <template>
   <div>
-    <input
-      type="color"
-      :value="editor?.getAttributes('textStyle').color"
-      @input="editor?.chain().focus().setColor($event.target.value).run()"
-    >
-    <Button
-      v-for="marker in markers"
-      :key="marker.name"
-      class="ql-button" :class="[`ql-${marker.name}`]"
-      @click.stop="createMarker(marker)"
-    />
-    <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-      undo
-    </button>
-    <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-      redo
-    </button>
-    <div class="block is-small">
-      <Field v-if="players.length">
-        <div class="control box is-black is-small content">
-          <a
-            v-for="player in players"
-            :key="player.id"
-            :class="
-              `has-wow-text-${player.class.replace(' ', '-').toLowerCase()}`
-            "
-            @click.prevent="createPlayerSnippet(player)"
-          >
-            {{ player.name }}
-          </a>
-        </div>
-      </Field>
+    <div class="toolbar flex flex-wrap">
+      <input
+        type="color"
+        :value="editor?.getAttributes('textStyle').color"
+        @input="editor?.chain().focus().setColor($event.target.value).run()"
+      >
+      <Button
+        v-for="marker in markers"
+        :key="marker.name"
+        class="ql-button" :class="[`ql-${marker.name}`]"
+        @click.stop="createMarker(marker)"
+      />
+      <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
+        <span class="i-carbon-undo" />
+      </button>
+      <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
+        <span class="i-carbon-redo" />
+      </button>
+      <button
+        :disabled="!editor?.can().chain().focus().clearNodes().unsetAllMarks().run()"
+        @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()"
+      >
+        <span class="i-carbon-text-clear-format text-white" />
+      </button>
+
+      <Button @click.stop="createTimeSnippet">
+        Time Snippet
+      </Button>
+      <Button @click.stop="createSpellSnippet">
+        Spell Snippet
+      </Button>
+      <Button @click="openSpellOccurrenceDialog">
+        Spell Occurrence
+      </Button>
     </div>
-    <Button @click.stop="createTimeSnippet">
-      Time Snippet
-    </Button>
-    <Button @click.stop="createSpellSnippet">
-      Spell Snippet
-    </Button>
-    <Button @click="openSpellOccurrenceDialog">
-      Spell Occurrence
-    </Button>
+
+    <Field v-if="players.length">
+      <a
+        v-for="player in players"
+        :key="player.id"
+        :class="
+          `has-wow-text-${player.class.replace(' ', '-').toLowerCase()}`
+        "
+        @click.prevent="createPlayerSnippet(player)"
+      >
+        {{ player.name }}
+      </a>
+    </Field>
+
+    <EditorContent class="editor" :editor="editor" />
 
     <Modal
       v-model:active="isComponentModalActive"
       has-modal-card
-      trap-focus
       :destroy-on-hide="false"
       aria-role="dialog"
       aria-modal
@@ -225,7 +231,6 @@ export default defineComponent({
         </footer>
       </div>
     </Modal>
-    <EditorContent class="editor" :editor="editor" />
   </div>
 </template>
 
@@ -237,10 +242,6 @@ export default defineComponent({
 
   .ProseMirror {
     min-height: 6rem;
-  }
-
-  span {
-    color: black !important;
   }
 
   img {

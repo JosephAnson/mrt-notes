@@ -1,5 +1,4 @@
 import SnackbarProgramatic from '~/components/Programatic/SnackbarProgramatic'
-import { useRouter, useSupabaseAuthClient } from '#imports'
 
 export const login = async (provider: 'discord' | 'google') => {
   const client = useSupabaseAuthClient()

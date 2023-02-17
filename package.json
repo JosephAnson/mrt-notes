@@ -7,12 +7,12 @@
     "lint": "eslint . --fix",
     "postinstall": "nuxt prepare",
     "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
     "gen-types": "supabase gen types typescript --project-id \"tcqilgocqemuhfpezlwa\" --schema public > src/supabase.types.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@headlessui/vue": "^1.7.10",
-    "@heroicons/vue": "2.0.13",
     "@tiptap/extension-color": "^2.0.0-beta.217",
     "@tiptap/extension-image": "^2.0.0-beta.217",
     "@tiptap/extension-text-style": "^2.0.0-beta.217",
@@ -42,6 +42,7 @@
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
     "typescript": "^4.9.5",
-    "unocss": "^0.49.6"
+    "unocss": "^0.49.6",
+    "@iconify-json/carbon": "^1.1.15"
   }
 }
