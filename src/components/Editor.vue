@@ -3,13 +3,13 @@ import { EditorContent, useEditor } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
-import type { PropType } from '@vue/runtime-core'
 import Image from '@tiptap/extension-image'
 import type { Marker } from '~/utils/config'
 import { markers, wowColors } from '~/utils/config'
-import type { Player } from '~/types'
+import type { Member } from '~/types'
 import DialogProgrammatic from '~/components/Programatic/DialogProgramatic'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
+import { useTeamMembers } from '~/composables/state'
 
 export default defineComponent({
   components: {
@@ -20,10 +20,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    players: { type: Array as PropType<Player[]>, default: () => [] },
   },
   emits: ['update:modelValue', 'update:json'],
   setup(props, { emit }) {
+    const teamMembers = useTeamMembers()
     const isComponentModalActive = ref(false)
 
     const spellOccurrence = reactive({
@@ -42,6 +42,9 @@ export default defineComponent({
         Color,
         TextStyle,
       ],
+      onCreate: () => {
+        emit('update:json', editor.value?.getJSON())
+      },
       onUpdate: () => {
         emit('update:modelValue', editor.value?.getHTML())
         emit('update:json', editor.value?.getJSON())
@@ -61,7 +64,7 @@ export default defineComponent({
       editor.value?.chain().focus().setImage({ src: marker.src }).run()
     }
 
-    async function createPlayerSnippet(player: Player) {
+    async function createPlayerSnippet(player: Member) {
       const insertString = player.name
 
       editor.value?.commands.setMark('textStyle', { color: wowColors[player.class] })
@@ -122,6 +125,7 @@ export default defineComponent({
       editor,
       isComponentModalActive,
       spellOccurrence,
+      teamMembers,
       markers,
       openSpellOccurrenceDialog,
       createMarker,
@@ -135,19 +139,23 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    <div class="toolbar flex flex-wrap">
+  <div class="editor bg-gray-800 rounded mb-4">
+    <div class="toolbar flex flex-wrap p-2 bg-gray-700">
       <input
+        class="p-0 border-0 mr-2"
         type="color"
         :value="editor?.getAttributes('textStyle').color"
         @input="editor?.chain().focus().setColor($event.target.value).run()"
       >
-      <Button
+      <a
         v-for="marker in markers"
         :key="marker.name"
-        class="ql-button" :class="[`ql-${marker.name}`]"
+        class="h-6 w-6 flex items-center cursor-pointer mr-2 last:mr-0"
         @click.stop="createMarker(marker)"
-      />
+      >
+        <img class="object-contain w-full h-full" :src="marker.src">
+      </a>
+
       <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
         <span class="i-carbon-undo" />
       </button>
@@ -161,32 +169,34 @@ export default defineComponent({
         <span class="i-carbon-text-clear-format text-white" />
       </button>
 
-      <Button @click.stop="createTimeSnippet">
-        Time Snippet
-      </Button>
-      <Button @click.stop="createSpellSnippet">
-        Spell Snippet
-      </Button>
-      <Button @click="openSpellOccurrenceDialog">
+      <a class="mr-2" href="#" @click.stop="createTimeSnippet">
+        Time
+      </a>
+      <a class="mr-2" href="#" @click.stop="createSpellSnippet">
+        Spell ID
+      </a>
+      <a class="mr-2" href="#" @click="openSpellOccurrenceDialog">
         Spell Occurrence
-      </Button>
+      </a>
     </div>
 
-    <Field v-if="players.length">
+    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0">
       <a
-        v-for="player in players"
-        :key="player.id"
+        v-for="teamMember in teamMembers"
+        :key="teamMember.id"
+        class="mr-2 last:mr-0 cursor-pointer"
         :class="
-          `has-wow-text-${player.class.replace(' ', '-').toLowerCase()}`
+          `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`
         "
-        @click.prevent="createPlayerSnippet(player)"
+        @click.prevent="createPlayerSnippet(teamMember)"
       >
-        {{ player.name }}
+        {{ teamMember.name }}
       </a>
     </Field>
 
-    <EditorContent class="editor" :editor="editor" />
-
+    <div class="p-2 pt-0">
+      <EditorContent class="editor-content" :editor="editor" />
+    </div>
     <Modal
       v-model:active="isComponentModalActive"
       has-modal-card
@@ -235,13 +245,14 @@ export default defineComponent({
 </template>
 
 <style lang='scss'>
-.editor {
+.editor-content {
   background: white;
   color: black;
   border-radius: 2px;
 
   .ProseMirror {
-    min-height: 6rem;
+    min-height: 10rem;
+    padding: 0.5rem;
   }
 
   img {

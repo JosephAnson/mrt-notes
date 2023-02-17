@@ -1,5 +1,4 @@
 import type { JSONContent } from '@tiptap/vue-3'
-import type { Guid } from '~/utils/guid'
 
 export type TemplateOption = 'Starter' | 'Empty'
 
@@ -29,14 +28,14 @@ export const WowClasses = ['Death Knight',
   'Demon Hunter'] as const
 export type WowClassesUnion = typeof WowClasses[number]
 
-export interface Player {
-  id: Guid
+export interface Member {
+  id: number
   name: string
   class: WowClassesUnion
 }
 
 export interface Group {
-  id: Guid
+  id: number
   type: GroupTypeUnion
   players: string[]
   note: Note

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { computedInject, useVModel } from '@vueuse/core'
+import { useVModel } from '@vueuse/core'
 
 export default defineComponent({
   props: {
@@ -13,12 +13,9 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const newValue = useVModel(props, 'value', emit)
-    const labelFor = computedInject('labelFor', source => source, '')
-    const newId = computed(() => props.id || labelFor.value)
+    const newValue = useVModel(props, 'value', emit, { passive: true })
 
     return {
-      newId,
       newValue,
     }
   },
@@ -27,7 +24,7 @@ export default defineComponent({
 
 <template>
   <select
-    :id="newId"
+    :id="id"
     v-model="newValue"
     class="select bg-white color-black rounded w-full px-2 block h-8 focus:ring-indigo-500 focus:border-indigo-500"
   >

@@ -14,11 +14,15 @@ const { data: notes } = await useAsyncData('notes', async () => {
 <template>
   <Page>
     <Container>
-      here's ya notes
+      <Heading h1>
+        Notes
+      </Heading>
 
-      <nuxt-link><Button>Open note</Button></nuxt-link>
-
-      <pre>{{ notes }}</pre>
+      <div v-for="note in notes" :key="note.id">
+        <nuxt-link :to="`/note/${note.id}` ">
+          <Button>Open note: {{ note.name }}</Button>
+        </nuxt-link>
+      </div>
     </Container>
   </Page>
 </template>

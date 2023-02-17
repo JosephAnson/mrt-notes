@@ -2,7 +2,7 @@
 import Draggable from 'vuedraggable'
 import { Guid } from '~/utils/guid'
 import { GroupType } from '~/types'
-import type { Group, Player } from '~/types'
+import type { Group, Member } from '~/types'
 
 const props = defineProps({
   groups: {
@@ -10,7 +10,7 @@ const props = defineProps({
     required: true,
   },
   players: {
-    type: Array as PropType<Player[]>,
+    type: Array as PropType<Member[]>,
     required: true,
   },
 })
@@ -62,41 +62,44 @@ function removeGroup(group: Group) {
     </div>
     <Draggable v-model="groups" handle=".handle" item-key="id">
       <template #item="{ element }">
-        <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
-          <span class="i-carbon-draggable mr-2 text-2xl" />
+        <div class=" flex w-full bg-gray-800 py-2 px-4 mb-2 rounded-1">
+          <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
-          <Field label="Type" horizontal>
-            <Select v-model:value="element.type">
-              <option v-for="type in GroupType" :key="type">
-                {{ type }}
-              </option>
-            </Select>
-          </Field>
-          <Field
-            v-if="element.type === 'Players'"
-            label="Players"
-            horizontal
-          >
-            <Taginput
-              v-model:tags="element.players"
-              :data="playerNames"
-              autocomplete
-              allow-new
-              open-on-focus
-              :confirm-key-codes="[13, 32, 188]"
-              @typing="getFilteredPlayers"
-            />
-          </Field>
-          <Field label="Tactic" horizontal>
-            <Editor
-              v-model="element.note.value"
-              :players="players"
-              @update:json="element.note.json = $event"
-            />
-          </Field>
+          <div>
+            <Field label="Type" stacked>
+              <Select v-model:value="element.type">
+                <option v-for="type in GroupType" :key="type">
+                  {{ type }}
+                </option>
+              </Select>
+            </Field>
 
-          <button
-            class="delete"
+            <Field
+              v-if="element.type === 'Players'"
+              stacked
+              label="Players"
+            >
+              <Taginput
+                v-model:tags="element.players"
+                :data="playerNames"
+                autocomplete
+                allow-new
+                open-on-focus
+                :confirm-key-codes="[13, 32, 188]"
+                @typing="getFilteredPlayers"
+              />
+            </Field>
+
+            <Field stacked>
+              <Editor
+                v-model="element.note.value"
+                :players="players"
+                @update:json="element.note.json = $event"
+              />
+            </Field>
+          </div>
+          <a
+            class="i-carbon-trash-can w-8"
             @click="removeGroup(element)"
           />
         </div>

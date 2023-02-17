@@ -5,15 +5,12 @@ export default defineComponent({
     id: { type: String, default: null },
     type: { type: String, default: 'text' },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const input = useVModel(props, 'modelValue', emit)
-    const labelFor = computedInject('labelFor', source => source, '')
-    const newId = computed(() => props.id || labelFor.value)
 
     return {
       input,
-      newId,
     }
   },
 })
@@ -21,9 +18,10 @@ export default defineComponent({
 
 <template>
   <input
-    :id="newId"
+    :id="id"
     v-model="input"
     :type="type"
     class="bg-white color-black rounded w-full px-2 block h-8 focus:ring-indigo-500 focus:border-indigo-500"
+    @change="$emit('change')"
   >
 </template>

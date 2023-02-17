@@ -301,10 +301,9 @@ export default defineComponent({
             <div v-html="content" />
           </template>
           <slot v-else :can-cancel="canCancel" :close="close" />
-          <button
+          <Button
             v-if="showX"
             v-show="!modelState.animating"
-            type="button"
             class="modal-close is-large"
             @click="cancel('x')"
           />

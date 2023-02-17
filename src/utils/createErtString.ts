@@ -22,6 +22,9 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
       if (marker)
         previewString += `{${marker.name}}`
     }
+    else if (contentItem.type === 'hardBreak') {
+      previewString += '\n'
+    }
   }
 
   return previewString
@@ -30,6 +33,7 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
 export function createERTString(json?: JSONContent) {
   let previewString = ''
 
+  console.log('json', json)
   if (json && json.content) {
     for (const contentItem of json.content) {
       if (contentItem.content) {

@@ -48,19 +48,22 @@ const ertString = computed(() => {
       Copy ERT String
     </Button>
   </div>
-  <div class="preview bg-white p-4 color-black text-sm mb-4 h-48">
+  <div class="preview bg-white p-4 color-black text-sm mb-4 h-64 overflow-y-scroll break-all">
     <pre v-html="ertString" />
   </div>
   <Heading h3>
     Preview
   </Heading>
-  <div class="preview bg-white p-4 color-black text-sm h-48">
-    <pre v-html="preview" />
+  <div class="preview bg-white p-4 color-black text-sm h-64 overflow-y-scroll">
+    <pre class="whitespace-normal break-all" v-html="preview" />
   </div>
 </template>
 
 <style scoped lang="scss">
-.preview :deep(img) {
-  display: inline-block;
+.preview {
+
+  :deep(img) {
+    display: inline-block;
+  }
 }
 </style>

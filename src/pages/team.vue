@@ -7,7 +7,7 @@ definePageMeta({
 <template>
   <Page>
     <Container>
-      <Heading>
+      <Heading h1>
         Team Members
       </Heading>
       <TeamMembers />

@@ -12,23 +12,23 @@ export interface Database {
       notes: {
         Row: {
           created_at: string | null
-          editor_json: Json | null
           editor_string: string | null
           id: number
+          name: string
           user_id: string | null
         }
         Insert: {
           created_at?: string | null
-          editor_json?: Json | null
           editor_string?: string | null
           id?: number
+          name?: string
           user_id?: string | null
         }
         Update: {
           created_at?: string | null
-          editor_json?: Json | null
           editor_string?: string | null
           id?: number
+          name?: string
           user_id?: string | null
         }
       }
