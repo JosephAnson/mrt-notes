@@ -41,7 +41,7 @@ export async function getNote(id: string) {
 export async function updateNote(id: number, name: string, editor_string: string) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  client.from('notes')
+  const data = await client.from('notes')
     .upsert({
       editor_string,
       name,

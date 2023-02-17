@@ -16,7 +16,7 @@ export default defineComponent({
 
 <template>
   <div class="field items-center mb-4 last-child:mb-0" :class="{ flex: !stacked }">
-    <label :for="labelFor" class="label mr-4 inline-block" :class="{ 'mb-2': stacked }">
+    <label v-if="label" :for="labelFor" class="label mr-4 inline-block" :class="{ 'mb-2': stacked }">
       {{ label }}
     </label>
     <slot />

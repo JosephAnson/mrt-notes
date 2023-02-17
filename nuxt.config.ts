@@ -16,9 +16,6 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      htmlAttrs: {
-        class: 'has-navbar-fixed-top',
-      },
       title: 'ERT Notes',
       meta: [
         { charset: 'utf-8' },

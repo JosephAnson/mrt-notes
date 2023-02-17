@@ -9,16 +9,7 @@ const SnackbarProgrammatic = {
       }
     }
 
-    const defaultParam = {
-      type: 'is-success',
-      position: 'is-bottom-right',
-    }
-
-    const propsData = { ...defaultParam, ...params }
-
-    const component = createApp(Snackbar, {
-      ...propsData,
-    })
+    const component = createApp(Snackbar, params)
 
     component.mount(document.createElement('div'))
   },

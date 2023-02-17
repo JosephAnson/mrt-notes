@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 import type { PropType } from 'vue'
 
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
@@ -126,7 +126,6 @@ export default defineComponent({
         if (value)
           modelState.destroyed = false
 
-        handleScroll()
         // nextTick(() => {
         //   if (value && root.$el && 'focus' in root.$el && props.autoFocus) {
         //     (root.$el as HTMLElement).focus();
@@ -134,38 +133,6 @@ export default defineComponent({
         // });
       },
     )
-
-    function handleScroll() {
-      if (typeof window === 'undefined')
-        return
-
-      if (props.scroll === 'clip') {
-        if (modelState.isActive)
-          document.documentElement.classList.add('is-clipped')
-        else
-          document.documentElement.classList.remove('is-clipped')
-
-        return
-      }
-
-      modelState.savedScrollTop = !modelState.savedScrollTop
-        ? document.documentElement.scrollTop
-        : modelState.savedScrollTop
-
-      if (modelState.isActive)
-        document.body.classList.add('is-noscroll')
-      else
-        document.body.classList.remove('is-noscroll')
-
-      if (modelState.isActive) {
-        document.body.style.top = `-${modelState.savedScrollTop}px`
-        return
-      }
-
-      document.documentElement.scrollTop = modelState.savedScrollTop
-      document.body.style.top = ''
-      modelState.savedScrollTop = null
-    }
 
     /**
      * Close the Modal if canCancel and call the onCancel prop (function).
@@ -199,31 +166,6 @@ export default defineComponent({
         cancel('escape')
     }
 
-    /**
-     * Transition after-enter hook
-     */
-    function afterEnter() {
-      modelState.animating = false
-      emit('afterEnter')
-    }
-
-    /**
-     * Transition before-leave hook
-     */
-    function beforeLeave() {
-      modelState.animating = true
-    }
-
-    /**
-     * Transition after-leave hook
-     */
-    function afterLeave() {
-      if (props.destroyOnHide)
-        modelState.destroyed = true
-
-      emit('afterLeave')
-    }
-
     if (typeof window !== 'undefined')
       document.addEventListener('keyup', keyPress)
 
@@ -232,22 +174,6 @@ export default defineComponent({
 
       if (props.programmatic)
         modelState.isActive = true
-      else if (modelState.isActive)
-        handleScroll()
-    })
-
-    onBeforeUnmount(() => {
-      if (typeof window !== 'undefined') {
-        document.removeEventListener('keyup', keyPress)
-        // reset scroll
-        document.documentElement.classList.remove('is-clipped')
-        const savedScrollTop = !modelState.savedScrollTop
-          ? document.documentElement.scrollTop
-          : modelState.savedScrollTop
-        document.body.classList.remove('is-noscroll')
-        document.documentElement.scrollTop = savedScrollTop
-        document.body.style.top = ''
-      }
     })
 
     return {
@@ -256,9 +182,6 @@ export default defineComponent({
       showX,
       close,
       cancel,
-      afterEnter,
-      beforeLeave,
-      afterLeave,
     }
   },
 })
@@ -266,29 +189,19 @@ export default defineComponent({
 
 <template>
   <teleport to="body">
-    <transition
-      :name="animation"
-      @after-enter="afterEnter"
-      @before-leave="beforeLeave"
-      @after-leave="afterLeave"
-    >
+    <transition name="zoom-out">
       <div
         v-if="!modelState.destroyed"
         v-show="modelState.isActive"
-        ref="modal"
-        class="modal is-active"
+        class="modal"
         :class="[{ 'is-full-screen': fullScreen }, customClass]"
         tabindex="-1"
         :role="ariaRole"
         :aria-label="ariaLabel"
         :aria-modal="ariaModal"
       >
-        <div class="modal-background" @click="cancel('outside')" />
-        <div
-          class="animation-content"
-          :class="{ 'modal-content': !hasModalCard }"
-          :style="customStyle"
-        >
+        <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
+        <div class=" z-2 fixed top-10% left-1/2 translate-x-2/4 bg-gray-800 p-4 shadow-white">
           <component
             v-bind="componentProps"
             :is="component"
