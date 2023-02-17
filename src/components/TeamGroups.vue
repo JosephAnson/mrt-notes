@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
-import { Guid } from '~/shared/guid'
+import { Guid } from '~/utils/guid'
 import { GroupType } from '~/types'
 import type { Group, Player } from '~/types'
 

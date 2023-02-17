@@ -1,14 +1,10 @@
 <script lang='ts' setup>
 import type { JSONContent } from '@tiptap/vue-3'
-import type { Guid } from '~/shared/guid'
 import type { Group, Player, TemplateOption } from '~/types'
-import type { Database } from '~/supabase.types'
-import { definePageMeta, reactive, useSupabaseClient } from '#imports'
+import { definePageMeta, reactive } from '#imports'
 
 const templateOption: TemplateOption = 'Default'
 const templateOptions: TemplateOption[] = ['Default', 'Empty']
-
-const client = useSupabaseClient<Database>()
 
 definePageMeta({
   middleware: 'auth',
@@ -41,18 +37,10 @@ function createSteps(type: TemplateOption) {
   }
 }
 
-async function saveData(id: Guid) {
-
-}
-
+async function saveData() {}
 function loadNote() {}
-function newNote() {
-
-}
-
-async function copyNote() {
-
-}
+function newNote() {}
+async function copyNote() {}
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 import type { JSONContent } from '@tiptap/vue-3'
-import type { Guid } from '~/shared/guid'
+import type { Guid } from '~/utils/guid'
 
 export type TemplateOption = 'Default' | 'Empty'
 

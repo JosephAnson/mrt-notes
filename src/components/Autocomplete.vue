@@ -480,7 +480,7 @@ export default defineComponent({
     <Input
       v-bind="$attrs"
       ref="input"
-      v-model:value="autocompleteState.newValue"
+      v-model="autocompleteState.newValue"
       type="text"
       :size="size"
       :loading="loading"

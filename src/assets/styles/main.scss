@@ -1,23 +1,31 @@
-@import 'bulma/sass/utilities/initial-variables';
-
-@import 'utilities/initial-variables';
-
-// Bulma
-@import 'bulma/bulma';
-
-// Highlight.js
-@import 'highlight.js/styles/atom-one-dark.css';
-
 // FontAwesome 5
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import '@fortawesome/fontawesome-free/scss/fontawesome';
 @import '@fortawesome/fontawesome-free/scss/regular';
 @import '@fortawesome/fontawesome-free/scss/solid';
 @import '@fortawesome/fontawesome-free/scss/brands';
 
-@import 'utilities/manifest';
-@import 'base/manifest';
-@import 'elements/manifest';
-@import 'components/manifest';
-@import 'pages/manifest';
-@import 'vendor/manifest';
+@import "@unocss/reset/tailwind.css";
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #020816;
+  color: #ffffff;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.font-secondary {
+  font-family: "Montserrat", sans-serif;
+}
+
+.swiper-button-prev,
+.swiper-button-next{
+  &.swiper-button-disabled{
+    display: none;
+  }
+}
+

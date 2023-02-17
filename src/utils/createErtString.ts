@@ -1,6 +1,6 @@
 import type { JSONContent } from '@tiptap/vue-3'
 import type { Group } from '~/types'
-import { markers } from '~/shared/config'
+import { markers } from '~/utils/config'
 
 function createParagraphContent(paragraphContent: JSONContent[]) {
   let previewString = ''

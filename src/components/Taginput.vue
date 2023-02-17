@@ -2,7 +2,7 @@
 import { computed, defineComponent, nextTick, reactive, ref, watch } from 'vue'
 import type { PropType } from 'vue'
 import { getValueByPath } from '~/utils/helpers'
-import { fieldType } from '~/shared/form-helpers'
+import { fieldType } from '~/utils/form-helpers'
 
 export default defineComponent({
   props: {
@@ -300,7 +300,7 @@ export default defineComponent({
         v-if="hasInput"
         v-bind="$attrs"
         ref="autocompleteRef"
-        v-model:value="state.newTag"
+        v-model="state.newTag"
         :data="data"
         :field="field"
         :icon="icon"

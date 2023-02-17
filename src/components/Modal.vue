@@ -204,7 +204,7 @@ export default defineComponent({
      */
     function afterEnter() {
       modelState.animating = false
-      emit('after-enter')
+      emit('afterEnter')
     }
 
     /**
@@ -221,7 +221,7 @@ export default defineComponent({
       if (props.destroyOnHide)
         modelState.destroyed = true
 
-      emit('after-leave')
+      emit('afterLeave')
     }
 
     if (typeof window !== 'undefined')

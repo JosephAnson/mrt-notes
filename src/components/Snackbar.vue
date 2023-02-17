@@ -164,14 +164,9 @@ export default defineComponent({
       }
     }
 
-    onBeforeMount(() => {
-      setupContainer()
-    })
+    onBeforeMount(() => setupContainer())
 
-    onMounted(() => {
-      console.log('SHOW SNACK')
-      showNotice()
-    })
+    onMounted(() => showNotice())
 
     return {
       transition,
