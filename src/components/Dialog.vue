@@ -149,50 +149,54 @@ export default defineComponent({
         :aria-modal="ariaModal"
       >
         <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
-        <div class=" z-2 fixed top-10% left-1/2 translate-x-2/4 bg-gray-800 p-4 shadow-white">
-          <Heading v-if="title" p styled="h2">
-            {{ title }}
-          </Heading>
+        <div class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex">
+          <div class="relative w-full h-full max-w-2xl md:h-auto">
+            <div class="relative p-4 bg-gray-700 rounded-lg shadow">
+              <Heading v-if="title" p styled="h2">
+                {{ title }}
+              </Heading>
 
-          <section>
-            <p class="mb-2">
-              <template v-if="$slots.default">
-                <slot />
-              </template>
-              <template v-else>
-                {{ message }}
-              </template>
-            </p>
+              <section>
+                <p class="mb-2">
+                  <template v-if="$slots.default">
+                    <slot />
+                  </template>
+                  <template v-else>
+                    {{ message }}
+                  </template>
+                </p>
 
-            <Field v-if="hasInput">
-              <Input
-                v-bind="inputAttrs"
-                ref="input"
-                v-model="prompt"
-                class="input"
-                @keyup.enter="confirm"
-              />
-            </Field>
-          </section>
+                <Field v-if="hasInput">
+                  <Input
+                    v-bind="inputAttrs"
+                    ref="input"
+                    v-model="prompt"
+                    class="input"
+                    @keyup.enter="confirm"
+                  />
+                </Field>
+              </section>
 
-          <footer class="flex justify-between">
-            <Button
-              v-if="showCancel"
-              class="mr-2"
-              @click="cancel('button')"
-              @keyup.enter="cancel('button')"
-            >
-              {{ cancelText }}
-            </Button>
-            <Button
-              class="button"
-              :class="type"
-              @click="confirm"
-              @keyup.enter="confirm"
-            >
-              {{ confirmText }}
-            </Button>
-          </footer>
+              <footer class="flex justify-between">
+                <Button
+                  v-if="showCancel"
+                  class="mr-2"
+                  @click="cancel('button')"
+                  @keyup.enter="cancel('button')"
+                >
+                  {{ cancelText }}
+                </Button>
+                <Button
+                  class="button"
+                  :class="type"
+                  @click="confirm"
+                  @keyup.enter="confirm"
+                >
+                  {{ confirmText }}
+                </Button>
+              </footer>
+            </div>
+          </div>
         </div>
       </div>
     </transition>
