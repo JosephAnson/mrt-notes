@@ -142,12 +142,15 @@ export default defineComponent({
 <template>
   <div class="editor bg-gray-800 rounded mb-4">
     <div class="toolbar flex flex-wrap p-2 bg-gray-700">
-      <input
-        class="p-0 border-0 mr-2 w-4 h-4 appearance-none"
-        type="color"
-        :value="editor?.getAttributes('textStyle').color"
-        @input="editor?.chain().focus().setColor($event.target.value).run()"
-      >
+      <div class="relative">
+        <input
+          class="absolute top-0 left-0 w-full h-full opacity-0"
+          type="color"
+          :value="editor?.getAttributes('textStyle').color"
+          @input="editor?.chain().focus().setColor($event.target.value).run()"
+        >
+        <span class="i-carbon-text-color text-3xl inline-block pointer-events-none" :style="{ color: editor?.getAttributes('textStyle').color }" />
+      </div>
       <a
         v-for="marker in markers"
         :key="marker.name"
@@ -168,13 +171,13 @@ export default defineComponent({
       </a>
 
       <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-        <span class="i-carbon-undo w-4 inline-block  mr-2" />
+        <span class="text-xl i-carbon-undo  inline-block  mr-2" />
       </button>
       <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-        <span class="i-carbon-redo w-4 inline-block  mr-2" />
+        <span class="text-xl i-carbon-redo  inline-block  mr-2" />
       </button>
       <button @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
-        <span class="i-carbon-text-clear-format text-white w-4 inline-block  mr-2" />
+        <span class="text-xl i-carbon-text-clear-format text-white  inline-block  mr-2" />
       </button>
     </div>
 
@@ -257,6 +260,15 @@ export default defineComponent({
     &.ProseMirror-selectednode {
       outline: 3px solid #68CEF8;
     }
+  }
+}
+
+.input-color{
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  &::-webkit-color-swatch {
+    border: none;
   }
 }
 </style>
