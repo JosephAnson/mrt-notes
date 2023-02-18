@@ -24,7 +24,7 @@ export async function signInWithOtp(email: string) {
   const { error } = await client.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${window.location.origin}/checkEmails`,
+      emailRedirectTo: window.location.origin,
     },
   })
 
