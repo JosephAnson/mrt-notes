@@ -30,7 +30,7 @@ async function deleteNoteAndRedirect() {
   if (note.value) {
     const router = useRouter()
     await deleteNote(note.value.id)
-    router.push('/notes')
+    router.push('/')
   }
 }
 </script>

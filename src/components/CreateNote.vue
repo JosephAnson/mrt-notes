@@ -5,7 +5,7 @@ const noteName = ref('')
 </script>
 
 <template>
-  <Heading h2>
+  <Heading h3>
     Create New Note
   </Heading>
   <div class="mb-8 flex">
