@@ -2,19 +2,6 @@ import type { JSONContent } from '@tiptap/vue-3'
 import type { Group } from '~/types'
 import { markers } from '~/utils/config'
 
-function convertRgbColorsToHex(string: string) {
-  return string.replace(/rgb\(\d+,\s*\d+,\s*\d+\)/g,
-    (rgbString) => {
-      return `#${rgbString
-          .match(/\b(\d+)\b/g)
-          ?.map(digit =>
-              parseInt(digit).toString(16).padStart(2, '0').toUpperCase(),
-          )
-          .join('')}`
-    },
-  )
-}
-
 function createParagraphContent(paragraphContent: JSONContent[]) {
   let previewString = ''
 
@@ -24,7 +11,7 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
         previewString += contentItem.text
       }
       else {
-        previewString += `|cff${convertRgbColorsToHex(contentItem.marks[0].attrs?.color.replace('#', ''))}${
+        previewString += `|cff${contentItem.marks[0].attrs?.color.replace('#', '')}${
           contentItem.text
         }|r`
       }

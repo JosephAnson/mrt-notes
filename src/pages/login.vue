@@ -5,7 +5,6 @@ const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
 
 const email = ref('')
-const password = ref('')
 </script>
 
 <template>

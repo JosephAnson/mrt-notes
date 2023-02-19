@@ -1,15 +1,12 @@
 <script lang='ts'>
-import { EditorContent, useEditor } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
-import Image from '@tiptap/extension-image'
+import { EditorContent } from '@tiptap/vue-3'
 import type { Marker } from '~/utils/config'
 import { markers, wowColors } from '~/utils/config'
 import type { Member } from '~/types'
 import DialogProgrammatic from '~/components/Programatic/DialogProgramatic'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useTeamMembers } from '~/composables/state'
+import { useEditor } from '~/utils/editor'
 
 export default defineComponent({
   components: {
@@ -23,6 +20,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'update:json'],
   setup(props, { emit }) {
+    const { modelValue } = toRefs(props)
     const teamMembers = useTeamMembers()
     const isComponentModalActive = ref(false)
 
@@ -32,34 +30,7 @@ export default defineComponent({
       spellId: 306111,
     })
 
-    const editor = useEditor({
-      content: props.modelValue,
-      extensions: [
-        StarterKit,
-        Image.configure({
-          inline: true,
-        }),
-        Color,
-        TextStyle,
-      ],
-      onCreate: () => {
-        emit('update:json', editor.value?.getJSON())
-      },
-      onUpdate: () => {
-        emit('update:modelValue', editor.value?.getHTML())
-        emit('update:json', editor.value?.getJSON())
-      },
-    })
-
-    watch(() => props.modelValue, value => setContent(value))
-
-    function setContent(value: string) {
-      if (value === editor.value?.getHTML())
-        return
-
-      editor.value?.commands.setContent(value, false, { preserveWhitespace: 'full' })
-      emit('update:json', editor.value?.getJSON())
-    }
+    const editor = useEditor(modelValue, emit)
 
     function createMarker(marker: Marker) {
       editor.value?.chain().focus().setImage({ src: marker.src }).run()
