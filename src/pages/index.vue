@@ -4,7 +4,7 @@ import Heading from '~/components/Heading.vue'
 import { getAllTeamMembers, setTeamMembers, useAsyncDataAllTeamMembers } from '~/services/teamMembers'
 
 const user = useSupabaseUser()
-const teamMember = useTeamMembers()
+const teamMembers = useTeamMembers()
 const notes = useNotes()
 
 const { data: asyncNotes } = await useAsyncDataGetAllNotes()

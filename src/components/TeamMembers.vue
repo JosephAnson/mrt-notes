@@ -11,6 +11,7 @@ import {
   useAsyncDataAllTeamMembers,
 } from '~/services/teamMembers'
 import { useTeamMembers } from '~/composables/state'
+import { toParamCase } from '~/utils/toParamCase'
 
 const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
 
@@ -25,10 +26,6 @@ if (asyncTeamMembers.value)
 const debouncedUpdateMembers = useDebounceFn(() => {
   updateMembers(teamMembers.value)
 }, 2000)
-
-function toParamCase(string: String) {
-  return string.replaceAll(' ', '-').toLowerCase()
-}
 </script>
 
 <template>
