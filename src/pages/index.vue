@@ -28,7 +28,7 @@ if (asyncNotes.value) {
       </Heading>
 
       <Heading h2 class="mb-8">
-        Website to handle all your World of Warcraft ERT Notes
+        Website to handle all your World of Warcraft MRT Notes
       </Heading>
 
       <div v-if="!user">
@@ -74,7 +74,7 @@ if (asyncNotes.value) {
       <div class="prose mt-8">
         <p>Website dedicated to making raid leaders lives a little easier with ert note planning, below are some of the features:</p>
         <ul>
-          <li>Create and export ert notes</li>
+          <li>Create and export mrt notes</li>
           <li>Change color of text</li>
           <li>Add raid markers</li>
           <li>Add raid teams members and easier add to note</li>
@@ -94,7 +94,7 @@ if (asyncNotes.value) {
             Import of ert note
           </li>
           <li>
-            Copying note
+            Duplicate note
           </li>
         </ul>
       </div>
