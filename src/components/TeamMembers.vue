@@ -6,20 +6,12 @@ import { WowClasses } from '~/types'
 import { addTeamMember, getAllTeamMembers, removeTeamMember, setTeamMembers, updateMembers } from '~/services/teamMembers'
 import { useTeamMembers } from '~/composables/state'
 
-const { data: asyncTeamMembers } = await useAsyncData('team_members', async () => {
-  const { data } = await getAllTeamMembers()
-  return data
-})
-
 const teamMembers = useTeamMembers()
 
-if (asyncTeamMembers.value) {
-  setTeamMembers(asyncTeamMembers.value.map(item => ({
-    id: item.id,
-    class: item.class as WowClassesUnion,
-    name: item.name,
-  })))
-}
+const { data: asyncTeamMembers } = await getAllTeamMembers()
+
+if (asyncTeamMembers.value)
+  setTeamMembers(asyncTeamMembers.value)
 
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')

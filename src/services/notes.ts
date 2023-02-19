@@ -1,7 +1,6 @@
 import type { Database } from '~/supabase.types'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useNotes } from '~/composables/state'
-import type { Note } from '~/types'
 import { deleteGroupsWithNoteId } from '~/services/groups'
 
 const noteColumns = 'id, name, editor_string'
@@ -11,6 +10,8 @@ const defaultEditorValue = 'Fight summary<br><br><br>'
     + 'Phase 1<br><br><br>'
     + 'Phase 2<br><br><br>'
     + 'Phase 3<br><br><br>'
+
+type NotesRow = Database['public']['Tables']['notes']['Row']
 
 export async function createNewNote(name: string, editor_string = defaultEditorValue) {
   if (!name && name.length <= 0)
@@ -55,15 +56,23 @@ export async function updateNote(id: number, name: string, editor_string: string
   SnackbarProgrammatic.open('Saved')
 }
 
-export function setNotes(newNotes: Note[]) {
+export function setNotes(newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string'>[]) {
   const notes = useNotes()
-  notes.value = newNotes
+  notes.value = newNotes.map(item => ({
+    id: item.id,
+    name: item.name,
+    editor_string: item.editor_string || '',
+  }))
 }
 
 export async function getAllNotes() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client.from('notes').select(noteColumns).eq('user_id', user.value?.id).order('created_at')
+
+  return await useAsyncData('notes', async () => {
+    const { data } = await client.from('notes').select(noteColumns).eq('user_id', user.value?.id).order('created_at')
+    return data
+  })
 }
 
 export async function deleteNote(id: number) {

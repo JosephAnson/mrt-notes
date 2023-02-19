@@ -1,24 +1,21 @@
 <script lang="ts" setup async>
 import { deleteNote, getAllNotes, setNotes } from '~/services/notes'
 import Heading from '~/components/Heading.vue'
+import { getAllTeamMembers, setTeamMembers } from '~/services/teamMembers'
 
 const user = useSupabaseUser()
-
-const { data: asyncNotes } = await useAsyncData('notes', async () => {
-  const { data } = await getAllNotes()
-  return data
-})
-
+const teamMember = useTeamMembers()
 const notes = useNotes()
 
+const { data: asyncNotes } = await getAllNotes()
+const { data: asyncTeamMembers } = await getAllTeamMembers()
+
+if (asyncTeamMembers.value)
+  setTeamMembers(asyncTeamMembers.value)
+
 function setGlobalNotes(data: { id: number; name: string; editor_string: string | null }[] | null) {
-  if (data) {
-    setNotes(data.map(item => ({
-      id: item.id,
-      name: item.name,
-      editor_string: item.editor_string || '',
-    })))
-  }
+  if (data)
+    setNotes(data)
 }
 
 setGlobalNotes(asyncNotes.value)
@@ -33,6 +30,7 @@ watch(() => user.value, async () => {
 <template>
   <Page>
     <Container>
+      {{ teamMember }}
       <Heading h1>
         Homepage
       </Heading>

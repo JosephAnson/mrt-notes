@@ -5,16 +5,25 @@ import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 
 const teamMembersColumns = 'id, name, class'
 
-export function setTeamMembers(members: Member[]) {
+type TeamMembersRow = Database['public']['Tables']['team_members']['Row']
+export function setTeamMembers(members: Pick<TeamMembersRow, 'id' | 'name' | 'class'>[]) {
   const teamMembers = useTeamMembers()
 
-  teamMembers.value = members
+  teamMembers.value = members.map(item => ({
+    id: item.id,
+    class: item.class as WowClassesUnion,
+    name: item.name,
+  }))
 }
 
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client.from('team_members').select(teamMembersColumns).eq('user_id', user.value?.id).order('order')
+
+  return await useAsyncData('teamMembers', async () => {
+    const { data } = await client.from('team_members').select(teamMembersColumns).eq('user_id', user.value?.id).order('order')
+    return data
+  })
 }
 
 export async function updateMembers(members: Member[]) {
@@ -36,16 +45,18 @@ export async function updateMembers(members: Member[]) {
 export async function addTeamMember(playerName: string, playerClass: WowClassesUnion) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
+  const teamMembers = useTeamMembers()
+
   const { data } = await client.from('team_members')
     .insert({
       name: playerName,
       class: playerClass,
+      order: teamMembers.value.length + 1,
       user_id: user.value?.id,
     })
     .select(teamMembersColumns)
     .single()
 
-  const teamMembers = useTeamMembers()
   if (data) {
     teamMembers.value?.push({
       id: data.id,
