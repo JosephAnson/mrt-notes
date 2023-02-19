@@ -15,7 +15,7 @@ function copyToClipboard(string: string) {
   clipboard(string)
   SnackbarProgrammatic.open({
     message: 'Copied to clipboard!',
-    type: 'is-primary',
+    background: 'bg-gray-900',
   })
 }
 
