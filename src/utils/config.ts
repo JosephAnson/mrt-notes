@@ -26,6 +26,7 @@ export const wowColors = {
   'Shaman': '#0070DE',
   'Warlock': '#9482C9',
   'Warrior': '#C79C6E',
+  'Evoker': '#33937F',
   'Demon Hunter': '#a330c9',
 }
 
