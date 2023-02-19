@@ -20,9 +20,6 @@ const debouncedUpdateMembers = useDebounceFn(() => {
   updateMembers(teamMembers.value)
 }, 2000)
 
-function toParamCase(string: String) {
-  return string.replaceAll(' ', '-').toLowerCase()
-}
 </script>
 
 <template>
@@ -35,10 +32,7 @@ function toParamCase(string: String) {
       </option>
     </Select>
 
-    <Button
-      type="is-primary"
-      @click="addTeamMember(playerName, playerClass)"
-    >
+    <Button type="is-primary" @click="addTeamMember(playerName, playerClass)">
       Add
     </Button>
   </Field>
@@ -51,17 +45,15 @@ function toParamCase(string: String) {
         <Field class="w-full !mb-0 mr-2" :label-for="`player-${index}`" label="Player">
           <Input v-model="element.name" class="w-full mr-2" @change="debouncedUpdateMembers" />
 
-          <Select v-model:value="element.class" :class="`has-wow-background-${toParamCase(element.class)}`" @update:value="debouncedUpdateMembers">
+          <Select v-model:value="element.class" :class="`has-wow-background-${toParamCase(element.class)}`"
+            @update:value="debouncedUpdateMembers">
             <option v-for="type in WowClasses" :key="type">
               {{ type }}
             </option>
           </Select>
         </Field>
 
-        <Button
-          class="delete"
-          @click="removeTeamMember(element)"
-        >
+        <Button class="delete" @click="removeTeamMember(element)">
           Delete
         </Button>
       </div>

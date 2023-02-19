@@ -83,7 +83,7 @@ export default defineComponent({
 
     function createSpellOccurrenceSnippet() {
       SnackbarProgrammatic.open(
-          `Snippet entered is: {time:0:30,SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`,
+        `Snippet entered is: {time:0:30,SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`,
       )
       const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
 
@@ -114,20 +114,14 @@ export default defineComponent({
   <div class="editor bg-gray-800 rounded mb-4">
     <div class="toolbar flex flex-wrap p-2 bg-gray-700">
       <div class="relative">
-        <input
-          class="absolute top-0 left-0 w-full h-full opacity-0"
-          type="color"
+        <input class="absolute top-0 left-0 w-full h-full opacity-0" type="color"
           :value="editor?.getAttributes('textStyle').color"
-          @input="editor?.chain().focus().setColor($event.target.value).run()"
-        >
-        <span class="i-carbon-text-color text-3xl inline-block pointer-events-none" :style="{ color: editor?.getAttributes('textStyle').color }" />
+          @input="editor?.chain().focus().setColor($event.target.value).run()">
+        <span class="i-carbon-text-color text-3xl inline-block pointer-events-none"
+          :style="{ color: editor?.getAttributes('textStyle').color }" />
       </div>
-      <a
-        v-for="marker in markers"
-        :key="marker.name"
-        class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
-        @click.stop="createMarker(marker)"
-      >
+      <a v-for="marker in markers" :key="marker.name" class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
+        @click.stop="createMarker(marker)">
         <img class="object-contain w-full h-full" :src="marker.src">
       </a>
 
@@ -152,48 +146,32 @@ export default defineComponent({
       </button>
     </div>
 
-    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap">
-      <a
-        v-for="teamMember in teamMembers"
-        :key="teamMember.id"
-        class="mr-2 last:mr-0 cursor-pointer"
-        :class="
+    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap" :is-editor="true">
+      <div class="flex flex-wrap">
+        <a v-for="teamMember in teamMembers" :key="teamMember.id" class="mr-2 last:mr-0 cursor-pointer" :class="
           `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`
-        "
-        @click.prevent="createPlayerSnippet(teamMember)"
-      >
-        {{ teamMember.name }}
-      </a>
+        " @click.prevent="createPlayerSnippet(teamMember)">
+          {{ teamMember.name }}
+        </a>
+      </div>
     </Field>
 
     <div class="p-2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />
     </div>
-    <Modal
-      v-model:active="isComponentModalActive"
-      has-modal-card
-      :destroy-on-hide="false"
-      aria-role="dialog"
-      aria-modal
-    >
+    <Modal v-model:active="isComponentModalActive" has-modal-card :destroy-on-hide="false" aria-role="dialog" aria-modal>
       <div class="modal-card animation-content">
         <section class="modal-card-body is-titleless">
           <div class="media">
             <div class="media-content">
               <Field label="Enter the Time after spell cast? {00:10}" stacked>
-                <Input
-                  v-model="spellOccurrence.timeAfterSpellStarted"
-                />
+                <Input v-model="spellOccurrence.timeAfterSpellStarted" />
               </Field>
               <Field label="Enter the spell id?" stacked>
-                <Input
-                  v-model="spellOccurrence.spellId"
-                />
+                <Input v-model="spellOccurrence.spellId" />
               </Field>
               <Field label="Enter the cast number?" stacked>
-                <Input
-                  v-model="spellOccurrence.occurrence"
-                />
+                <Input v-model="spellOccurrence.occurrence" />
               </Field>
             </div>
           </div>
@@ -202,10 +180,7 @@ export default defineComponent({
           <Button class="button mr-2" @click="isComponentModalActive = false">
             Cancel
           </Button>
-          <Button
-            class="button is-primary"
-            @click="createSpellOccurrenceSnippet"
-          >
+          <Button class="button is-primary" @click="createSpellOccurrenceSnippet">
             Done
           </Button>
         </footer>
@@ -234,10 +209,11 @@ export default defineComponent({
   }
 }
 
-.input-color{
+.input-color {
   &::-webkit-color-swatch-wrapper {
     padding: 0;
   }
+
   &::-webkit-color-swatch {
     border: none;
   }

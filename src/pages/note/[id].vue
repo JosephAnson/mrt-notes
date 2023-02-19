@@ -60,12 +60,8 @@ async function deleteNoteAndRedirect() {
               </Heading>
             </div>
 
-            <Editor
-              v-model="editor.value"
-              class="block"
-              @update:model-value="debouncedUpdateNote"
-              @update:json="editor.json = $event"
-            />
+            <Editor v-model="editor.value" class="block" @update:model-value="debouncedUpdateNote"
+              @update:json="editor.json = $event" />
 
             <TeamGroups class="mb-8" :note-id="note.id" />
 

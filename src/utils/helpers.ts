@@ -48,3 +48,7 @@ export function toCss(value: number | string | undefined): null | string {
       : `${value}px`
   }
 }
+
+export function toParamCase(string: String) {
+  return string.replaceAll(' ', '-').toLowerCase()
+}
