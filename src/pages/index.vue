@@ -11,13 +11,23 @@ const { data: asyncNotes } = await useAsyncData('notes', async () => {
 
 const notes = useNotes()
 
-if (asyncNotes.value) {
-  setNotes(asyncNotes.value.map(item => ({
-    id: item.id,
-    name: item.name,
-    editor_string: item.editor_string || '',
-  })))
+function setGlobalNotes(data: { id: number; name: string; editor_string: string | null }[] | null) {
+  if (data) {
+    setNotes(data.map(item => ({
+      id: item.id,
+      name: item.name,
+      editor_string: item.editor_string || '',
+    })))
+  }
 }
+
+setGlobalNotes(asyncNotes.value)
+
+// Watch to see if user changes to re-fetch notes
+watch(() => user.value, async () => {
+  const { data } = await getAllNotes()
+  setGlobalNotes(data)
+}, { deep: true })
 </script>
 
 <template>
