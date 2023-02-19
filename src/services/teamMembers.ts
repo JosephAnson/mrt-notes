@@ -19,9 +19,12 @@ export function setTeamMembers(members: Pick<TeamMembersRow, 'id' | 'name' | 'cl
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
+  return client.from('team_members').select(teamMembersColumns).eq('user_id', user.value?.id).order('order')
+}
 
+export async function useAsyncDataAllTeamMembers() {
   return await useAsyncData('teamMembers', async () => {
-    const { data } = await client.from('team_members').select(teamMembersColumns).eq('user_id', user.value?.id).order('order')
+    const { data } = await getAllTeamMembers()
     return data
   })
 }

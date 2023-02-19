@@ -1,36 +1,37 @@
 <script lang="ts" setup async>
-import { deleteNote, getAllNotes, setNotes } from '~/services/notes'
+import { deleteNote, getAllNotes, setNotes, useAsyncDataGetAllNotes } from '~/services/notes'
 import Heading from '~/components/Heading.vue'
-import { getAllTeamMembers, setTeamMembers } from '~/services/teamMembers'
+import { getAllTeamMembers, setTeamMembers, useAsyncDataAllTeamMembers } from '~/services/teamMembers'
 
 const user = useSupabaseUser()
 const teamMember = useTeamMembers()
 const notes = useNotes()
 
-const { data: asyncNotes } = await getAllNotes()
-const { data: asyncTeamMembers } = await getAllTeamMembers()
+const { data: asyncNotes } = await useAsyncDataGetAllNotes()
+const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
+
+if (asyncNotes.value)
+  setNotes(asyncNotes.value)
 
 if (asyncTeamMembers.value)
   setTeamMembers(asyncTeamMembers.value)
 
-function setGlobalNotes(data: { id: number; name: string; editor_string: string | null }[] | null) {
-  if (data)
-    setNotes(data)
-}
-
-setGlobalNotes(asyncNotes.value)
-
 // Watch to see if user changes to re-fetch notes
 watch(() => user.value, async () => {
-  const { data } = await getAllNotes()
-  setGlobalNotes(data)
+  const { data: notes } = await getAllNotes()
+  const { data: teamMembers } = await getAllTeamMembers()
+
+  if (notes)
+    setNotes(notes)
+
+  if (teamMembers)
+    setTeamMembers(teamMembers)
 }, { deep: true })
 </script>
 
 <template>
   <Page>
     <Container>
-      {{ teamMember }}
       <Heading h1>
         Homepage
       </Heading>
