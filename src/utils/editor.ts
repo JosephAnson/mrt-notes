@@ -78,9 +78,6 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       TextStyle,
     ],
     autofocus: 'end',
-    enableInputRules: false,
-    enablePasteRules: false,
-    injectCSS: false,
     onCreate: () => {
       emit('update:json', editor.value?.getJSON())
 
