@@ -152,7 +152,7 @@ export default defineComponent({
       </button>
     </div>
 
-    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0">
+    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap">
       <a
         v-for="teamMember in teamMembers"
         :key="teamMember.id"
