@@ -51,7 +51,7 @@ function toParamCase(string: String) {
     </Button>
   </Field>
 
-  <Draggable v-model="teamMembers" handle=".handle" item-key="id">
+  <Draggable v-model="teamMembers" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
     <template #item="{ element, index }">
       <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
         <span class="i-carbon-draggable mr-2 text-2xl handle" />

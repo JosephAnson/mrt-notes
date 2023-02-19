@@ -66,7 +66,7 @@ const filteredMembers = computed(() =>
         </Button>
       </div>
     </div>
-    <Draggable v-model="groups" handle=".handle" item-key="id">
+    <Draggable v-model="groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
       <template #item="{ element }">
         <div class=" flex w-full bg-gray-800 py-2 px-4 mb-2 rounded-1">
           <span class="i-carbon-draggable mr-2 text-2xl handle" />

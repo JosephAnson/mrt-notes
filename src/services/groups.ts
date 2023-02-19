@@ -31,7 +31,6 @@ export async function createNewGroup(note_id: number, order: number, type: Group
     groups.value?.push({
       id: data.id,
       note: { value: data.editor_string || '', json: {} },
-      order: data.order,
       type: data.type as GroupTypeUnion || 'Players',
       players: data.players || [],
     })
@@ -43,11 +42,11 @@ export async function updateGroups(note_id: number, groups: Group[]) {
   const user = useSupabaseUser()
 
   await client.from('groups')
-    .upsert(groups.map(group => ({
+    .upsert(groups.map((group, index) => ({
       editor_string: group.note.value,
       id: group.id,
       note_id,
-      order: group.order,
+      order: index,
       players: group.players,
       type: group.type,
       user_id: user.value?.id,

@@ -3,6 +3,8 @@ import type { Database } from '~/supabase.types'
 import { useTeamMembers } from '~/composables/state'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 
+const teamMembersColumns = 'id, name, class'
+
 export function setTeamMembers(members: Member[]) {
   const teamMembers = useTeamMembers()
 
@@ -12,20 +14,21 @@ export function setTeamMembers(members: Member[]) {
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client.from('team_members').select('id, name, class').eq('user_id', user.value?.id).order('created_at')
+  return client.from('team_members').select(teamMembersColumns).eq('user_id', user.value?.id).order('order')
 }
 
 export async function updateMembers(members: Member[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
   await client.from('team_members')
-    .upsert(members.map(member => ({
+    .upsert(members.map((member, index) => ({
       id: member.id,
       name: member.name,
       user_id: user.value?.id,
+      order: index,
       class: member.class,
     })))
-    .select('id, name, class')
+    .select(teamMembersColumns)
 
   SnackbarProgrammatic.open('Saved')
 }
@@ -39,7 +42,7 @@ export async function addTeamMember(playerName: string, playerClass: WowClassesU
       class: playerClass,
       user_id: user.value?.id,
     })
-    .select('id, name, class')
+    .select(teamMembersColumns)
     .single()
 
   const teamMembers = useTeamMembers()
