@@ -10,8 +10,12 @@ import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
 
 export function convertSliceToHex(text: Slice | Node) {
   text.content?.forEach((item) => {
-    if (item.marks[0]?.attrs?.color)
+    if (item.marks[0]?.attrs?.color) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      // Value can be set, ignore type issue
       item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
+    }
 
     convertSliceToHex(item)
   })
@@ -88,13 +92,11 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       emit('update:json', editor.value?.getJSON())
     },
     editorProps: {
+      // function exists, the types are wrong
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       transformPasted: (pastedText: Slice) => {
-        const text = convertSliceToHex(pastedText)
-
-        /* if (editor.value)
-          return createColorsOnPaste(editor.value, text) */
-
-        return text
+        return convertSliceToHex(pastedText)
       },
     },
   })

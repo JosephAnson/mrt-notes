@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import type { EditorData, Group, Member } from '~/types'
+import type { EditorData } from '~/types'
 import { deleteNote, getNote, updateNote } from '~/services/notes'
 import { getRouterParamsAsString } from '~/utils/getRouterParamsAsString'
 
@@ -13,14 +13,13 @@ const { data: note } = await useAsyncData('notes', async () => {
   return data
 })
 
-const name = ref(note.value?.name || '')
+const groups = useGroups()
 
+const name = ref(note.value?.name || '')
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
   json: {},
 })
-const groups = ref<Group[]>([])
-const players = ref<Member[]>([])
 
 const debouncedUpdateNote = useDebounceFn(() => {
   if (note.value)
@@ -46,8 +45,8 @@ async function deleteNoteAndRedirect() {
 
         <div class="flex">
           <Input v-model="name" class="mr-2" @change="debouncedUpdateNote" />
-          <Button class="bg-red-700" @click="deleteNoteAndRedirect">
-            Delete
+          <Button class="bg-red-700 flex-shrink-0" @click="deleteNoteAndRedirect">
+            Delete Note
           </Button>
         </div>
       </div>
@@ -64,12 +63,11 @@ async function deleteNoteAndRedirect() {
             <Editor
               v-model="editor.value"
               class="block"
-              :players="players"
               @update:model-value="debouncedUpdateNote"
               @update:json="editor.json = $event"
             />
 
-            <TeamGroups v-model:groups="groups" class="mb-8" :players="players" />
+            <TeamGroups class="mb-8" :note-id="note.id" />
 
             <TeamMembers />
           </div>

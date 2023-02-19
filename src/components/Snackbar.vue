@@ -8,13 +8,9 @@ interface SnackbarState {
 
 export default defineComponent({
   props: {
-    background: { type: String, default: 'text-gray-400' },
+    background: { type: String, default: 'bg-green-700' },
     message: { type: [String, Array], default: null },
     duration: { type: Number, default: 3500 },
-    actionText: {
-      type: String,
-      default: 'OK',
-    },
   },
   emits: ['close'],
   setup(props, { emit }) {
@@ -54,7 +50,7 @@ export default defineComponent({
     <transition enter-active-class="fade-in-down" leave-active-class="fade-out">
       <div
         v-show="snackbarState.isActive"
-        class="flex items-center w-full max-w-xs p-4 rounded-lg shadow text-gray-400 bg-gray-800 mt-2"
+        class="flex items-center w-full max-w-xs p-4 rounded-lg shadow text-white mt-2"
         :class="[background]"
       >
         <template v-if="$slots.default">
@@ -63,10 +59,6 @@ export default defineComponent({
         <template v-else>
           {{ message }}
         </template>
-
-        <Button class="flex-grow-0 ml-4">
-          {{ actionText }}
-        </Button>
       </div>
     </transition>
   </teleport>
