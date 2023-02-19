@@ -54,7 +54,7 @@ export default defineComponent({
     <transition enter-active-class="fade-in-down" leave-active-class="fade-out">
       <div
         v-show="snackbarState.isActive"
-        class="flex items-center w-full max-w-xs p-4 rounded-lg shadow text-gray-400 bg-gray-800"
+        class="flex items-center w-full max-w-xs p-4 rounded-lg shadow text-gray-400 bg-gray-800 mt-2"
         :class="[background]"
       >
         <template v-if="$slots.default">

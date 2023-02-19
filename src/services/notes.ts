@@ -11,7 +11,7 @@ const defaultEditorValue = 'Fight summary<br><br><br>'
     + 'Phase 2<br><br><br>'
     + 'Phase 3<br><br><br>'
 
-export async function createNewNote(name: string, editor_string = defaultEditorValue, editor_json = {}) {
+export async function createNewNote(name: string, editor_string = defaultEditorValue) {
   if (!name && name.length <= 0)
     return SnackbarProgrammatic.open('Please enter a name')
 
@@ -41,7 +41,7 @@ export async function getNote(id: string) {
 export async function updateNote(id: number, name: string, editor_string: string) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  const data = await client.from('notes')
+  await client.from('notes')
     .upsert({
       editor_string,
       name,

@@ -28,10 +28,8 @@ export async function signInWithOtp(email: string) {
     },
   })
 
-  if (error) {
-    console.log(error)
-
+  if (error)
     return SnackbarProgramatic.open(`Something went wrong: ${error}`)
-  }
+
   await router.push('/checkemail')
 }

@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.2",
+    "@iconify-json/carbon": "^1.1.15",
     "@nuxtjs/supabase": "^0.3.1",
     "@types/node": "^18.13.0",
     "autoprefixer": "10.4.13",
@@ -42,7 +43,6 @@
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
     "typescript": "^4.9.5",
-    "unocss": "^0.49.6",
-    "@iconify-json/carbon": "^1.1.15"
+    "unocss": "^0.49.6"
   }
 }
