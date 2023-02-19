@@ -36,18 +36,16 @@ const user = useSupabaseUser()
           <Button>View your team</Button>
         </nuxt-link>
 
-        <p class="prose mt-8">
-          Working in progress, items still to be completed
-
+        <div class="prose mt-8">
+          <p>
+            Working in progress, items still to be completed
+          </p>
           <ul>
             <li>
-              Note groups
-            </li>
-            <li>
-              Improve user experience
+              Import of ert note
             </li>
           </ul>
-        </p>
+        </div>
       </div>
     </Container>
   </Page>

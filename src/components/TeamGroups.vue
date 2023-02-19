@@ -8,23 +8,40 @@ import {
   TransitionRoot,
 } from '@headlessui/vue'
 import { GroupType } from '~/types'
-import type { Group } from '~/types'
+import type { GroupTypeUnion } from '~/types'
 import { useTeamMembers } from '~/composables/state'
+import { createNewGroup, deleteGroup, getAllGroups, setGroups, updateGroups } from '~/services/groups'
 
 const props = defineProps({
-  groups: {
-    type: Array as PropType<Group[]>,
+  noteId: {
+    type: Number,
     required: true,
   },
 })
 
-const emit = defineEmits(['update:players'])
+const { data: asyncGroups } = await useAsyncData('groups', async () => {
+  const { data } = await getAllGroups(props.noteId)
+  return data
+})
 
+const groups = useGroups()
 const teamMembers = useTeamMembers()
 
-const groups = useVModel(props, 'groups', emit)
-const query = ref('')
+const debouncedUpdateGroups = useDebounceFn(() => {
+  updateGroups(props.noteId, groups.value)
+}, 2000)
 
+if (asyncGroups.value) {
+  setGroups(asyncGroups.value.map((item, index) => ({
+    id: item.id,
+    note: { value: item.editor_string || '', json: {} },
+    order: index,
+    type: item.type as GroupTypeUnion || 'Players',
+    players: item.players || [],
+  })))
+}
+
+const query = ref('')
 const filteredMembers = computed(() =>
   query.value === ''
     ? teamMembers.value
@@ -35,23 +52,6 @@ const filteredMembers = computed(() =>
         .includes(query.value.toLowerCase().replace(/\s+/g, '')),
     ),
 )
-
-function addGroup() {
-  groups.value.push({
-    id: Math.floor(Math.random() * 999999999999999),
-    type: 'Players',
-    players: [],
-    note: {
-      value: '',
-      json: {},
-    },
-  })
-}
-
-function removeGroup(group: Group) {
-  const index = groups.value.indexOf(group)
-  groups.value.splice(index, 1)
-}
 </script>
 
 <template>
@@ -61,7 +61,7 @@ function removeGroup(group: Group) {
         Add groups to show messages only to certain players
       </div>
       <div class="groups__actions buttons">
-        <Button type="is-primary" @click="addGroup">
+        <Button type="is-primary" @click="createNewGroup(noteId, groups.length + 1)">
           Add Group
         </Button>
       </div>
@@ -73,7 +73,7 @@ function removeGroup(group: Group) {
 
           <div class="w-full">
             <Field label="Type" stacked>
-              <Select v-model:value="element.type">
+              <Select v-model:value="element.type" @update:value="debouncedUpdateGroups">
                 <option v-for="type in GroupType" :key="type">
                   {{ type }}
                 </option>
@@ -85,7 +85,7 @@ function removeGroup(group: Group) {
               stacked
               :label="`Players: ${element.players.join(',')}`"
             >
-              <Combobox v-model="element.players" multiple>
+              <Combobox v-model="element.players" multiple @update:model-value="debouncedUpdateGroups">
                 <div class="relative mt-1">
                   <div
                     class="relative w-full cursor-default  rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
@@ -148,13 +148,14 @@ function removeGroup(group: Group) {
               <Editor
                 v-model="element.note.value"
                 @update:json="element.note.json = $event"
+                @update:model-value="debouncedUpdateGroups"
               />
             </Field>
           </div>
 
           <a
             class="i-carbon-trash-can w-8 mt-2 ml-2 flex-grow-0"
-            @click="removeGroup(element)"
+            @click="deleteGroup(element.id)"
           />
         </div>
       </template>

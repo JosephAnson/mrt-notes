@@ -2,6 +2,7 @@ import type { Database } from '~/supabase.types'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useNotes } from '~/composables/state'
 import type { Note } from '~/types'
+import { deleteGroupsWithNoteId } from '~/services/groups'
 
 const noteColumns = 'id, name, editor_string'
 
@@ -67,6 +68,9 @@ export async function getAllNotes() {
 
 export async function deleteNote(id: number) {
   const client = useSupabaseClient<Database>()
+
+  await deleteGroupsWithNoteId(id)
+
   await client.from('notes').delete().match({ id })
 
   const notes = useNotes()

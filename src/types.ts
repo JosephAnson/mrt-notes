@@ -39,6 +39,7 @@ export interface Member {
 }
 
 export interface Group {
+  order: number
   id: number
   type: GroupTypeUnion
   players: string[]
