@@ -6,7 +6,7 @@ function tweet(): void {
   const top = (window.screen.height - height) / 2
   const url = `https://twitter.com/share?url=${encodeURIComponent(
         `${document.location.protocol}//${document.location.host}`,
-      )}&text=ERT Notes: Quick build ERT Notes to use in WoW&hashtags=ERTNotes&via=JosephLeeAnson`
+      )}&text=MRT Notes: Quick build MRT Notes to use in WoW&hashtags=MRTNotes&via=JosephLeeAnson`
   const opts = `status=1,width=${width},height=${height},top=${top},left=${left}`
 
   window.open(url, '', opts)
@@ -22,7 +22,7 @@ function tweet(): void {
           title="ERT: ERT Note creator for WoW"
           class="heading font-secondary font-semibold flex justify-start text-l mr-2"
         >
-          ERT Notes
+          MRT Notes
         </nuxt-link>
 
         <div class="menu flex">

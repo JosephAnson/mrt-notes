@@ -40,7 +40,7 @@ async function deleteNoteAndRedirect() {
     <Container>
       <div class="flex justify-between mb-4">
         <Heading h1>
-          Ert Notes
+          Mrt Notes
         </Heading>
 
         <div class="flex">
