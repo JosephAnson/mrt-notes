@@ -13,11 +13,12 @@ export function setGroups(newGroups: Group[]) {
 export async function createNewGroup(note_id: number, order: number, type: GroupTypeUnion = 'Healers', editor_string = '', players?: string[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
+  const groups = useGroups()
 
   const { data } = await client.from('groups')
     .insert({
       note_id,
-      order,
+      order: groups.value.length + 1,
       players,
       type,
       user_id: user.value?.id,
@@ -26,7 +27,6 @@ export async function createNewGroup(note_id: number, order: number, type: Group
     .select(groupColumns)
     .single()
 
-  const groups = useGroups()
   if (data) {
     groups.value?.push({
       id: data.id,
