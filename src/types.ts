@@ -29,6 +29,7 @@ export const WowClasses = ['Death Knight',
   'Shaman',
   'Warlock',
   'Warrior',
+  'Evoker',
   'Demon Hunter'] as const
 export type WowClassesUnion = typeof WowClasses[number]
 
