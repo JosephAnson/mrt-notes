@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
+import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 import { addTeamMember, getAllTeamMembers, removeTeamMember, setTeamMembers, updateMembers } from '~/services/teamMembers'
@@ -21,7 +22,7 @@ if (asyncTeamMembers.value) {
 }
 
 const playerName = ref('')
-const playerClass: WowClassesUnion = 'Death Knight'
+const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
 const debouncedUpdateMembers = useDebounceFn(() => {
   updateMembers(teamMembers.value)
