@@ -30,6 +30,14 @@ function tweet(): void {
             Tweet
           </Button>
 
+          <nuxt-link
+            to="/playground"
+          >
+            <Button class="mr-2">
+              Playground
+            </Button>
+          </nuxt-link>
+
           <LoginButtons />
         </div>
       </div>
