@@ -5,3 +5,4 @@ nuxt.d.ts
 .output
 .idea
 .env
+.DS_Store

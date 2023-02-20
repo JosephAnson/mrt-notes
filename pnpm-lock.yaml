@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.35.2
-  '@fortawesome/fontawesome-free': ^6.2.1
+  '@fortawesome/fontawesome-free': ^6.3.0
   '@headlessui/vue': ^1.7.10
   '@iconify-json/carbon': ^1.1.15
   '@nuxtjs/supabase': ^0.3.1
@@ -13,27 +13,27 @@ specifiers:
   '@tiptap/pm': ^2.0.0-beta.218
   '@tiptap/starter-kit': ^2.0.0-beta.218
   '@tiptap/vue-3': ^2.0.0-beta.218
-  '@types/node': ^18.13.0
+  '@types/node': ^18.14.0
   '@unocss/nuxt': ^0.49.7
-  '@unocss/reset': ^0.48.5
-  '@vueuse/core': ^9.11.1
-  '@vueuse/integrations': ^9.11.1
-  '@vueuse/nuxt': ^9.11.1
+  '@unocss/reset': ^0.49.7
+  '@vueuse/core': ^9.13.0
+  '@vueuse/integrations': ^9.13.0
+  '@vueuse/nuxt': ^9.13.0
   autoprefixer: 10.4.13
   copy-to-clipboard: ^3.3.3
   eslint: ^8.34.0
   eslint-config-prettier: ^8.6.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-yml: ^1.5.0
-  focus-trap: ^7.2.0
-  nuxt: ^3.2.0
+  focus-trap: ^7.3.1
+  nuxt: ^3.2.2
   postcss: 8.4.21
   prettier: ^2.8.4
-  sass: ^1.57.1
-  supabase: ^1.38.2
-  tailwindcss: 3.2.4
+  sass: ^1.58.3
+  supabase: ^1.38.6
+  tailwindcss: 3.2.7
   typescript: ^4.9.5
-  unocss: ^0.49.6
+  unocss: ^0.49.7
   vite: ^4.1.3
   vue: ^3.2.47
   vuedraggable: ^4.1.0
@@ -49,7 +49,7 @@ dependencies:
   '@tiptap/starter-kit': 2.0.0-beta.218_@tiptap+pm@2.0.0-beta.218
   '@tiptap/vue-3': 2.0.0-beta.218_2p7kft6r7l2pbqpusj5d3uq2ja
   '@unocss/nuxt': 0.49.7_vite@4.1.3
-  '@unocss/reset': 0.48.5
+  '@unocss/reset': 0.49.7
   '@vueuse/core': 9.13.0_vue@3.2.47
   '@vueuse/integrations': 9.13.0_oggptlzwchqpaguemspe4ract4
   '@vueuse/nuxt': 9.13.0_nuxt@3.2.2+vue@3.2.47
@@ -57,7 +57,7 @@ dependencies:
   focus-trap: 7.3.1
   nuxt: 3.2.2_h4fnh25vzwmk3hy62tksygpjya
   supabase: 1.38.6
-  tailwindcss: 3.2.4_postcss@8.4.21
+  tailwindcss: 3.2.7_postcss@8.4.21
   vuedraggable: 4.1.0_vue@3.2.47
 
 devDependencies:
@@ -2113,10 +2113,6 @@ packages:
     dependencies:
       '@unocss/core': 0.49.7
       '@unocss/preset-mini': 0.49.7
-
-  /@unocss/reset/0.48.5:
-    resolution: {integrity: sha512-+JJT3Btj1oNX4XwKBDPRUYre3NYBNmi0PsC3tqkHN2VphJG0iZl91XNfsveLz8pVpDJPUDdLH4xsqh52WmxU1g==}
-    dev: false
 
   /@unocss/reset/0.49.7:
     resolution: {integrity: sha512-dodJ+4LLyBJVLNZZyZNGRnEF/Sepb2n4q+JC+TZ1SjxGpiYGxeDvPFw9kE1M7DZ0XshWE+j31HhojQXc1GDsBA==}
@@ -7009,8 +7005,8 @@ packages:
     resolution: {integrity: sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==}
     dev: false
 
-  /tailwindcss/3.2.4_postcss@8.4.21:
-    resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
+  /tailwindcss/3.2.7_postcss@8.4.21:
+    resolution: {integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:
