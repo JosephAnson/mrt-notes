@@ -192,6 +192,7 @@ export default defineComponent({
     <div class="p-2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />
     </div>
+
     <Modal
       v-model:active="isComponentModalActive"
       has-modal-card
