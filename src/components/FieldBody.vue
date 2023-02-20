@@ -7,7 +7,10 @@ export default defineComponent({
   props: {
     message: { type: String, default: null },
     description: { type: String, default: null },
-    type: { type: [String, Object] as PropType<string | Record<string, unknown>>, default: null },
+    type: {
+      type: [String, Object] as PropType<string | Record<string, unknown>>,
+      default: null,
+    },
   },
   setup(props, { slots }) {
     const fieldSlots = computed<any[]>(() => {
@@ -21,7 +24,7 @@ export default defineComponent({
                 description: props.description,
                 type: props.type,
               },
-              () => [element],
+              () => [element]
             )
           }
           return h(Field, { type: props.type }, () => element)
@@ -31,7 +34,12 @@ export default defineComponent({
       return []
     })
 
-    return () => h('div', { 'class': 'field-body', 'data-testid': 'field-body' }, fieldSlots.value)
+    return () =>
+      h(
+        'div',
+        { 'class': 'field-body', 'data-testid': 'field-body' },
+        fieldSlots.value
+      )
   },
 })
 </script>

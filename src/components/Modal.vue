@@ -20,8 +20,14 @@ export default defineComponent({
   props: {
     active: { type: Boolean, default: false },
     component: { type: [Object, Function, String], default: null },
-    componentProps: { type: Object as PropType<Record<string, any>>, default: null },
-    componentEvents: { type: Object as PropType<Record<string, any>>, default: null },
+    componentProps: {
+      type: Object as PropType<Record<string, any>>,
+      default: null,
+    },
+    componentEvents: {
+      type: Object as PropType<Record<string, any>>,
+      default: null,
+    },
     content: { type: [String, Array], default: null },
     programmatic: Boolean,
     props: { type: Object, default: null },
@@ -89,7 +95,8 @@ export default defineComponent({
     const modelState = reactive<ModelState>({
       isActive: props.active || false,
       savedScrollTop: null,
-      newWidth: typeof props.width === 'number' ? `${props.width}px` : props.width,
+      newWidth:
+        typeof props.width === 'number' ? `${props.width}px` : props.width,
       animating: !props.active,
       destroyed: !props.active,
     })
@@ -107,8 +114,7 @@ export default defineComponent({
     })
 
     const customStyle = computed(() => {
-      if (!props.fullScreen)
-        return { maxWidth: modelState.newWidth }
+      if (!props.fullScreen) return { maxWidth: modelState.newWidth }
 
       return null
     })
@@ -117,29 +123,27 @@ export default defineComponent({
       () => props.active,
       (value) => {
         modelState.isActive = value
-      },
+      }
     )
 
     watch(
       () => modelState.isActive,
       (value) => {
-        if (value)
-          modelState.destroyed = false
+        if (value) modelState.destroyed = false
 
         // nextTick(() => {
         //   if (value && root.$el && 'focus' in root.$el && props.autoFocus) {
         //     (root.$el as HTMLElement).focus();
         //   }
         // });
-      },
+      }
     )
 
     /**
      * Close the Modal if canCancel and call the onCancel prop (function).
      */
     function cancel(method: string) {
-      if (!cancelOptions.value.includes(method))
-        return
+      if (!cancelOptions.value.includes(method)) return
 
       close()
     }
@@ -154,8 +158,7 @@ export default defineComponent({
       emit('update:active', false)
 
       // Timeout for the animation complete before destroying
-      if (props.programmatic)
-        modelState.isActive = false
+      if (props.programmatic) modelState.isActive = false
     }
 
     /**
@@ -172,8 +175,7 @@ export default defineComponent({
     onMounted(() => {
       activate()
 
-      if (props.programmatic)
-        modelState.isActive = true
+      if (props.programmatic) modelState.isActive = true
     })
 
     return {
@@ -200,8 +202,13 @@ export default defineComponent({
         :aria-label="ariaLabel"
         :aria-modal="ariaModal"
       >
-        <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
-        <div class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex">
+        <div
+          class="fixed bg-black opacity-50 h-full w-full top-0 left-0"
+          @click="cancel('outside')"
+        />
+        <div
+          class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex"
+        >
           <div class="relative w-full h-full max-w-2xl md:h-auto">
             <div class="relative p-4 bg-gray-700 rounded-lg shadow">
               <component

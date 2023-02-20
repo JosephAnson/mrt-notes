@@ -9,20 +9,17 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
     if (contentItem.type === 'text') {
       if (!contentItem.marks) {
         previewString += contentItem.text
+      } else {
+        previewString += `|cff${contentItem.marks[0].attrs?.color.replace(
+          '#',
+          ''
+        )}${contentItem.text}|r`
       }
-      else {
-        previewString += `|cff${contentItem.marks[0].attrs?.color.replace('#', '')}${
-          contentItem.text
-        }|r`
-      }
-    }
-    else if (contentItem.type === 'image') {
-      const marker = markers.find(item => contentItem.attrs?.src === item.src)
+    } else if (contentItem.type === 'image') {
+      const marker = markers.find((item) => contentItem.attrs?.src === item.src)
 
-      if (marker)
-        previewString += `{${marker.name}}`
-    }
-    else if (contentItem.type === 'hardBreak') {
+      if (marker) previewString += `{${marker.name}}`
+    } else if (contentItem.type === 'hardBreak') {
       previewString += '\n'
     }
   }

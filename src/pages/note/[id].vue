@@ -1,4 +1,4 @@
-<script lang='ts' setup>
+<script lang="ts" setup>
 import type { EditorData } from '~/types'
 import { deleteNote, getNote, updateNote } from '~/services/notes'
 import { getRouterParamsAsString } from '~/utils/getRouterParamsAsString'
@@ -22,8 +22,7 @@ const editor = reactive<EditorData>({
 })
 
 const debouncedUpdateNote = useDebounceFn(() => {
-  if (note.value)
-    updateNote(note.value.id, name.value, editor.value)
+  if (note.value) updateNote(note.value.id, name.value, editor.value)
 }, 2000)
 
 async function deleteNoteAndRedirect() {
@@ -39,13 +38,14 @@ async function deleteNoteAndRedirect() {
   <Page>
     <Container>
       <div class="flex justify-between mb-4">
-        <Heading h1>
-          Mrt Notes
-        </Heading>
+        <Heading h1> Mrt Notes </Heading>
 
         <div class="flex">
           <Input v-model="name" class="mr-2" @change="debouncedUpdateNote" />
-          <Button class="bg-red-700 flex-shrink-0" @click="deleteNoteAndRedirect">
+          <Button
+            class="bg-red-700 flex-shrink-0"
+            @click="deleteNoteAndRedirect"
+          >
             Delete Note
           </Button>
         </div>
@@ -55,13 +55,13 @@ async function deleteNoteAndRedirect() {
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
             <div class="flex justify-between">
-              <Heading h2>
-                General Tactic
-              </Heading>
+              <Heading h2> General Tactic </Heading>
             </div>
 
             <Editor
-              v-model="editor.value" class="block" @update:model-value="debouncedUpdateNote"
+              v-model="editor.value"
+              class="block"
+              @update:model-value="debouncedUpdateNote"
               @update:json="editor.json = $event"
             />
 
@@ -70,7 +70,11 @@ async function deleteNoteAndRedirect() {
             <TeamMembers />
           </div>
           <div class="sm:col-span-12 md:col-span-6">
-            <NotePreview :note-json="editor.json" :note-string="editor.value" :groups="groups" />
+            <NotePreview
+              :note-json="editor.json"
+              :note-string="editor.value"
+              :groups="groups"
+            />
           </div>
         </div>
       </section>

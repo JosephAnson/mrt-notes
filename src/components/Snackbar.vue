@@ -20,8 +20,7 @@ export default defineComponent({
     })
 
     function close(): void {
-      if (snackbarState.timer)
-        clearTimeout(snackbarState.timer)
+      if (snackbarState.timer) clearTimeout(snackbarState.timer)
 
       snackbarState.isActive = false
       emit('close')

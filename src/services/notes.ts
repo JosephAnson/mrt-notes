@@ -5,15 +5,19 @@ import { deleteGroupsWithNoteId } from '~/services/groups'
 
 const noteColumns = 'id, name, editor_string'
 
-const defaultEditorValue = 'Fight summary<br><br><br>'
-    + 'All Phases<br><br><br>'
-    + 'Phase 1<br><br><br>'
-    + 'Phase 2<br><br><br>'
-    + 'Phase 3<br><br><br>'
+const defaultEditorValue =
+  'Fight summary<br><br><br>' +
+  'All Phases<br><br><br>' +
+  'Phase 1<br><br><br>' +
+  'Phase 2<br><br><br>' +
+  'Phase 3<br><br><br>'
 
 type NotesRow = Database['public']['Tables']['notes']['Row']
 
-export async function createNewNote(name: string, editor_string = defaultEditorValue) {
+export async function createNewNote(
+  name: string,
+  editor_string = defaultEditorValue
+) {
   if (!name && name.length <= 0)
     return SnackbarProgrammatic.open('Please enter a name')
 
@@ -21,7 +25,8 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
   const user = useSupabaseUser()
   const router = useRouter()
 
-  const { data } = await client.from('notes')
+  const { data } = await client
+    .from('notes')
     .insert({
       editor_string,
       name,
@@ -30,20 +35,29 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
     .select(noteColumns)
     .single()
 
-  if (data)
-    await router.push(`/note/${data.id}`)
+  if (data) await router.push(`/note/${data.id}`)
 }
 
 export async function getNote(id: string) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client.from('notes').select(noteColumns).match({ id }).eq('user_id', user.value?.id).single()
+  return client
+    .from('notes')
+    .select(noteColumns)
+    .match({ id })
+    .eq('user_id', user.value?.id)
+    .single()
 }
 
-export async function updateNote(id: number, name: string, editor_string: string) {
+export async function updateNote(
+  id: number,
+  name: string,
+  editor_string: string
+) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  await client.from('notes')
+  await client
+    .from('notes')
     .upsert({
       editor_string,
       name,
@@ -56,9 +70,11 @@ export async function updateNote(id: number, name: string, editor_string: string
   SnackbarProgrammatic.open('Saved')
 }
 
-export function setNotes(newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string'>[]) {
+export function setNotes(
+  newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string'>[]
+) {
   const notes = useNotes()
-  notes.value = newNotes.map(item => ({
+  notes.value = newNotes.map((item) => ({
     id: item.id,
     name: item.name,
     editor_string: item.editor_string || '',
@@ -68,7 +84,11 @@ export function setNotes(newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string
 export async function getAllNotes() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client.from('notes').select(noteColumns).eq('user_id', user.value?.id).order('created_at')
+  return client
+    .from('notes')
+    .select(noteColumns)
+    .eq('user_id', user.value?.id)
+    .order('created_at')
 }
 
 export async function useAsyncDataGetAllNotes() {
@@ -86,5 +106,5 @@ export async function deleteNote(id: number) {
   await client.from('notes').delete().match({ id })
 
   const notes = useNotes()
-  notes.value = notes.value?.filter(t => t.id !== id) || []
+  notes.value = notes.value?.filter((t) => t.id !== id) || []
 }

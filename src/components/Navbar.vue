@@ -5,8 +5,8 @@ function tweet(): void {
   const left = (window.screen.width - width) / 2
   const top = (window.screen.height - height) / 2
   const url = `https://twitter.com/share?url=${encodeURIComponent(
-        `${document.location.protocol}//${document.location.host}`,
-      )}&text=MRT Notes: Quick build MRT Notes to use in WoW&hashtags=MRTNotes&via=JosephLeeAnson`
+    `${document.location.protocol}//${document.location.host}`
+  )}&text=MRT Notes: Quick build MRT Notes to use in WoW&hashtags=MRTNotes&via=JosephLeeAnson`
   const opts = `status=1,width=${width},height=${height},top=${top},left=${left}`
 
   window.open(url, '', opts)
@@ -26,16 +26,10 @@ function tweet(): void {
         </nuxt-link>
 
         <div class="menu flex">
-          <Button class="mr-2" @click="tweet">
-            Tweet
-          </Button>
+          <Button class="mr-2" @click="tweet"> Tweet </Button>
 
-          <nuxt-link
-            to="/playground"
-          >
-            <Button class="mr-2">
-              Playground
-            </Button>
+          <nuxt-link to="/playground">
+            <Button class="mr-2"> Playground </Button>
           </nuxt-link>
 
           <LoginButtons />

@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import Dialog from '../Dialog.vue'
-import { merge } from '~/utils/helpers'
+import { merge } from '~/utils/merge'
 
 function open(propsData: Record<string, any>) {
   const component = createApp(Dialog, propsData)

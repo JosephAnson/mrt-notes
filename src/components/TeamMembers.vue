@@ -20,8 +20,7 @@ const teamMembers = useTeamMembers()
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
-if (asyncTeamMembers.value)
-  setTeamMembers(asyncTeamMembers.value)
+if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
 
 const debouncedUpdateMembers = useDebounceFn(() => {
   updateMembers(teamMembers.value)
@@ -32,7 +31,11 @@ const debouncedUpdateMembers = useDebounceFn(() => {
   <Field label-for="player" label="Player">
     <Input v-model="playerName" class="mr-2" />
 
-    <Select v-model:value="playerClass" class="mr-2" :class="`has-wow-background-${toParamCase(playerClass)}`">
+    <Select
+      v-model:value="playerClass"
+      class="mr-2"
+      :class="`has-wow-background-${toParamCase(playerClass)}`"
+    >
       <option v-for="type in WowClasses" :key="type">
         {{ type }}
       </option>
@@ -43,16 +46,32 @@ const debouncedUpdateMembers = useDebounceFn(() => {
     </Button>
   </Field>
 
-  <Draggable v-model="teamMembers" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
+  <Draggable
+    v-model="teamMembers"
+    handle=".handle"
+    item-key="id"
+    @change="debouncedUpdateMembers"
+  >
     <template #item="{ element, index }">
-      <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
+      <div
+        class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1"
+      >
         <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
-        <Field class="w-full !mb-0 mr-2" :label-for="`player-${index}`" label="Player">
-          <Input v-model="element.name" class="w-full mr-2" @change="debouncedUpdateMembers" />
+        <Field
+          class="w-full !mb-0 mr-2"
+          :label-for="`player-${index}`"
+          label="Player"
+        >
+          <Input
+            v-model="element.name"
+            class="w-full mr-2"
+            @change="debouncedUpdateMembers"
+          />
 
           <Select
-            v-model:value="element.class" :class="`has-wow-background-${toParamCase(element.class)}`"
+            v-model:value="element.class"
+            :class="`has-wow-background-${toParamCase(element.class)}`"
             @update:value="debouncedUpdateMembers"
           >
             <option v-for="type in WowClasses" :key="type">

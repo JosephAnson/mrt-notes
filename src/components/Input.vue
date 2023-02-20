@@ -25,5 +25,5 @@ export default defineComponent({
     :placeholder="placeholder"
     class="bg-white color-black rounded w-full px-2 block h-8 focus:ring-indigo-500 focus:border-indigo-500"
     @change="$emit('change')"
-  >
+  />
 </template>

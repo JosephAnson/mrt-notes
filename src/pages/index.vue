@@ -1,68 +1,72 @@
 <script lang="ts" setup async>
-import { deleteNote, getAllNotes, setNotes, useAsyncDataGetAllNotes } from '~/services/notes'
+import {
+  deleteNote,
+  getAllNotes,
+  setNotes,
+  useAsyncDataGetAllNotes,
+} from '~/services/notes'
 import Heading from '~/components/Heading.vue'
-import { getAllTeamMembers, setTeamMembers, useAsyncDataAllTeamMembers } from '~/services/teamMembers'
+import {
+  getAllTeamMembers,
+  setTeamMembers,
+  useAsyncDataAllTeamMembers,
+} from '~/services/teamMembers'
 
 const user = useSupabaseUser()
-const teamMembers = useTeamMembers()
 const notes = useNotes()
+const teamMembers = useTeamMembers()
 
 const { data: asyncNotes } = await useAsyncDataGetAllNotes()
 const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
 
-if (asyncNotes.value)
-  setNotes(asyncNotes.value)
+if (asyncNotes.value) setNotes(asyncNotes.value)
 
-if (asyncTeamMembers.value)
-  setTeamMembers(asyncTeamMembers.value)
+if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
 
 // Watch to see if user changes to re-fetch notes
-watch(() => user.value, async () => {
-  const { data: notes } = await getAllNotes()
-  const { data: teamMembers } = await getAllTeamMembers()
+watch(
+  () => user.value,
+  async () => {
+    const { data: notes } = await getAllNotes()
+    const { data: teamMembers } = await getAllTeamMembers()
 
-  if (notes)
-    setNotes(notes)
+    if (notes) setNotes(notes)
 
-  if (teamMembers)
-    setTeamMembers(teamMembers)
-}, { deep: true })
+    if (teamMembers) setTeamMembers(teamMembers)
+  },
+  { deep: true }
+)
 </script>
 
 <template>
   <Page>
     <Container>
-      <Heading h1>
-        Homepage
-      </Heading>
+      <Heading h1> Homepage</Heading>
 
       <Heading h2 class="mb-8">
         Website to handle all your World of Warcraft MRT Notes
       </Heading>
 
       <div v-if="!user">
-        <Heading class="mb-4">
-          Login to get started
-        </Heading>
+        <Heading class="mb-4"> Login to get started</Heading>
         <LoginButtons />
         <SiteInfo />
       </div>
 
       <div v-if="user">
         <article class="flex flex-wrap">
-          <div class=" w-full lg:w-2/3 lg:pr-8">
+          <div class="w-full lg:w-2/3 lg:pr-8">
             <CreateNote />
 
             <section v-if="notes.length">
-              <Heading>
-                Notes
-              </Heading>
+              <Heading> Notes</Heading>
               <div class="mb-8">
                 <div
-                  v-for="note in notes" :key="note.id"
+                  v-for="note in notes"
+                  :key="note.id"
                   class="flex items-center justify-between w-full bg-gray-800 py-1 px-2 rounded mb-2"
                 >
-                  <p> Name: {{ note.name }}</p>
+                  <p>Name: {{ note.name }}</p>
 
                   <div>
                     <nuxt-link :to="`/note/${note.id}`" class="mr-2">
@@ -91,7 +95,8 @@ watch(() => user.value, async () => {
 
             <ul>
               <li
-                v-for="member in teamMembers" :key="member.id"
+                v-for="member in teamMembers"
+                :key="member.id"
                 :class="`leading-[2] has-wow-text-${toParamCase(member.class)}`"
               >
                 {{ member.name }}

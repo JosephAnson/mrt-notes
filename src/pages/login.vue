@@ -14,20 +14,13 @@ const email = ref('')
         <Field label-for="email" label="Email" stacked>
           <Input id="email" v-model="email" type="email" />
         </Field>
-        <Button @click="signInWithOtp(email)">
-          Sign In
-        </Button>
+        <Button @click="signInWithOtp(email)"> Sign In </Button>
       </div>
 
       <Button v-if="!user" @click="login('discord')">
         Login with Discord
       </Button>
-      <Button
-        v-else
-        @click="client.auth.signOut()"
-      >
-        Logout
-      </Button>
+      <Button v-else @click="client.auth.signOut()"> Logout </Button>
     </Container>
   </Page>
 </template>
