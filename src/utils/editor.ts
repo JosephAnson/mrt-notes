@@ -1,4 +1,5 @@
 import type { Node, Slice } from '@tiptap/pm/model'
+import { Fragment } from '@tiptap/pm/model'
 import type { Editor, JSONContent } from '@tiptap/vue-3'
 import { useEditor as tiptapUseEditor } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
@@ -40,11 +41,12 @@ export function convertJsonContentToHex(content: JSONContent) {
 }
 
 function createNode(editor: Editor, text: string, color?: string) {
-  const mark = editor.schema.marks.variable.create({
+  const mark = editor.schema.marks.textStyle.create({
     color,
   })
-  return editor.schema.text(text, [mark])
+  return editor.schema.text(text, color ? [mark] : [])
 }
+
 export function createColorsOnPaste(editor: Editor, content: Slice | Node) {
   const jsonContent: Node[] = []
 
@@ -53,10 +55,16 @@ export function createColorsOnPaste(editor: Editor, content: Slice | Node) {
 
     if (splitText && splitText.length > 1) {
       for (const string of splitText) {
-        const color = string.substring(0, 6)
-        if (isHexColor(color))
-          jsonContent.push(createNode(editor, string, color))
-        else jsonContent.push(createNode(editor, string))
+        if (string && string.length > 0) {
+          const color = string.substring(0, 6)
+          const newString = string.substring(6)
+
+          if (newString && isHexColor(color)) {
+            jsonContent.push(createNode(editor, newString, `#${color}`))
+          } else {
+            jsonContent.push(createNode(editor, string))
+          }
+        }
       }
     } else {
       jsonContent.push(item)
@@ -65,14 +73,31 @@ export function createColorsOnPaste(editor: Editor, content: Slice | Node) {
     createColorsOnPaste(editor, item)
   })
 
-  return jsonContent
+  if (jsonContent.length > 0) {
+    content.content = Fragment.fromArray(jsonContent)
+  }
+
+  return content
 }
 
 export function useEditor(initialValue: Ref<string>, emit: any) {
   const editor = tiptapUseEditor({
     content: initialValue.value,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: false,
+        blockquote: false,
+        bold: false,
+        bulletList: false,
+        code: false,
+        codeBlock: false,
+        gapcursor: false,
+        horizontalRule: false,
+        italic: false,
+        listItem: false,
+        orderedList: false,
+        strike: false,
+      }),
       Image.configure({
         inline: true,
       }),
@@ -95,7 +120,11 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       transformPasted: (pastedText: Slice) => {
-        return convertSliceToHex(pastedText)
+        if (editor.value) {
+          const colorsCreated = createColorsOnPaste(editor.value, pastedText)
+
+          return convertSliceToHex(colorsCreated)
+        }
       },
     },
   })

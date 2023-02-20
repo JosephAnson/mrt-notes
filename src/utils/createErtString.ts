@@ -10,7 +10,7 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
       if (!contentItem.marks) {
         previewString += contentItem.text
       } else {
-        previewString += `|cff${contentItem.marks[0].attrs?.color.replace(
+        previewString += `|cff${contentItem.marks[0].attrs?.color?.replace(
           '#',
           ''
         )}${contentItem.text}|r`
@@ -36,6 +36,12 @@ export function createERTString(json?: JSONContent) {
         switch (contentItem.type) {
           case 'paragraph':
             previewString += `${createParagraphContent(contentItem.content)}\n`
+        }
+      } else {
+        // if the content is missing then still add new line for paragraph
+        switch (contentItem.type) {
+          case 'paragraph':
+            previewString += `\n`
         }
       }
     }

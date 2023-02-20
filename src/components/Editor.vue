@@ -8,6 +8,14 @@ import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useTeamMembers } from '~/composables/state'
 import { useEditor } from '~/utils/editor'
 
+function addEmptyLineToEditor(
+  editor: Ref<Editor | undefined> & { '[ShallowRefMarker]'?: true }
+) {
+  editor.value?.commands.unsetMark('textStyle')
+  editor.value?.commands.insertContent(' ')
+  editor.value?.commands.focus()
+}
+
 export default defineComponent({
   components: {
     EditorContent,
@@ -43,9 +51,7 @@ export default defineComponent({
         color: wowColors[player.class],
       })
       editor.value?.commands.insertContent(insertString)
-      editor.value?.commands.unsetMark('textStyle')
-      editor.value?.commands.insertContent(' ')
-      editor.value?.commands.focus()
+      addEmptyLineToEditor(editor)
     }
 
     function createTimeSnippet() {
