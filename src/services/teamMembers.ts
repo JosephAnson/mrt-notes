@@ -6,10 +6,12 @@ import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 const teamMembersColumns = 'id, name, class'
 
 type TeamMembersRow = Database['public']['Tables']['team_members']['Row']
-export function setTeamMembers(members: Pick<TeamMembersRow, 'id' | 'name' | 'class'>[]) {
+export function setTeamMembers(
+  members: Pick<TeamMembersRow, 'id' | 'name' | 'class'>[]
+) {
   const teamMembers = useTeamMembers()
 
-  teamMembers.value = members.map(item => ({
+  teamMembers.value = members.map((item) => ({
     id: item.id,
     class: item.class as WowClassesUnion,
     name: item.name,
@@ -19,7 +21,11 @@ export function setTeamMembers(members: Pick<TeamMembersRow, 'id' | 'name' | 'cl
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client.from('team_members').select(teamMembersColumns).eq('user_id', user.value?.id).order('order')
+  return client
+    .from('team_members')
+    .select(teamMembersColumns)
+    .eq('user_id', user.value?.id)
+    .order('order')
 }
 
 export async function useAsyncDataAllTeamMembers() {
@@ -32,25 +38,32 @@ export async function useAsyncDataAllTeamMembers() {
 export async function updateMembers(members: Member[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  await client.from('team_members')
-    .upsert(members.map((member, index) => ({
-      id: member.id,
-      name: member.name,
-      user_id: user.value?.id,
-      order: index,
-      class: member.class,
-    })))
+  await client
+    .from('team_members')
+    .upsert(
+      members.map((member, index) => ({
+        id: member.id,
+        name: member.name,
+        user_id: user.value?.id,
+        order: index,
+        class: member.class,
+      }))
+    )
     .select(teamMembersColumns)
 
   SnackbarProgrammatic.open('Saved')
 }
 
-export async function addTeamMember(playerName: string, playerClass: WowClassesUnion) {
+export async function addTeamMember(
+  playerName: string,
+  playerClass: WowClassesUnion
+) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
   const teamMembers = useTeamMembers()
 
-  const { data } = await client.from('team_members')
+  const { data } = await client
+    .from('team_members')
     .insert({
       name: playerName,
       class: playerClass,
@@ -73,7 +86,7 @@ export async function removeTeamMember(player: Member) {
   const client = useSupabaseClient<Database>()
 
   const teamMembers = useTeamMembers()
-  teamMembers.value = teamMembers.value?.filter(t => t.id !== player.id) || []
+  teamMembers.value = teamMembers.value?.filter((t) => t.id !== player.id) || []
 
   return client.from('team_members').delete().match({ id: player.id })
 }

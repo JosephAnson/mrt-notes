@@ -14,7 +14,9 @@ export function convertSliceToHex(text: Slice | Node) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       // Value can be set, ignore type issue
-      item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
+      item.marks[0].attrs.color = convertRgbColorsToHex(
+        item.marks[0]?.attrs?.color
+      )
     }
 
     convertSliceToHex(item)
@@ -25,8 +27,11 @@ export function convertSliceToHex(text: Slice | Node) {
 
 export function convertJsonContentToHex(content: JSONContent) {
   content.content?.forEach((item: JSONContent) => {
-    if (item.marks?.[0]?.attrs?.color)
-      item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
+    if (item.marks?.[0]?.attrs?.color) {
+      item.marks[0].attrs.color = convertRgbColorsToHex(
+        item.marks[0]?.attrs?.color
+      )
+    }
 
     convertJsonContentToHex(item)
   })
@@ -51,12 +56,9 @@ export function createColorsOnPaste(editor: Editor, content: Slice | Node) {
         const color = string.substring(0, 6)
         if (isHexColor(color))
           jsonContent.push(createNode(editor, string, color))
-
-        else
-          jsonContent.push(createNode(editor, string))
+        else jsonContent.push(createNode(editor, string))
       }
-    }
-    else {
+    } else {
       jsonContent.push(item)
     }
 
@@ -98,13 +100,17 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
     },
   })
 
-  watch(() => initialValue.value, value => setContent(value))
+  watch(
+    () => initialValue.value,
+    (value) => setContent(value)
+  )
 
   function setContent(value: string) {
-    if (value === editor.value?.getHTML())
-      return
+    if (value === editor.value?.getHTML()) return
 
-    editor.value?.commands.setContent(value, true, { preserveWhitespace: 'full' })
+    editor.value?.commands.setContent(value, true, {
+      preserveWhitespace: 'full',
+    })
     emit('update:json', editor.value?.getJSON())
   }
 

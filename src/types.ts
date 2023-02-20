@@ -15,10 +15,12 @@ export const GroupType = [
   'Healers',
   'Damage Dealers',
   'Tanks',
-  'Players'] as const
-export type GroupTypeUnion = typeof GroupType[number]
+  'Players',
+] as const
+export type GroupTypeUnion = (typeof GroupType)[number]
 
-export const WowClasses = ['Death Knight',
+export const WowClasses = [
+  'Death Knight',
   'Druid',
   'Hunter',
   'Mage',
@@ -30,8 +32,9 @@ export const WowClasses = ['Death Knight',
   'Warlock',
   'Warrior',
   'Evoker',
-  'Demon Hunter'] as const
-export type WowClassesUnion = typeof WowClasses[number]
+  'Demon Hunter',
+] as const
+export type WowClassesUnion = (typeof WowClasses)[number]
 
 export interface Member {
   id: number

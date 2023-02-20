@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import Modal from '../Modal.vue'
-import { merge } from '~/utils/helpers'
+import { merge } from '~/utils/merge'
 
 const ModalProgrammatic = {
   open(params: Record<string, any> | string): void {

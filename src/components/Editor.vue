@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 import { EditorContent } from '@tiptap/vue-3'
 import type { Marker } from '~/utils/config'
 import { markers, wowColors } from '~/utils/config'
@@ -39,7 +39,9 @@ export default defineComponent({
     async function createPlayerSnippet(player: Member) {
       const insertString = player.name
 
-      editor.value?.commands.setMark('textStyle', { color: wowColors[player.class] })
+      editor.value?.commands.setMark('textStyle', {
+        color: wowColors[player.class],
+      })
       editor.value?.commands.insertContent(insertString)
       editor.value?.commands.unsetMark('textStyle')
       editor.value?.commands.insertContent(' ')
@@ -83,7 +85,7 @@ export default defineComponent({
 
     function createSpellOccurrenceSnippet() {
       SnackbarProgrammatic.open(
-          `Snippet entered is: {time:0:30,SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`,
+        `Snippet entered is: {time:0:30,SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
       )
       const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
 
@@ -119,8 +121,11 @@ export default defineComponent({
           type="color"
           :value="editor?.getAttributes('textStyle').color"
           @input="editor?.chain().focus().setColor($event.target.value).run()"
-        >
-        <span class="i-carbon-text-color text-3xl inline-block pointer-events-none" :style="{ color: editor?.getAttributes('textStyle').color }" />
+        />
+        <span
+          class="i-carbon-text-color text-3xl inline-block pointer-events-none"
+          :style="{ color: editor?.getAttributes('textStyle').color }"
+        />
       </div>
       <a
         v-for="marker in markers"
@@ -128,38 +133,48 @@ export default defineComponent({
         class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
         @click.stop="createMarker(marker)"
       >
-        <img class="object-contain w-full h-full" :src="marker.src">
+        <img class="object-contain w-full h-full" :src="marker.src" />
       </a>
 
-      <a class="mr-2" href="#" @click.stop="createTimeSnippet">
-        Time
-      </a>
-      <a class="mr-2" href="#" @click.stop="createSpellSnippet">
-        Spell ID
-      </a>
+      <a class="mr-2" href="#" @click.stop="createTimeSnippet"> Time </a>
+      <a class="mr-2" href="#" @click.stop="createSpellSnippet"> Spell ID </a>
       <a class="mr-2" href="#" @click="openSpellOccurrenceDialog">
         Spell Occurrence
       </a>
 
-      <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-        <span class="text-xl i-carbon-undo  inline-block  mr-2" />
+      <button
+        :disabled="!editor?.can().chain().focus().undo().run()"
+        @click="editor?.chain().focus().undo().run()"
+      >
+        <span class="text-xl i-carbon-undo inline-block mr-2" />
       </button>
-      <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-        <span class="text-xl i-carbon-redo  inline-block  mr-2" />
+      <button
+        :disabled="!editor?.can().chain().focus().redo().run()"
+        @click="editor?.chain().focus().redo().run()"
+      >
+        <span class="text-xl i-carbon-redo inline-block mr-2" />
       </button>
-      <button @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
-        <span class="text-xl i-carbon-text-clear-format text-white  inline-block  mr-2" />
+      <button
+        @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()"
+      >
+        <span
+          class="text-xl i-carbon-text-clear-format text-white inline-block mr-2"
+        />
       </button>
     </div>
 
-    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap">
+    <Field
+      v-if="teamMembers.length"
+      label="Players:"
+      class="p-2 !mb-0 flex-wrap"
+    >
       <a
         v-for="teamMember in teamMembers"
         :key="teamMember.id"
         class="mr-2 last:mr-0 cursor-pointer"
-        :class="
-          `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`
-        "
+        :class="`has-wow-text-${teamMember.class
+          .replace(' ', '-')
+          .toLowerCase()}`"
         @click.prevent="createPlayerSnippet(teamMember)"
       >
         {{ teamMember.name }}
@@ -181,19 +196,13 @@ export default defineComponent({
           <div class="media">
             <div class="media-content">
               <Field label="Enter the Time after spell cast? {00:10}" stacked>
-                <Input
-                  v-model="spellOccurrence.timeAfterSpellStarted"
-                />
+                <Input v-model="spellOccurrence.timeAfterSpellStarted" />
               </Field>
               <Field label="Enter the spell id?" stacked>
-                <Input
-                  v-model="spellOccurrence.spellId"
-                />
+                <Input v-model="spellOccurrence.spellId" />
               </Field>
               <Field label="Enter the cast number?" stacked>
-                <Input
-                  v-model="spellOccurrence.occurrence"
-                />
+                <Input v-model="spellOccurrence.occurrence" />
               </Field>
             </div>
           </div>
@@ -214,7 +223,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style lang='scss'>
+<style lang="scss">
 .editor-content {
   background: #eee;
   color: black;
@@ -229,12 +238,12 @@ export default defineComponent({
     display: inline-block;
 
     &.ProseMirror-selectednode {
-      outline: 3px solid #68CEF8;
+      outline: 3px solid #68cef8;
     }
   }
 }
 
-.input-color{
+.input-color {
   &::-webkit-color-swatch-wrapper {
     padding: 0;
   }

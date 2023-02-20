@@ -8,20 +8,19 @@
             href="https://twitter.com/JosephLeeAnson"
             target="_blank"
             rel="noopener noreferrer nofollow"
-          >Joseph Anson</a>
+            >Joseph Anson</a
+          >
         </p>
 
         <div class="flex items-center">
-          <p class=" mr-2">
-            Visit our guild at:
-          </p>
+          <p class="mr-2">Visit our guild at:</p>
           <a
             href="http://axionguild.com/"
             target="_blank"
             rel="noopener noreferrer nofollow"
             class="image w-24 inline-block"
           >
-            <img class="w-full" src="/axion-white.png">
+            <img class="w-full" src="/axion-white.png" />
           </a>
         </div>
       </div>
