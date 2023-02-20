@@ -58,8 +58,10 @@ watch(() => user.value, async () => {
                 Notes
               </Heading>
               <div class="mb-8">
-                <div v-for="note in notes" :key="note.id"
-                  class="flex items-center justify-between w-full bg-gray-800 py-1 px-2 rounded mb-2">
+                <div
+                  v-for="note in notes" :key="note.id"
+                  class="flex items-center justify-between w-full bg-gray-800 py-1 px-2 rounded mb-2"
+                >
                   <p> Name: {{ note.name }}</p>
 
                   <div>
@@ -87,13 +89,17 @@ watch(() => user.value, async () => {
               </nuxt-link>
             </div>
 
-            <ul v-for="member in teamMembers">
-              <li :class="`leading-[2] has-wow-text-${toParamCase(member.class)}`" :key="member.id">{{ member.name }}</li>
+            <ul>
+              <li
+                v-for="member in teamMembers" :key="member.id"
+                :class="`leading-[2] has-wow-text-${toParamCase(member.class)}`"
+              >
+                {{ member.name }}
+              </li>
             </ul>
           </aside>
         </article>
       </div>
-
     </Container>
   </Page>
 </template>

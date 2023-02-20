@@ -114,14 +114,20 @@ export default defineComponent({
   <div class="editor bg-gray-800 rounded mb-4">
     <div class="toolbar flex flex-wrap p-2 bg-gray-700">
       <div class="relative">
-        <input class="absolute top-0 left-0 w-full h-full opacity-0" type="color"
+        <input
+          class="absolute top-0 left-0 w-full h-full opacity-0" type="color"
           :value="editor?.getAttributes('textStyle').color"
-          @input="editor?.chain().focus().setColor($event.target.value).run()">
-        <span class="i-carbon-text-color text-3xl inline-block pointer-events-none"
-          :style="{ color: editor?.getAttributes('textStyle').color }" />
+          @input="editor?.chain().focus().setColor($event.target.value).run()"
+        >
+        <span
+          class="i-carbon-text-color text-3xl inline-block pointer-events-none"
+          :style="{ color: editor?.getAttributes('textStyle').color }"
+        />
       </div>
-      <a v-for="marker in markers" :key="marker.name" class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
-        @click.stop="createMarker(marker)">
+      <a
+        v-for="marker in markers" :key="marker.name" class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
+        @click.stop="createMarker(marker)"
+      >
         <img class="object-contain w-full h-full" :src="marker.src">
       </a>
 
@@ -148,9 +154,11 @@ export default defineComponent({
 
     <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start">
       <div class="flex flex-wrap">
-        <a v-for="teamMember in teamMembers" :key="teamMember.id" class="mr-2 last:mr-0 cursor-pointer" :class="
-          `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
-          @click.prevent="createPlayerSnippet(teamMember)">
+        <a
+          v-for="teamMember in teamMembers" :key="teamMember.id" class="mr-2 last:mr-0 cursor-pointer" :class="
+            `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
+          @click.prevent="createPlayerSnippet(teamMember)"
+        >
           {{ teamMember.name }}
         </a>
       </div>

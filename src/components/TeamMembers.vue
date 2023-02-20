@@ -51,8 +51,10 @@ const debouncedUpdateMembers = useDebounceFn(() => {
         <Field class="w-full !mb-0 mr-2" :label-for="`player-${index}`" label="Player">
           <Input v-model="element.name" class="w-full mr-2" @change="debouncedUpdateMembers" />
 
-          <Select v-model:value="element.class" :class="`has-wow-background-${toParamCase(element.class)}`"
-            @update:value="debouncedUpdateMembers">
+          <Select
+            v-model:value="element.class" :class="`has-wow-background-${toParamCase(element.class)}`"
+            @update:value="debouncedUpdateMembers"
+          >
             <option v-for="type in WowClasses" :key="type">
               {{ type }}
             </option>
