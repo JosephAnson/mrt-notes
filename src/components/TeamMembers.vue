@@ -3,23 +3,29 @@ import Draggable from 'vuedraggable'
 import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
-import { addTeamMember, getAllTeamMembers, removeTeamMember, setTeamMembers, updateMembers } from '~/services/teamMembers'
+import {
+  addTeamMember,
+  removeTeamMember,
+  setTeamMembers,
+  updateMembers,
+  useAsyncDataAllTeamMembers,
+} from '~/services/teamMembers'
 import { useTeamMembers } from '~/composables/state'
+import { toParamCase } from '~/utils/toParamCase'
+
+const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
 
 const teamMembers = useTeamMembers()
-
-const { data: asyncTeamMembers } = await getAllTeamMembers()
-
-if (asyncTeamMembers.value)
-  setTeamMembers(asyncTeamMembers.value)
 
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
+if (asyncTeamMembers.value)
+  setTeamMembers(asyncTeamMembers.value)
+
 const debouncedUpdateMembers = useDebounceFn(() => {
   updateMembers(teamMembers.value)
 }, 2000)
-
 </script>
 
 <template>

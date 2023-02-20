@@ -146,11 +146,11 @@ export default defineComponent({
       </button>
     </div>
 
-    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap" :is-editor="true">
+    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start">
       <div class="flex flex-wrap">
         <a v-for="teamMember in teamMembers" :key="teamMember.id" class="mr-2 last:mr-0 cursor-pointer" :class="
-          `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`
-        " @click.prevent="createPlayerSnippet(teamMember)">
+          `has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
+          @click.prevent="createPlayerSnippet(teamMember)">
           {{ teamMember.name }}
         </a>
       </div>

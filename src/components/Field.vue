@@ -7,7 +7,6 @@ export default defineComponent({
     label: { type: String, default: null },
     stacked: { type: Boolean, default: false },
     labelFor: { type: String, default: Guid.create() },
-    isEditor: { type: Boolean, default: false }
   },
   setup(props) {
     provide('labelFor', props.labelFor)
@@ -16,8 +15,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="field mb-4 last-child:mb-0"
-    :class="{ 'flex items-center': !stacked, 'lg:flex lg:flex-nowrap lg:items-start': isEditor }">
+  <div class="field mb-4 last-child:mb-0" :class="{ 'flex items-center': !stacked }">
     <label v-if="label" :for="labelFor" class="label mr-2" :class="{ 'mb-2': stacked }">
       {{ label }}
     </label>

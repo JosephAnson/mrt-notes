@@ -68,9 +68,12 @@ export function setNotes(newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string
 export async function getAllNotes() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
+  return client.from('notes').select(noteColumns).eq('user_id', user.value?.id).order('created_at')
+}
 
+export async function useAsyncDataGetAllNotes() {
   return await useAsyncData('notes', async () => {
-    const { data } = await client.from('notes').select(noteColumns).eq('user_id', user.value?.id).order('created_at')
+    const { data } = await getAllNotes()
     return data
   })
 }
