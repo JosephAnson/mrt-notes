@@ -68,7 +68,6 @@ export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
       /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|\|cff([\S\w\s]+?)\|r/gim
     const splitText = item.text?.split(regex)
 
-    console.log('splitText', splitText)
     if (splitText && splitText.length > 1) {
       for (const string of splitText) {
         if (string && string.length > 0) {
@@ -141,7 +140,6 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       transformPasted: (pastedText: Slice) => {
-        console.log('pastedText')
         if (editor.value) {
           const colorsCreated = createNodesOnPaste(editor.value, pastedText)
 

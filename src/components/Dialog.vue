@@ -10,10 +10,6 @@ export default defineComponent({
   props: {
     title: { type: String, default: null },
     message: { type: String, default: null },
-    icon: { type: String, default: null },
-    size: { type: String, default: null },
-    hasIcon: { type: Boolean, default: false },
-    type: { type: String, default: 'is-primary' },
     confirmText: { type: String, default: 'OK' },
     cancelText: { type: String, default: 'Cancel' },
     hasInput: { type: Boolean, default: false },
@@ -33,12 +29,6 @@ export default defineComponent({
         return null
       },
     },
-    container: {
-      type: String as PropType<string | null>,
-      default: () => {
-        return null
-      },
-    },
     ariaRole: {
       type: String as PropType<string | null>,
       validator: (value: string) => {
@@ -46,13 +36,6 @@ export default defineComponent({
       },
       default: null,
     },
-    canCancel: {
-      type: [Array, Boolean] as PropType<string[] | boolean>,
-      default: () => {
-        return ['escape', 'x', 'outside', 'button']
-      },
-    },
-    ariaModal: { type: Boolean, default: false },
     animation: {
       type: String,
       default: 'zoom-out',
@@ -62,26 +45,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const dialog = ref(null)
 
-    const prompt = ref<string>(props.hasInput ? props.inputAttrs.value : '')
+    const prompt = ref<string>('')
     const isActive = ref<boolean>(false)
 
     const { activate, deactivate } = useFocusTrap(dialog, { immediate: true })
 
-    const dialogClass = computed(() => {
-      return [
-        props.size,
-        {
-          'has-custom-container': props.container !== null,
-        },
-      ]
-    })
-
     const cancelOptions = computed(() => {
-      return typeof props.canCancel === 'boolean'
-        ? props.canCancel
-          ? ['escape', 'x', 'outside', 'button']
-          : []
-        : props.canCancel
+      return ['escape', 'x', 'outside', 'button']
     })
 
     function showCancel() {
@@ -126,7 +96,6 @@ export default defineComponent({
       prompt,
       dialog,
       isActive,
-      dialogClass,
       showCancel,
       confirm,
       close,
@@ -138,14 +107,13 @@ export default defineComponent({
 
 <template>
   <teleport to="body">
-    <transition :name="animation">
+    <transition name="zoom-out">
       <div
         v-if="isActive"
+        v-bind="$attrs"
         ref="dialog"
         class="dialog"
-        :class="dialogClass"
         :role="ariaRole"
-        :aria-modal="ariaModal"
       >
         <div
           class="fixed bg-black opacity-50 h-full w-full top-0 left-0"
@@ -190,12 +158,7 @@ export default defineComponent({
                 >
                   {{ cancelText }}
                 </Button>
-                <Button
-                  class="button"
-                  :class="type"
-                  @click="confirm"
-                  @keyup.enter="confirm"
-                >
+                <Button class="button" @click="confirm" @keyup.enter="confirm">
                   {{ confirmText }}
                 </Button>
               </footer>

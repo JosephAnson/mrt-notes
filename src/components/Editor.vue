@@ -1,20 +1,11 @@
 <script lang="ts">
 import { EditorContent } from '@tiptap/vue-3'
-import type { Marker } from '~/utils/config'
-import { markers, wowColors } from '~/utils/config'
-import type { Member } from '~/types'
-import DialogProgrammatic from '~/components/Programatic/DialogProgramatic'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useTeamMembers } from '~/composables/state'
+import type { Member } from '~/types'
+import type { Marker } from '~/utils/config'
+import { markers, wowColors } from '~/utils/config'
 import { useEditor } from '~/utils/editor'
-
-function addEmptyLineToEditor(
-  editor: Ref<Editor | undefined> & { '[ShallowRefMarker]'?: true }
-) {
-  editor.value?.commands.unsetMark('textStyle')
-  editor.value?.commands.insertContent(' ')
-  editor.value?.commands.focus()
-}
 
 export default defineComponent({
   components: {
@@ -30,8 +21,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const { modelValue } = toRefs(props)
     const teamMembers = useTeamMembers()
-    const isComponentModalActive = ref(false)
-
+    const isSpellOccurrenceModelActive = ref(false)
+    const isSpellIDModelActive = ref(false)
+    const isTimeSnippetModelActive = ref(false)
+    const time = ref('')
+    const spellID = ref('')
     const spellOccurrence = reactive({
       timeAfterSpellStarted: '00:10',
       occurrence: 1,
@@ -51,63 +45,53 @@ export default defineComponent({
         color: wowColors[player.class],
       })
       editor.value?.commands.insertContent(insertString)
-      addEmptyLineToEditor(editor)
+      editor.value?.commands.unsetMark('textStyle')
+      editor.value?.commands.insertContent(' ')
+      editor.value?.commands.focus()
     }
 
-    function createTimeSnippet() {
-      DialogProgrammatic.prompt({
-        message: 'Enter a time?',
-        inputAttrs: {
-          placeholder: 'e.g. 10:00',
-        },
-        onConfirm: (value: string) => {
-          SnackbarProgrammatic.open(`Time entered is: ${value}`)
-
-          editor.value?.commands.insertContent(`{time:${value}}`)
-          editor.value?.commands.focus()
-        },
-      })
-    }
-
-    function createSpellSnippet() {
-      DialogProgrammatic.prompt({
-        message: 'Enter a spell id:',
-        inputAttrs: {
-          placeholder: 'Add in a spell id',
-        },
-        onConfirm: (value: string) => {
-          SnackbarProgrammatic.open(`Spell entered is: ${value}`)
-          const insertString = `{spell:${value}}`
-
-          editor.value?.commands.insertContent(insertString)
-          editor.value?.commands.focus()
-        },
-      })
-    }
-
-    function openSpellOccurrenceDialog() {
-      isComponentModalActive.value = true
-    }
-
-    function createSpellOccurrenceSnippet() {
-      SnackbarProgrammatic.open(
-        `Snippet entered is: {time:0:30,SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
-      )
-      const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
+    function createSpellSnippet(value: String) {
+      SnackbarProgrammatic.open(`Spell entered is: ${value}`)
+      const insertString = `{spell:${value}}`
 
       editor.value?.commands.insertContent(insertString)
       editor.value?.commands.focus()
 
-      isComponentModalActive.value = false
+      time.value = ''
+      isSpellIDModelActive.value = false
+    }
+
+    function createTimeSnippet(value: String) {
+      SnackbarProgrammatic.open(`Time entered is: ${value}`)
+
+      editor.value?.commands.insertContent(`{time:${value}}`)
+      editor.value?.commands.focus()
+
+      time.value = ''
+      isTimeSnippetModelActive.value = false
+    }
+
+    function createSpellOccurrenceSnippet() {
+      const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
+
+      SnackbarProgrammatic.open(`Snippet entered is: ${insertString}`)
+
+      editor.value?.commands.insertContent(insertString)
+      editor.value?.commands.focus()
+
+      isSpellOccurrenceModelActive.value = false
     }
 
     return {
       editor,
-      isComponentModalActive,
+      isSpellOccurrenceModelActive,
+      isTimeSnippetModelActive,
+      isSpellIDModelActive,
       spellOccurrence,
       teamMembers,
+      time,
+      spellID,
       markers,
-      openSpellOccurrenceDialog,
       createMarker,
       createPlayerSnippet,
       createTimeSnippet,
@@ -142,9 +126,13 @@ export default defineComponent({
         <img class="object-contain w-full h-full" :src="marker.src" />
       </a>
 
-      <a class="mr-2" href="#" @click.stop="createTimeSnippet"> Time </a>
-      <a class="mr-2" href="#" @click.stop="createSpellSnippet"> Spell ID </a>
-      <a class="mr-2" href="#" @click="openSpellOccurrenceDialog">
+      <a class="mr-2" href="#" @click.stop="isTimeSnippetModelActive = true">
+        Time
+      </a>
+      <a class="mr-2" href="#" @click.stop="isSpellIDModelActive = true">
+        Spell ID
+      </a>
+      <a class="mr-2" href="#" @click="isSpellOccurrenceModelActive = true">
         Spell Occurrence
       </a>
 
@@ -193,41 +181,47 @@ export default defineComponent({
       <EditorContent class="editor-content" :editor="editor" />
     </div>
 
-    <Modal
-      v-model:active="isComponentModalActive"
-      has-modal-card
-      :destroy-on-hide="false"
-      aria-role="dialog"
-      aria-modal
-    >
-      <div class="modal-card animation-content">
-        <section class="modal-card-body is-titleless">
-          <div class="media">
-            <div class="media-content">
-              <Field label="Enter the Time after spell cast? {00:10}" stacked>
-                <Input v-model="spellOccurrence.timeAfterSpellStarted" />
-              </Field>
-              <Field label="Enter the spell id?" stacked>
-                <Input v-model="spellOccurrence.spellId" />
-              </Field>
-              <Field label="Enter the cast number?" stacked>
-                <Input v-model="spellOccurrence.occurrence" />
-              </Field>
-            </div>
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <Button class="button mr-2" @click="isComponentModalActive = false">
-            Cancel
-          </Button>
-          <Button
-            class="button is-primary"
-            @click="createSpellOccurrenceSnippet"
-          >
-            Done
-          </Button>
-        </footer>
-      </div>
+    <Modal v-model:active="isSpellIDModelActive">
+      <SpellIdInput v-model="spellID" />
+
+      <footer>
+        <Button class="mr-2" @click="isSpellIDModelActive = false">
+          Cancel
+        </Button>
+        <Button @click="createSpellSnippet(spellID)"> Done </Button>
+      </footer>
+    </Modal>
+
+    <Modal v-model:active="isTimeSnippetModelActive">
+      <Field label="Enter a time?" stacked>
+        <Input v-model="time" placeholder="e.g. 10:00" />
+      </Field>
+
+      <footer>
+        <Button class="mr-2" @click="isTimeSnippetModelActive = false">
+          Cancel
+        </Button>
+        <Button @click="createTimeSnippet(time)"> Done </Button>
+      </footer>
+    </Modal>
+
+    <Modal v-model:active="isSpellOccurrenceModelActive">
+      <SpellIdInput v-model="spellOccurrence.spellId" />
+
+      <Field label="Enter the Time after spell cast? {00:10}" stacked>
+        <Input v-model="spellOccurrence.timeAfterSpellStarted" />
+      </Field>
+
+      <Field label="Enter the cast number?" stacked>
+        <Input v-model="spellOccurrence.occurrence" />
+      </Field>
+
+      <footer>
+        <Button class="mr-2" @click="isSpellOccurrenceModelActive = false">
+          Cancel
+        </Button>
+        <Button @click="createSpellOccurrenceSnippet"> Done </Button>
+      </footer>
     </Modal>
   </div>
 </template>

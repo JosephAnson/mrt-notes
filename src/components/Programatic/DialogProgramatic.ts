@@ -10,9 +10,7 @@ function open(propsData: Record<string, any>) {
 
 interface DialogProps {
   message: string
-  inputAttrs: {
-    placeholder: string
-  }
+  inputAttrs: any
   onConfirm: (value: string) => void
 }
 

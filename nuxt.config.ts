@@ -22,6 +22,12 @@ export default defineNuxtConfig({
           content: 'MRT Notes allows you to generate ert note snippets',
         },
       ],
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://wow.zamimg.com/css/universal.css',
+        },
+      ],
     },
   },
   css: ['~/assets/styles/main.scss'],

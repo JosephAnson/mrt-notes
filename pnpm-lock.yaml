@@ -20,7 +20,6 @@ specifiers:
   '@vueuse/integrations': ^9.13.0
   '@vueuse/nuxt': ^9.13.0
   autoprefixer: 10.4.13
-  copy-to-clipboard: ^3.3.3
   eslint: ^8.34.0
   eslint-config-prettier: ^8.6.0
   eslint-plugin-prettier: ^4.2.1
@@ -53,7 +52,6 @@ dependencies:
   '@vueuse/core': 9.13.0_vue@3.2.47
   '@vueuse/integrations': 9.13.0_oggptlzwchqpaguemspe4ract4
   '@vueuse/nuxt': 9.13.0_nuxt@3.2.2+vue@3.2.47
-  copy-to-clipboard: 3.3.3
   focus-trap: 7.3.1
   nuxt: 3.2.2_h4fnh25vzwmk3hy62tksygpjya
   supabase: 1.38.6
@@ -2997,12 +2995,6 @@ packages:
 
   /cookie-es/0.5.0:
     resolution: {integrity: sha512-RyZrFi6PNpBFbIaQjXDlFIhFVqV42QeKSZX1yQIl6ihImq6vcHNGMtqQ/QzY3RMPuYSkvsRwtnt5M9NeYxKt0g==}
-    dev: false
-
-  /copy-to-clipboard/3.3.3:
-    resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
-    dependencies:
-      toggle-selection: 1.0.6
     dev: false
 
   /core-util-is/1.0.3:
@@ -7119,10 +7111,6 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
-
-  /toggle-selection/1.0.6:
-    resolution: {integrity: sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==}
-    dev: false
 
   /toidentifier/1.0.1:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
