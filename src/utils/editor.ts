@@ -1,11 +1,11 @@
+import { Color } from '@tiptap/extension-color'
+import Image from '@tiptap/extension-image'
+import TextStyle from '@tiptap/extension-text-style'
 import type { Node, Slice } from '@tiptap/pm/model'
 import { Fragment } from '@tiptap/pm/model'
+import StarterKit from '@tiptap/starter-kit'
 import type { Editor, JSONContent } from '@tiptap/vue-3'
 import { useEditor as tiptapUseEditor } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
-import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
 import type { Ref } from 'vue'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
 
@@ -40,29 +40,50 @@ export function convertJsonContentToHex(content: JSONContent) {
   return content
 }
 
-function createNode(editor: Editor, text: string, color?: string) {
-  const mark = editor.schema.marks.textStyle.create({
-    color,
-  })
-  return editor.schema.text(text, color ? [mark] : [])
+function createTextNode(
+  editor: Editor,
+  text: string,
+  { color }: { color?: string } = {}
+) {
+  const marks = []
+
+  if (color) marks.push(editor.schema.marks.textStyle.create({ color }))
+
+  return editor.schema.text(text, marks)
 }
 
-export function createColorsOnPaste(editor: Editor, content: Slice | Node) {
+function createImageNode(editor: Editor, src: string) {
+  return editor.schema.nodes.image.create({ src })
+}
+
+function isMarker(string: String) {
+  return markers.find((marker) => marker.name === string.slice(1, -1))
+}
+
+export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
   const jsonContent: Node[] = []
 
   content.content?.forEach((item: Node) => {
-    const splitText = item.text?.split(/\|cff([\S\w\s]+?)\|r/gim)
+    const regex =
+      /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|\|cff([\S\w\s]+?)\|r/gim
+    const splitText = item.text?.split(regex)
 
+    console.log('splitText', splitText)
     if (splitText && splitText.length > 1) {
       for (const string of splitText) {
         if (string && string.length > 0) {
+          const marker = isMarker(string)
           const color = string.substring(0, 6)
           const newString = string.substring(6)
 
-          if (newString && isHexColor(color)) {
-            jsonContent.push(createNode(editor, newString, `#${color}`))
+          if (marker) {
+            jsonContent.push(createImageNode(editor, marker.src))
+          } else if (newString && isHexColor(color)) {
+            jsonContent.push(
+              createTextNode(editor, newString, { color: `#${color}` })
+            )
           } else {
-            jsonContent.push(createNode(editor, string))
+            jsonContent.push(createTextNode(editor, string))
           }
         }
       }
@@ -70,7 +91,7 @@ export function createColorsOnPaste(editor: Editor, content: Slice | Node) {
       jsonContent.push(item)
     }
 
-    createColorsOnPaste(editor, item)
+    createNodesOnPaste(editor, item)
   })
 
   if (jsonContent.length > 0) {
@@ -120,8 +141,9 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       transformPasted: (pastedText: Slice) => {
+        console.log('pastedText')
         if (editor.value) {
-          const colorsCreated = createColorsOnPaste(editor.value, pastedText)
+          const colorsCreated = createNodesOnPaste(editor.value, pastedText)
 
           return convertSliceToHex(colorsCreated)
         }
