@@ -109,8 +109,7 @@ export default defineComponent({
      * Close the Modal if canCancel and call the onCancel prop (function).
      */
     function cancel(method?: string) {
-      if (method && !cancelOptions.value.includes(method))
-        return
+      if (method && !cancelOptions.value.includes(method)) return
 
       emit('cancel')
       props.onCancel()
@@ -148,8 +147,13 @@ export default defineComponent({
         :role="ariaRole"
         :aria-modal="ariaModal"
       >
-        <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
-        <div class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex">
+        <div
+          class="fixed bg-black opacity-50 h-full w-full top-0 left-0"
+          @click="cancel('outside')"
+        />
+        <div
+          class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex"
+        >
           <div class="relative w-full h-full max-w-2xl md:h-auto">
             <div class="relative p-4 bg-gray-700 rounded-lg shadow">
               <Heading v-if="title" p styled="h2">

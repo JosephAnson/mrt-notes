@@ -1,4 +1,4 @@
-<script lang='ts' setup>
+<script lang="ts" setup>
 definePageMeta({
   middleware: 'auth',
 })
@@ -7,9 +7,7 @@ definePageMeta({
 <template>
   <Page>
     <Container>
-      <Heading h1>
-        Team Members
-      </Heading>
+      <Heading h1> Team Members </Heading>
       <TeamMembers />
     </Container>
   </Page>

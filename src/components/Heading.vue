@@ -35,14 +35,10 @@ type HeadingSizesTuple = typeof HEADING_SIZES
 type HeadingSizesType = HeadingSizesTuple[number]
 
 const type = computed(() => {
-  if (props.h1)
-    return 'h1'
-  if (props.h2)
-    return 'h2'
-  if (props.h4)
-    return 'h4'
-  if (props.p)
-    return 'p'
+  if (props.h1) return 'h1'
+  if (props.h2) return 'h2'
+  if (props.h4) return 'h4'
+  if (props.p) return 'p'
 
   return 'h3'
 })
@@ -61,8 +57,7 @@ function getHeaderClass(type: HeadingSizesType) {
 }
 
 const styles = computed(() => {
-  if (!props.styled)
-    return getHeaderClass(type.value)
+  if (!props.styled) return getHeaderClass(type.value)
   return getHeaderClass(props.styled)
 })
 </script>

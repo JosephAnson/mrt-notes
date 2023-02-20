@@ -1,3 +1,1 @@
-<template>
-  Can't be found
-</template>
+<template>Can't be found</template>

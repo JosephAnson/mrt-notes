@@ -10,8 +10,7 @@ export const login = async (provider: 'discord' | 'google') => {
     },
   })
 
-  if (error)
-    return SnackbarProgramatic.open('Something went wrong !')
+  if (error) return SnackbarProgramatic.open('Something went wrong !')
 }
 
 export async function signInWithOtp(email: string) {
@@ -25,8 +24,7 @@ export async function signInWithOtp(email: string) {
     },
   })
 
-  if (error)
-    return SnackbarProgramatic.open(`Something went wrong: ${error}`)
+  if (error) return SnackbarProgramatic.open(`Something went wrong: ${error}`)
 
   await router.push('/checkemail')
 }

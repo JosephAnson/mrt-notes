@@ -5,14 +5,7 @@ const user = useSupabaseUser()
 
 <template>
   <nuxt-link v-if="!user" to="login">
-    <Button>
-      Login
-    </Button>
+    <Button> Login </Button>
   </nuxt-link>
-  <Button
-    v-else
-    @click="client.auth.signOut()"
-  >
-    Logout
-  </Button>
+  <Button v-else @click="client.auth.signOut()"> Logout </Button>
 </template>

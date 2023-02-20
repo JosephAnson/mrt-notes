@@ -9,11 +9,7 @@ import {
 } from 'unocss'
 
 export default defineNuxtConfig({
-  modules: [
-    '@vueuse/nuxt',
-    '@nuxtjs/supabase',
-    '@unocss/nuxt',
-  ],
+  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@unocss/nuxt'],
   app: {
     head: {
       title: 'MRT Notes',
@@ -28,9 +24,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: [
-    '~/assets/styles/main.scss',
-  ],
+  css: ['~/assets/styles/main.scss'],
   srcDir: 'src/',
   unocss: {
     presets: [
