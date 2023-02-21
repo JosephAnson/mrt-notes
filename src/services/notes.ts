@@ -1,5 +1,4 @@
 import type { Database } from '~/supabase.types'
-import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useNotes } from '~/composables/state'
 
 const noteColumns = 'id, name, editor_string'
@@ -17,8 +16,7 @@ export async function createNewNote(
   name: string,
   editor_string = defaultEditorValue
 ) {
-  if (!name && name.length <= 0)
-    return SnackbarProgrammatic.open('Please enter a name')
+  if (!name && name.length <= 0) return openSnackbar('Please enter a name')
 
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
@@ -66,7 +64,7 @@ export async function updateNote(
     .select(noteColumns)
     .single()
 
-  SnackbarProgrammatic.open('Saved')
+  openSnackbar('Saved')
 }
 
 export function setNotes(

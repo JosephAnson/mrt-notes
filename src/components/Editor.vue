@@ -1,6 +1,5 @@
 <script lang="ts">
 import { EditorContent } from '@tiptap/vue-3'
-import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useTeamMembers } from '~/composables/state'
 import type { Member } from '~/types'
 import type { Marker } from '~/utils/config'
@@ -51,7 +50,7 @@ export default defineComponent({
     }
 
     function createSpellSnippet(value: String) {
-      SnackbarProgrammatic.open(`Spell entered is: ${value}`)
+      openSnackbar(`Spell entered is: ${value}`)
       const insertString = `{spell:${value}}`
 
       editor.value?.commands.insertContent(insertString)
@@ -62,7 +61,7 @@ export default defineComponent({
     }
 
     function createTimeSnippet(value: String) {
-      SnackbarProgrammatic.open(`Time entered is: ${value}`)
+      openSnackbar(`Time entered is: ${value}`)
 
       editor.value?.commands.insertContent(`{time:${value}}`)
       editor.value?.commands.focus()
@@ -74,7 +73,7 @@ export default defineComponent({
     function createSpellOccurrenceSnippet() {
       const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
 
-      SnackbarProgrammatic.open(`Snippet entered is: ${insertString}`)
+      openSnackbar(`Snippet entered is: ${insertString}`)
 
       editor.value?.commands.insertContent(insertString)
       editor.value?.commands.focus()

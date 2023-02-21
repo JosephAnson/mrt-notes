@@ -1,7 +1,6 @@
 import type { Member, WowClassesUnion } from '~/types'
 import type { Database } from '~/supabase.types'
 import { useTeamMembers } from '~/composables/state'
-import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 
 const teamMembersColumns = 'id, name, class'
 
@@ -51,7 +50,7 @@ export async function updateMembers(members: Member[]) {
     )
     .select(teamMembersColumns)
 
-  SnackbarProgrammatic.open('Saved')
+  openSnackbar('Saved')
 }
 
 export async function addTeamMember(

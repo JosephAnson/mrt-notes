@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { JSONContent } from '@tiptap/vue-3'
-import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { createERTGroupString, createERTString } from '~/utils/createErtString'
 import type { Group } from '~/types'
 
@@ -14,7 +13,7 @@ const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {
   copy(string)
-  SnackbarProgrammatic.open({
+  openSnackbar({
     message: 'Copied to clipboard!',
     background: 'bg-gray-900',
   })

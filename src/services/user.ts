@@ -1,5 +1,3 @@
-import SnackbarProgramatic from '~/components/Programatic/SnackbarProgramatic'
-
 export const login = async (provider: 'discord' | 'google') => {
   const client = useSupabaseAuthClient()
 

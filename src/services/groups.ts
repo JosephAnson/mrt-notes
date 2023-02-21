@@ -1,5 +1,4 @@
 import type { Database } from '~/supabase.types'
-import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useGroups } from '~/composables/state'
 import type { Group, GroupTypeUnion } from '~/types'
 
@@ -63,7 +62,7 @@ export async function updateGroups(note_id: number, groups: Group[]) {
     )
     .select(groupColumns)
 
-  SnackbarProgrammatic.open('Saved')
+  openSnackbar('Saved')
 }
 
 export async function getAllGroups(noteId: number | string) {

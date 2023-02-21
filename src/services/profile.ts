@@ -1,4 +1,3 @@
-import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useProfile } from '~/composables/state'
 import type { Database } from '~/supabase.types'
 
@@ -49,7 +48,7 @@ export async function updateUsername(username: string) {
   const usernameExist = await usernameExists(username)
 
   if (usernameExist) {
-    SnackbarProgrammatic.open({
+    openSnackbar({
       message: 'Username exists try another!',
       background: 'bg-red-700',
     })
@@ -68,6 +67,6 @@ export async function updateUsername(username: string) {
 
     profile.value.username = username
 
-    SnackbarProgrammatic.open('Saved username')
+    openSnackbar('Saved username')
   }
 }
