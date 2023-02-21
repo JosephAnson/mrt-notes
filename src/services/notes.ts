@@ -97,4 +97,5 @@ export async function deleteNote(id: number) {
   await client.from('notes').delete().match({ id })
 
   notes.value = notes.value?.filter((t) => t.id !== id) || []
+  openSnackbar({ message: 'Note Deleted', background: 'bg-red-700' })
 }

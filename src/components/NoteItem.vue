@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { Note } from '~/types'
-
 const props = defineProps<{
   note: Note
-  preview: boolean
-  delete: boolean
 }>()
+
+const user = useSupabaseUser()
+
+const isUsers = isUsersNote(user.value?.id, props.note.user_id)
 </script>
 
 <template>
@@ -16,19 +17,19 @@ const props = defineProps<{
 
     <div>
       <nuxt-link
-        :to="
-          props.preview
-            ? `/note/${props.note.id}`
-            : `/note/edit/${props.note.id}`
-        "
+        v-if="isUsers"
+        :to="`/note/edit/${props.note.id}`"
         class="mr-2"
       >
-        <Button v-if="props.preview">View</Button>
-        <Button v-else>Edit</Button>
+        <Button>Edit</Button>
+      </nuxt-link>
+
+      <nuxt-link :to="`/note/${props.note.id}`" class="mr-2">
+        <Button>View</Button>
       </nuxt-link>
 
       <Button
-        v-if="props.delete"
+        v-if="isUsers"
         class="bg-red-700"
         @click="deleteNote(props.note.id)"
       >

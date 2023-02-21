@@ -42,7 +42,7 @@ export async function getProfileByUsername(username: string) {
   const { data } = await client
     .from('profiles')
     .select(profileColumns)
-    .ilike('username', `%${username}%`)
+    .ilike('username', `${username}`)
     .single()
   return data
 }

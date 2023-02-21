@@ -12,6 +12,7 @@ const returnUrl = computed(
 <template>
   <Page>
     <Container>
+      <Heading h1>Login</Heading>
       <div class="mb-8">
         <Field label-for="email" label="Email" stacked>
           <Input id="email" v-model="email" type="email" />

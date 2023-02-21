@@ -1,1 +1,5 @@
-<template>Can't be found</template>
+<template>
+  <Page>
+    <Container> Page can't be found </Container>
+  </Page>
+</template>

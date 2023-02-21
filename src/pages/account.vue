@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Notification from '~/components/Notification.vue'
+
 definePageMeta({
   middleware: 'auth',
 })
@@ -14,20 +16,17 @@ const username = ref(profile.value.username)
 <template>
   <Page>
     <Container>
+      <Heading h1>Account</Heading>
+
       <div class="max-w-lg">
-        <Field label="Links" stacked>
+        <Field v-if="profile.avatar_url" label-for="avatar" stacked>
+          <img class="w-48 rounded-full" :src="profile.avatar_url" />
+        </Field>
+
+        <Field v-if="profile.username" stacked>
           <nuxt-link :to="`profile/${profile.username}`">
             <Button>View Profile</Button>
           </nuxt-link>
-        </Field>
-
-        <Field
-          v-if="profile.avatar_url"
-          label-for="avatar"
-          label="Avatar"
-          stacked
-        >
-          <img class="w-48 rounded-full" :src="profile.avatar_url" />
         </Field>
 
         <Field v-if="user?.email" label-for="avatar_url" label="Email" stacked>
@@ -44,13 +43,16 @@ const username = ref(profile.value.username)
             </Button>
           </div>
         </Field>
+        <Notification v-if="!profile.username">
+          Set a username if you want to share your profile
+        </Notification>
         <Field label-for="signup with" label="Signed up with " stacked>
           <span
             v-for="provider in user.app_metadata.providers"
             :key="provider"
             class="bg-primary-100 p-1 px-2 rounded"
           >
-            {{ provider }}
+            {{ provider.toUpperCase() }}
           </span>
         </Field>
       </div>

@@ -64,8 +64,17 @@ function logout() {
           <Button v-if="!user" @click="login"> Login </Button>
 
           <template v-else>
+            <nuxt-link
+              v-if="profile.username"
+              :to="`/profile/${profile.username}`"
+            >
+              <Button> Profile </Button>
+            </nuxt-link>
             <nuxt-link to="/account">
-              <Button> Account ({{ profile.username }}) </Button>
+              <Button v-if="profile.username">
+                Account ({{ profile.username }})
+              </Button>
+              <Button v-else> Account </Button>
             </nuxt-link>
             <Button @click="logout"> Logout </Button>
           </template>

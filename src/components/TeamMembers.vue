@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { paramCase } from 'change-case'
 import Draggable from 'vuedraggable'
 import { getAllTeamMembers } from '#imports'
 import type { Ref } from '#imports'
@@ -29,7 +30,7 @@ const debouncedUpdateMembers = useDebounceFn(() => {
     <Select
       v-model:value="playerClass"
       class="mr-2"
-      :class="`has-wow-background-${toParamCase(playerClass)}`"
+      :class="`has-wow-background-${paramCase(playerClass)}`"
     >
       <option v-for="type in WowClasses" :key="type">
         {{ type }}
@@ -66,7 +67,7 @@ const debouncedUpdateMembers = useDebounceFn(() => {
 
           <Select
             v-model:value="element.class"
-            :class="`has-wow-background-${toParamCase(element.class)}`"
+            :class="`has-wow-background-${paramCase(element.class)}`"
             @update:value="debouncedUpdateMembers"
           >
             <option v-for="type in WowClasses" :key="type">

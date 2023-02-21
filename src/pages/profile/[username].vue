@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { capitalCase } from 'change-case'
+import { useSupabaseUser } from '#imports'
 import { getAllNotesByUserId, setNotes } from '~/services/notes'
 import { getProfileByUsername } from '~/services/profile'
-import { isUsersNote } from '~/services/user'
 
 const route = useRoute()
-const user = useSupabaseUser()
 const notes = useNotes()
+const user = useSupabaseUser()
 
 const usernameParam = getRouterParamsAsString(route.params.username)
 
@@ -24,16 +25,18 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
 <template>
   <Page>
     <Container>
-      <Heading>{{ asyncProfile.username }}'s Notes</Heading>
-      <div class="">
-        <NoteItem
-          v-for="note in notes"
-          :key="note.id"
-          :note="note"
-          :preview="true"
-          :delete="isUsersNote(user?.id, note.user_id)"
-        />
+      <div v-if="asyncProfile">
+        <Heading h1>{{ capitalCase(asyncProfile.username) }}'s Profile</Heading>
+        <CreateNote v-if="user?.id === asyncProfile?.id" />
+
+        <div v-if="notes.length">
+          <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+        </div>
+        <Heading v-else h2>
+          {{ asyncProfile.username }} doesn't have any notes
+        </Heading>
       </div>
+      <Heading v-else h1>No profile found</Heading>
     </Container>
   </Page>
 </template>
