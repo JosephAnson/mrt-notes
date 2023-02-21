@@ -3,15 +3,6 @@ import Draggable from 'vuedraggable'
 import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
-import {
-  addTeamMember,
-  removeTeamMember,
-  setTeamMembers,
-  updateMembers,
-  useAsyncDataAllTeamMembers,
-} from '~/services/teamMembers'
-import { useTeamMembers } from '~/composables/state'
-import { toParamCase } from '~/utils/toParamCase'
 
 const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
 

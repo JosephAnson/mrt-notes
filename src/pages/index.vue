@@ -1,17 +1,4 @@
 <script lang="ts" setup async>
-import {
-  deleteNote,
-  getAllNotes,
-  setNotes,
-  useAsyncDataGetAllNotes,
-} from '~/services/notes'
-import Heading from '~/components/Heading.vue'
-import {
-  getAllTeamMembers,
-  setTeamMembers,
-  useAsyncDataAllTeamMembers,
-} from '~/services/teamMembers'
-
 const user = useSupabaseUser()
 const notes = useNotes()
 const teamMembers = useTeamMembers()

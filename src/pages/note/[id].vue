@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import type { EditorData } from '~/types'
-import { deleteNote, getNote, updateNote } from '~/services/notes'
-import { getRouterParamsAsString } from '~/utils/getRouterParamsAsString'
 
 definePageMeta({
   middleware: 'auth',

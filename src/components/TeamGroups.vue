@@ -9,14 +9,6 @@ import {
 } from '@headlessui/vue'
 import { GroupType } from '~/types'
 import type { GroupTypeUnion } from '~/types'
-import { useTeamMembers } from '~/composables/state'
-import {
-  createNewGroup,
-  deleteGroup,
-  getAllGroups,
-  setGroups,
-  updateGroups,
-} from '~/services/groups'
 
 const props = defineProps({
   noteId: {

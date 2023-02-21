@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { login, signInWithOtp } from '~/services/user'
-
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
 

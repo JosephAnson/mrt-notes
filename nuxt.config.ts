@@ -30,6 +30,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+  imports: {
+    dirs: ['services'],
+  },
   css: ['~/assets/styles/main.scss'],
   srcDir: 'src/',
   unocss: {

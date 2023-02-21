@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { createNewNote } from '~/services/notes'
-
 const noteName = ref('')
 </script>
 

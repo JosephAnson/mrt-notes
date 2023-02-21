@@ -1,7 +1,6 @@
 import type { Database } from '~/supabase.types'
 import SnackbarProgrammatic from '~/components/Programatic/SnackbarProgramatic'
 import { useNotes } from '~/composables/state'
-import { deleteGroupsWithNoteId } from '~/services/groups'
 
 const noteColumns = 'id, name, editor_string'
 

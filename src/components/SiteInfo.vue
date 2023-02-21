@@ -22,7 +22,8 @@
   <div class="prose mt-8">
     <p>Working in progress, items still to be completed</p>
     <ul>
-      <li>Import of ert note</li>
+      <li>Profile</li>
+      <li>Preview Note</li>
       <li>Duplicate note</li>
     </ul>
   </div>
