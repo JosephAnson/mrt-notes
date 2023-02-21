@@ -5,7 +5,12 @@
       note planning, below are some of the features:
     </p>
     <ul>
-      <li>Create and export mrt notes</li>
+      <li>Create, share and export mrt notes</li>
+      <li>Share Profile</li>
+      <li>Preview Notes</li>
+    </ul>
+    <p>Editor Features:</p>
+    <ul>
       <li>Change color of text</li>
       <li>Add raid markers</li>
       <li>Add raid teams members and easier add to note</li>
@@ -16,15 +21,6 @@
         Define groups that notes can be assigned to: Tanks, Healers, DPS,
         individual players
       </li>
-    </ul>
-  </div>
-
-  <div class="prose mt-8">
-    <p>Working in progress, items still to be completed</p>
-    <ul>
-      <li>Profile</li>
-      <li>Preview Note</li>
-      <li>Duplicate note</li>
     </ul>
   </div>
 </template>

@@ -2,7 +2,7 @@
 import type { EditorData } from '~/types'
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: 'note-edit',
 })
 
 const { data: note } = await useAsyncData('notes', async () => {
