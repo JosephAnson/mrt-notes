@@ -24,14 +24,13 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
 if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
 
 // Watch to see if user changes to re-fetch notes
-watch(
+watchOnce(
   () => user.value,
   async () => {
     const { data: notes } = await getAllNotes()
     const { data: teamMembers } = await getAllTeamMembers()
 
     if (notes) setNotes(notes)
-
     if (teamMembers) setTeamMembers(teamMembers)
   },
   { deep: true }
