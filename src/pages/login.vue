@@ -1,8 +1,12 @@
 <script setup lang="ts">
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
+const route = useRouter()
 
 const email = ref('')
+const returnUrl = computed(
+  () => (route.currentRoute.value.query as { returnUrl?: string })?.returnUrl
+)
 </script>
 
 <template>
@@ -12,10 +16,10 @@ const email = ref('')
         <Field label-for="email" label="Email" stacked>
           <Input id="email" v-model="email" type="email" />
         </Field>
-        <Button @click="signInWithOtp(email)"> Sign In </Button>
+        <Button @click="signInWithOtp(email, returnUrl)"> Sign In </Button>
       </div>
 
-      <Button v-if="!user" @click="login('discord')">
+      <Button v-if="!user" @click="login('discord', returnUrl)">
         Login with Discord
       </Button>
       <Button v-else @click="client.auth.signOut()"> Logout </Button>

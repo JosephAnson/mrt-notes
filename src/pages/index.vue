@@ -1,10 +1,19 @@
 <script lang="ts" setup async>
+import { getAllNotes } from '~/services/notes'
+import { getAllTeamMembers } from '~/services/teamMembers'
+
 const user = useSupabaseUser()
 const notes = useNotes()
 const teamMembers = useTeamMembers()
 
-const { data: asyncNotes } = await useAsyncDataGetAllNotes()
-const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
+const { data: asyncNotes } = await useAsyncData(
+  'notes',
+  async () => await getAllNotes()
+)
+const { data: asyncTeamMembers } = await useAsyncData(
+  'teamMembers',
+  async () => await getAllTeamMembers()
+)
 
 if (user.value) {
   if (asyncNotes.value) setNotes(asyncNotes.value)
@@ -14,8 +23,8 @@ if (user.value) {
 watchOnce(
   () => user.value,
   async () => {
-    const { data: notes } = await getAllNotes()
-    const { data: teamMembers } = await getAllTeamMembers()
+    const notes = await getAllNotes()
+    const teamMembers = await getAllTeamMembers()
 
     if (notes) setNotes(notes)
     if (teamMembers) setTeamMembers(teamMembers)
@@ -35,7 +44,6 @@ watchOnce(
 
       <div v-if="!user">
         <Heading class="mb-4"> Login to get started</Heading>
-        <LoginButtons />
         <SiteInfo />
       </div>
 
@@ -47,23 +55,7 @@ watchOnce(
             <section v-if="notes.length">
               <Heading>My Notes</Heading>
               <div class="mb-8">
-                <div
-                  v-for="note in notes"
-                  :key="note.id"
-                  class="flex items-center justify-between w-full bg-gray-800 py-1 px-2 rounded mb-2"
-                >
-                  <p>Name: {{ note.name }}</p>
-
-                  <div>
-                    <nuxt-link :to="`/note/${note.id}`" class="mr-2">
-                      <Button>Open</Button>
-                    </nuxt-link>
-
-                    <Button class="bg-red-700" @click="deleteNote(note.id)">
-                      Delete
-                    </Button>
-                  </div>
-                </div>
+                <NoteItem v-for="note in notes" :key="note.id" :note="note" />
               </div>
             </section>
 

@@ -1,7 +1,6 @@
 import type { Database } from '~/supabase.types'
-import { useNotes } from '~/composables/state'
 
-const noteColumns = 'id, name, editor_string'
+const noteColumns = 'id, name, editor_string, user_id'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -37,13 +36,7 @@ export async function createNewNote(
 
 export async function getNote(id: string) {
   const client = useSupabaseClient<Database>()
-  const user = useSupabaseUser()
-  return client
-    .from('notes')
-    .select(noteColumns)
-    .match({ id })
-    .eq('user_id', user.value?.id)
-    .single()
+  return client.from('notes').select(noteColumns).match({ id }).single()
 }
 
 export async function updateNote(
@@ -79,20 +72,19 @@ export function setNotes(
 }
 
 export async function getAllNotes() {
-  const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client
-    .from('notes')
-    .select(noteColumns)
-    .eq('user_id', user.value?.id)
-    .order('created_at')
+  return getAllNotesByUserId(user.value?.id || '')
 }
 
-export async function useAsyncDataGetAllNotes() {
-  return await useAsyncData('notes', async () => {
-    const { data } = await getAllNotes()
-    return data
-  })
+export async function getAllNotesByUserId(user_id: String) {
+  const client = useSupabaseClient<Database>()
+  const { data } = await client
+    .from('notes')
+    .select(noteColumns)
+    .eq('user_id', user_id)
+    .order('created_at')
+
+  return data
 }
 
 export async function deleteNote(id: number) {

@@ -1,28 +1,31 @@
-export const login = async (provider: 'discord' | 'google') => {
+export const login = async (
+  provider: 'discord' | 'google',
+  returnUrl?: string
+) => {
   const client = useSupabaseAuthClient()
 
   const { error } = await client.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: window.location.origin,
+      redirectTo: returnUrl || window.location.origin,
     },
   })
 
-  if (error) return SnackbarProgramatic.open('Something went wrong !')
+  if (error) return openSnackbar('Something went wrong !')
 }
 
-export async function signInWithOtp(email: string) {
+export async function signInWithOtp(email: string, returnUrl?: string) {
   const client = useSupabaseAuthClient()
   const router = useRouter()
 
   const { error } = await client.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: window.location.origin,
+      emailRedirectTo: returnUrl || window.location.origin,
     },
   })
 
-  if (error) return SnackbarProgramatic.open(`Something went wrong: ${error}`)
+  if (error) return openSnackbar(`Something went wrong: ${error}`)
 
   await router.push('/checkemail')
 }

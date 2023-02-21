@@ -20,24 +20,18 @@ export function setTeamMembers(
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  return client
+  const { data } = await client
     .from('team_members')
     .select(teamMembersColumns)
     .eq('user_id', user.value?.id)
     .order('order')
-}
 
-export async function useAsyncDataAllTeamMembers() {
-  return await useAsyncData('teamMembers', async () => {
-    const { data } = await getAllTeamMembers()
-    return data
-  })
+  return data
 }
-
 export async function updateMembers(members: Member[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  await client
+  const { data } = await client
     .from('team_members')
     .upsert(
       members.map((member, index) => ({
@@ -49,6 +43,8 @@ export async function updateMembers(members: Member[]) {
       }))
     )
     .select(teamMembersColumns)
+
+  return data
 
   openSnackbar('Saved')
 }

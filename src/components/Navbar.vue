@@ -1,7 +1,45 @@
 <script lang="ts" setup>
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
-const profile = await useAsyncGetProfile()
+const router = useRouter()
+const profile = useProfile()
+
+const { data: asyncProfile } = await useAsyncData(
+  'profile',
+  async () => await getProfile()
+)
+
+if (asyncProfile.value)
+  setProfile({
+    id: asyncProfile.value.id,
+    username: asyncProfile.value.username,
+    avatar_url: asyncProfile.value.avatar_url,
+  })
+
+// Watch to see if user changes to re-fetch notes
+watchOnce(
+  () => user.value,
+  async () => {
+    const profile = await getProfile()
+
+    if (profile)
+      setProfile({
+        id: profile.id,
+        username: profile.username,
+        avatar_url: profile.avatar_url,
+      })
+  },
+  { deep: true }
+)
+
+function login() {
+  router.push(`/login?returnUrl=${window.location.href}`)
+}
+
+function logout() {
+  client.auth.signOut()
+  router.push('/')
+}
 </script>
 
 <template>
@@ -23,14 +61,13 @@ const profile = await useAsyncGetProfile()
             <Button class="mr-2"> Playground </Button>
           </nuxt-link>
 
-          <nuxt-link v-if="!user" to="login">
-            <Button> Login </Button>
-          </nuxt-link>
+          <Button v-if="!user" @click="login"> Login </Button>
+
           <template v-else>
-            <nuxt-link to="account">
+            <nuxt-link to="/account">
               <Button> Account ({{ profile.username }}) </Button>
             </nuxt-link>
-            <Button @click="client.auth.signOut()"> Logout </Button>
+            <Button @click="logout"> Logout </Button>
           </template>
         </div>
       </div>

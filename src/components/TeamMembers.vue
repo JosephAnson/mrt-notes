@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
+import { getAllTeamMembers } from '#imports'
 import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
-const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
+const { data: asyncTeamMembers } = await useAsyncData(
+  'teamMembers',
+  async () => await getAllTeamMembers()
+)
 
 const teamMembers = useTeamMembers()
 

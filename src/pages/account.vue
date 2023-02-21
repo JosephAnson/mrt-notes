@@ -3,8 +3,10 @@ definePageMeta({
   middleware: 'auth',
 })
 
-const profile = await useAsyncGetProfile()
 const user = useSupabaseUser()
+const profile = useProfile()
+
+await useAsyncGetProfile()
 
 const username = ref(profile.value.username)
 </script>
@@ -13,6 +15,12 @@ const username = ref(profile.value.username)
   <Page>
     <Container>
       <div class="max-w-lg">
+        <Field label="Links" stacked>
+          <nuxt-link :to="`profile/${profile.username}`">
+            <Button>View Profile</Button>
+          </nuxt-link>
+        </Field>
+
         <Field
           v-if="profile.avatar_url"
           label-for="avatar"
