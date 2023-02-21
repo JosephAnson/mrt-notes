@@ -45,6 +45,7 @@ watchOnce(
 
       <div v-if="!user">
         <Heading class="mb-4"> Login to get started</Heading>
+        <nuxt-link to="login"><Button>Login</Button></nuxt-link>
         <SiteInfo />
       </div>
 
