@@ -11,6 +11,13 @@
     </ul>
     <p>Editor Features:</p>
     <ul>
+      <li>
+        Auto transform pasted MRT note, current support is:
+        <ul>
+          <li>Colors</li>
+          <li>Raid Markers</li>
+        </ul>
+      </li>
       <li>Change color of text</li>
       <li>Add raid markers</li>
       <li>Add raid teams members and easier add to note</li>

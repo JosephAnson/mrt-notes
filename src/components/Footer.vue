@@ -3,7 +3,7 @@
     <div class="container">
       <div class="flex items-center justify-between">
         <p>
-          Authored by
+          Created by
           <a
             href="https://twitter.com/JosephLeeAnson"
             target="_blank"
