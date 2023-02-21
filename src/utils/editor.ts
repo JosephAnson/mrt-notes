@@ -94,6 +94,8 @@ export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
   })
 
   if (jsonContent.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     content.content = Fragment.fromArray(jsonContent)
   }
 

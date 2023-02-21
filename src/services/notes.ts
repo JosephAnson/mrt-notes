@@ -61,12 +61,13 @@ export async function updateNote(
 }
 
 export function setNotes(
-  newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string'>[]
+  newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string' | 'user_id'>[]
 ) {
   const notes = useNotes()
   notes.value = newNotes.map((item) => ({
     id: item.id,
     name: item.name,
+    user_id: item.user_id,
     editor_string: item.editor_string || '',
   }))
 }
@@ -89,11 +90,11 @@ export async function getAllNotesByUserId(user_id: String) {
 
 export async function deleteNote(id: number) {
   const client = useSupabaseClient<Database>()
+  const notes = useNotes()
 
   await deleteGroupsWithNoteId(id)
 
   await client.from('notes').delete().match({ id })
 
-  const notes = useNotes()
   notes.value = notes.value?.filter((t) => t.id !== id) || []
 }

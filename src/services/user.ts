@@ -29,3 +29,8 @@ export async function signInWithOtp(email: string, returnUrl?: string) {
 
   await router.push('/checkemail')
 }
+
+export function isUsersNote(userId?: string, noteId?: string) {
+  if (!userId || !noteId) return false
+  return userId === noteId
+}

@@ -55,7 +55,12 @@ watchOnce(
             <section v-if="notes.length">
               <Heading>My Notes</Heading>
               <div class="mb-8">
-                <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+                <NoteItem
+                  v-for="note in notes"
+                  :key="note.id"
+                  :note="note"
+                  :delete="isUsersNote(user?.id, note.user_id)"
+                />
               </div>
             </section>
 

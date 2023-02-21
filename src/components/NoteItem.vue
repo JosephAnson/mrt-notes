@@ -4,6 +4,7 @@ import type { Note } from '~/types'
 const props = defineProps<{
   note: Note
   preview: boolean
+  delete: boolean
 }>()
 </script>
 
@@ -22,11 +23,15 @@ const props = defineProps<{
         "
         class="mr-2"
       >
-        <Button v-if="props.preview">Open</Button>
+        <Button v-if="props.preview">View</Button>
         <Button v-else>Edit</Button>
       </nuxt-link>
 
-      <Button class="bg-red-700" @click="deleteNote(props.note.id)">
+      <Button
+        v-if="props.delete"
+        class="bg-red-700"
+        @click="deleteNote(props.note.id)"
+      >
         Delete
       </Button>
     </div>

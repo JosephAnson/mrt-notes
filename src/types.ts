@@ -10,6 +10,7 @@ export interface Note {
   id: number
   name: string
   editor_string: string
+  user_id: string
 }
 
 export interface EditorData {

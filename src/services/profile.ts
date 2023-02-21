@@ -4,7 +4,7 @@ import type { Profile } from '~/types'
 const profileColumns = 'id, username, avatar_url'
 
 export async function useAsyncGetProfile() {
-  const asyncProfile = await useAsyncData(
+  const { data: asyncProfile } = await useAsyncData(
     'profile',
     async () => await getProfile()
   )
