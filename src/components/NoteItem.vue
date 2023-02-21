@@ -16,17 +16,18 @@ const isUsers = isUsersNote(user.value?.id, props.note.user_id)
     <p>Name: {{ props.note.name }}</p>
 
     <div>
-      <nuxt-link
+      <NuxtLink
         v-if="isUsers"
+        tag="button"
         :to="`/note/edit/${props.note.id}`"
         class="mr-2"
       >
         <Button>Edit</Button>
-      </nuxt-link>
+      </NuxtLink>
 
-      <nuxt-link :to="`/note/${props.note.id}`" class="mr-2">
+      <NuxtLink :to="`/note/${props.note.id}`" class="mr-2">
         <Button>View</Button>
-      </nuxt-link>
+      </NuxtLink>
 
       <Button
         v-if="isUsers"

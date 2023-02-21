@@ -27,13 +27,13 @@ const noteIsUsers = computed(
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 
-        <nuxt-link
+        <NuxtLink
           v-if="noteIsUsers"
           :to="`/note/edit/${route.params.id}`"
           class="flex"
         >
           <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>
-        </nuxt-link>
+        </NuxtLink>
       </div>
 
       <section>

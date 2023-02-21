@@ -45,7 +45,7 @@ watchOnce(
 
       <div v-if="!user">
         <Heading class="mb-4"> Login to get started</Heading>
-        <nuxt-link to="login"><Button>Login</Button></nuxt-link>
+        <NuxtLink to="login"><Button>Login</Button></NuxtLink>
         <SiteInfo />
       </div>
 
@@ -68,9 +68,9 @@ watchOnce(
             <div class="flex justify-between items-center">
               <Heading>Your Team</Heading>
 
-              <nuxt-link class="mr-2" to="team">
+              <NuxtLink class="mr-2" to="team">
                 <Button>Edit your team</Button>
-              </nuxt-link>
+              </NuxtLink>
             </div>
 
             <ul>

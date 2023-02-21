@@ -46,36 +46,36 @@ function logout() {
   <nav class="relative bg-primary-100">
     <Container>
       <div class="flex items-center justify-between py-2">
-        <nuxt-link
+        <NuxtLink
           to="/"
           title="ERT: ERT Note creator for WoW"
           class="heading font-secondary font-semibold flex justify-start text-l mr-2"
         >
           MRT Notes
-        </nuxt-link>
+        </NuxtLink>
 
         <div class="menu flex">
           <Button class="mr-2" @click="tweet"> Tweet </Button>
 
-          <nuxt-link to="/playground">
+          <NuxtLink to="/playground">
             <Button class="mr-2"> Playground </Button>
-          </nuxt-link>
+          </NuxtLink>
 
           <Button v-if="!user" @click="login"> Login </Button>
 
           <template v-else>
-            <nuxt-link
+            <NuxtLink
               v-if="profile.username"
               :to="`/profile/${profile.username}`"
             >
               <Button> Profile </Button>
-            </nuxt-link>
-            <nuxt-link to="/account">
+            </NuxtLink>
+            <NuxtLink to="/account">
               <Button v-if="profile.username">
                 Account ({{ profile.username }})
               </Button>
               <Button v-else> Account </Button>
-            </nuxt-link>
+            </NuxtLink>
             <Button @click="logout"> Logout </Button>
           </template>
         </div>

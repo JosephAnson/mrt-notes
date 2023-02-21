@@ -24,9 +24,9 @@ const username = ref(profile.value.username)
         </Field>
 
         <Field v-if="profile.username" stacked>
-          <nuxt-link :to="`profile/${profile.username}`">
+          <NuxtLink :to="`profile/${profile.username}`">
             <Button>View Profile</Button>
-          </nuxt-link>
+          </NuxtLink>
         </Field>
 
         <Field v-if="user?.email" label-for="avatar_url" label="Email" stacked>
