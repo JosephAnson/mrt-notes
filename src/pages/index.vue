@@ -6,10 +6,10 @@ const teamMembers = useTeamMembers()
 const { data: asyncNotes } = await useAsyncDataGetAllNotes()
 const { data: asyncTeamMembers } = await useAsyncDataAllTeamMembers()
 
-if (asyncNotes.value) setNotes(asyncNotes.value)
-
-if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
-
+if (user.value) {
+  if (asyncNotes.value) setNotes(asyncNotes.value)
+  if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
+}
 // Watch to see if user changes to re-fetch notes
 watchOnce(
   () => user.value,
@@ -45,7 +45,7 @@ watchOnce(
             <CreateNote />
 
             <section v-if="notes.length">
-              <Heading> Notes</Heading>
+              <Heading>My Notes</Heading>
               <div class="mb-8">
                 <div
                   v-for="note in notes"
