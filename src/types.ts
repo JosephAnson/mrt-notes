@@ -1,5 +1,11 @@
 import type { JSONContent } from '@tiptap/vue-3'
 
+export interface Profile {
+  id: string
+  avatar_url: string | null
+  username: string | null
+}
+
 export interface Note {
   id: number
   name: string

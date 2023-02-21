@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
+const profile = await useAsyncGetProfile()
 </script>
 
 <template>
@@ -25,7 +26,12 @@ const user = useSupabaseUser()
           <nuxt-link v-if="!user" to="login">
             <Button> Login </Button>
           </nuxt-link>
-          <Button v-else @click="client.auth.signOut()"> Logout </Button>
+          <template v-else>
+            <nuxt-link to="account">
+              <Button> Account ({{ profile.username }}) </Button>
+            </nuxt-link>
+            <Button @click="client.auth.signOut()"> Logout </Button>
+          </template>
         </div>
       </div>
     </Container>
