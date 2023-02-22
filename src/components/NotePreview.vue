@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { JSONContent } from '@tiptap/vue-3'
 import { createERTGroupString, createERTString } from '~/utils/createErtString'
-import type { Group } from '~/types'
 
 const props = defineProps({
   noteString: { type: String, default: '' },
   noteJson: Object as PropType<JSONContent>,
-  groups: { type: Array as PropType<Group[]>, required: true },
 })
 
+const groups = useGroups()
 const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {
@@ -22,7 +21,7 @@ function copyToClipboard(string: string) {
 const preview = computed(() => {
   let preview = `${props.noteString}\n`
 
-  for (const group of props.groups) preview += group.note.value
+  for (const group of groups.value) preview += group.note.value
 
   return preview
 })
@@ -30,7 +29,7 @@ const preview = computed(() => {
 const ertString = computed(() => {
   let ERTNote = createERTString(props.noteJson)
 
-  for (const group of props.groups) ERTNote += createERTGroupString(group)
+  for (const group of groups.value) ERTNote += createERTGroupString(group)
 
   return ERTNote
 })
@@ -39,7 +38,6 @@ const ertString = computed(() => {
 <template>
   <div class="flex justify-between mb-4">
     <Heading h3> String Preview </Heading>
-
     <Button v-if="isSupported" @click="copyToClipboard(ertString)">
       Copy ERT String
     </Button>

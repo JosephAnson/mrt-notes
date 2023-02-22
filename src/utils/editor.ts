@@ -102,30 +102,31 @@ export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
   return content
 }
 
+export const editorExtensions = [
+  StarterKit.configure({
+    heading: false,
+    blockquote: false,
+    bold: false,
+    bulletList: false,
+    code: false,
+    codeBlock: false,
+    gapcursor: false,
+    horizontalRule: false,
+    italic: false,
+    listItem: false,
+    orderedList: false,
+    strike: false,
+  }),
+  Image.configure({
+    inline: true,
+  }),
+  Color,
+  TextStyle,
+]
 export function useEditor(initialValue: Ref<string>, emit: any) {
   const editor = tiptapUseEditor({
     content: initialValue.value,
-    extensions: [
-      StarterKit.configure({
-        heading: false,
-        blockquote: false,
-        bold: false,
-        bulletList: false,
-        code: false,
-        codeBlock: false,
-        gapcursor: false,
-        horizontalRule: false,
-        italic: false,
-        listItem: false,
-        orderedList: false,
-        strike: false,
-      }),
-      Image.configure({
-        inline: true,
-      }),
-      Color,
-      TextStyle,
-    ],
+    extensions: editorExtensions,
     autofocus: 'end',
     onCreate: () => {
       emit('update:json', editor.value?.getJSON())

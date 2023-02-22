@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { generateJSON } from '@tiptap/html'
 import type { EditorData } from '~/types'
 
 definePageMeta({
@@ -16,7 +17,7 @@ const groups = useGroups()
 const name = ref(note.value?.name || '')
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
-  json: {},
+  json: generateJSON(note.value?.editor_string || '', editorExtensions),
 })
 
 const debouncedUpdateNote = useDebounceFn(() => {

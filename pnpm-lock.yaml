@@ -10,6 +10,7 @@ specifiers:
   '@tiptap/extension-color': ^2.0.0-beta.218
   '@tiptap/extension-image': ^2.0.0-beta.218
   '@tiptap/extension-text-style': ^2.0.0-beta.218
+  '@tiptap/html': 2.0.0-beta.218
   '@tiptap/pm': ^2.0.0-beta.218
   '@tiptap/starter-kit': ^2.0.0-beta.218
   '@tiptap/vue-3': ^2.0.0-beta.218
@@ -45,6 +46,7 @@ dependencies:
   '@tiptap/extension-color': 2.0.0-beta.218_zynsb2njebftevexpx7prxbqb4
   '@tiptap/extension-image': 2.0.0-beta.218_xixjdlstfbsoyvyes7aewz3ng4
   '@tiptap/extension-text-style': 2.0.0-beta.218_xixjdlstfbsoyvyes7aewz3ng4
+  '@tiptap/html': 2.0.0-beta.218_p7b6nzxe7qctmzbzapdik3nr64
   '@tiptap/pm': 2.0.0-beta.218_xixjdlstfbsoyvyes7aewz3ng4
   '@tiptap/starter-kit': 2.0.0-beta.218_@tiptap+pm@2.0.0-beta.218
   '@tiptap/vue-3': 2.0.0-beta.218_2p7kft6r7l2pbqpusj5d3uq2ja
@@ -1697,6 +1699,17 @@ packages:
       '@tiptap/core': ^2.0.0-beta.209
     dependencies:
       '@tiptap/core': 2.0.0-beta.218_@tiptap+pm@2.0.0-beta.218
+    dev: false
+
+  /@tiptap/html/2.0.0-beta.218_p7b6nzxe7qctmzbzapdik3nr64:
+    resolution: {integrity: sha512-9FgIyAz7YgtECbLbTjLGUpGb705+QoYjwYoxn6bIkcGlQE1Nbs///03y3h7mPbnnty4kX/DikTSSg2jGxCWatg==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0-beta.209
+      '@tiptap/pm': ^2.0.0-beta.209
+    dependencies:
+      '@tiptap/core': 2.0.0-beta.218_@tiptap+pm@2.0.0-beta.218
+      '@tiptap/pm': 2.0.0-beta.218_xixjdlstfbsoyvyes7aewz3ng4
+      zeed-dom: 0.9.26
     dev: false
 
   /@tiptap/pm/2.0.0-beta.218_xixjdlstfbsoyvyes7aewz3ng4:
@@ -7987,6 +8000,13 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /zeed-dom/0.9.26:
+    resolution: {integrity: sha512-HWjX8rA3Y/RI32zby3KIN1D+mgskce+She4K7kRyyx62OiVxJ5FnYm8vWq0YVAja3Tf2S1M0XAc6O2lRFcMgcQ==}
+    engines: {node: '>=14.13.1'}
+    dependencies:
+      css-what: 6.1.0
+    dev: false
 
   /zhead/2.0.4:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
