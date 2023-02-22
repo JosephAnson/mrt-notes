@@ -1,6 +1,8 @@
 import type { Database } from '~/supabase.types'
+import type { NotesRow, ProfilesRow } from '~/types'
 
-const noteColumns = 'id, name, editor_string, user_id'
+const noteColumns =
+  'id, name, description, editor_string, user_id ( id, username ), created_at'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -8,8 +10,6 @@ const defaultEditorValue =
   'Phase 1<br><br><br>' +
   'Phase 2<br><br><br>' +
   'Phase 3<br><br><br>'
-
-type NotesRow = Database['public']['Tables']['notes']['Row']
 
 export async function createNewNote(
   name: string,
@@ -42,6 +42,7 @@ export async function getNote(id: string) {
 export async function updateNote(
   id: number,
   name: string,
+  description: string,
   editor_string: string
 ) {
   const client = useSupabaseClient<Database>()
@@ -52,6 +53,7 @@ export async function updateNote(
       editor_string,
       name,
       id,
+      description,
       user_id: user.value?.id,
     })
     .select(noteColumns)
@@ -60,14 +62,15 @@ export async function updateNote(
   openSnackbar('Saved')
 }
 
-export function setNotes(
-  newNotes: Pick<NotesRow, 'id' | 'name' | 'editor_string' | 'user_id'>[]
-) {
+export function setNotes(newNotes: (NotesRow & { user_id: ProfilesRow })[]) {
   const notes = useNotes()
   notes.value = newNotes.map((item) => ({
     id: item.id,
     name: item.name,
-    user_id: item.user_id,
+    user_id: item.user_id.id,
+    username: item.user_id.username,
+    description: item.description,
+    created_at: item.created_at,
     editor_string: item.editor_string || '',
   }))
 }

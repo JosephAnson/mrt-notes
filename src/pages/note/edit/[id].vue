@@ -15,13 +15,16 @@ const { data: note } = await useAsyncData('notes', async () => {
 const groups = useGroups()
 
 const name = ref(note.value?.name || '')
+const description = ref(note.value?.description || '')
+
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
   json: generateJSON(note.value?.editor_string || '', editorExtensions),
 })
 
 const debouncedUpdateNote = useDebounceFn(() => {
-  if (note.value) updateNote(note.value.id, name.value, editor.value)
+  if (note.value)
+    updateNote(note.value.id, name.value, description.value, editor.value)
 }, 2000)
 
 async function deleteNoteAndRedirect() {
@@ -40,7 +43,6 @@ async function deleteNoteAndRedirect() {
         <Heading h1> Mrt Notes </Heading>
 
         <div class="flex">
-          <Input v-model="name" class="mr-2" @change="debouncedUpdateNote" />
           <Button
             class="bg-red-700 flex-shrink-0"
             @click="deleteNoteAndRedirect"
@@ -50,6 +52,21 @@ async function deleteNoteAndRedirect() {
         </div>
       </div>
 
+      <section class="bg-primary-500 p-4 mb-4 rounded">
+        <Field label="Title" stacked>
+          <Input
+            v-model="name"
+            @update:model-value="debouncedUpdateNote"
+          ></Input>
+        </Field>
+        <Field label="Description" stacked>
+          <Input
+            v-model="description"
+            type="textarea"
+            @update:model-value="debouncedUpdateNote"
+          ></Input>
+        </Field>
+      </section>
       <section>
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">

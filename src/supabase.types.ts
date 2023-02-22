@@ -43,21 +43,24 @@ export interface Database {
       }
       notes: {
         Row: {
-          created_at: string | null
+          created_at: string
+          description: string | null
           editor_string: string | null
           id: number
           name: string
           user_id: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
+          description?: string | null
           editor_string?: string | null
           id?: number
           name?: string
           user_id?: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
+          description?: string | null
           editor_string?: string | null
           id?: number
           name?: string

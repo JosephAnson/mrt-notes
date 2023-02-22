@@ -1,4 +1,5 @@
 import type { JSONContent } from '@tiptap/vue-3'
+import type { Database } from '~/supabase.types'
 
 export interface Profile {
   id: string
@@ -8,7 +9,10 @@ export interface Profile {
 
 export interface Note {
   id: number
+  username: string | null
   name: string
+  description: string | null
+  created_at: string
   editor_string: string
   user_id: string
 }
@@ -55,3 +59,6 @@ export interface Group {
   players: string[]
   note: EditorData
 }
+
+export type NotesRow = Database['public']['Tables']['notes']['Row']
+export type ProfilesRow = Database['public']['Tables']['profiles']['Row']

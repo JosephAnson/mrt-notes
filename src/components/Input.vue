@@ -19,7 +19,20 @@ export default defineComponent({
 </script>
 
 <template>
+  <textarea
+    v-if="type === 'textarea'"
+    :id="id"
+    v-model="input"
+    :placeholder="placeholder"
+    class="color-black rounded w-full p-2 block focus:ring-indigo-500 focus:border-indigo-500"
+    :class="{
+      'bg-gray-300 cursor-not-allowed': disabled,
+      'bg-white': !disabled,
+    }"
+    :disabled="disabled"
+  />
   <input
+    v-else
     :id="id"
     v-model="input"
     :type="type"
@@ -30,6 +43,5 @@ export default defineComponent({
       'bg-white': !disabled,
     }"
     :disabled="disabled"
-    @change="$emit('change')"
   />
 </template>
