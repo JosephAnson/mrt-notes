@@ -5,6 +5,9 @@ const editor = reactive<EditorData>({
   value: '',
   json: {},
 })
+
+const groups = useGroups()
+groups.value = []
 </script>
 
 <template>
