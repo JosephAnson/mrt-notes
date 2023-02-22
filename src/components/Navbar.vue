@@ -68,7 +68,7 @@ function logout() {
               v-if="profile.username"
               :to="`/profile/${profile.username}`"
             >
-              <Button> Profile </Button>
+              <Button> My Notes </Button>
             </NuxtLink>
             <NuxtLink to="/account">
               <Button v-if="profile.username">
