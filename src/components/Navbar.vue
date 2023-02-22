@@ -5,7 +5,7 @@ const router = useRouter()
 const profile = useProfile()
 
 const { data: asyncProfile } = await useAsyncData(
-  'profile',
+  'nav-profile',
   async () => await getProfile()
 )
 
