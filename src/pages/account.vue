@@ -10,7 +10,7 @@ const profile = useProfile()
 
 await useAsyncGetProfile()
 
-const username = ref(profile.value.username)
+const username = ref<string>(profile.value?.username || '')
 </script>
 
 <template>
@@ -46,7 +46,12 @@ const username = ref(profile.value.username)
         <Notification v-if="!profile.username">
           Set a username if you want to share your profile
         </Notification>
-        <Field label-for="signup with" label="Signed up with " stacked>
+        <Field
+          v-if="user"
+          label-for="signup with"
+          label="Signed up with "
+          stacked
+        >
           <span
             v-for="provider in user.app_metadata.providers"
             :key="provider"

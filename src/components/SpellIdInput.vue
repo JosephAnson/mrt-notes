@@ -2,7 +2,7 @@
 import SpellInformation from '~/components/SpellInformation.vue'
 
 const props = defineProps({
-  modelValue: String,
+  modelValue: [String, Number],
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -12,7 +12,10 @@ const spellIDInformationUrl = computed(
     `https://nether.wowhead.com/tooltip/spell/${props.modelValue}?dataEnv=1&locale=0`
 )
 
-const { data: spellIDInformation } = useFetch(spellIDInformationUrl)
+const { data: spellIDInformation } = useFetch<{
+  icon: string
+  tooltip: string
+}>(spellIDInformationUrl)
 
 const modelValue = useVModel(props, 'modelValue', emit)
 </script>

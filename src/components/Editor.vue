@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { EditorContent } from '@tiptap/vue-3'
 import { useTeamMembers } from '~/composables/state'
 import type { Member } from '~/types'
@@ -6,99 +6,88 @@ import type { Marker } from '~/utils/config'
 import { markers, wowColors } from '~/utils/config'
 import { useEditor } from '~/utils/editor'
 
-export default defineComponent({
-  components: {
-    EditorContent,
-  },
-  props: {
-    modelValue: {
-      type: String,
-      default: '',
-    },
-  },
-  emits: ['update:modelValue', 'update:json'],
-  setup(props, { emit }) {
-    const { modelValue } = toRefs(props)
-    const teamMembers = useTeamMembers()
-    const isSpellOccurrenceModelActive = ref(false)
-    const isSpellIDModelActive = ref(false)
-    const isTimeSnippetModelActive = ref(false)
-    const time = ref('')
-    const spellID = ref('')
-    const spellOccurrence = reactive({
-      timeAfterSpellStarted: '00:10',
-      occurrence: 1,
-      spellId: 306111,
-    })
+const props = withDefaults(
+  defineProps<{
+    modelValue: string
+  }>(),
+  {
+    modelValue: '',
+  }
+)
 
-    const editor = useEditor(modelValue, emit)
+const emits = defineEmits(['update:modelValue', 'update:json'])
 
-    function createMarker(marker: Marker) {
-      editor.value?.chain().focus().setImage({ src: marker.src }).run()
-    }
+const { modelValue } = toRefs(props)
 
-    async function createPlayerSnippet(player: Member) {
-      const insertString = player.name
-
-      editor.value?.commands.setMark('textStyle', {
-        color: wowColors[player.class],
-      })
-      editor.value?.commands.insertContent(insertString)
-      editor.value?.commands.unsetMark('textStyle')
-      editor.value?.commands.insertContent(' ')
-      editor.value?.commands.focus()
-    }
-
-    function createSpellSnippet(value: String) {
-      openSnackbar(`Spell entered is: ${value}`)
-      const insertString = `{spell:${value}}`
-
-      editor.value?.commands.insertContent(insertString)
-      editor.value?.commands.focus()
-
-      time.value = ''
-      isSpellIDModelActive.value = false
-    }
-
-    function createTimeSnippet(value: String) {
-      openSnackbar(`Time entered is: ${value}`)
-
-      editor.value?.commands.insertContent(`{time:${value}}`)
-      editor.value?.commands.focus()
-
-      time.value = ''
-      isTimeSnippetModelActive.value = false
-    }
-
-    function createSpellOccurrenceSnippet() {
-      const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
-
-      openSnackbar(`Snippet entered is: ${insertString}`)
-
-      editor.value?.commands.insertContent(insertString)
-      editor.value?.commands.focus()
-
-      isSpellOccurrenceModelActive.value = false
-    }
-
-    return {
-      editor,
-      isSpellOccurrenceModelActive,
-      isTimeSnippetModelActive,
-      isSpellIDModelActive,
-      spellOccurrence,
-      teamMembers,
-      time,
-      spellID,
-      markers,
-      createMarker,
-      createPlayerSnippet,
-      createTimeSnippet,
-      createSpellSnippet,
-      createSpellOccurrenceSnippet,
-    }
-  },
+const teamMembers = useTeamMembers()
+const isSpellOccurrenceModelActive = ref(false)
+const isSpellIDModelActive = ref(false)
+const isTimeSnippetModelActive = ref(false)
+const time = ref('')
+const spellID = ref('')
+const spellOccurrence = reactive({
+  timeAfterSpellStarted: '00:10',
+  occurrence: 1,
+  spellId: 306111,
 })
+
+const editor = useEditor(modelValue, emits)
+
+function createMarker(marker: Marker) {
+  editor.value?.chain().focus().setImage({ src: marker.src }).run()
+}
+
+async function createPlayerSnippet(player: Member) {
+  const insertString = player.name
+
+  editor.value?.commands.setMark('textStyle', {
+    color: wowColors[player.class],
+  })
+  editor.value?.commands.insertContent(insertString)
+  editor.value?.commands.unsetMark('textStyle')
+  editor.value?.commands.insertContent(' ')
+  editor.value?.commands.focus()
+}
+
+function createSpellSnippet(value: String) {
+  openSnackbar(`Spell entered is: ${value}`)
+  const insertString = `{spell:${value}}`
+
+  editor.value?.commands.insertContent(insertString)
+  editor.value?.commands.focus()
+
+  time.value = ''
+  isSpellIDModelActive.value = false
+}
+
+function createTimeSnippet(value: String) {
+  openSnackbar(`Time entered is: ${value}`)
+
+  editor.value?.commands.insertContent(`{time:${value}}`)
+  editor.value?.commands.focus()
+
+  time.value = ''
+  isTimeSnippetModelActive.value = false
+}
+
+function createSpellOccurrenceSnippet() {
+  const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
+
+  openSnackbar(`Snippet entered is: ${insertString}`)
+
+  editor.value?.commands.insertContent(insertString)
+  editor.value?.commands.focus()
+
+  isSpellOccurrenceModelActive.value = false
+}
+
+function setColor(event: Event) {
+  editor.value
+    ?.chain()
+    .focus()
+    .setColor((event.target as HTMLInputElement).value)
+    .run()
+}
 </script>
 
 <template>
@@ -109,7 +98,7 @@ export default defineComponent({
           class="absolute top-0 left-0 w-full h-full opacity-0"
           type="color"
           :value="editor?.getAttributes('textStyle').color"
-          @input="editor?.chain().focus().setColor($event.target.value).run()"
+          @input="setColor"
         />
         <span
           class="i-carbon-text-color text-3xl inline-block pointer-events-none"

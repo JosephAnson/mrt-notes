@@ -30,11 +30,11 @@ export default defineComponent({
       },
     },
     ariaRole: {
-      type: String as PropType<string | null>,
+      type: String,
       validator: (value: string) => {
         return ['dialog', 'alertdialog'].includes(value)
       },
-      default: null,
+      default: 'dialog',
     },
     animation: {
       type: String,
@@ -54,9 +54,9 @@ export default defineComponent({
       return ['escape', 'x', 'outside', 'button']
     })
 
-    function showCancel() {
+    const showCancel = computed(() => {
       return cancelOptions.value.includes('button')
-    }
+    })
 
     /**
      * If it's a prompt Dialog, validate the input.

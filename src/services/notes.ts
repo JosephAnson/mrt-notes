@@ -85,7 +85,9 @@ export async function getAllNotes() {
   return getAllNotesByUserId(user.value?.id || '')
 }
 
-export async function getAllNotesByUserId(user_id: String) {
+export async function getAllNotesByUserId(
+  user_id: String
+): Promise<NotesAndProfile[]> {
   const client = useSupabaseClient<Database>()
   const { data } = await client
     .from('notes')
@@ -93,7 +95,7 @@ export async function getAllNotesByUserId(user_id: String) {
     .eq('user_id', user_id)
     .order('created_at')
 
-  return data
+  return data as NotesAndProfile[]
 }
 
 export async function deleteNote(id: number) {

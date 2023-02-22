@@ -38,7 +38,7 @@ async function deleteNoteAndRedirect() {
 
 <template>
   <Page>
-    <Container>
+    <Container v-if="note">
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 
