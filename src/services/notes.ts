@@ -1,3 +1,4 @@
+import type { PostgrestSingleResponse } from '@supabase/postgrest-js'
 import type { Database } from '~/supabase.types'
 import type { NotesRow, ProfilesRow } from '~/types'
 
@@ -10,6 +11,8 @@ const defaultEditorValue =
   'Phase 1<br><br><br>' +
   'Phase 2<br><br><br>' +
   'Phase 3<br><br><br>'
+
+type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
 
 export async function createNewNote(
   name: string,
@@ -34,7 +37,9 @@ export async function createNewNote(
   if (data) await router.push(`/note/${data.id}`)
 }
 
-export async function getNote(id: string) {
+export async function getNote(
+  id: string
+): Promise<PostgrestSingleResponse<NotesAndProfile>> {
   const client = useSupabaseClient<Database>()
   return client.from('notes').select(noteColumns).match({ id }).single()
 }
@@ -62,7 +67,7 @@ export async function updateNote(
   openSnackbar('Saved')
 }
 
-export function setNotes(newNotes: (NotesRow & { user_id: ProfilesRow })[]) {
+export function setNotes(newNotes: NotesAndProfile[]) {
   const notes = useNotes()
   notes.value = newNotes.map((item) => ({
     id: item.id,

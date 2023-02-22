@@ -12,9 +12,7 @@ const spellIDInformationUrl = computed(
     `https://nether.wowhead.com/tooltip/spell/${props.modelValue}?dataEnv=1&locale=0`
 )
 
-const { data: spellIDInformation } = useFetch(spellIDInformationUrl, {
-  refetch: true,
-})
+const { data: spellIDInformation } = useFetch(spellIDInformationUrl)
 
 const modelValue = useVModel(props, 'modelValue', emit)
 </script>

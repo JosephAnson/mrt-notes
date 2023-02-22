@@ -12,8 +12,8 @@ const { data: note } = await useAsyncData('notes', async () => {
   return data
 })
 
-const noteIsUsers = computed(
-  () => user.value && note.value && user.value.id === note.value.user_id
+const noteIsUsers = computed(() =>
+  isUsersNote(user.value?.id, note.value?.user_id?.id)
 )
 
 const editorString = computed(() => note.value?.editor_string || '')

@@ -14,6 +14,7 @@ const { data: asyncProfile } = await useAsyncData(
   'profile',
   async () => await getProfileByUsername(usernameParam)
 )
+
 const { data: asyncNotes } = await useAsyncData(
   'notes',
   async () => await getAllNotesByUserId(asyncProfile.value?.id || '')
@@ -26,7 +27,9 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
   <Page>
     <Container>
       <div v-if="asyncProfile">
-        <Heading h1>{{ capitalCase(asyncProfile.username) }}'s Profile</Heading>
+        <Heading h1
+          >{{ capitalCase(asyncProfile?.username || '') }}'s Profile</Heading
+        >
         <CreateNote v-if="user?.id === asyncProfile?.id" />
 
         <div v-if="notes.length">
