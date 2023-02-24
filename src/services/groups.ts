@@ -20,26 +20,28 @@ export async function createNewGroup(
   const user = useSupabaseUser()
   const groups = useGroups()
 
-  const { data } = await client
-    .from('groups')
-    .insert({
-      note_id,
-      order: groups.value.length + 1,
-      players,
-      type,
-      user_id: user.value?.id,
-      editor_string,
-    })
-    .select(groupColumns)
-    .single()
+  if (user.value) {
+    const { data } = await client
+      .from('groups')
+      .insert({
+        note_id,
+        order: groups.value.length + 1,
+        players,
+        type,
+        user_id: user.value.id,
+        editor_string,
+      })
+      .select(groupColumns)
+      .single()
 
-  if (data) {
-    groups.value?.push({
-      id: data.id,
-      note: { value: data.editor_string || '', json: {} },
-      type: (data.type as GroupTypeUnion) || 'Players',
-      players: data.players || [],
-    })
+    if (data) {
+      groups.value?.push({
+        id: data.id,
+        note: { value: data.editor_string || '', json: {} },
+        type: (data.type as GroupTypeUnion) || 'Players',
+        players: data.players || [],
+      })
+    }
   }
 }
 
@@ -47,22 +49,26 @@ export async function updateGroups(note_id: number, groups: Group[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
 
-  await client
-    .from('groups')
-    .upsert(
-      groups.map((group, index) => ({
-        editor_string: group.note.value,
-        id: group.id,
-        note_id,
-        order: index,
-        players: group.players,
-        type: group.type,
-        user_id: user.value?.id,
-      }))
-    )
-    .select(groupColumns)
+  if (user.value) {
+    await client
+      .from('groups')
+      .upsert(
+        groups.map((group, index) => ({
+          editor_string: group.note.value,
+          id: group.id,
+          note_id,
+          order: index,
+          players: group.players,
+          type: group.type,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          user_id: user.value.id,
+        }))
+      )
+      .select(groupColumns)
 
-  openSnackbar('Saved')
+    openSnackbar('Saved')
+  }
 }
 
 export async function getAllGroups(noteId: number | string) {

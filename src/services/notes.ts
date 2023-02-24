@@ -3,7 +3,7 @@ import type { Database } from '~/supabase.types'
 import type { NotesRow, ProfilesRow } from '~/types'
 
 const noteColumns =
-  'id, name, description, editor_string, user_id ( id, username ), created_at'
+  'id, name, description, editor_string, user_id ( id, username ), created_at, categories'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -24,17 +24,19 @@ export async function createNewNote(
   const user = useSupabaseUser()
   const router = useRouter()
 
-  const { data } = await client
-    .from('notes')
-    .insert({
-      editor_string,
-      name,
-      user_id: user.value?.id,
-    })
-    .select(noteColumns)
-    .single()
+  if (user.value) {
+    const { data } = await client
+      .from('notes')
+      .insert({
+        editor_string,
+        name,
+        user_id: user.value.id,
+      })
+      .select(noteColumns)
+      .single()
 
-  if (data) await router.push(`/note/${data.id}`)
+    if (data) await router.push(`/note/edit/${data.id}`)
+  }
 }
 
 export async function getNote(
@@ -44,25 +46,34 @@ export async function getNote(
   return client.from('notes').select(noteColumns).match({ id }).single()
 }
 
-export async function updateNote(
-  id: number,
-  name: string,
-  description: string,
+export async function updateNote({
+  id,
+  name,
+  description,
+  editor_string,
+  categories,
+}: {
+  id: number
+  name: string
+  description: string
   editor_string: string
-) {
+  categories: string[]
+}) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  await client
-    .from('notes')
-    .upsert({
-      editor_string,
-      name,
-      id,
-      description,
-      user_id: user.value?.id,
-    })
-    .select(noteColumns)
-    .single()
+  if (user.value)
+    await client
+      .from('notes')
+      .upsert({
+        editor_string,
+        name,
+        id,
+        description,
+        categories,
+        user_id: user.value.id,
+      })
+      .select(noteColumns)
+      .single()
 
   openSnackbar('Saved')
 }

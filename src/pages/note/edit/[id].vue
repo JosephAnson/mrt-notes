@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
-import type { EditorData } from '~/types'
+import type { EditorData, Node } from '~/types'
+import { flattenedNoteCategories } from '~/utils/constants'
 
 definePageMeta({
   middleware: 'note-edit',
@@ -14,8 +15,16 @@ const { data: note } = await useAsyncData('notes', async () => {
 
 const groups = useGroups()
 
+const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
+  note.value?.categories?.includes(category.id)
+)
+
 const name = ref(note.value?.name || '')
 const description = ref(note.value?.description || '')
+const categories = ref<Node[]>(selectedCategoryList)
+const categoryIds = computed<string[]>(() =>
+  categories.value.map((category) => category.id)
+)
 
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
@@ -24,7 +33,13 @@ const editor = reactive<EditorData>({
 
 const debouncedUpdateNote = useDebounceFn(() => {
   if (note.value)
-    updateNote(note.value.id, name.value, description.value, editor.value)
+    updateNote({
+      id: note.value.id,
+      name: name.value,
+      description: description.value,
+      editor_string: editor.value,
+      categories: categoryIds.value,
+    })
 }, 2000)
 
 async function deleteNoteAndRedirect() {
@@ -65,6 +80,12 @@ async function deleteNoteAndRedirect() {
             type="textarea"
             @update:model-value="debouncedUpdateNote"
           ></Input>
+        </Field>
+        <Field label="Tags" stacked>
+          <NoteCategories
+            v-model="categories"
+            @update:model-value="debouncedUpdateNote"
+          ></NoteCategories>
         </Field>
       </section>
       <section>

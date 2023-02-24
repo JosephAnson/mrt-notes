@@ -62,3 +62,9 @@ export interface Group {
 
 export type NotesRow = Database['public']['Tables']['notes']['Row']
 export type ProfilesRow = Database['public']['Tables']['profiles']['Row']
+
+export interface Node {
+  id: string
+  label: string
+  children?: Node[]
+}

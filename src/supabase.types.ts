@@ -28,7 +28,7 @@ export interface Database {
           order?: number
           players?: string[] | null
           type?: string | null
-          user_id?: string
+          user_id: string
         }
         Update: {
           created_at?: string | null
@@ -43,6 +43,7 @@ export interface Database {
       }
       notes: {
         Row: {
+          categories: string[] | null
           created_at: string
           description: string | null
           editor_string: string | null
@@ -51,14 +52,16 @@ export interface Database {
           user_id: string
         }
         Insert: {
+          categories?: string[] | null
           created_at?: string
           description?: string | null
           editor_string?: string | null
           id?: number
           name?: string
-          user_id?: string
+          user_id: string
         }
         Update: {
+          categories?: string[] | null
           created_at?: string
           description?: string | null
           editor_string?: string | null

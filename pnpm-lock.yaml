@@ -27,6 +27,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-yml: ^1.5.0
   focus-trap: ^7.3.1
+  fuse.js: ^6.6.2
   nuxt: ^3.2.2
   postcss: 8.4.21
   prettier: ^2.8.4
@@ -53,10 +54,11 @@ dependencies:
   '@unocss/nuxt': 0.49.7_vite@4.1.3
   '@unocss/reset': 0.49.7
   '@vueuse/core': 9.13.0_vue@3.2.47
-  '@vueuse/integrations': 9.13.0_6fe64dotbnaufdawerwdefr2va
+  '@vueuse/integrations': 9.13.0_6dhvfivfg7vpatybfth6glzfvy
   '@vueuse/nuxt': 9.13.0_nuxt@3.2.2+vue@3.2.47
   change-case: 4.1.2
   focus-trap: 7.3.1
+  fuse.js: 6.6.2
   nuxt: 3.2.2_h4fnh25vzwmk3hy62tksygpjya
   supabase: 1.38.6
   tailwindcss: 3.2.7_postcss@8.4.21
@@ -2361,7 +2363,7 @@ packages:
       vue: 3.2.47
     dev: false
 
-  /@vueuse/integrations/9.13.0_6fe64dotbnaufdawerwdefr2va:
+  /@vueuse/integrations/9.13.0_6dhvfivfg7vpatybfth6glzfvy:
     resolution: {integrity: sha512-I1kX/tsfcvWWLZD7HZaP0LsSfchK13YxReLfharXhk72SFXp87doLbRaTfIF5w8m/gr/vPtcNyQPAXW7Ubpuww==}
     peerDependencies:
       async-validator: '*'
@@ -2403,6 +2405,7 @@ packages:
       '@vueuse/shared': 9.13.0_vue@3.2.47
       change-case: 4.1.2
       focus-trap: 7.3.1
+      fuse.js: 6.6.2
       vue-demi: 0.13.11_vue@3.2.47
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -4314,6 +4317,11 @@ packages:
   /functions-have-names/1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
+
+  /fuse.js/6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
+    dev: false
 
   /gauge/3.0.2:
     resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}
