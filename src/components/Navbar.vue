@@ -55,7 +55,9 @@ function logout() {
         </NuxtLink>
 
         <div class="menu flex">
-          <Button class="mr-2" @click="tweet"> Tweet </Button>
+          <NuxtLink to="/search">
+            <Button class="mr-2"> Search </Button>
+          </NuxtLink>
 
           <NuxtLink to="/playground">
             <Button class="mr-2"> Playground </Button>

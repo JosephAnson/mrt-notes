@@ -1,6 +1,6 @@
 <script lang="ts" setup async>
 import { paramCase } from 'change-case'
-import { getAllNotes } from '~/services/notes'
+import { getAllUserNotes } from '~/services/notes'
 import { getAllTeamMembers } from '~/services/teamMembers'
 
 const user = useSupabaseUser()
@@ -9,7 +9,7 @@ const teamMembers = useTeamMembers()
 
 const { data: asyncNotes } = await useAsyncData(
   'notes',
-  async () => await getAllNotes()
+  async () => await getAllUserNotes()
 )
 const { data: asyncTeamMembers } = await useAsyncData(
   'teamMembers',
@@ -24,7 +24,7 @@ if (user.value) {
 watchOnce(
   () => user.value,
   async () => {
-    const notes = await getAllNotes()
+    const notes = await getAllUserNotes()
     const teamMembers = await getAllTeamMembers()
 
     if (notes) setNotes(notes)

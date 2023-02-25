@@ -91,9 +91,35 @@ export function setNotes(newNotes: NotesAndProfile[]) {
   }))
 }
 
-export async function getAllNotes() {
+export async function getAllUserNotes() {
   const user = useSupabaseUser()
   return getAllNotesByUserId(user.value?.id || '')
+}
+
+export async function getAllNotes() {
+  const client = useSupabaseClient<Database>()
+  const { data } = await client
+    .from('notes')
+    .select(noteColumns)
+    .order('created_at')
+    .limit(50)
+
+  return data as NotesAndProfile[]
+}
+
+export async function searchAllNotes(name: string) {
+  const client = useSupabaseClient<Database>()
+  const { data } = await client
+    .from('notes')
+    .select(noteColumns)
+    .order('created_at')
+    .limit(50)
+    .textSearch('name', name, {
+      type: 'websearch',
+      config: 'english',
+    })
+
+  return data as NotesAndProfile[]
 }
 
 export async function getAllNotesByUserId(

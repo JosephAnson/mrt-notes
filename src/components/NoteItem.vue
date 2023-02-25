@@ -17,7 +17,9 @@ const formattedDate = useDateFormat(props.note.created_at, 'YYYY-MM-DD')
         {{ props.note.name }}
       </Heading>
       <div class="flex items-center pb-2">
-        <span class="i-carbon-user inline-block" /> {{ props.note.username }}
+        <nuxt-link :to="`/profile/${props.note.username}`">
+          <span class="i-carbon-user inline-block" /> {{ props.note.username }}
+        </nuxt-link>
         <span
           class="border-r-1 border-solid h-4 border-white pr-2 mr-2 inline-block"
         ></span>

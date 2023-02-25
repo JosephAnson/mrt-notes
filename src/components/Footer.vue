@@ -2,8 +2,8 @@
   <footer class="py-10">
     <div class="container">
       <div class="flex items-center justify-between">
-        <div>
-          <p>
+        <div class="flex items-center">
+          <Button class="bg-transparent !px-2">
             <a
               href="https://github.com/JosephAnson/mrt-notes/issues"
               target="_blank"
@@ -13,7 +13,10 @@
               <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
               Submit issues or request features
             </a>
-          </p>
+          </Button>
+          <Button class="ml-4 !px-2 bg-transparent" @click="tweet">
+            <div class="i-carbon-logo-twitter"></div
+          ></Button>
         </div>
 
         <div class="flex items-center">
