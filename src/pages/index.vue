@@ -38,15 +38,27 @@ watchOnce(
 <template>
   <Section>
     <Container>
-      <Heading h1> Homepage</Heading>
+      <div class="flex justify-between">
+        <div>
+          <Heading h1> Homepage</Heading>
 
-      <Heading h2 class="mb-8">
-        Website to handle all your World of Warcraft MRT Notes
-      </Heading>
+          <Heading h2 class="mb-8 flex">
+            Website to handle all your World of Warcraft MRT Notes
+          </Heading>
+        </div>
+
+        <a
+          target="_blank"
+          rel="noreferrer nofollow"
+          href="https://www.curseforge.com/wow/addons/method-raid-tools"
+        >
+          <Button> Download MRT WoW Addon</Button>
+        </a>
+      </div>
 
       <div class="user-information mb-8">
-        <div v-if="!user">
-          <Heading class="mb-4"> Login to get started</Heading>
+        <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">
+          <Heading class="mr-4 !mb-0" h3> Login to get started</Heading>
           <NuxtLink to="login"><Button>Login</Button></NuxtLink>
         </div>
 
