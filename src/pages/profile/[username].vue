@@ -27,11 +27,15 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
   <Section>
     <Container>
       <div v-if="asyncProfile">
-        <Heading h1
-          >{{ capitalCase(asyncProfile?.username || '') }}'s Profile</Heading
-        >
+        <Heading h1>
+          {{ capitalCase(asyncProfile?.username || '') }}'s Profile
+        </Heading>
+
         <CreateNote v-if="user?.id === asyncProfile?.id" />
 
+        <Heading h2>
+          {{ capitalCase(asyncProfile?.username || '') }}'s Notes
+        </Heading>
         <div v-if="notes.length">
           <NoteItem v-for="note in notes" :key="note.id" :note="note" />
         </div>
