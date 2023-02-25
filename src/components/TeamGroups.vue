@@ -103,7 +103,7 @@ const filteredMembers = computed(() =>
               >
                 <div class="relative mt-1">
                   <div
-                    class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
+                    class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-300 sm:text-sm"
                   >
                     <ComboboxInput
                       class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
@@ -135,7 +135,7 @@ const filteredMembers = computed(() =>
                           <li
                             class="relative cursor-default select-none py-2 pl-10 pr-4"
                             :class="{
-                              'bg-teal-600 text-white': active,
+                              'bg-primary-100 text-white': active,
                               'text-gray-900': !active,
                             }"
                           >
@@ -153,7 +153,7 @@ const filteredMembers = computed(() =>
                               class="absolute inset-y-0 left-0 flex items-center pl-3"
                               :class="{
                                 'text-white': active,
-                                'text-teal-600': !active,
+                                'text-primary-100': !active,
                               }"
                             >
                               <span
