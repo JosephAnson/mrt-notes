@@ -20,6 +20,7 @@ const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
 )
 
 const name = ref(note.value?.name || '')
+const saving = ref(false)
 const description = ref(note.value?.description || '')
 const categories = ref<Node[]>(selectedCategoryList)
 const categoryIds = computed<string[]>(() =>
@@ -32,7 +33,7 @@ const editor = reactive<EditorData>({
 })
 
 const debouncedUpdateNote = useDebounceFn(() => {
-  if (note.value)
+  if (note.value) {
     updateNote({
       id: note.value.id,
       name: name.value,
@@ -40,7 +41,14 @@ const debouncedUpdateNote = useDebounceFn(() => {
       editor_string: editor.value,
       categories: categoryIds.value,
     })
+    saving.value = false
+  }
 }, 2000)
+
+function save() {
+  saving.value = true
+  debouncedUpdateNote()
+}
 
 async function deleteNoteAndRedirect() {
   if (note.value) {
@@ -57,7 +65,11 @@ async function deleteNoteAndRedirect() {
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 
-        <div class="flex">
+        <div class="flex items-center">
+          <div v-if="saving" class="flex item-center mr-4">
+            <p class="mr-4">Saving</p>
+            <div class="i-carbon-catalog animate-spin h-6 w-6"></div>
+          </div>
           <Button
             class="bg-red-700 flex-shrink-0"
             @click="deleteNoteAndRedirect"
@@ -69,22 +81,19 @@ async function deleteNoteAndRedirect() {
 
       <section class="bg-primary-500 p-4 mb-4 rounded">
         <Field label="Title" stacked>
-          <Input
-            v-model="name"
-            @update:model-value="debouncedUpdateNote"
-          ></Input>
+          <Input v-model="name" @update:model-value="save"></Input>
         </Field>
         <Field label="Description" stacked>
           <Input
             v-model="description"
             type="textarea"
-            @update:model-value="debouncedUpdateNote"
+            @update:model-value="save"
           ></Input>
         </Field>
         <Field label="Tags" stacked>
           <NoteCategories
             v-model="categories"
-            @update:model-value="debouncedUpdateNote"
+            @update:model-value="save"
           ></NoteCategories>
         </Field>
       </section>
@@ -98,7 +107,7 @@ async function deleteNoteAndRedirect() {
             <Editor
               v-model="editor.value"
               class="block"
-              @update:model-value="debouncedUpdateNote"
+              @update:model-value="save"
               @update:json="editor.json = $event"
             />
 
