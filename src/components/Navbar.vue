@@ -72,6 +72,9 @@ function logout() {
             >
               <Button> My Notes </Button>
             </NuxtLink>
+            <NuxtLink to="/team/">
+              <Button> Team </Button>
+            </NuxtLink>
             <NuxtLink to="/account">
               <Button v-if="profile.username">
                 Account ({{ profile.username }})

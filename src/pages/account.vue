@@ -14,7 +14,7 @@ const username = ref<string>(profile.value?.username || '')
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <Heading h1>Account</Heading>
 
@@ -62,5 +62,5 @@ const username = ref<string>(profile.value?.username || '')
         </Field>
       </div>
     </Container>
-  </Page>
+  </Section>
 </template>

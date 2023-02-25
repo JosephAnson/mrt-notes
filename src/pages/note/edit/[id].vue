@@ -60,7 +60,7 @@ async function deleteNoteAndRedirect() {
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container v-if="note">
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
@@ -125,5 +125,5 @@ async function deleteNoteAndRedirect() {
         </div>
       </section>
     </Container>
-  </Page>
+  </Section>
 </template>

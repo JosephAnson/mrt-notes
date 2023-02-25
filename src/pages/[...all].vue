@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <Section>
     <Container> Page can't be found </Container>
-  </Page>
+  </Section>
 </template>

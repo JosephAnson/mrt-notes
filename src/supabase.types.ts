@@ -49,6 +49,7 @@ export interface Database {
           editor_string: string | null
           id: number
           name: string
+          updated_at: string | null
           user_id: string
         }
         Insert: {
@@ -58,6 +59,7 @@ export interface Database {
           editor_string?: string | null
           id?: number
           name?: string
+          updated_at?: string | null
           user_id: string
         }
         Update: {
@@ -67,6 +69,7 @@ export interface Database {
           editor_string?: string | null
           id?: number
           name?: string
+          updated_at?: string | null
           user_id?: string
         }
       }

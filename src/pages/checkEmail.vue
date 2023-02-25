@@ -1,5 +1,5 @@
 <template>
-  <Page>
+  <Section>
     <Container> Check your email for magic link to sign in </Container>
-  </Page>
+  </Section>
 </template>

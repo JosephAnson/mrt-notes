@@ -11,7 +11,7 @@ groups.value = []
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <div class="flex justify-between">
         <Heading h1> Playground </Heading>
@@ -40,5 +40,5 @@ groups.value = []
         </div>
       </section>
     </Container>
-  </Page>
+  </Section>
 </template>

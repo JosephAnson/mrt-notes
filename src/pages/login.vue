@@ -10,7 +10,7 @@ const returnUrl = computed(
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <Heading h1>Login</Heading>
       <div class="mb-8">
@@ -30,5 +30,5 @@ const returnUrl = computed(
       </Button>
       <Button v-else @click="client.auth.signOut()"> Logout </Button>
     </Container>
-  </Page>
+  </Section>
 </template>

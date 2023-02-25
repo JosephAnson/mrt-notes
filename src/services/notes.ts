@@ -96,13 +96,16 @@ export async function getAllUserNotes() {
   return getAllNotesByUserId(user.value?.id || '')
 }
 
-export async function getAllNotes() {
+export async function getAllNotes({
+  order,
+  limit,
+}: { order?: keyof NotesRow; limit?: number } = {}) {
   const client = useSupabaseClient<Database>()
   const { data } = await client
     .from('notes')
     .select(noteColumns)
-    .order('created_at')
-    .limit(50)
+    .order(order || 'created_at', { ascending: false })
+    .limit(limit || 50)
 
   return data as NotesAndProfile[]
 }

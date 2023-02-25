@@ -1,4 +1,5 @@
 <template>
+  <Heading h3>Features</Heading>
   <div class="prose mt-8">
     <p>
       Website dedicated to making raid leaders lives a little easier with ert

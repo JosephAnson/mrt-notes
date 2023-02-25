@@ -43,7 +43,7 @@ if (asyncGroups.value) {
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
@@ -61,5 +61,5 @@ if (asyncGroups.value) {
         <NotePreview :note-json="json" :note-string="editorString" />
       </section>
     </Container>
-  </Page>
+  </Section>
 </template>

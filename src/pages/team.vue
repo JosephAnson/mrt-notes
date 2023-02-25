@@ -5,10 +5,10 @@ definePageMeta({
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <Heading h1> Team Members </Heading>
       <TeamMembers />
     </Container>
-  </Page>
+  </Section>
 </template>

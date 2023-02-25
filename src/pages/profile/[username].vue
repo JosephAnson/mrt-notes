@@ -24,7 +24,7 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <div v-if="asyncProfile">
         <Heading h1
@@ -41,5 +41,5 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
       </div>
       <Heading v-else h1>No profile found</Heading>
     </Container>
-  </Page>
+  </Section>
 </template>

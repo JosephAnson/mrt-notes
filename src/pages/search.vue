@@ -33,7 +33,7 @@ async function searchNotes() {
 </script>
 
 <template>
-  <Page>
+  <Section>
     <Container>
       <form class="mb-10" @submit.prevent="searchNotes">
         <Heading h1>Search</Heading>
@@ -45,5 +45,5 @@ async function searchNotes() {
 
       <NoteItem v-for="note in notes" :key="note.id" :note="note" />
     </Container>
-  </Page>
+  </Section>
 </template>
