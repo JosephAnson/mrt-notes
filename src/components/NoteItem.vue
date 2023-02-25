@@ -13,12 +13,12 @@ const updatedOn = useDateFormat(props.note.updated_at, format)
 </script>
 
 <template>
-  <div class="flex justify-between w-full bg-gray-800 py-1 px-2 rounded mb-2">
+  <div class="flex justify-between w-full bg-gray-800 p-4 rounded mb-2">
     <div class="mr-4">
       <Heading h4 class="line-clamp-3">
         {{ props.note.name }}
       </Heading>
-      <div class="flex items-center pb-2">
+      <div class="flex items-center text-gray-300 text-sm">
         <nuxt-link
           v-if="props.note.username"
           :to="`/profile/${props.note.username}`"
@@ -35,25 +35,24 @@ const updatedOn = useDateFormat(props.note.updated_at, format)
         ></span>
         Updated: {{ updatedOn }}
       </div>
-      <Field
-        v-if="props.note.description"
-        stacked
-        class="line-clamp-3 border-t-1 border-solid border-white pt-2"
-      >
+      <Field v-if="props.note.description" stacked class="line-clamp-3 pt-2">
         <p>{{ props.note.description }}</p>
       </Field>
     </div>
-    <div class="flex">
+    <div class="flex flex-col">
       <NuxtLink
         v-if="isUsers"
         :to="`/note/edit/${props.note.id}`"
-        class="mr-2 mb-2 inline-block"
+        class="mr-2 mb-2 inline-block w-full"
       >
-        <Button>Edit</Button>
+        <Button class="w-full">Edit</Button>
       </NuxtLink>
 
-      <NuxtLink :to="`/note/${props.note.id}`" class="mr-2 mb-2 inline-block">
-        <Button>View</Button>
+      <NuxtLink
+        :to="`/note/${props.note.id}`"
+        class="mr-2 mb-2 inline-block w-full"
+      >
+        <Button class="w-full">View</Button>
       </NuxtLink>
 
       <Button
