@@ -1,9 +1,9 @@
 import type { PostgrestSingleResponse } from '@supabase/postgrest-js'
 import type { Database } from '~/supabase.types'
-import type { NotesRow, ProfilesRow } from '~/types'
+import type { Note, NotesRow, ProfilesRow } from '~/types'
 
 const noteColumns =
-  'id, name, description, editor_string, user_id ( id, username ), created_at, categories'
+  'id, name, description, editor_string, user_id ( id, username ), created_at, updated_at, categories'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -78,17 +78,22 @@ export async function updateNote({
   openSnackbar('Saved')
 }
 
-export function setNotes(newNotes: NotesAndProfile[]) {
-  const notes = useNotes()
-  notes.value = newNotes.map((item) => ({
+export function createNotes(item: NotesAndProfile): Note {
+  return {
     id: item.id,
     name: item.name,
     user_id: item.user_id.id,
     username: item.user_id.username,
     description: item.description,
     created_at: item.created_at,
+    updated_at: item.updated_at,
     editor_string: item.editor_string || '',
-  }))
+  }
+}
+
+export function setNotes(newNotes: NotesAndProfile[]) {
+  const notes = useNotes()
+  notes.value = newNotes.map(createNotes)
 }
 
 export async function getAllUserNotes() {

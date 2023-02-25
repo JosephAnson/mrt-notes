@@ -7,7 +7,8 @@ const props = defineProps<{
 const user = useSupabaseUser()
 
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
-const formattedDate = useDateFormat(props.note.created_at, 'YYYY-MM-DD')
+const createdOn = useDateFormat(props.note.created_at, 'YYYY-MM-DD')
+const updatedOn = useDateFormat(props.note.updated_at, 'YYYY-MM-DD')
 </script>
 
 <template>
@@ -27,7 +28,11 @@ const formattedDate = useDateFormat(props.note.created_at, 'YYYY-MM-DD')
           v-if="props.note.username"
           class="border-r-1 border-solid h-4 border-white pr-2 mr-2 inline-block"
         ></span>
-        Created on: {{ formattedDate }}
+        Created on: {{ createdOn }}
+        <span
+          class="border-r-1 border-solid h-4 border-white pr-2 mr-2 inline-block"
+        ></span>
+        Updated: {{ updatedOn }}
       </div>
       <Field
         v-if="props.note.description"
