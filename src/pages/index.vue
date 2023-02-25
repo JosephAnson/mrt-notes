@@ -1,7 +1,5 @@
 <script lang="ts" setup async>
 import { paramCase } from 'change-case'
-import RecentlyCreateNotes from '~/pages/RecentlyCreateNotes.vue'
-import RecentlyModifiedNotes from '~/pages/RecentlyModifiedNotes.vue'
 import { getAllUserNotes } from '~/services/notes'
 import { getAllTeamMembers } from '~/services/teamMembers'
 

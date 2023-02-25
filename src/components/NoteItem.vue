@@ -1,8 +1,16 @@
 <script lang="ts" setup>
 import type { Note } from '~/types'
-const props = defineProps<{
-  note: Note
-}>()
+const props = withDefaults(
+  defineProps<{
+    note: Note
+    showDelete: boolean
+    showEdit: boolean
+  }>(),
+  {
+    showDelete: true,
+    showEdit: true,
+  }
+)
 
 const user = useSupabaseUser()
 
@@ -41,7 +49,7 @@ const updatedOn = useDateFormat(props.note.updated_at, format)
     </div>
     <div class="flex flex-col">
       <NuxtLink
-        v-if="isUsers"
+        v-if="isUsers && props.showEdit"
         :to="`/note/edit/${props.note.id}`"
         class="mr-2 mb-2 inline-block w-full"
       >
@@ -56,7 +64,7 @@ const updatedOn = useDateFormat(props.note.updated_at, format)
       </NuxtLink>
 
       <Button
-        v-if="isUsers"
+        v-if="isUsers && props.showDelete"
         class="bg-red-700"
         @click="deleteNote(props.note.id)"
       >
