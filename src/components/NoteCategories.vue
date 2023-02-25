@@ -73,7 +73,7 @@ onClickOutside(container, () => {
         ></Input>
         <div
           class="absolute top-0 right-0 text-primary-100 p-4"
-          :class="open ? 'i-carbon-caret-up' : 'i-carbon-caret-down'"
+          :class="open ? 'i-carbon-chevron-up' : 'i-carbon-chevron-down'"
           @click="open = !open"
         ></div>
       </div>
