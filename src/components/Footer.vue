@@ -3,16 +3,15 @@
     <div class="container">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <Button class="bg-transparent !px-2">
-            <a
-              href="https://github.com/JosephAnson/mrt-notes/issues"
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              class="flex items-center"
-            >
-              <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
-              Submit issues or request features
-            </a>
+          <Button
+            tag="a"
+            class="bg-transparent !px-2 flex items-center"
+            href="https://github.com/JosephAnson/mrt-notes/issues"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+          >
+            <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
+            Submit issues or request features
           </Button>
           <Button class="ml-4 !px-2 bg-transparent" @click="tweet">
             <div class="i-carbon-logo-twitter"></div

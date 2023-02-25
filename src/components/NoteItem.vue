@@ -6,9 +6,10 @@ const props = defineProps<{
 
 const user = useSupabaseUser()
 
+const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
-const createdOn = useDateFormat(props.note.created_at, 'YYYY-MM-DD')
-const updatedOn = useDateFormat(props.note.updated_at, 'YYYY-MM-DD')
+const createdOn = useDateFormat(props.note.created_at, format)
+const updatedOn = useDateFormat(props.note.updated_at, format)
 </script>
 
 <template>

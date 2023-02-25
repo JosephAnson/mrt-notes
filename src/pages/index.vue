@@ -47,13 +47,15 @@ watchOnce(
           </Heading>
         </div>
 
-        <a
+        <Button
+          tag="a"
           target="_blank"
           rel="noreferrer nofollow"
           href="https://www.curseforge.com/wow/addons/method-raid-tools"
+          class="!bg-[#F16436]"
         >
-          <Button> Download MRT WoW Addon</Button>
-        </a>
+          Download MRT WoW Addon</Button
+        >
       </div>
 
       <div class="user-information mb-8">
