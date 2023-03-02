@@ -17,18 +17,6 @@
             <div class="i-carbon-logo-twitter"></div
           ></Button>
         </div>
-
-        <div class="flex items-center">
-          <p class="mr-2">Visit our guild at:</p>
-          <a
-            href="http://axionguild.com/"
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            class="image w-24 inline-block"
-          >
-            <img class="w-full" src="/axion-white.png" />
-          </a>
-        </div>
       </div>
     </div>
   </footer>
