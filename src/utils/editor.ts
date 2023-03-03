@@ -88,10 +88,18 @@ function isTime(string: String) {
   return string.includes('time:')
 }
 
-export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
+export async function createNodesOnPaste(
+  editor: Editor,
+  content: Slice | Node
+) {
   const jsonContent: Node[] = []
+  const nodeList: Node[] = []
 
-  content.content?.forEach(async (item: Node) => {
+  content.content?.forEach((item: Node) => {
+    nodeList.push(item)
+  })
+
+  for (const item of nodeList) {
     const regex =
       /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|{([\S\w\s]+?)}|\|cff([\S\w\s]+?)\|r/gim
     const splitText = item.text?.split(regex)
@@ -145,8 +153,8 @@ export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
       jsonContent.push(item)
     }
 
-    createNodesOnPaste(editor, item)
-  })
+    await createNodesOnPaste(editor, item)
+  }
 
   if (jsonContent.length > 0) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -194,12 +202,21 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       emit('update:json', editor.value?.getJSON())
     },
     editorProps: {
+      handlePaste() {
+        return true
+      },
       // function exists, the types are wrong
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      transformPasted: (pastedText: Slice) => {
+      transformPasted: async (pastedText: Slice) => {
         if (editor.value) {
-          return createNodesOnPaste(editor.value, pastedText)
+          const content = await createNodesOnPaste(editor.value, pastedText)
+
+          editor.value?.commands.insertContent(content.content.toJSON(), {
+            parseOptions: {
+              preserveWhitespace: false,
+            },
+          })
         }
       },
     },
