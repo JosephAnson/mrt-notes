@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { EditorContent } from '@tiptap/vue-3'
+import EditorSpellOccurranceModalButton from '~/components/EditorSpellOccurranceModalButton.vue'
+import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
 import { useTeamMembers } from '~/composables/state'
 import type { Member } from '~/types'
 import type { Marker } from '~/utils/config'
@@ -20,20 +22,10 @@ const emits = defineEmits(['update:modelValue', 'update:json'])
 const { modelValue } = toRefs(props)
 
 const teamMembers = useTeamMembers()
-const isSpellOccurrenceModelActive = ref(false)
-const isSpellIDModelActive = ref(false)
-const isTimeSnippetModelActive = ref(false)
-const time = ref('')
-const spellID = ref('')
-const spellOccurrence = reactive({
-  timeAfterSpellStarted: '00:10',
-  occurrence: 1,
-  spellId: 306111,
-})
 
 const editor = useEditor(modelValue, emits)
 
-function createMarker(marker: Marker) {
+function createImageToEditor(marker: Marker) {
   editor.value?.chain().focus().setImage({ src: marker.src }).run()
 }
 
@@ -49,36 +41,9 @@ async function createPlayerSnippet(player: Member) {
   editor.value?.commands.focus()
 }
 
-function createSpellSnippet(value: String) {
-  openSnackbar(`Spell entered is: ${value}`)
-  const insertString = `{spell:${value}}`
-
-  editor.value?.commands.insertContent(insertString)
+function addStringToEditor(value: string) {
+  editor.value?.commands.insertContent(value)
   editor.value?.commands.focus()
-
-  time.value = ''
-  isSpellIDModelActive.value = false
-}
-
-function createTimeSnippet(value: String) {
-  openSnackbar(`Time entered is: ${value}`)
-
-  editor.value?.commands.insertContent(`{time:${value}}`)
-  editor.value?.commands.focus()
-
-  time.value = ''
-  isTimeSnippetModelActive.value = false
-}
-
-function createSpellOccurrenceSnippet() {
-  const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
-
-  openSnackbar(`Snippet entered is: ${insertString}`)
-
-  editor.value?.commands.insertContent(insertString)
-  editor.value?.commands.focus()
-
-  isSpellOccurrenceModelActive.value = false
 }
 
 function setColor(event: Event) {
@@ -109,20 +74,20 @@ function setColor(event: Event) {
         v-for="marker in markers"
         :key="marker.name"
         class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
-        @click.stop="createMarker(marker)"
+        @click.stop="createImageToEditor(marker)"
       >
         <img class="object-contain w-full h-full" :src="marker.src" />
       </a>
 
-      <a class="mr-2" href="#" @click.stop="isTimeSnippetModelActive = true">
+      <EditorTimeModalButton @input="addStringToEditor">
         Time
-      </a>
-      <a class="mr-2" href="#" @click.stop="isSpellIDModelActive = true">
+      </EditorTimeModalButton>
+      <EditorSpellModalButton @input="addStringToEditor">
         Spell ID
-      </a>
-      <a class="mr-2" href="#" @click="isSpellOccurrenceModelActive = true">
+      </EditorSpellModalButton>
+      <EditorSpellOccurranceModalButton @input="addStringToEditor">
         Spell Occurrence
-      </a>
+      </EditorSpellOccurranceModalButton>
 
       <button
         :disabled="!editor?.can().chain().focus().undo().run()"
@@ -168,49 +133,6 @@ function setColor(event: Event) {
     <div class="p-2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />
     </div>
-
-    <Modal v-model:active="isSpellIDModelActive">
-      <SpellIdInput v-model="spellID" />
-
-      <footer>
-        <Button class="mr-2" @click="isSpellIDModelActive = false">
-          Cancel
-        </Button>
-        <Button @click="createSpellSnippet(spellID)"> Done </Button>
-      </footer>
-    </Modal>
-
-    <Modal v-model:active="isTimeSnippetModelActive">
-      <Field label="Enter a time?" stacked>
-        <Input v-model="time" placeholder="e.g. 10:00" />
-      </Field>
-
-      <footer>
-        <Button class="mr-2" @click="isTimeSnippetModelActive = false">
-          Cancel
-        </Button>
-        <Button @click="createTimeSnippet(time)"> Done </Button>
-      </footer>
-    </Modal>
-
-    <Modal v-model:active="isSpellOccurrenceModelActive">
-      <SpellIdInput v-model="spellOccurrence.spellId" />
-
-      <Field label="Enter the Time after spell cast? {00:10}" stacked>
-        <Input v-model="spellOccurrence.timeAfterSpellStarted" />
-      </Field>
-
-      <Field label="Enter the cast number?" stacked>
-        <Input v-model="spellOccurrence.occurrence" />
-      </Field>
-
-      <footer>
-        <Button class="mr-2" @click="isSpellOccurrenceModelActive = false">
-          Cancel
-        </Button>
-        <Button @click="createSpellOccurrenceSnippet"> Done </Button>
-      </footer>
-    </Modal>
   </div>
 </template>
 

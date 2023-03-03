@@ -5,7 +5,7 @@ const props = defineProps({
   modelValue: [String, Number],
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'spellIDInformation'])
 
 const spellIDInformationUrl = computed(
   () =>
@@ -18,6 +18,8 @@ const { data: spellIDInformation } = useFetch<{
 }>(spellIDInformationUrl)
 
 const modelValue = useVModel(props, 'modelValue', emit)
+
+watch(spellIDInformation, () => emit('spellIDInformation', spellIDInformation))
 </script>
 
 <template>
