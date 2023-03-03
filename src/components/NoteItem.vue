@@ -18,14 +18,20 @@ const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
 const createdOn = useDateFormat(props.note.created_at, format)
 const updatedOn = useDateFormat(props.note.updated_at, format)
+
+const canEdit = computed(() => isUsers && props.showEdit)
 </script>
 
 <template>
   <div class="flex justify-between w-full bg-gray-800 p-4 rounded mb-2">
     <div class="mr-4">
-      <Heading h4 class="line-clamp-3">
-        {{ props.note.name }}
-      </Heading>
+      <NuxtLink
+        :to="canEdit ? `/note/edit/${props.note.id}` : `/note/${props.note.id}`"
+      >
+        <Heading h4 class="line-clamp-3">
+          {{ props.note.name }}
+        </Heading>
+      </NuxtLink>
       <div class="flex items-center text-gray-300 text-sm">
         <nuxt-link
           v-if="props.note.username"
@@ -49,7 +55,7 @@ const updatedOn = useDateFormat(props.note.updated_at, format)
     </div>
     <div class="flex flex-col">
       <NuxtLink
-        v-if="isUsers && props.showEdit"
+        v-if="canEdit"
         :to="`/note/edit/${props.note.id}`"
         class="mr-2 mb-2 inline-block w-full"
       >
