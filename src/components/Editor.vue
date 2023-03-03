@@ -4,8 +4,8 @@ import EditorSpellOccurranceModalButton from '~/components/EditorSpellOccurrance
 import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
 import { useTeamMembers } from '~/composables/state'
 import type { Member } from '~/types'
-import type { Marker } from '~/utils/config'
 import { markers, wowColors } from '~/utils/config'
+import { IMAGE_MARKER } from '~/utils/constants'
 import { useEditor } from '~/utils/editor'
 
 const props = withDefaults(
@@ -25,8 +25,16 @@ const teamMembers = useTeamMembers()
 
 const editor = useEditor(modelValue, emits)
 
-function createImageToEditor(marker: Marker) {
-  editor.value?.chain().focus().setImage({ src: marker.src }).run()
+function addImageToEditor({
+  src,
+  alt,
+  title,
+}: {
+  src: string
+  alt: string
+  title?: string
+}) {
+  editor.value?.chain().focus().setImage({ src, alt, title }).run()
 }
 
 async function createPlayerSnippet(player: Member) {
@@ -74,7 +82,7 @@ function setColor(event: Event) {
         v-for="marker in markers"
         :key="marker.name"
         class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
-        @click.stop="createImageToEditor(marker)"
+        @click.stop="addImageToEditor({ src: marker.src, alt: IMAGE_MARKER })"
       >
         <img class="object-contain w-full h-full" :src="marker.src" />
       </a>
@@ -82,7 +90,7 @@ function setColor(event: Event) {
       <EditorTimeModalButton @input="addStringToEditor">
         Time
       </EditorTimeModalButton>
-      <EditorSpellModalButton @input="addStringToEditor">
+      <EditorSpellModalButton @input="addImageToEditor">
         Spell ID
       </EditorSpellModalButton>
       <EditorSpellOccurranceModalButton @input="addStringToEditor">

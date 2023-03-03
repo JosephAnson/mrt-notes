@@ -1,6 +1,7 @@
 import type { JSONContent } from '@tiptap/vue-3'
 import type { Group } from '~/types'
 import { markers } from '~/utils/config'
+import { IMAGE_MARKER, IMAGE_SPELLID } from '~/utils/constants'
 
 function createParagraphContent(paragraphContent: JSONContent[]) {
   let previewString = ''
@@ -16,9 +17,15 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
         )}${contentItem.text}|r`
       }
     } else if (contentItem.type === 'image') {
-      const marker = markers.find((item) => contentItem.attrs?.src === item.src)
+      if (contentItem.attrs?.alt === IMAGE_MARKER) {
+        const marker = markers.find(
+          (item) => contentItem.attrs?.src === item.src
+        )
 
-      if (marker) previewString += `{${marker.name}}`
+        if (marker) previewString += `{${marker.name}}`
+      } else if (contentItem.attrs?.alt === IMAGE_SPELLID) {
+        previewString += contentItem.attrs.title
+      }
     } else if (contentItem.type === 'hardBreak') {
       previewString += '\n'
     }

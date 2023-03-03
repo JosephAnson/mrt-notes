@@ -1,14 +1,21 @@
 <script lang="ts" setup>
+import type { SpellIdInformation } from '~/types'
+import { SPELL_INFO_BASE_URL } from '~/utils/constants'
+import { createEdtiorSpellIdImageData } from '~/utils/editor'
+
 const emits = defineEmits(['input'])
 
 const modalActive = ref(false)
 const spellID = ref('')
 
-function createSpellSnippet(value: String) {
-  openSnackbar(`Spell entered is: ${value}`)
-  const insertString = `{spell:${value}}`
+async function createSpellSnippet(spellId: string) {
+  openSnackbar(`Spell entered is: ${spellId}`)
 
-  emits('input', insertString)
+  const { icon } = await $fetch<SpellIdInformation>(
+    SPELL_INFO_BASE_URL + spellId
+  )
+
+  emits('input', createEdtiorSpellIdImageData(icon, spellId))
 
   modalActive.value = false
 }

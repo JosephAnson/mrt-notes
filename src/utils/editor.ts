@@ -7,7 +7,17 @@ import StarterKit from '@tiptap/starter-kit'
 import type { Editor, JSONContent } from '@tiptap/vue-3'
 import { useEditor as tiptapUseEditor } from '@tiptap/vue-3'
 import type { Ref } from 'vue'
+import { IMAGE_MARKER, IMAGE_SPELLID, SPELL_INFO_BASE_URL } from './constants'
+import type { SpellIdInformation } from '~/types'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
+
+export function createEdtiorSpellIdImageData(icon: string, spellId: string) {
+  return {
+    src: `https://wow.zamimg.com/images/wow/icons/small/${icon}.jpg`,
+    alt: IMAGE_SPELLID,
+    title: `{spell: ${spellId}}`,
+  }
+}
 
 export function convertSliceToHex(text: Slice | Node) {
   text.content?.forEach((item) => {
@@ -52,31 +62,76 @@ function createTextNode(
   return editor.schema.text(text, marks)
 }
 
-function createImageNode(editor: Editor, src: string) {
-  return editor.schema.nodes.image.create({ src })
+function createImageNode({
+  editor,
+  src,
+  alt,
+  title,
+}: {
+  editor: Editor
+  src: string
+  alt: string
+  title?: string
+}) {
+  return editor.schema.nodes.image.create({ src, alt, title })
 }
 
 function isMarker(string: String) {
   return markers.find((marker) => marker.name === string.slice(1, -1))
 }
 
+function isSpell(string: String) {
+  return string.includes('spell:')
+}
+
+function isTime(string: String) {
+  return string.includes('time:')
+}
+
 export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
   const jsonContent: Node[] = []
 
-  content.content?.forEach((item: Node) => {
+  content.content?.forEach(async (item: Node) => {
     const regex =
-      /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|\|cff([\S\w\s]+?)\|r/gim
+      /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|{([\S\w\s]+?)}|\|cff([\S\w\s]+?)\|r/gim
     const splitText = item.text?.split(regex)
 
     if (splitText && splitText.length > 1) {
       for (const string of splitText) {
         if (string && string.length > 0) {
           const marker = isMarker(string)
+          const spell = isSpell(string)
+          const time = isTime(string)
           const color = string.substring(0, 6)
           const newString = string.substring(6)
 
           if (marker) {
-            jsonContent.push(createImageNode(editor, marker.src))
+            jsonContent.push(
+              createImageNode({
+                editor,
+                src: marker.src,
+                alt: IMAGE_MARKER,
+              })
+            )
+          } else if (spell) {
+            const spellId = string.replace('spell:', '').trim()
+            const { icon } = await $fetch<SpellIdInformation>(
+              SPELL_INFO_BASE_URL + spellId
+            )
+            const { src, title, alt } = createEdtiorSpellIdImageData(
+              icon,
+              spellId
+            )
+            jsonContent.push(
+              createImageNode({
+                editor,
+                src,
+                alt,
+                title,
+              })
+            )
+          } else if (time) {
+            jsonContent.push(createTextNode(editor, `{${string}}`))
           } else if (newString && isHexColor(color)) {
             jsonContent.push(
               createTextNode(editor, newString, { color: `#${color}` })
@@ -99,7 +154,7 @@ export function createNodesOnPaste(editor: Editor, content: Slice | Node) {
     content.content = Fragment.fromArray(jsonContent)
   }
 
-  return content
+  return convertSliceToHex(content)
 }
 
 export const editorExtensions = [
@@ -144,9 +199,7 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
       // @ts-expect-error
       transformPasted: (pastedText: Slice) => {
         if (editor.value) {
-          const colorsCreated = createNodesOnPaste(editor.value, pastedText)
-
-          return convertSliceToHex(colorsCreated)
+          return createNodesOnPaste(editor.value, pastedText)
         }
       },
     },

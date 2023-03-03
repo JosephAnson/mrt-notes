@@ -1,6 +1,11 @@
 import type { Node } from '~/types'
 import { flattenCategoryNodes } from '~/utils/flattenCategoryNodes'
 
+export const SPELL_INFO_BASE_URL = 'https://nether.wowhead.com/tooltip/spell/'
+
+export const IMAGE_MARKER = 'IMAGE_MARKER'
+export const IMAGE_SPELLID = 'IMAGE_SPELLID'
+
 export const noteCategories: Node[] = [
   {
     id: 'pve/sepulcher-of-the-first-ones',

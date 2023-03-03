@@ -69,3 +69,8 @@ export interface Node {
   label: string
   children?: Node[]
 }
+
+export interface SpellIdInformation {
+  icon: string
+  tooltip: string
+}
