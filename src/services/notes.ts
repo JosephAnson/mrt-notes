@@ -115,14 +115,30 @@ export async function getAllNotes({
   return data as NotesAndProfile[]
 }
 
-export async function searchAllNotes(name: string) {
+export async function searchAllNotes(name: string, categories: string[]) {
   const client = useSupabaseClient<Database>()
+  const query = []
+
+  if (name) query.push(`'${name}'`)
+
+  if (categories.length) {
+    for (let i = 0; i < categories.length; i++) {
+      const category = categories[i]
+      const sections = category.split('/')
+      sections.pop()
+      if (sections) query.push(sections.join('/'))
+
+      query.push(category)
+    }
+  }
+
   const { data } = await client
     .from('notes')
     .select(noteColumns)
     .order('created_at')
+    .containedBy('categories', categories)
     .limit(50)
-    .textSearch('name', name, {
+    .textSearch('fts', query.join(' OR '), {
       type: 'websearch',
       config: 'english',
     })

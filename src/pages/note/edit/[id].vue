@@ -93,6 +93,7 @@ async function deleteNoteAndRedirect() {
         <Field label="Tags" stacked>
           <NoteCategories
             v-model="categories"
+            class="bg-primary-700 p-1 rounded"
             @update:model-value="save"
           ></NoteCategories>
         </Field>

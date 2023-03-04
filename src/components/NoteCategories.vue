@@ -48,7 +48,7 @@ onClickOutside(container, () => {
 </script>
 
 <template>
-  <div ref="container" class="bg-primary-700 p-1 rounded">
+  <div ref="container">
     <div>
       <div class="flex flex-wrap">
         <Button
