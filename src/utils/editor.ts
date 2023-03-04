@@ -7,7 +7,7 @@ import StarterKit from '@tiptap/starter-kit'
 import type { Editor, JSONContent } from '@tiptap/vue-3'
 import { useEditor as tiptapUseEditor } from '@tiptap/vue-3'
 import type { Ref } from 'vue'
-import { IMAGE_MARKER, IMAGE_SPELLID, SPELL_INFO_BASE_URL } from './constants'
+import { IMAGE_MARKER, IMAGE_SPELLID } from './constants'
 import type { SpellIdInformation } from '~/types'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
 
@@ -124,8 +124,9 @@ export async function createNodesOnPaste(
           } else if (spell) {
             const spellId = string.replace('spell:', '').trim()
             const { icon } = await $fetch<SpellIdInformation>(
-              SPELL_INFO_BASE_URL + spellId
+              `/api/spell/${spellId}`
             )
+
             const { src, title, alt } = createEdtiorSpellIdImageData(
               icon,
               spellId

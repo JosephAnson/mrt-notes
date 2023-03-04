@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import SpellInformation from '~/components/SpellInformation.vue'
 import type { SpellIdInformation } from '~/types'
-import { SPELL_INFO_BASE_URL } from '~/utils/constants'
 
 const props = defineProps({
   modelValue: [String, Number],
@@ -9,9 +8,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'spellIDInformation'])
 
-const spellIDInformationUrl = computed(
-  () => `${SPELL_INFO_BASE_URL}${props.modelValue}`
-)
+const spellIDInformationUrl = computed(() => `/api/spell/${props.modelValue}`)
 
 const { data: spellIDInformation } = useFetch<SpellIdInformation>(
   spellIDInformationUrl
@@ -24,7 +21,7 @@ watch(spellIDInformation, () => emit('spellIDInformation', spellIDInformation))
 
 <template>
   <SpellInformation
-    v-if="spellIDInformation"
+    v-if="spellIDInformation && props.modelValue"
     :icon="spellIDInformation.icon"
     :tooltip="spellIDInformation.tooltip"
   />

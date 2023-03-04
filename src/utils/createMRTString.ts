@@ -34,7 +34,7 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
   return previewString
 }
 
-export function createERTString(json?: JSONContent) {
+export function createMRTString(json?: JSONContent) {
   let previewString = ''
 
   if (json && json.content) {
@@ -56,8 +56,8 @@ export function createERTString(json?: JSONContent) {
   return previewString
 }
 
-export function createERTGroupString(group: Group) {
-  const ertString = createERTString(group.note.json)
+export function createMRTGroupString(group: Group) {
+  const ertString = createMRTString(group.note.json)
   switch (group.type) {
     case 'Healers':
       return `{H}\n${ertString}{/H}\n`

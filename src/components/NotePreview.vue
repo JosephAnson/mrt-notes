@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { JSONContent } from '@tiptap/vue-3'
-import { createERTGroupString, createERTString } from '~/utils/createErtString'
+import { createMRTGroupString, createMRTString } from '~/utils/createMRTString'
 
 const props = defineProps({
   noteString: { type: String, default: '' },
@@ -26,26 +26,26 @@ const preview = computed(() => {
   return preview
 })
 
-const ertString = computed(() => {
-  let ERTNote = createERTString(props.noteJson)
+const mrtString = computed(() => {
+  let MRTNote = createMRTString(props.noteJson)
 
-  for (const group of groups.value) ERTNote += createERTGroupString(group)
+  for (const group of groups.value) MRTNote += createMRTGroupString(group)
 
-  return ERTNote
+  return MRTNote
 })
 </script>
 
 <template>
   <div class="flex justify-between mb-4">
     <Heading h3> MRT String </Heading>
-    <Button v-if="isSupported" @click="copyToClipboard(ertString)">
-      Copy ERT String
+    <Button v-if="isSupported" @click="copyToClipboard(mrtString)">
+      Copy MRT String
     </Button>
   </div>
   <div
     class="preview bg-white p-4 color-black text-sm mb-4 h-64 overflow-y-scroll break-all text-xs"
   >
-    <pre v-html="ertString" />
+    <pre v-html="mrtString" />
   </div>
   <Heading h3> Preview </Heading>
   <div class="relative preview p-4 text-xs">
