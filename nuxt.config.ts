@@ -34,6 +34,9 @@ export default defineNuxtConfig({
           content: 'MRT Notes allows you to generate ert note snippets',
         },
       ],
+      htmlAttrs: {
+        lang: 'en',
+      },
       link: [
         {
           rel: 'stylesheet',
