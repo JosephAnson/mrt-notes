@@ -3,8 +3,8 @@ import type { Note } from '~/types'
 const props = withDefaults(
   defineProps<{
     note: Note
-    showDelete: boolean
-    showEdit: boolean
+    showDelete?: boolean
+    showEdit?: boolean
   }>(),
   {
     showDelete: true,

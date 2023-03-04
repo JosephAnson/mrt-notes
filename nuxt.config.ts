@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxtjs/web-vitals',
   ],
+  plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   webVitals: {
     provider: 'vercel',
     disabled: isDev,
