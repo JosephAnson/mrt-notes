@@ -79,7 +79,7 @@ async function deleteNoteAndRedirect() {
         </div>
       </div>
 
-      <section class="bg-primary-500 p-4 mb-4 rounded">
+      <section class="bg-primary-500 p-4 mb-6 rounded">
         <Field label="Title" stacked>
           <Input v-model="name" @update:model-value="save"></Input>
         </Field>

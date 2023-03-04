@@ -36,11 +36,9 @@ watchOnce(
 <template>
   <Section>
     <Container>
-      <div class="flex justify-between">
+      <div class="md:flex justify-between mb-8 mb:mb-0">
         <div>
-          <Heading h1> Homepage</Heading>
-
-          <Heading h2 class="mb-8 flex">
+          <Heading h1>
             Website to handle all your World of Warcraft MRT Notes
           </Heading>
         </div>
@@ -58,7 +56,7 @@ watchOnce(
 
       <div class="user-information mb-8">
         <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">
-          <Heading class="mr-4 !mb-0" h3> Login to get started</Heading>
+          <Heading class="mr-4 !mb-0" h2> Login to get started</Heading>
           <NuxtLink to="login"><Button>Login</Button></NuxtLink>
         </div>
 
