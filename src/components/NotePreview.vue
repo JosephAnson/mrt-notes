@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { JSONContent } from '@tiptap/vue-3'
-import { createMRTGroupString, createMRTString } from '~/utils/createMRTString'
+import {
+  createMRTGroupString,
+  createMRTString,
+  createPreviewString,
+} from '~/utils/createMRTString'
 
 const props = defineProps({
   noteString: { type: String, default: '' },
@@ -19,9 +23,10 @@ function copyToClipboard(string: string) {
 }
 
 const preview = computed(() => {
-  let preview = `${props.noteString}\n`
+  let preview = `${createPreviewString(props.noteString)}\n`
 
-  for (const group of groups.value) preview += group.note.value
+  for (const group of groups.value)
+    preview += createPreviewString(group.note.value)
 
   return preview
 })

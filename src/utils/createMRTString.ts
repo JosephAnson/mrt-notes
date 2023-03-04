@@ -34,6 +34,13 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
   return previewString
 }
 
+export function createPreviewString(string: string) {
+  return string.replace(
+    /\{time:([\S\w\s]+?)}/g,
+    '<span style="color: #ffed88;">$1</span> '
+  )
+}
+
 export function createMRTString(json?: JSONContent) {
   let previewString = ''
 
