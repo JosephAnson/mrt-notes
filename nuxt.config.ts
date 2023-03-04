@@ -8,8 +8,19 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@unocss/nuxt'],
+  modules: [
+    '@vueuse/nuxt',
+    '@nuxtjs/supabase',
+    '@unocss/nuxt',
+    '@nuxtjs/web-vitals',
+  ],
+  webVitals: {
+    provider: 'vercel',
+    disabled: isDev,
+  },
   app: {
     head: {
       title: 'MRT Notes',
