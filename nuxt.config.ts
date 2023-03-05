@@ -39,9 +39,8 @@ export default defineNuxtConfig({
       },
       link: [
         {
-          rel: 'preload',
+          rel: 'stylesheet',
           href: 'https://wow.zamimg.com/css/universal.css',
-          as: 'style',
         },
       ],
     },
