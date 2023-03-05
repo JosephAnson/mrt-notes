@@ -18,10 +18,11 @@ export default defineNuxtConfig({
     '@nuxtjs/web-vitals',
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
-  webVitals: {
-    provider: 'vercel',
-    disabled: isDev,
-  },
+  webVitals: isDev
+    ? {
+        provider: 'vercel',
+      }
+    : {},
   app: {
     head: {
       title: 'MRT Notes',
