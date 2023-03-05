@@ -58,31 +58,38 @@ async function usernameExists(username: String) {
 }
 
 export async function updateUsername(username: string) {
-  const client = useSupabaseClient<Database>()
-  const user = useSupabaseUser()
-  const profile = useProfile()
-  const usernameExist = await usernameExists(username)
-
-  if (usernameExist) {
+  if (!username) {
     openSnackbar({
-      message: 'Username exists try another!',
+      message: 'Username cannot be empty!',
       background: 'bg-red-700',
     })
   } else {
-    if (!user.value) throw new Error('User not logged in')
-    const { error } = await client
-      .from('profiles')
-      .upsert({
-        username,
-        id: user.value.id,
+    const client = useSupabaseClient<Database>()
+    const user = useSupabaseUser()
+    const profile = useProfile()
+    const usernameExist = await usernameExists(username)
+
+    if (usernameExist) {
+      openSnackbar({
+        message: 'Username exists try another!',
+        background: 'bg-red-700',
       })
-      .select(profileColumns)
-      .single()
+    } else {
+      if (!user.value) throw new Error('User not logged in')
+      const { error } = await client
+        .from('profiles')
+        .upsert({
+          username,
+          id: user.value.id,
+        })
+        .select(profileColumns)
+        .single()
 
-    if (error) throw new Error('Cannot update username')
+      if (error) throw new Error('Cannot update username')
 
-    profile.value.username = username
+      profile.value.username = username
 
-    openSnackbar('Saved username')
+      openSnackbar('Saved username')
+    }
   }
 }

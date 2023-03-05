@@ -36,7 +36,7 @@ const username = ref<string>(profile.value?.username || '')
           <div class="flex">
             <Input id="username" v-model="username" type="text" class="mr-2" />
             <Button
-              :disabled="username === profile.username"
+              :disabled="username === profile.username || !username"
               @click="username !== profile.username && updateUsername(username)"
             >
               Set Username
