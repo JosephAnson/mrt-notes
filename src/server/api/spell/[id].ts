@@ -10,20 +10,24 @@ export default defineEventHandler(
       })
     }
     const spellId = event.context.params.id
-    const storageKey = `spellId:${spellId}`
+    const storageKey = `spell:${spellId}`
 
     const storedIcon = await useStorage().getItem(storageKey)
     if (storedIcon)
-      return { icon: storedIcon.icon, tooltip: storedIcon.tooltip }
+      return {
+        icon: storedIcon.icon,
+        tooltip: storedIcon.tooltip,
+        name: storedIcon.name,
+      }
 
     try {
-      const { icon, tooltip } = await $fetch<SpellIdInformation>(
+      const { icon, tooltip, name } = await $fetch<SpellIdInformation>(
         `${SPELL_INFO_BASE_URL}${spellId}`
       )
 
-      await useStorage().setItem(storageKey, { icon, tooltip })
+      await useStorage().setItem(storageKey, { icon, tooltip, name })
 
-      return { icon, tooltip }
+      return { icon, tooltip, name }
     } catch {
       throw createError({
         statusCode: 404,

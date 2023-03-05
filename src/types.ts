@@ -73,4 +73,5 @@ export interface Node {
 export interface SpellIdInformation {
   icon: string
   tooltip: string
+  name: string
 }
