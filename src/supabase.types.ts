@@ -9,6 +9,26 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      favourites: {
+        Row: {
+          created_at: string | null
+          id: number
+          note_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          note_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          note_id?: number
+          user_id?: string
+        }
+      }
       groups: {
         Row: {
           created_at: string | null
@@ -47,6 +67,7 @@ export interface Database {
           created_at: string
           description: string | null
           editor_string: string | null
+          fts: unknown | null
           id: number
           name: string
           updated_at: string
@@ -57,6 +78,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           editor_string?: string | null
+          fts?: unknown | null
           id?: number
           name?: string
           updated_at?: string
@@ -67,6 +89,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           editor_string?: string | null
+          fts?: unknown | null
           id?: number
           name?: string
           updated_at?: string
@@ -124,7 +147,14 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      array_to_string_immutable: {
+        Args: {
+          arg: string[]
+          separator: string
+          null_string?: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
