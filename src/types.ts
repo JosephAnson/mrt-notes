@@ -18,6 +18,13 @@ export interface Note {
   user_id: string
 }
 
+export interface Favourite {
+  id: number
+  created_at: string
+  user_id: string
+  note_id: string
+}
+
 export interface EditorData {
   value: string
   json: JSONContent
