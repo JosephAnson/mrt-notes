@@ -6,7 +6,7 @@ const props = defineProps<{
 
 const favourited = ref(false)
 
-const userHasFavourited = await getUserHasFavourited(props.noteId, props.userId)
+const userHasFavourited = await getUserHasFavourite(props.noteId, props.userId)
 favourited.value = userHasFavourited
 
 const handleClick = () => {

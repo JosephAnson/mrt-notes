@@ -1,18 +1,19 @@
 <script setup lang="ts">
+import { useSearchNotes } from '~/composables/state'
 import type { Node } from '~/types'
 import { flattenedNoteCategories } from '~/utils/constants'
 
 const route = useRoute()
 const router = useRouter()
-const notes = useNotes()
+const searchedNotes = useSearchNotes()
 
 const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
 const categoryQuery = route.query?.categories
   ? getRouterParamsAsString(route.query.categories).split(',')
-  : []
+  : null
 
 const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
-  categoryQuery.includes(category.id)
+  categoryQuery?.includes(category.id)
 )
 
 const { data: asyncNotes } = await useAsyncData('notes', async () =>
@@ -20,7 +21,7 @@ const { data: asyncNotes } = await useAsyncData('notes', async () =>
     ? await searchAllNotes(q || '', categoryQuery)
     : await getAllNotes()
 )
-if (asyncNotes.value) setNotes(asyncNotes.value)
+if (asyncNotes.value) setNotes(searchedNotes, asyncNotes.value)
 
 const search = ref(q || '')
 const categories = ref<Node[]>(selectedCategoryList)
@@ -38,13 +39,16 @@ async function searchNotes() {
       },
     })
 
-    setNotes(await searchAllNotes(search.value, categoryIds.value))
+    setNotes(
+      searchedNotes,
+      await searchAllNotes(search.value, categoryIds.value)
+    )
   } else {
     router.push({
       name: 'search',
     })
 
-    setNotes(await getAllNotes())
+    setNotes(searchedNotes, await getAllNotes())
   }
 }
 </script>
@@ -61,7 +65,7 @@ async function searchNotes() {
         <Button type="submit"> Search </Button>
       </form>
 
-      <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+      <NoteItem v-for="note in searchedNotes" :key="note.id" :note="note" />
     </Container>
   </Section>
 </template>

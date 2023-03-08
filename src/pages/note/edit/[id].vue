@@ -13,8 +13,6 @@ const { data: note } = await useAsyncData('notes', async () => {
   return data
 })
 
-const groups = useGroups()
-
 const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
   note.value?.categories?.includes(category.id)
 )

@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import type { NuxtConfig } from '@nuxt/schema'
 import {
   presetIcons,
   presetTypography,
@@ -10,7 +11,7 @@ import {
 
 const isDev = process.env.NODE_ENV === 'development'
 
-export default defineNuxtConfig({
+const config: NuxtConfig = {
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
@@ -18,11 +19,6 @@ export default defineNuxtConfig({
     '@nuxtjs/web-vitals',
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
-  webVitals: isDev
-    ? {
-        provider: 'vercel',
-      }
-    : {},
   app: {
     head: {
       title: 'MRT Notes',
@@ -92,4 +88,15 @@ export default defineNuxtConfig({
     transformers: [transformerDirectives(), transformerVariantGroup()],
     safelist: 'text-l text-xl text-2xl'.split(' '),
   },
+}
+
+export default defineNuxtConfig({
+  ...config,
+  ...(!isDev
+    ? {
+        webVitals: {
+          provider: 'vercel',
+        },
+      }
+    : {}),
 })

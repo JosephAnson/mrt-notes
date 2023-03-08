@@ -1,6 +1,6 @@
-import type { Database } from '../supabase.types'
+import type { Database } from '~/supabase.types'
 
-export async function getUserHasFavourited(
+export async function getUserHasFavourite(
   noteId: number,
   userId: string | undefined
 ) {
@@ -42,21 +42,17 @@ export async function removeFavourite(noteId: number, userId: string) {
   return { status }
 }
 
-// Handle favourite
-
 export async function handleFavourite(
   noteId: number,
   userId: string | undefined
 ) {
   if (!userId) return
 
-  const userHasFavourited = await getUserHasFavourited(noteId, userId)
+  const userHasFavourited = await getUserHasFavourite(noteId, userId)
 
   if (userHasFavourited) {
-    console.log('removed')
     return removeFavourite(noteId, userId)
   }
 
-  console.log('added')
   return addFavourite(noteId, userId)
 }
