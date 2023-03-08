@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { createNotes } from '~/services/notes'
-
 const { data: recentlyModifiedNotes } = await useAsyncData(
   'recentlyModifiedNotes',
   async () => await getAllNotes({ order: 'updated_at', limit: 5 })
 )
 
-const notes = recentlyModifiedNotes.value?.map(createNotes) || []
+const notes = useRecentlyUpdatedNotes()
+if (recentlyModifiedNotes.value) setNotes(notes, recentlyModifiedNotes.value)
 </script>
 
 <template>

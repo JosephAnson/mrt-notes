@@ -6,7 +6,15 @@ export const useProfile = () =>
     username: null,
     avatar_url: null,
   }))
-export const useTeamMembers = () => useState<Member[]>('teamMembers', () => [])
+
 export const useNotes = () => useState<Note[]>('notes', () => [])
+export const useSearchNotes = () => useState<Note[]>('searchNotes', () => [])
+export const useUserNotes = () => useState<Note[]>('userNotes', () => [])
+export const useRecentlyCreatedNotes = () =>
+  useState<Note[]>('recentlyCreateNotes', () => [])
+export const useRecentlyUpdatedNotes = () =>
+  useState<Note[]>('recentlyUpdatedNotes', () => [])
+
+export const useTeamMembers = () => useState<Member[]>('teamMembers', () => [])
 export const useGroups = () => useState<Group[]>('groups', () => [])
 export const useFavourites = () => useState<Favourite[]>('favourites', () => [])
