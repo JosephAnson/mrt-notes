@@ -88,6 +88,14 @@ function isTime(string: String) {
   return string.includes('time:')
 }
 
+function isText(string: String) {
+  return string.includes('text')
+}
+
+function isEveryone(string: String) {
+  return string.includes('everyone')
+}
+
 export async function createNodesOnPaste(
   editor: Editor,
   content: Slice | Node
@@ -101,7 +109,7 @@ export async function createNodesOnPaste(
 
   for (const item of nodeList) {
     const regex =
-      /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|{([\S\w\s]+?)}|\|cff([\S\w\s]+?)\|r/gim
+      /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|{([\S\w\s]+?)}|\|cff([\S\w\s]+?)\|r|\|cF3([\S\w\s]+?)\|r/gim
     const splitText = item.text?.split(regex)
 
     if (splitText && splitText.length > 1) {
@@ -109,8 +117,7 @@ export async function createNodesOnPaste(
         if (string && string.length > 0) {
           const marker = isMarker(string)
           const spell = isSpell(string)
-          const time = isTime(string)
-          const color = string.substring(0, 6)
+          const color = string.substring(0, 6).toLowerCase()
           const newString = string.substring(6)
 
           if (marker) {
@@ -127,6 +134,8 @@ export async function createNodesOnPaste(
               `/api/spell/${spellId}`
             )
 
+            openSnackbar(`Loading icon for spell id: ${spellId}`)
+
             const { src, title, alt } = createEdtiorSpellIdImageData(
               icon,
               spellId
@@ -139,7 +148,7 @@ export async function createNodesOnPaste(
                 title,
               })
             )
-          } else if (time) {
+          } else if (isTime(string) || isText(string) || isEveryone(string)) {
             jsonContent.push(createTextNode(editor, `{${string}}`))
           } else if (newString && isHexColor(color)) {
             jsonContent.push(

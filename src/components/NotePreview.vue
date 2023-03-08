@@ -55,7 +55,7 @@ const mrtString = computed(() => {
   <Heading h3> Preview </Heading>
   <div class="relative preview p-4 text-xs">
     <div
-      class="absolute top-0 left-0 w-full h-full bg-cover bg-center z-1 grayscale bg-no-repeat"
+      class="absolute top-0 left-0 w-full h-full !bg-cover !bg-center z-1 grayscale !bg-no-repeat opacity-70"
       :style="{ background: 'url(/wow-background.jpeg)' }"
     ></div>
     <pre class="whitespace-normal break-all z-2 relative" v-html="preview" />
