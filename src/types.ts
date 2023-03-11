@@ -16,6 +16,15 @@ export interface Note {
   updated_at: string
   editor_string: string
   user_id: string
+  favorite: boolean
+}
+
+export type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
+export interface Favourite {
+  id: number
+  created_at: string
+  user_id: string
+  note_id: string
 }
 
 export interface EditorData {
