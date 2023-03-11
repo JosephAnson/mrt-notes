@@ -87,6 +87,7 @@ export function createNotes(item: NotesAndProfile): Note {
     created_at: item.created_at,
     updated_at: item.updated_at,
     editor_string: item.editor_string || '',
+    favorite: false,
   }
 }
 

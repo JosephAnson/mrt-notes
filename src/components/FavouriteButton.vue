@@ -1,24 +1,36 @@
 <script lang="ts" setup async>
+import { addFavourite, removeFavourite } from '~/services/favourites'
+
 const props = defineProps<{
   noteId: number
   userId?: string
+  favorite: boolean
 }>()
 
-const favourited = ref(false)
+const noteStore = useNotesStore()
 
-const userHasFavourited = await getUserHasFavourite(props.noteId, props.userId)
-favourited.value = userHasFavourited
+noteStore.setNoteFavourite(
+  props.noteId,
+  await getUserHasFavourite(props.noteId, props.userId)
+)
 
 const handleClick = () => {
-  handleFavourite(props.noteId, props.userId)
-  favourited.value = !favourited.value
+  if (props.userId) {
+    if (props.favorite) {
+      removeFavourite(props.noteId, props.userId)
+      noteStore.setNoteFavourite(props.noteId, false)
+    } else {
+      addFavourite(props.noteId, props.userId)
+      noteStore.setNoteFavourite(props.noteId, true)
+    }
+  }
 }
 </script>
 
 <template>
   <button
     class="inline-block text-base"
-    :class="favourited ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
+    :class="props.favorite ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
     @click="handleClick"
   />
 </template>

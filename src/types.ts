@@ -16,6 +16,7 @@ export interface Note {
   updated_at: string
   editor_string: string
   user_id: string
+  favorite: boolean
 }
 
 export type NotesAndProfile = NotesRow & { user_id: ProfilesRow }

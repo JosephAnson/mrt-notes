@@ -3,7 +3,8 @@ const notesStore = useNotesStore()
 
 await useAsyncData(
   'recentlyCreatedNotes',
-  async () => await notesStore.fetchRecentlyCreatedNotes()
+  async () => await notesStore.fetchRecentlyCreatedNotes(),
+  { server: false }
 )
 </script>
 

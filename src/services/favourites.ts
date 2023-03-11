@@ -41,18 +41,3 @@ export async function removeFavourite(noteId: number, userId: string) {
 
   return { status }
 }
-
-export async function handleFavourite(
-  noteId: number,
-  userId: string | undefined
-) {
-  if (!userId) return
-
-  const userHasFavourited = await getUserHasFavourite(noteId, userId)
-
-  if (userHasFavourited) {
-    return removeFavourite(noteId, userId)
-  }
-
-  return addFavourite(noteId, userId)
-}

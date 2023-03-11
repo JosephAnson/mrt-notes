@@ -36,6 +36,7 @@ export const useNotesStore = defineStore('notes', {
     },
     async fetchAllUserNotes(userID: string) {
       const notes = await fetchAllNotesByUserId(userID)
+
       this.setNotes('user', notes)
       return notes
     },
@@ -61,6 +62,17 @@ export const useNotesStore = defineStore('notes', {
         const noteKey = key as NoteTypes
         this.notes[noteKey] =
           this.notes[noteKey]?.filter((t: Note) => t.id !== id) || []
+      }
+    },
+    async setNoteFavourite(id: number, value: boolean) {
+      for (const key in this.notes) {
+        const noteKey = key as NoteTypes
+
+        for (const note of this.notes[noteKey]) {
+          if (note.id === id) {
+            note.favorite = value
+          }
+        }
       }
     },
   },
