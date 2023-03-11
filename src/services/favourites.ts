@@ -1,32 +1,37 @@
 import type { Database } from '~/supabase.types'
+import type { Favourite } from '~/types'
 
-export async function getUserHasFavourite(
-  noteId: number,
+export async function getUserHasFavourites(
   userId: string | undefined
-) {
+): Promise<Favourite[]> {
   const client = useSupabaseClient<Database>()
-  if (!userId) return false
+  if (!userId) return []
 
   const { data, error } = await client
     .from('favourites')
     .select()
-    .match({ note_id: noteId, user_id: userId })
+    .eq('user_id', userId)
 
   if (error) throw new Error(error.message)
 
-  return data?.length > 0
+  return data as Favourite[]
 }
 
-export async function addFavourite(noteId: number, userId: string) {
+export async function addFavourite(
+  noteId: number,
+  userId: string
+): Promise<Favourite> {
   const client = useSupabaseClient<Database>()
 
-  const { error, status } = await client
+  const { data, error } = await client
     .from('favourites')
     .insert({ user_id: userId, note_id: noteId })
+    .select('*')
+    .single()
 
   if (error) throw new Error(error.message)
 
-  return { status }
+  return data as Favourite
 }
 
 export async function removeFavourite(noteId: number, userId: string) {
@@ -40,19 +45,4 @@ export async function removeFavourite(noteId: number, userId: string) {
   if (error) throw new Error(error.message)
 
   return { status }
-}
-
-export async function handleFavourite(
-  noteId: number,
-  userId: string | undefined
-) {
-  if (!userId) return
-
-  const userHasFavourited = await getUserHasFavourite(noteId, userId)
-
-  if (userHasFavourited) {
-    return removeFavourite(noteId, userId)
-  }
-
-  return addFavourite(noteId, userId)
 }

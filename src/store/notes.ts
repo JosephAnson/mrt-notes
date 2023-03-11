@@ -1,12 +1,10 @@
-import type { Note, NotesAndProfile } from '~/types'
+import type { Note, NoteTypes, NotesAndProfile } from '~/types'
 import {
   createNotes,
   deleteNote,
   fetchAllNotesByUserId,
   searchAllNotes,
 } from '~/services/notes'
-
-type NoteTypes = 'search' | 'user' | 'recentlyModified' | 'recentlyCreated'
 
 export interface NoteState {
   notes: {
@@ -36,6 +34,7 @@ export const useNotesStore = defineStore('notes', {
     },
     async fetchAllUserNotes(userID: string) {
       const notes = await fetchAllNotesByUserId(userID)
+
       this.setNotes('user', notes)
       return notes
     },

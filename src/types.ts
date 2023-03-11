@@ -23,7 +23,7 @@ export interface Favourite {
   id: number
   created_at: string
   user_id: string
-  note_id: string
+  note_id: number
 }
 
 export interface EditorData {
@@ -78,3 +78,9 @@ export interface SpellIdInformation {
   tooltip: string
   name: string
 }
+
+export type NoteTypes =
+  | 'search'
+  | 'user'
+  | 'recentlyModified'
+  | 'recentlyCreated'

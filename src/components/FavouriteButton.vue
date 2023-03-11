@@ -1,24 +1,37 @@
 <script lang="ts" setup async>
+import { useUserStore } from '~/store/user'
+
 const props = defineProps<{
   noteId: number
   userId?: string
 }>()
 
-const favourited = ref(false)
+const userStore = useUserStore()
 
-const userHasFavourited = await getUserHasFavourite(props.noteId, props.userId)
-favourited.value = userHasFavourited
+const hasFavourite = computed(() =>
+  userStore.favourites.find((item) => item.note_id === props.noteId)
+)
+
+await useAsyncData(
+  'userFavourites',
+  async () => await userStore.fetchUserFavourites(props.userId)
+)
 
 const handleClick = () => {
-  handleFavourite(props.noteId, props.userId)
-  favourited.value = !favourited.value
+  if (props.userId) {
+    if (hasFavourite.value) {
+      userStore.removeUserFavourite(props.noteId, props.userId)
+    } else {
+      userStore.addUserFavourite(props.noteId, props.userId)
+    }
+  }
 }
 </script>
 
 <template>
   <button
     class="inline-block text-base"
-    :class="favourited ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
+    :class="hasFavourite ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
     @click="handleClick"
   />
 </template>
