@@ -7,6 +7,7 @@ specifiers:
   '@iconify-json/carbon': ^1.1.16
   '@nuxtjs/supabase': ^0.3.1
   '@nuxtjs/web-vitals': ^0.2.2
+  '@pinia/nuxt': ^0.4.7
   '@tiptap/core': ^2.0.0-beta.220
   '@tiptap/extension-color': ^2.0.0-beta.220
   '@tiptap/extension-image': ^2.0.0-beta.220
@@ -32,6 +33,7 @@ specifiers:
   focus-trap: ^7.3.1
   fuse.js: ^6.6.2
   nuxt: ^3.2.3
+  pinia: ^2.0.33
   postcss: 8.4.21
   prettier: ^2.8.4
   sass: ^1.58.3
@@ -47,6 +49,7 @@ dependencies:
   '@fortawesome/fontawesome-free': 6.3.0
   '@headlessui/vue': 1.7.12_vue@3.2.47
   '@nuxtjs/web-vitals': 0.2.2
+  '@pinia/nuxt': 0.4.7_hmuptsblhheur2tugfgucj7gc4
   '@tiptap/core': 2.0.0-beta.220_@tiptap+pm@2.0.0-beta.220
   '@tiptap/extension-color': 2.0.0-beta.220_fgzihh3z3pqzu3tukvfwtssou4
   '@tiptap/extension-image': 2.0.0-beta.220_7w7m52asdh3tod4ocz57yex63q
@@ -66,6 +69,7 @@ dependencies:
   focus-trap: 7.3.1
   fuse.js: 6.6.2
   nuxt: 3.2.3_y4w5t2e3uxicgwz4t25jvtnoka
+  pinia: 2.0.33_hmuptsblhheur2tugfgucj7gc4
   supabase: 1.41.6
   tailwindcss: 3.2.7_postcss@8.4.21
   vuedraggable: 4.1.0_vue@3.2.47
@@ -1307,6 +1311,19 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: false
+
+  /@pinia/nuxt/0.4.7_hmuptsblhheur2tugfgucj7gc4:
+    resolution: {integrity: sha512-ifgA9PO/jmPlK1e/HtkrZa7OMSL8EUOpo8Z1O5vNLRr/OZ42kKGEaY1NbIoCz6dIf/pbkATTNHJmcrlPCo3zSA==}
+    dependencies:
+      '@nuxt/kit': 3.2.3
+      pinia: 2.0.33_hmuptsblhheur2tugfgucj7gc4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - rollup
+      - supports-color
+      - typescript
+      - vue
     dev: false
 
   /@planetscale/database/1.5.0:
@@ -6100,6 +6117,24 @@ packages:
   /pify/2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /pinia/2.0.33_hmuptsblhheur2tugfgucj7gc4:
+    resolution: {integrity: sha512-HOj1yVV2itw6rNIrR2f7+MirGNxhORjrULL8GWgRwXsGSvEqIQ+SE0MYt6cwtpegzCda3i+rVTZM+AM7CG+kRg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      typescript: 4.9.5
+      vue: 3.2.47
+      vue-demi: 0.13.11_vue@3.2.47
     dev: false
 
   /pkg-types/1.0.2:

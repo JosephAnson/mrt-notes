@@ -1,7 +1,7 @@
 import type { PostgrestSingleResponse } from '@supabase/postgrest-js'
 import type { Ref } from 'vue'
 import type { Database } from '~/supabase.types'
-import type { Note, NotesRow, ProfilesRow } from '~/types'
+import type { Note, NotesAndProfile, NotesRow } from '~/types'
 
 const noteColumns =
   'id, name, description, editor_string, user_id ( id, username ), created_at, updated_at, categories'
@@ -12,8 +12,6 @@ const defaultEditorValue =
   'Phase 1<br><br><br>' +
   'Phase 2<br><br><br>' +
   'Phase 3<br><br><br>'
-
-type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
 
 export async function createNewNote(
   name: string,
@@ -164,14 +162,8 @@ export async function fetchAllNotesByUserId(
 
 export async function deleteNote(id: number) {
   const client = useSupabaseClient<Database>()
-  const userNotes = useUserNotes()
-
-  // TODO: Fix deleting notes from all types !!
-
   await deleteGroupsWithNoteId(id)
 
   await client.from('notes').delete().match({ id })
-
-  userNotes.value = userNotes.value?.filter((t: Note) => t.id !== id) || []
   openSnackbar({ message: 'Note Deleted', background: 'bg-red-700' })
 }
