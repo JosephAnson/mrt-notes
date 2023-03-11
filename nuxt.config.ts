@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import type { NuxtConfig } from '@nuxt/schema'
 import {
   presetIcons,
   presetTypography,
@@ -11,12 +10,13 @@ import {
 
 const isDev = process.env.NODE_ENV === 'development'
 
-const config: NuxtConfig = {
+export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
     '@unocss/nuxt',
     '@nuxtjs/web-vitals',
+    '@pinia/nuxt',
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   app: {
@@ -43,7 +43,7 @@ const config: NuxtConfig = {
     },
   },
   imports: {
-    dirs: ['services'],
+    dirs: ['services', 'store'],
   },
   css: ['~/assets/styles/main.scss'],
   srcDir: 'src/',
@@ -88,15 +88,10 @@ const config: NuxtConfig = {
     transformers: [transformerDirectives(), transformerVariantGroup()],
     safelist: 'text-l text-xl text-2xl'.split(' '),
   },
-}
-
-export default defineNuxtConfig({
-  ...config,
-  ...(!isDev
-    ? {
-        webVitals: {
-          provider: 'vercel',
-        },
-      }
-    : {}),
+  pinia: {
+    autoImports: ['defineStore', ['defineStore', 'definePiniaStore']],
+  },
+  webVitals: {
+    provider: 'vercel',
+  },
 })

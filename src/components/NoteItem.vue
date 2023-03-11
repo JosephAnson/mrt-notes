@@ -12,6 +12,7 @@ const props = withDefaults(
   }
 )
 
+const notesStore = useNotesStore()
 const user = useSupabaseUser()
 const userId = user.value?.id
 
@@ -83,7 +84,7 @@ const canEdit = computed(() => isUsers && props.showEdit)
       <Button
         v-if="isUsers && props.showDelete"
         class="bg-red-700"
-        @click="deleteNote(props.note.id)"
+        @click="notesStore.deleteNote(props.note.id)"
       >
         Delete
       </Button>

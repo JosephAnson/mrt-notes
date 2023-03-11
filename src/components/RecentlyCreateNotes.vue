@@ -1,20 +1,18 @@
 <script setup lang="ts">
-const { data: recentlyCreatedNotes } = await useAsyncData(
+const notesStore = useNotesStore()
+
+await useAsyncData(
   'recentlyCreatedNotes',
-  async () => await getAllNotes({ limit: 5 })
+  async () => await notesStore.fetchRecentlyCreatedNotes()
 )
-
-const notes = useRecentlyCreatedNotes()
-
-if (recentlyCreatedNotes.value) setNotes(notes, recentlyCreatedNotes.value)
 </script>
 
 <template>
-  <section v-if="notes.length">
+  <section v-if="notesStore.notes.recentlyCreated.length">
     <Heading>Recently Created Notes</Heading>
     <div class="mb-8">
       <NoteItem
-        v-for="note in notes"
+        v-for="note in notesStore.notes.recentlyCreated"
         :key="note.id"
         :note="note"
         :show-edit="false"

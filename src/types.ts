@@ -18,6 +18,7 @@ export interface Note {
   user_id: string
 }
 
+export type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
 export interface Favourite {
   id: number
   created_at: string
