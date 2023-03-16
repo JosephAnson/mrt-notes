@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Notification from '~/components/Notification.vue'
+import { getProfile, setProfile } from '~/services/profile'
 
 definePageMeta({
   middleware: 'auth',
@@ -7,8 +8,18 @@ definePageMeta({
 
 const user = useSupabaseUser()
 const profile = useProfile()
+const userStore = useUserStore()
 
-await useAsyncGetProfile()
+await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
+const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfile())
+
+if (asyncProfile.value) {
+  setProfile({
+    id: asyncProfile.value.id,
+    username: asyncProfile.value.username,
+    avatar_url: asyncProfile.value.avatar_url,
+  })
+}
 
 const username = ref<string>(profile.value?.username || '')
 </script>
@@ -49,6 +60,11 @@ const username = ref<string>(profile.value?.username || '')
             {{ provider.toUpperCase() }}
           </span>
         </Field>
+
+        <Heading>Favourites</Heading>
+        <div v-if="userStore.favourites.length">
+          <div v-for="favourite in userStore.favourites" :key="favourite.id">{{ favourite }}</div>
+        </div>
       </div>
     </Container>
   </Section>
