@@ -1,10 +1,7 @@
 <script setup lang="ts">
 const notesStore = useNotesStore()
 
-await useAsyncData(
-  'recentlyModifiedNotes',
-  async () => await notesStore.fetchRecentlyModifiedNotes()
-)
+await useAsyncData('recentlyModifiedNotes', async () => await notesStore.fetchRecentlyModifiedNotes())
 </script>
 
 <template>

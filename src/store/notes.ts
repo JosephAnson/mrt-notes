@@ -1,10 +1,5 @@
 import type { Note, NoteTypes, NotesAndProfile } from '~/types'
-import {
-  createNotes,
-  deleteNote,
-  fetchAllNotesByUserId,
-  searchAllNotes,
-} from '~/services/notes'
+import { createNotes, deleteNote, fetchAllNotesByUserId, searchAllNotes } from '~/services/notes'
 
 export interface NoteState {
   notes: {
@@ -58,8 +53,7 @@ export const useNotesStore = defineStore('notes', {
 
       for (const key in this.notes) {
         const noteKey = key as NoteTypes
-        this.notes[noteKey] =
-          this.notes[noteKey]?.filter((t: Note) => t.id !== id) || []
+        this.notes[noteKey] = this.notes[noteKey]?.filter((t: Note) => t.id !== id) || []
       }
     },
   },
