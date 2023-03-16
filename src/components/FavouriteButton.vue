@@ -8,14 +8,7 @@ const props = defineProps<{
 
 const userStore = useUserStore()
 
-const hasFavourite = computed(() =>
-  userStore.favourites.find((item) => item.note_id === props.noteId)
-)
-
-await useAsyncData(
-  'userFavourites',
-  async () => await userStore.fetchUserFavourites(props.userId)
-)
+const hasFavourite = computed(() => userStore.favourites.find((item) => item.note_id === props.noteId))
 
 const handleClick = () => {
   if (props.userId) {

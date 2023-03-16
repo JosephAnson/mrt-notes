@@ -2,29 +2,23 @@
 import type { Node } from '~/types'
 import { flattenedNoteCategories } from '~/utils/constants'
 
+const user = useSupabaseUser()
 const route = useRoute()
 const router = useRouter()
 const notesStore = useNotesStore()
+const userStore = useUserStore()
 
 const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
-const categoryQuery = route.query?.categories
-  ? getRouterParamsAsString(route.query.categories).split(',')
-  : null
+const categoryQuery = route.query?.categories ? getRouterParamsAsString(route.query.categories).split(',') : null
 
-const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
-  categoryQuery?.includes(category.id)
-)
+await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
+await useAsyncData('notes', async () => await notesStore.fetchSearchNotes(q || '', categoryQuery))
 
-await useAsyncData(
-  'notes',
-  async () => await notesStore.fetchSearchNotes(q || '', categoryQuery)
-)
+const selectedCategoryList = flattenedNoteCategories?.filter((category) => categoryQuery?.includes(category.id))
 
 const search = ref(q || '')
 const categories = ref<Node[]>(selectedCategoryList)
-const categoryIds = computed<string[]>(() =>
-  categories.value.map((category) => category.id)
-)
+const categoryIds = computed<string[]>(() => categories.value.map((category) => category.id))
 
 async function searchNotes() {
   if (search.value || categories.value.length) {
@@ -53,11 +47,7 @@ async function searchNotes() {
         <Button type="submit"> Search </Button>
       </form>
 
-      <NoteItem
-        v-for="note in notesStore.notes.search"
-        :key="note.id"
-        :note="note"
-      />
+      <NoteItem v-for="note in notesStore.notes.search" :key="note.id" :note="note" />
     </Container>
   </Section>
 </template>
