@@ -95,8 +95,7 @@ export default defineComponent({
     const modelState = reactive<ModelState>({
       isActive: props.active || false,
       savedScrollTop: null,
-      newWidth:
-        typeof props.width === 'number' ? `${props.width}px` : props.width,
+      newWidth: typeof props.width === 'number' ? `${props.width}px` : props.width,
       animating: !props.active,
       destroyed: !props.active,
     })
@@ -165,12 +164,10 @@ export default defineComponent({
      * Keypress event that is bound to the document.
      */
     function keyPress({ key }: KeyboardEvent) {
-      if (modelState.isActive && (key === 'Escape' || key === 'Esc'))
-        cancel('escape')
+      if (modelState.isActive && (key === 'Escape' || key === 'Esc')) cancel('escape')
     }
 
-    if (typeof window !== 'undefined')
-      document.addEventListener('keyup', keyPress)
+    if (typeof window !== 'undefined') document.addEventListener('keyup', keyPress)
 
     onMounted(() => {
       activate()
@@ -202,10 +199,7 @@ export default defineComponent({
         :aria-label="ariaLabel"
         :aria-modal="ariaModal"
       >
-        <div
-          class="fixed bg-black opacity-50 h-full w-full top-0 left-0"
-          @click="cancel('outside')"
-        />
+        <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
         <div
           class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex"
         >
@@ -223,12 +217,7 @@ export default defineComponent({
                 <div v-html="content" />
               </template>
               <slot v-else :can-cancel="canCancel" :close="close" />
-              <Button
-                v-if="showX"
-                v-show="!modelState.animating"
-                class="modal-close is-large"
-                @click="cancel('x')"
-              />
+              <Button v-if="showX" v-show="!modelState.animating" class="modal-close is-large" @click="cancel('x')" />
             </div>
           </div>
         </div>

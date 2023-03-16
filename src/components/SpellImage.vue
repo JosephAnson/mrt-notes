@@ -7,10 +7,9 @@ const props = defineProps({
 
 const spellIDInformationUrl = computed(() => `/api/spell/${props.modelValue}`)
 
-const { data: spellIDInformation } = useFetch<SpellIdInformation>(
-  spellIDInformationUrl,
-  { key: `spellImage: ${props.modelValue}` }
-)
+const { data: spellIDInformation } = useFetch<SpellIdInformation>(spellIDInformationUrl, {
+  key: `spellImage: ${props.modelValue}`,
+})
 </script>
 
 <template>

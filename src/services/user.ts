@@ -1,7 +1,4 @@
-export const login = async (
-  provider: 'discord' | 'google',
-  returnUrl?: string
-) => {
+export const login = async (provider: 'discord' | 'google', returnUrl?: string) => {
   const client = useSupabaseAuthClient()
 
   const { error } = await client.auth.signInWithOAuth({

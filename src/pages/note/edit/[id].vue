@@ -23,9 +23,7 @@ const name = ref(note.value?.name || '')
 const saving = ref(false)
 const description = ref(note.value?.description || '')
 const categories = ref<Node[]>(selectedCategoryList)
-const categoryIds = computed<string[]>(() =>
-  categories.value.map((category) => category.id)
-)
+const categoryIds = computed<string[]>(() => categories.value.map((category) => category.id))
 
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
@@ -70,12 +68,7 @@ async function deleteNoteAndRedirect() {
             <p class="mr-4">Saving</p>
             <div class="i-carbon-catalog animate-spin h-6 w-6"></div>
           </div>
-          <Button
-            class="bg-red-700 flex-shrink-0"
-            @click="deleteNoteAndRedirect"
-          >
-            Delete Note
-          </Button>
+          <Button class="bg-red-700 flex-shrink-0" @click="deleteNoteAndRedirect"> Delete Note </Button>
         </div>
       </div>
 
@@ -84,11 +77,7 @@ async function deleteNoteAndRedirect() {
           <Input v-model="name" @update:model-value="save"></Input>
         </Field>
         <Field label="Description" stacked>
-          <Input
-            v-model="description"
-            type="textarea"
-            @update:model-value="save"
-          ></Input>
+          <Input v-model="description" type="textarea" @update:model-value="save"></Input>
         </Field>
         <Field label="Tags" stacked>
           <NoteCategories

@@ -23,12 +23,7 @@ export interface EditorData {
   json: JSONContent
 }
 
-export const GroupType = [
-  'Healers',
-  'Damage Dealers',
-  'Tanks',
-  'Players',
-] as const
+export const GroupType = ['Healers', 'Damage Dealers', 'Tanks', 'Players'] as const
 export type GroupTypeUnion = (typeof GroupType)[number]
 
 export const WowClasses = [

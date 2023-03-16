@@ -7,26 +7,18 @@ const router = useRouter()
 const notes = useNotes()
 
 const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
-const categoryQuery = route.query?.categories
-  ? getRouterParamsAsString(route.query.categories).split(',')
-  : []
+const categoryQuery = route.query?.categories ? getRouterParamsAsString(route.query.categories).split(',') : []
 
-const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
-  categoryQuery.includes(category.id)
-)
+const selectedCategoryList = flattenedNoteCategories?.filter((category) => categoryQuery.includes(category.id))
 
 const { data: asyncNotes } = await useAsyncData('notes', async () =>
-  q || categoryQuery
-    ? await searchAllNotes(q || '', categoryQuery)
-    : await getAllNotes()
+  q || categoryQuery ? await searchAllNotes(q || '', categoryQuery) : await getAllNotes()
 )
 if (asyncNotes.value) setNotes(asyncNotes.value)
 
 const search = ref(q || '')
 const categories = ref<Node[]>(selectedCategoryList)
-const categoryIds = computed<string[]>(() =>
-  categories.value.map((category) => category.id)
-)
+const categoryIds = computed<string[]>(() => categories.value.map((category) => category.id))
 
 async function searchNotes() {
   if (search.value || categories.value.length) {

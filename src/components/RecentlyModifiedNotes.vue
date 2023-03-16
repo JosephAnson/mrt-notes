@@ -13,13 +13,7 @@ const notes = recentlyModifiedNotes.value?.map(createNotes) || []
   <section v-if="notes.length">
     <Heading>Recently Modified Notes</Heading>
     <div class="mb-8">
-      <NoteItem
-        v-for="note in notes"
-        :key="note.id"
-        :note="note"
-        :show-edit="false"
-        :show-delete="false"
-      />
+      <NoteItem v-for="note in notes" :key="note.id" :note="note" :show-edit="false" :show-delete="false" />
     </div>
   </section>
 </template>

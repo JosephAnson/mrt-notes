@@ -108,17 +108,8 @@ export default defineComponent({
 <template>
   <teleport to="body">
     <transition name="zoom-out">
-      <div
-        v-if="isActive"
-        v-bind="$attrs"
-        ref="dialog"
-        class="dialog"
-        :role="ariaRole"
-      >
-        <div
-          class="fixed bg-black opacity-50 h-full w-full top-0 left-0"
-          @click="cancel('outside')"
-        />
+      <div v-if="isActive" v-bind="$attrs" ref="dialog" class="dialog" :role="ariaRole">
+        <div class="fixed bg-black opacity-50 h-full w-full top-0 left-0" @click="cancel('outside')" />
         <div
           class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full justify-center items-center flex"
         >
@@ -139,23 +130,12 @@ export default defineComponent({
                 </p>
 
                 <Field v-if="hasInput">
-                  <Input
-                    v-bind="inputAttrs"
-                    ref="input"
-                    v-model="prompt"
-                    class="input"
-                    @keyup.enter="confirm"
-                  />
+                  <Input v-bind="inputAttrs" ref="input" v-model="prompt" class="input" @keyup.enter="confirm" />
                 </Field>
               </section>
 
               <footer class="flex justify-between">
-                <Button
-                  v-if="showCancel"
-                  class="mr-2"
-                  @click="cancel('button')"
-                  @keyup.enter="cancel('button')"
-                >
+                <Button v-if="showCancel" class="mr-2" @click="cancel('button')" @keyup.enter="cancel('button')">
                   {{ cancelText }}
                 </Button>
                 <Button class="button" @click="confirm" @keyup.enter="confirm">

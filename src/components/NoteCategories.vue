@@ -80,45 +80,20 @@ onClickOutside(container, () => {
     </div>
 
     <div class="relative">
-      <div
-        v-if="open"
-        class="absolute bg-white text-black rounded overflow-hidden mt-1 w-full z-20 shadow"
-      >
-        <div
-          v-for="result in results"
-          :key="result.item.id"
-          @click.stop="toggle(result.item)"
-        >
-          <div
-            class="px-2 py-1 flex items-center"
-            :class="{ 'bg-gray-200': highlight(result.item) }"
-          >
+      <div v-if="open" class="absolute bg-white text-black rounded overflow-hidden mt-1 w-full z-20 shadow">
+        <div v-for="result in results" :key="result.item.id" @click.stop="toggle(result.item)">
+          <div class="px-2 py-1 flex items-center" :class="{ 'bg-gray-200': highlight(result.item) }">
             <div
               class="text-primary-100 mr-1"
-              :class="
-                highlight(result.item)
-                  ? 'i-carbon-checkbox-checked'
-                  : 'i-carbon-checkbox'
-              "
+              :class="highlight(result.item) ? 'i-carbon-checkbox-checked' : 'i-carbon-checkbox'"
             ></div>
             {{ result.item.label }}
           </div>
-          <div
-            v-for="child in result.item.children"
-            :key="child.id"
-            @click.stop="toggle(child)"
-          >
-            <div
-              class="flex items-center px-2 py-1 pl-4"
-              :class="{ 'bg-gray-200': highlight(child) }"
-            >
+          <div v-for="child in result.item.children" :key="child.id" @click.stop="toggle(child)">
+            <div class="flex items-center px-2 py-1 pl-4" :class="{ 'bg-gray-200': highlight(child) }">
               <div
                 class="text-primary-100 mr-1"
-                :class="
-                  highlight(child)
-                    ? 'i-carbon-checkbox-checked'
-                    : 'i-carbon-checkbox'
-                "
+                :class="highlight(child) ? 'i-carbon-checkbox-checked' : 'i-carbon-checkbox'"
               ></div>
               {{ child.label }}
             </div>

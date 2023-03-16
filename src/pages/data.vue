@@ -1,15 +1,10 @@
 <script setup>
 const { data: expansions } = await useFetch('/api/blizzard/expansion/all')
-const { data: expansionInstances } = await useFetch(
-  '/api/blizzard/expansion/instances/503',
-  {
-    pick: ['dungeons', 'raids'],
-  }
-)
+const { data: expansionInstances } = await useFetch('/api/blizzard/expansion/instances/503', {
+  pick: ['dungeons', 'raids'],
+})
 const { data: instance } = await useFetch('/api/blizzard/instance/1200')
-const { data: spellData } = await useFetch(
-  '/api/blizzard/encounter/spells/2500'
-)
+const { data: spellData } = await useFetch('/api/blizzard/encounter/spells/2500')
 </script>
 
 <template>

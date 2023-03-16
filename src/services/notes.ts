@@ -2,8 +2,7 @@ import type { PostgrestSingleResponse } from '@supabase/postgrest-js'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesRow, ProfilesRow } from '~/types'
 
-const noteColumns =
-  'id, name, description, editor_string, user_id ( id, username ), created_at, updated_at, categories'
+const noteColumns = 'id, name, description, editor_string, user_id ( id, username ), created_at, updated_at, categories'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -14,10 +13,7 @@ const defaultEditorValue =
 
 type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
 
-export async function createNewNote(
-  name: string,
-  editor_string = defaultEditorValue
-) {
+export async function createNewNote(name: string, editor_string = defaultEditorValue) {
   if (!name && name.length <= 0) return openSnackbar('Please enter a name')
 
   const client = useSupabaseClient<Database>()
@@ -39,9 +35,7 @@ export async function createNewNote(
   }
 }
 
-export async function getNote(
-  id: string
-): Promise<PostgrestSingleResponse<NotesAndProfile>> {
+export async function getNote(id: string): Promise<PostgrestSingleResponse<NotesAndProfile>> {
   const client = useSupabaseClient<Database>()
   return client.from('notes').select(noteColumns).match({ id }).single()
 }
@@ -101,10 +95,7 @@ export async function getAllUserNotes() {
   return getAllNotesByUserId(user.value?.id || '')
 }
 
-export async function getAllNotes({
-  order,
-  limit,
-}: { order?: keyof NotesRow; limit?: number } = {}) {
+export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; limit?: number } = {}) {
   const client = useSupabaseClient<Database>()
   const { data } = await client
     .from('notes')
@@ -146,15 +137,9 @@ export async function searchAllNotes(name: string, categories: string[]) {
   return data as NotesAndProfile[]
 }
 
-export async function getAllNotesByUserId(
-  user_id: String
-): Promise<NotesAndProfile[]> {
+export async function getAllNotesByUserId(user_id: String): Promise<NotesAndProfile[]> {
   const client = useSupabaseClient<Database>()
-  const { data } = await client
-    .from('notes')
-    .select(noteColumns)
-    .eq('user_id', user_id)
-    .order('created_at')
+  const { data } = await client.from('notes').select(noteColumns).eq('user_id', user_id).order('created_at')
 
   return data as NotesAndProfile[]
 }

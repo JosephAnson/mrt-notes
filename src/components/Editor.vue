@@ -25,15 +25,7 @@ const teamMembers = useTeamMembers()
 
 const editor = useEditor(modelValue, emits)
 
-function addImageToEditor({
-  src,
-  alt,
-  title,
-}: {
-  src: string
-  alt: string
-  title?: string
-}) {
+function addImageToEditor({ src, alt, title }: { src: string; alt: string; title?: string }) {
   editor.value?.chain().focus().setImage({ src, alt, title }).run()
 }
 
@@ -87,50 +79,28 @@ function setColor(event: Event) {
         <img class="object-contain w-full h-full" :src="marker.src" />
       </a>
 
-      <EditorTimeModalButton @input="addStringToEditor">
-        Time
-      </EditorTimeModalButton>
-      <EditorSpellModalButton @input="addImageToEditor">
-        Spell ID
-      </EditorSpellModalButton>
-      <EditorSpellOccurranceModalButton @input="addStringToEditor">
-        Spell Occurrence
-      </EditorSpellOccurranceModalButton>
+      <EditorTimeModalButton @input="addStringToEditor"> Time </EditorTimeModalButton>
+      <EditorSpellModalButton @input="addImageToEditor"> Spell ID </EditorSpellModalButton>
+      <EditorSpellOccurranceModalButton @input="addStringToEditor"> Spell Occurrence </EditorSpellOccurranceModalButton>
 
-      <button
-        :disabled="!editor?.can().chain().focus().undo().run()"
-        @click="editor?.chain().focus().undo().run()"
-      >
+      <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
         <span class="text-xl i-carbon-undo inline-block mr-2" />
       </button>
-      <button
-        :disabled="!editor?.can().chain().focus().redo().run()"
-        @click="editor?.chain().focus().redo().run()"
-      >
+      <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
         <span class="text-xl i-carbon-redo inline-block mr-2" />
       </button>
-      <button
-        @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()"
-      >
-        <span
-          class="text-xl i-carbon-text-clear-format text-white inline-block mr-2"
-        />
+      <button @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
+        <span class="text-xl i-carbon-text-clear-format text-white inline-block mr-2" />
       </button>
     </div>
 
-    <Field
-      v-if="teamMembers.length"
-      label="Players:"
-      class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
-    >
+    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start">
       <div class="flex flex-wrap">
         <a
           v-for="teamMember in teamMembers"
           :key="teamMember.id"
           class="mr-2 last:mr-0 cursor-pointer"
-          :class="`has-wow-text-${teamMember.class
-            .replace(' ', '-')
-            .toLowerCase()}`"
+          :class="`has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
           @click.prevent="createPlayerSnippet(teamMember)"
         >
           {{ teamMember.name }}

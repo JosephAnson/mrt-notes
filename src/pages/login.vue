@@ -4,9 +4,7 @@ const user = useSupabaseUser()
 const route = useRouter()
 
 const email = ref('')
-const returnUrl = computed(
-  () => (route.currentRoute.value.query as { returnUrl?: string })?.returnUrl
-)
+const returnUrl = computed(() => (route.currentRoute.value.query as { returnUrl?: string })?.returnUrl)
 </script>
 
 <template>

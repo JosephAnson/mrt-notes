@@ -6,18 +6,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <div
-    class="wowhead-tooltip wowhead-tooltip-width-restriction mb-2 pl-12 relative"
-    :style="{ visibility: 'visible' }"
-  >
+  <div class="wowhead-tooltip wowhead-tooltip-width-restriction mb-2 pl-12 relative" :style="{ visibility: 'visible' }">
     <div class="whtt-tooltip-icon !left-0" style="visibility: visible">
-      <div
-        class="iconmedium"
-        data-env="live"
-        data-tree="live"
-        data-game="wow"
-        data-type="spell"
-      >
+      <div class="iconmedium" data-env="live" data-tree="live" data-game="wow" data-type="spell">
         <ins
           :style="`background-image: url('https://wow.zamimg.com/images/wow/icons/medium/${props.icon}.jpg');`"
         ></ins>

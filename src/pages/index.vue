@@ -8,14 +8,8 @@ const notes = useNotes()
 const teamMembers = useTeamMembers()
 const profile = useProfile()
 
-const { data: asyncNotes } = await useAsyncData(
-  'notes',
-  async () => await getAllUserNotes()
-)
-const { data: asyncTeamMembers } = await useAsyncData(
-  'teamMembers',
-  async () => await getAllTeamMembers()
-)
+const { data: asyncNotes } = await useAsyncData('notes', async () => await getAllUserNotes())
+const { data: asyncTeamMembers } = await useAsyncData('teamMembers', async () => await getAllTeamMembers())
 if (user.value) {
   if (asyncNotes.value) setNotes(asyncNotes.value)
   if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
@@ -39,9 +33,7 @@ watchOnce(
     <Container>
       <div class="md:flex justify-between mb-8 mb:mb-0">
         <div>
-          <Heading h1>
-            Website to handle all your World of Warcraft MRT Notes
-          </Heading>
+          <Heading h1> Website to handle all your World of Warcraft MRT Notes </Heading>
         </div>
 
         <Button
@@ -54,14 +46,9 @@ watchOnce(
           Download MRT WoW Addon</Button
         >
       </div>
-      <Notification
-        v-if="user && !profile.username"
-        class="inline-flex justify-between items-center mb-8"
-      >
+      <Notification v-if="user && !profile.username" class="inline-flex justify-between items-center mb-8">
         Set your username on your account if you want to share your profile
-        <nuxt-link to="account">
-          <Button class="ml-4">Set Username</Button></nuxt-link
-        >
+        <nuxt-link to="account"> <Button class="ml-4">Set Username</Button></nuxt-link>
       </Notification>
       <div class="user-information mb-8">
         <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">
@@ -82,9 +69,7 @@ watchOnce(
               </section>
             </div>
 
-            <aside
-              class="w-full lg:w-1/3 lg:border-l-2 lg:border-black lg:pl-8"
-            >
+            <aside class="w-full lg:w-1/3 lg:border-l-2 lg:border-black lg:pl-8">
               <div class="flex justify-between items-center">
                 <Heading>Your Team</Heading>
 

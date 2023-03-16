@@ -10,10 +10,9 @@ const emit = defineEmits(['update:modelValue', 'spellIDInformation'])
 
 const spellIDInformationUrl = computed(() => `/api/spell/${props.modelValue}`)
 
-const { data: spellIDInformation } = useFetch<SpellIdInformation>(
-  spellIDInformationUrl,
-  { key: `SpellIdInput${props.modelValue}` }
-)
+const { data: spellIDInformation } = useFetch<SpellIdInformation>(spellIDInformationUrl, {
+  key: `SpellIdInput${props.modelValue}`,
+})
 
 const modelValue = useVModel(props, 'modelValue', emit)
 

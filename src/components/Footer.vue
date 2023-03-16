@@ -13,11 +13,7 @@
             <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
             Submit issues or request features
           </Button>
-          <Button
-            class="ml-4 !px-2 bg-transparent"
-            aria-label="Twitter Share Button"
-            @click="tweet"
-          >
+          <Button class="ml-4 !px-2 bg-transparent" aria-label="Twitter Share Button" @click="tweet">
             <div class="i-carbon-logo-twitter"></div
           ></Button>
         </div>

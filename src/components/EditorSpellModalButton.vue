@@ -32,9 +32,7 @@ async function createSpellSnippet(spellId: string) {
 
     <footer>
       <Button class="mr-2" @click="modalActive = false"> Cancel </Button>
-      <Button :disabled="!spellID" @click="createSpellSnippet(spellID)">
-        Done
-      </Button>
+      <Button :disabled="!spellID" @click="createSpellSnippet(spellID)"> Done </Button>
     </footer>
   </Modal>
 </template>

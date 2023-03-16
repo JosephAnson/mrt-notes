@@ -73,11 +73,7 @@ export async function updateGroups(note_id: number, groups: Group[]) {
 
 export async function getAllGroups(noteId: number | string) {
   const client = useSupabaseClient<Database>()
-  return client
-    .from('groups')
-    .select(groupColumns)
-    .eq('note_id', noteId)
-    .order('order')
+  return client.from('groups').select(groupColumns).eq('note_id', noteId).order('order')
 }
 
 export async function deleteGroup(id: number) {

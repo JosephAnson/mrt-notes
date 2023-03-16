@@ -11,12 +11,7 @@ import {
 const isDev = process.env.NODE_ENV === 'development'
 
 export default defineNuxtConfig({
-  modules: [
-    '@vueuse/nuxt',
-    '@nuxtjs/supabase',
-    '@unocss/nuxt',
-    '@nuxtjs/web-vitals',
-  ],
+  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@unocss/nuxt', '@nuxtjs/web-vitals'],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   webVitals: isDev
     ? {

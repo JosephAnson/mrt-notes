@@ -11,16 +11,11 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
       if (!contentItem.marks) {
         previewString += contentItem.text
       } else {
-        previewString += `|cff${contentItem.marks[0].attrs?.color?.replace(
-          '#',
-          ''
-        )}${contentItem.text}|r`
+        previewString += `|cff${contentItem.marks[0].attrs?.color?.replace('#', '')}${contentItem.text}|r`
       }
     } else if (contentItem.type === 'image') {
       if (contentItem.attrs?.alt === IMAGE_MARKER) {
-        const marker = markers.find(
-          (item) => contentItem.attrs?.src === item.src
-        )
+        const marker = markers.find((item) => contentItem.attrs?.src === item.src)
 
         if (marker) previewString += `{${marker.name}}`
       } else if (contentItem.attrs?.alt === IMAGE_SPELLID) {
@@ -35,10 +30,7 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
 }
 
 export function createPreviewString(string: string) {
-  return string.replace(
-    /\{time:([\S\w\s]+?)}/g,
-    '<span style="color: #ffed88;">$1</span> '
-  )
+  return string.replace(/\{time:([\S\w\s]+?)}/g, '<span style="color: #ffed88;">$1</span> ')
 }
 
 export function createMRTString(json?: JSONContent) {

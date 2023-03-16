@@ -5,9 +5,7 @@ import { useTeamMembers } from '~/composables/state'
 const teamMembersColumns = 'id, name, class'
 
 type TeamMembersRow = Database['public']['Tables']['team_members']['Row']
-export function setTeamMembers(
-  members: Pick<TeamMembersRow, 'id' | 'name' | 'class'>[]
-) {
+export function setTeamMembers(members: Pick<TeamMembersRow, 'id' | 'name' | 'class'>[]) {
   const teamMembers = useTeamMembers()
 
   teamMembers.value = members.map((item) => ({
@@ -49,10 +47,7 @@ export async function updateMembers(members: Member[]) {
   openSnackbar('Saved')
 }
 
-export async function addTeamMember(
-  playerName: string,
-  playerClass: WowClassesUnion
-) {
+export async function addTeamMember(playerName: string, playerClass: WowClassesUnion) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
   const teamMembers = useTeamMembers()

@@ -43,20 +43,9 @@ const username = ref<string>(profile.value?.username || '')
             </Button>
           </div>
         </Field>
-        <Notification v-if="!profile.username">
-          Set a username if you want to share your profile
-        </Notification>
-        <Field
-          v-if="user"
-          label-for="signup with"
-          label="Signed up with "
-          stacked
-        >
-          <span
-            v-for="provider in user.app_metadata.providers"
-            :key="provider"
-            class="bg-primary-100 p-1 px-2 rounded"
-          >
+        <Notification v-if="!profile.username"> Set a username if you want to share your profile </Notification>
+        <Field v-if="user" label-for="signup with" label="Signed up with " stacked>
+          <span v-for="provider in user.app_metadata.providers" :key="provider" class="bg-primary-100 p-1 px-2 rounded">
             {{ provider.toUpperCase() }}
           </span>
         </Field>

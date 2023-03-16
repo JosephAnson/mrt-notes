@@ -25,9 +25,7 @@ export function convertSliceToHex(text: Slice | Node) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       // Value can be set, ignore type issue
-      item.marks[0].attrs.color = convertRgbColorsToHex(
-        item.marks[0]?.attrs?.color
-      )
+      item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
     }
 
     convertSliceToHex(item)
@@ -39,9 +37,7 @@ export function convertSliceToHex(text: Slice | Node) {
 export function convertJsonContentToHex(content: JSONContent) {
   content.content?.forEach((item: JSONContent) => {
     if (item.marks?.[0]?.attrs?.color) {
-      item.marks[0].attrs.color = convertRgbColorsToHex(
-        item.marks[0]?.attrs?.color
-      )
+      item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
     }
 
     convertJsonContentToHex(item)
@@ -50,11 +46,7 @@ export function convertJsonContentToHex(content: JSONContent) {
   return content
 }
 
-function createTextNode(
-  editor: Editor,
-  text: string,
-  { color }: { color?: string } = {}
-) {
+function createTextNode(editor: Editor, text: string, { color }: { color?: string } = {}) {
   const marks = []
 
   if (color) marks.push(editor.schema.marks.textStyle.create({ color }))
@@ -62,17 +54,7 @@ function createTextNode(
   return editor.schema.text(text, marks)
 }
 
-function createImageNode({
-  editor,
-  src,
-  alt,
-  title,
-}: {
-  editor: Editor
-  src: string
-  alt: string
-  title?: string
-}) {
+function createImageNode({ editor, src, alt, title }: { editor: Editor; src: string; alt: string; title?: string }) {
   return editor.schema.nodes.image.create({ src, alt, title })
 }
 
@@ -96,10 +78,7 @@ function isEveryone(string: String) {
   return string.includes('everyone')
 }
 
-export async function createNodesOnPaste(
-  editor: Editor,
-  content: Slice | Node
-) {
+export async function createNodesOnPaste(editor: Editor, content: Slice | Node) {
   const jsonContent: Node[] = []
   const nodeList: Node[] = []
 
@@ -130,16 +109,11 @@ export async function createNodesOnPaste(
             )
           } else if (spell) {
             const spellId = string.replace('spell:', '').trim()
-            const { icon } = await $fetch<SpellIdInformation>(
-              `/api/spell/${spellId}`
-            )
+            const { icon } = await $fetch<SpellIdInformation>(`/api/spell/${spellId}`)
 
             openSnackbar(`Loading icon for spell id: ${spellId}`)
 
-            const { src, title, alt } = createEdtiorSpellIdImageData(
-              icon,
-              spellId
-            )
+            const { src, title, alt } = createEdtiorSpellIdImageData(icon, spellId)
             jsonContent.push(
               createImageNode({
                 editor,
@@ -151,9 +125,7 @@ export async function createNodesOnPaste(
           } else if (isTime(string) || isText(string) || isEveryone(string)) {
             jsonContent.push(createTextNode(editor, `{${string}}`))
           } else if (newString && isHexColor(color)) {
-            jsonContent.push(
-              createTextNode(editor, newString, { color: `#${color}` })
-            )
+            jsonContent.push(createTextNode(editor, newString, { color: `#${color}` }))
           } else {
             jsonContent.push(createTextNode(editor, string))
           }
@@ -204,8 +176,7 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
     onCreate: () => {
       emit('update:json', editor.value?.getJSON())
 
-      if (editor.value?.getJSON())
-        convertJsonContentToHex(editor.value?.getJSON())
+      if (editor.value?.getJSON()) convertJsonContentToHex(editor.value?.getJSON())
     },
     onUpdate: () => {
       emit('update:modelValue', editor.value?.getHTML())

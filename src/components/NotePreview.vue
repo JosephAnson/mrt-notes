@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import type { JSONContent } from '@tiptap/vue-3'
-import {
-  createMRTGroupString,
-  createMRTString,
-  createPreviewString,
-} from '~/utils/createMRTString'
+import { createMRTGroupString, createMRTString, createPreviewString } from '~/utils/createMRTString'
 
 const props = defineProps({
   noteString: { type: String, default: '' },
@@ -25,8 +21,7 @@ function copyToClipboard(string: string) {
 const preview = computed(() => {
   let preview = `${createPreviewString(props.noteString)}\n`
 
-  for (const group of groups.value)
-    preview += createPreviewString(group.note.value)
+  for (const group of groups.value) preview += createPreviewString(group.note.value)
 
   return preview
 })
@@ -43,13 +38,9 @@ const mrtString = computed(() => {
 <template>
   <div class="flex justify-between mb-4">
     <Heading h3> MRT String </Heading>
-    <Button v-if="isSupported" @click="copyToClipboard(mrtString)">
-      Copy MRT String
-    </Button>
+    <Button v-if="isSupported" @click="copyToClipboard(mrtString)"> Copy MRT String </Button>
   </div>
-  <div
-    class="preview bg-white p-4 color-black text-sm mb-4 h-64 overflow-y-scroll break-all text-xs"
-  >
+  <div class="preview bg-white p-4 color-black text-sm mb-4 h-64 overflow-y-scroll break-all text-xs">
     <pre v-html="mrtString" />
   </div>
   <Heading h3> Preview </Heading>

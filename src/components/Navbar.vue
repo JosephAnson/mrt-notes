@@ -4,10 +4,7 @@ const user = useSupabaseUser()
 const router = useRouter()
 const profile = useProfile()
 
-const { data: asyncProfile } = await useAsyncData(
-  'nav-profile',
-  async () => await getProfile()
-)
+const { data: asyncProfile } = await useAsyncData('nav-profile', async () => await getProfile())
 
 if (asyncProfile.value)
   setProfile({
@@ -66,19 +63,14 @@ function logout() {
           <Button v-if="!user" @click="login"> Login </Button>
 
           <template v-else>
-            <NuxtLink
-              v-if="profile.username"
-              :to="`/profile/${profile.username}`"
-            >
+            <NuxtLink v-if="profile.username" :to="`/profile/${profile.username}`">
               <Button> My Notes </Button>
             </NuxtLink>
             <NuxtLink to="/team/">
               <Button> Team </Button>
             </NuxtLink>
             <NuxtLink to="/account">
-              <Button v-if="profile.username">
-                Account ({{ profile.username }})
-              </Button>
+              <Button v-if="profile.username"> Account ({{ profile.username }}) </Button>
               <Button v-else> Account </Button>
             </NuxtLink>
             <Button @click="logout"> Logout </Button>

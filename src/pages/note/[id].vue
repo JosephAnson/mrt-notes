@@ -12,9 +12,7 @@ const { data: note } = await useAsyncData('notes', async () => {
   return data
 })
 
-const noteIsUsers = computed(() =>
-  isUsersNote(user.value?.id, note.value?.user_id?.id)
-)
+const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id?.id))
 
 const editorString = computed(() => note.value?.editor_string || '')
 const json = computed(() => generateJSON(editorString.value, editorExtensions))
@@ -48,11 +46,7 @@ if (asyncGroups.value) {
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 
-        <NuxtLink
-          v-if="noteIsUsers"
-          :to="`/note/edit/${route.params.id}`"
-          class="flex"
-        >
+        <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex">
           <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>
         </NuxtLink>
       </div>

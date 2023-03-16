@@ -6,10 +6,7 @@ import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
-const { data: asyncTeamMembers } = await useAsyncData(
-  'teamMembers',
-  async () => await getAllTeamMembers()
-)
+const { data: asyncTeamMembers } = await useAsyncData('teamMembers', async () => await getAllTeamMembers())
 
 const teamMembers = useTeamMembers()
 
@@ -27,43 +24,22 @@ const debouncedUpdateMembers = useDebounceFn(() => {
   <Field label-for="player" label="Player">
     <Input v-model="playerName" class="mr-2" />
 
-    <Select
-      v-model:value="playerClass"
-      class="mr-2"
-      :class="`has-wow-background-${paramCase(playerClass)}`"
-    >
+    <Select v-model:value="playerClass" class="mr-2" :class="`has-wow-background-${paramCase(playerClass)}`">
       <option v-for="type in WowClasses" :key="type">
         {{ type }}
       </option>
     </Select>
 
-    <Button type="is-primary" @click="addTeamMember(playerName, playerClass)">
-      Add
-    </Button>
+    <Button type="is-primary" @click="addTeamMember(playerName, playerClass)"> Add </Button>
   </Field>
 
-  <Draggable
-    v-model="teamMembers"
-    handle=".handle"
-    item-key="id"
-    @change="debouncedUpdateMembers"
-  >
+  <Draggable v-model="teamMembers" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
     <template #item="{ element, index }">
-      <div
-        class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1"
-      >
+      <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
         <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
-        <Field
-          class="w-full !mb-0 mr-2 !inline-block !sm:flex"
-          :label-for="`player-${index}`"
-          label="Player"
-        >
-          <Input
-            v-model="element.name"
-            class="w-full mr-2 my-2 sm:my-0"
-            @change="debouncedUpdateMembers"
-          />
+        <Field class="w-full !mb-0 mr-2 !inline-block !sm:flex" :label-for="`player-${index}`" label="Player">
+          <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @change="debouncedUpdateMembers" />
 
           <Select
             v-model:value="element.class"
@@ -76,9 +52,7 @@ const debouncedUpdateMembers = useDebounceFn(() => {
           </Select>
         </Field>
 
-        <Button class="delete" @click="removeTeamMember(element)">
-          Delete
-        </Button>
+        <Button class="delete" @click="removeTeamMember(element)"> Delete </Button>
       </div>
     </template>
   </Draggable>

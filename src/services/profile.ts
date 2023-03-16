@@ -4,10 +4,7 @@ import type { Profile } from '~/types'
 const profileColumns = 'id, username, avatar_url'
 
 export async function useAsyncGetProfile() {
-  const { data: asyncProfile } = await useAsyncData(
-    'profile',
-    async () => await getProfile()
-  )
+  const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfile())
 
   if (asyncProfile.value)
     setProfile({
@@ -28,31 +25,20 @@ export async function getProfile() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
 
-  const { data } = await client
-    .from('profiles')
-    .select(profileColumns)
-    .eq('id', user.value?.id)
-    .single()
+  const { data } = await client.from('profiles').select(profileColumns).eq('id', user.value?.id).single()
 
   return data
 }
 
 export async function getProfileByUsername(username: string) {
   const client = useSupabaseClient<Database>()
-  const { data } = await client
-    .from('profiles')
-    .select(profileColumns)
-    .ilike('username', `${username}`)
-    .single()
+  const { data } = await client.from('profiles').select(profileColumns).ilike('username', `${username}`).single()
   return data
 }
 
 async function usernameExists(username: String) {
   const client = useSupabaseClient<Database>()
-  const { data } = await client
-    .from('profiles')
-    .select('username')
-    .eq('username', username)
+  const { data } = await client.from('profiles').select('username').eq('username', username)
 
   return (data?.length || 0) > 0
 }

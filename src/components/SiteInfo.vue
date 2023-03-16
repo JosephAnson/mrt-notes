@@ -2,8 +2,8 @@
   <Heading h3>Features</Heading>
   <div class="prose mt-8">
     <p>
-      Website dedicated to making raid leaders lives a little easier with mrt
-      note planning, below are some of the features:
+      Website dedicated to making raid leaders lives a little easier with mrt note planning, below are some of the
+      features:
     </p>
     <ul>
       <li>Create, share and export mrt notes</li>
@@ -26,10 +26,7 @@
       <li>Add time stamps</li>
       <li>Add spell icons</li>
       <li>Add spell occurrence</li>
-      <li>
-        Define groups that notes can be assigned to: Tanks, Healers, DPS,
-        individual players
-      </li>
+      <li>Define groups that notes can be assigned to: Tanks, Healers, DPS, individual players</li>
     </ul>
   </div>
 </template>

@@ -34,12 +34,7 @@ export default defineComponent({
       return []
     })
 
-    return () =>
-      h(
-        'div',
-        { 'class': 'field-body', 'data-testid': 'field-body' },
-        fieldSlots.value
-      )
+    return () => h('div', { 'class': 'field-body', 'data-testid': 'field-body' }, fieldSlots.value)
   },
 })
 </script>
