@@ -12,8 +12,9 @@ const props = withDefaults(
   }
 )
 
-const notesStore = useNotesStore()
 const user = useSupabaseUser()
+const notesStore = useNotesStore()
+
 const userId = user.value?.id
 
 const format = 'DD MMMM YYYY'
@@ -43,8 +44,8 @@ const canEdit = computed(() => isUsers && props.showEdit)
         <span>Created on: {{ createdOn }}</span>
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
         <span>Updated: {{ updatedOn }}</span>
-        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
-        <FavouriteButton :favorite="props.note.favorite" :note-id="props.note.id" :user-id="userId" />
+        <span v-if="user" class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
+        <FavouriteButton v-if="user" :favorite="props.note.favorite" :note-id="props.note.id" :user-id="userId" />
       </div>
       <Field v-if="props.note.description" stacked class="line-clamp-3 pt-2 !mb-0">
         <p>{{ props.note.description }}</p>
