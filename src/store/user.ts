@@ -6,10 +6,9 @@ export interface UserState {
 }
 
 export const useUserStore = defineStore('user', {
-  state: () =>
-    ({
-      favourites: [],
-    } as UserState),
+  state: (): UserState => ({
+    favourites: [],
+  }),
   actions: {
     hasFavourite(noteId: number) {
       return this.favourites.find((item) => item.note_id === noteId)

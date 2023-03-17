@@ -11,15 +11,14 @@ export interface NoteState {
 }
 
 export const useNotesStore = defineStore('notes', {
-  state: () =>
-    ({
-      notes: {
-        search: [],
-        user: [],
-        recentlyCreated: [],
-        recentlyModified: [],
-      },
-    } as NoteState),
+  state: (): NoteState => ({
+    notes: {
+      search: [],
+      user: [],
+      recentlyCreated: [],
+      recentlyModified: [],
+    },
+  }),
   actions: {
     setNotes(type: NoteTypes, notes: NotesAndProfile[]) {
       this.notes[type] = notes.map(createNotes)

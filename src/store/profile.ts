@@ -6,14 +6,13 @@ interface ProfileState {
 }
 
 export const useProfileStore = defineStore('profile', {
-  state: () =>
-    ({
-      profile: {
-        id: '',
-        username: null,
-        avatar_url: null,
-      },
-    } as ProfileState),
+  state: (): ProfileState => ({
+    profile: {
+      id: '',
+      username: null,
+      avatar_url: null,
+    },
+  }),
   getters: {
     username: (state) => state.profile.username,
   },
