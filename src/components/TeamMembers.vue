@@ -11,9 +11,13 @@ await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTea
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
-const debouncedUpdateMembers = useDebounceFn(() => {
-  teamMembersStore.updateMembers()
-}, 2000)
+const debouncedUpdateMembers = useDebounceFn(
+  () => {
+    teamMembersStore.updateMembers()
+  },
+  DEBOUNCE_TYPING_TIMER,
+  { maxWait: 5000 }
+)
 </script>
 
 <template>
@@ -35,7 +39,7 @@ const debouncedUpdateMembers = useDebounceFn(() => {
         <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
         <Field class="w-full !mb-0 mr-2 !inline-block !sm:flex" :label-for="`player-${index}`" label="Player">
-          <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @change="debouncedUpdateMembers" />
+          <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @update:modelValue="debouncedUpdateMembers" />
 
           <Select
             v-model:value="element.class"

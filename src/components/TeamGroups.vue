@@ -15,9 +15,13 @@ const teamMembersStore = useTeamMembersStore()
 
 await useAsyncData('groups', async () => await groupsStore.fetchAllGroups(props.noteId))
 
-const debouncedUpdateGroups = useDebounceFn(() => {
-  updateGroups(props.noteId, groupsStore.groups)
-}, 2000)
+const debouncedUpdateGroups = useDebounceFn(
+  () => {
+    updateGroups(props.noteId, groupsStore.groups)
+  },
+  DEBOUNCE_TYPING_TIMER,
+  { maxWait: 5000 }
+)
 
 const query = ref('')
 const filteredMembers = computed(() =>

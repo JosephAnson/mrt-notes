@@ -30,18 +30,22 @@ const editor = reactive<EditorData>({
   json: generateJSON(note.value?.editor_string || '', editorExtensions),
 })
 
-const debouncedUpdateNote = useDebounceFn(() => {
-  if (note.value) {
-    updateNote({
-      id: note.value.id,
-      name: name.value,
-      description: description.value,
-      editor_string: editor.value,
-      categories: categoryIds.value,
-    })
-    saving.value = false
-  }
-}, 2000)
+const debouncedUpdateNote = useDebounceFn(
+  () => {
+    if (note.value) {
+      updateNote({
+        id: note.value.id,
+        name: name.value,
+        description: description.value,
+        editor_string: editor.value,
+        categories: categoryIds.value,
+      })
+      saving.value = false
+    }
+  },
+  DEBOUNCE_TYPING_TIMER,
+  { maxWait: 5000 }
+)
 
 function save() {
   saving.value = true
