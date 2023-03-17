@@ -1,7 +1,13 @@
 import { createApp } from 'vue'
 import { Snackbar } from '#components'
 
-export function openSnackbar(params: Record<string, any> | string): any {
+interface SnackbarProps {
+  background?: string
+  message: string | string[]
+  duration?: number
+}
+
+export function openSnackbar(params: (SnackbarProps & Record<string, any>) | string): any {
   if (typeof params === 'string') {
     params = {
       message: params,
