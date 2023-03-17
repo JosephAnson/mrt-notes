@@ -1,15 +1,18 @@
 import type { Database } from '~/supabase.types'
 import type { Favourite } from '~/types'
 
-export async function getUserHasFavourites(userId: string | undefined): Promise<Favourite[]> {
+export async function getUserFavourites(userId: string | undefined, withNotes: boolean): Promise<Favourite[]> {
   const client = useSupabaseClient<Database>()
   if (!userId) return []
 
-  const { data, error } = await client.from('favourites').select().eq('user_id', userId)
+  const { data, error } = await client
+    .from('favourites')
+    .select(withNotes ? 'id, user_id, note_id, note:note_id(*), created_at' : 'id, user_id, note_id, created_at')
+    .eq('user_id', userId)
 
   if (error) throw new Error(error.message)
 
-  return data as Favourite[]
+  return data as unknown as Favourite[]
 }
 
 export async function addFavourite(noteId: number, userId: string): Promise<Favourite> {

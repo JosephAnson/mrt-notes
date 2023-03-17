@@ -1,4 +1,4 @@
-import { addFavourite, getUserHasFavourites, removeFavourite } from '~/services/favourites'
+import { addFavourite, getUserFavourites, removeFavourite } from '~/services/favourites'
 import type { Favourite } from '~/types'
 
 export interface UserState {
@@ -11,9 +11,9 @@ export const useUserStore = defineStore('user', {
       favourites: [],
     } as UserState),
   actions: {
-    async fetchUserFavourites(userID: string | undefined) {
+    async fetchUserFavourites(userID: string | undefined, withNotes = false) {
       if (userID) {
-        this.favourites = await getUserHasFavourites(userID)
+        this.favourites = await getUserFavourites(userID, withNotes)
       }
 
       return this.favourites
