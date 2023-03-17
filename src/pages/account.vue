@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import Notification from '~/components/Notification.vue'
-import { getProfile, setProfile } from '~/services/profile'
 
 definePageMeta({
   middleware: 'auth',
 })
 
 const user = useSupabaseUser()
-const profile = useProfile()
+const profileStore = useProfileStore()
 const userStore = useUserStore()
 
 await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
-const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfile())
+await useAsyncData('profile', async () => await profileStore.fetchProfile())
 
-if (asyncProfile.value) {
-  setProfile({
-    id: asyncProfile.value.id,
-    username: asyncProfile.value.username,
-    avatar_url: asyncProfile.value.avatar_url,
-  })
-}
-
-const username = ref<string>(profile.value?.username || '')
+const username = ref<string>(profileStore.username || '')
 </script>
 
 <template>
@@ -32,12 +23,12 @@ const username = ref<string>(profile.value?.username || '')
       <div class="md:grid grid-cols-12 gap-8">
         <div class="col-span-12 xl:col-span-6">
           <div class="max-w-lg">
-            <Field v-if="profile.avatar_url" label-for="avatar" stacked>
-              <img class="w-48 rounded-full" :src="profile.avatar_url" />
+            <Field v-if="profileStore.profile.avatar_url" label-for="avatar" stacked>
+              <img class="w-48 rounded-full" :src="profileStore.profile.avatar_url" />
             </Field>
 
-            <Field v-if="profile.username" stacked>
-              <NuxtLink :to="`profile/${profile.username}`">
+            <Field v-if="profileStore.profile.username" stacked>
+              <NuxtLink :to="`profile/${profileStore.profile.username}`">
                 <Button>View Profile</Button>
               </NuxtLink>
             </Field>
@@ -48,14 +39,16 @@ const username = ref<string>(profile.value?.username || '')
               <div class="flex">
                 <Input id="username" v-model="username" type="text" class="mr-2" />
                 <Button
-                  :disabled="username === profile.username || !username"
-                  @click="username !== profile.username && updateUsername(username)"
+                  :disabled="username === profileStore.profile.username || !username"
+                  @click="username !== profileStore.profile.username && profileStore.setUsername(username)"
                 >
                   Set Username
                 </Button>
               </div>
             </Field>
-            <Notification v-if="!profile.username"> Set a username if you want to share your profile </Notification>
+            <Notification v-if="!profileStore.profile.username">
+              Set a username if you want to share your profile
+            </Notification>
             <Field v-if="user" label-for="signup with" label="Signed up with " stacked>
               <span
                 v-for="provider in user.app_metadata.providers"

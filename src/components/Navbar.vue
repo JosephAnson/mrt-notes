@@ -1,30 +1,18 @@
 <script lang="ts" setup>
+import { useProfileStore } from '~/store/profile'
+
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
 const router = useRouter()
-const profile = useProfile()
+const profileStore = useProfileStore()
 
-const { data: asyncProfile } = await useAsyncData('nav-profile', async () => await getProfile())
-
-if (asyncProfile.value)
-  setProfile({
-    id: asyncProfile.value.id,
-    username: asyncProfile.value.username,
-    avatar_url: asyncProfile.value.avatar_url,
-  })
+await useAsyncData('nav-profile', async () => await profileStore.fetchProfile())
 
 // Watch to see if user changes to re-fetch notes
 watchOnce(
   () => user.value,
   async () => {
-    const profile = await getProfile()
-
-    if (profile)
-      setProfile({
-        id: profile.id,
-        username: profile.username,
-        avatar_url: profile.avatar_url,
-      })
+    await profileStore.fetchProfile()
   },
   { deep: true }
 )
@@ -63,14 +51,14 @@ function logout() {
           <Button v-if="!user" @click="login"> Login </Button>
 
           <template v-else>
-            <NuxtLink v-if="profile.username" :to="`/profile/${profile.username}`">
+            <NuxtLink v-if="profileStore.username" :to="`/profile/${profileStore.username}`">
               <Button> My Notes </Button>
             </NuxtLink>
             <NuxtLink to="/team/">
               <Button> Team </Button>
             </NuxtLink>
             <NuxtLink to="/account">
-              <Button v-if="profile.username"> Account ({{ profile.username }}) </Button>
+              <Button v-if="profileStore.username"> Account ({{ profileStore.username }}) </Button>
               <Button v-else> Account </Button>
             </NuxtLink>
             <Button @click="logout"> Logout </Button>

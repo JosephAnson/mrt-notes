@@ -3,20 +3,13 @@ import type { Profile } from '~/types'
 
 const profileColumns = 'id, username, avatar_url'
 
-export function setProfile({ id, username, avatar_url }: Profile) {
-  const profile = useProfile()
-  profile.value.id = id
-  profile.value.username = username
-  profile.value.avatar_url = avatar_url
-}
-
 export async function getProfile() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
 
   const { data } = await client.from('profiles').select(profileColumns).eq('id', user.value?.id).single()
 
-  return data
+  return data as Profile
 }
 
 export async function getProfileByUsername(username: string) {
@@ -25,46 +18,26 @@ export async function getProfileByUsername(username: string) {
   return data
 }
 
-async function usernameExists(username: String) {
+export async function usernameExists(username: String) {
   const client = useSupabaseClient<Database>()
   const { data } = await client.from('profiles').select('username').eq('username', username)
 
   return (data?.length || 0) > 0
 }
 
-export async function updateUsername(username: string) {
-  if (!username) {
-    openSnackbar({
-      message: 'Username cannot be empty!',
-      background: 'bg-red-700',
+export async function updateUsername(username: string, userId: string) {
+  const client = useSupabaseClient<Database>()
+
+  const { data, error } = await client
+    .from('profiles')
+    .upsert({
+      username,
+      id: userId,
     })
-  } else {
-    const client = useSupabaseClient<Database>()
-    const user = useSupabaseUser()
-    const profile = useProfile()
-    const usernameExist = await usernameExists(username)
+    .select(profileColumns)
+    .single()
 
-    if (usernameExist) {
-      openSnackbar({
-        message: 'Username exists try another!',
-        background: 'bg-red-700',
-      })
-    } else {
-      if (!user.value) throw new Error('User not logged in')
-      const { error } = await client
-        .from('profiles')
-        .upsert({
-          username,
-          id: user.value.id,
-        })
-        .select(profileColumns)
-        .single()
+  if (error) throw new Error('Cannot update username')
 
-      if (error) throw new Error('Cannot update username')
-
-      profile.value.username = username
-
-      openSnackbar('Saved username')
-    }
-  }
+  return data
 }

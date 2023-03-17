@@ -20,9 +20,6 @@ export const useNotesStore = defineStore('notes', {
         recentlyModified: [],
       },
     } as NoteState),
-  getters: {
-    searchList: (state) => state.notes.search,
-  },
   actions: {
     setNotes(type: NoteTypes, notes: NotesAndProfile[]) {
       this.notes[type] = notes.map(createNotes)

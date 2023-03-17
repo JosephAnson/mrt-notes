@@ -4,8 +4,8 @@ import { paramCase } from 'change-case'
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
 const userStore = useUserStore()
+const profileStore = useProfileStore()
 const teamMembers = useTeamMembers()
-const profile = useProfile()
 
 await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id || ''))
@@ -45,7 +45,7 @@ watchOnce(
           Download MRT WoW Addon</Button
         >
       </div>
-      <Notification v-if="user && !profile.username" class="inline-flex justify-between items-center mb-8">
+      <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
         Set your username on your account if you want to share your profile
         <nuxt-link to="account"> <Button class="ml-4">Set Username</Button></nuxt-link>
       </Notification>
