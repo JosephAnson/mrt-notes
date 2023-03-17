@@ -24,7 +24,7 @@ export interface Favourite {
   created_at: string
   user_id: string
   note_id: number
-  note?: Note
+  note: Note
 }
 
 export interface EditorData {

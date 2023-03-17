@@ -11,9 +11,9 @@ export const useUserStore = defineStore('user', {
       favourites: [],
     } as UserState),
   actions: {
-    async fetchUserFavourites(userID: string | undefined, withNotes = false) {
+    async fetchUserFavourites(userID: string | undefined) {
       if (userID) {
-        this.favourites = await getUserFavourites(userID, withNotes)
+        this.favourites = await getUserFavourites(userID)
       }
 
       return this.favourites

@@ -6,7 +6,7 @@ const route = useRoute()
 const notesStore = useNotesStore()
 const userStore = useUserStore()
 
-await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value.id))
+await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 const usernameParam = getRouterParamsAsString(route.params.username)
 
 const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam))

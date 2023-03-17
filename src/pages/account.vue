@@ -10,7 +10,7 @@ const user = useSupabaseUser()
 const profile = useProfile()
 const userStore = useUserStore()
 
-await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id, true))
+await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfile())
 
 if (asyncProfile.value) {
