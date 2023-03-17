@@ -59,7 +59,7 @@ const canEdit = computed(() => isUsers && props.showEdit)
       </NuxtLink>
 
       <Button v-if="isUsers && props.showDelete" class="bg-red-700" @click="notesStore.deleteNote(props.note.id)">
-        Delete
+        Delete Note
       </Button>
     </div>
   </div>

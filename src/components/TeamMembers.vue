@@ -1,22 +1,18 @@
 <script setup lang="ts">
 import { paramCase } from 'change-case'
 import Draggable from 'vuedraggable'
-import { getAllTeamMembers } from '#imports'
 import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
-const { data: asyncTeamMembers } = await useAsyncData('teamMembers', async () => await getAllTeamMembers())
-
-const teamMembers = useTeamMembers()
+const teamMembersStore = useTeamMembersStore()
+await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
-if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
-
 const debouncedUpdateMembers = useDebounceFn(() => {
-  updateMembers(teamMembers.value)
+  teamMembersStore.updateMembers()
 }, 2000)
 </script>
 
@@ -30,10 +26,10 @@ const debouncedUpdateMembers = useDebounceFn(() => {
       </option>
     </Select>
 
-    <Button type="is-primary" @click="addTeamMember(playerName, playerClass)"> Add </Button>
+    <Button type="is-primary" @click="teamMembersStore.addMember(playerName, playerClass)"> Add </Button>
   </Field>
 
-  <Draggable v-model="teamMembers" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
+  <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
     <template #item="{ element, index }">
       <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
         <span class="i-carbon-draggable mr-2 text-2xl handle" />
@@ -52,7 +48,7 @@ const debouncedUpdateMembers = useDebounceFn(() => {
           </Select>
         </Field>
 
-        <Button class="delete" @click="removeTeamMember(element)"> Delete </Button>
+        <Button class="delete" @click="teamMembersStore.removeMember(element)"> Delete </Button>
       </div>
     </template>
   </Draggable>

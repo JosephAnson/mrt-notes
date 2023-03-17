@@ -17,7 +17,7 @@ const { data: asyncGroups } = await useAsyncData('groups', async () => {
 })
 
 const groups = useGroups()
-const teamMembers = useTeamMembers()
+const teamMembersStore = useTeamMembersStore()
 
 const debouncedUpdateGroups = useDebounceFn(() => {
   updateGroups(props.noteId, groups.value)
@@ -38,8 +38,8 @@ if (asyncGroups.value) {
 const query = ref('')
 const filteredMembers = computed(() =>
   query.value === ''
-    ? teamMembers.value
-    : teamMembers.value.filter((member) =>
+    ? teamMembersStore.members
+    : teamMembersStore.members.filter((member) =>
         member.name.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, ''))
       )
 )

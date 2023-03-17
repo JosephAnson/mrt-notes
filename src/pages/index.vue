@@ -1,27 +1,23 @@
 <script lang="ts" setup async>
 import { paramCase } from 'change-case'
+import { useTeamMembersStore } from '~/store/teamMembers'
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
 const userStore = useUserStore()
 const profileStore = useProfileStore()
-const teamMembers = useTeamMembers()
+const teamMembersStore = useTeamMembersStore()
 
 await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id || ''))
-const { data: asyncTeamMembers } = await useAsyncData('teamMembers', async () => await getAllTeamMembers())
+await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
-if (user.value) {
-  if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
-}
 // Watch to see if user changes to re-fetch notes
 watchOnce(
   () => user.value,
   async () => {
     await notesStore.fetchAllUserNotes(user.value?.id || '')
-    const teamMembers = await getAllTeamMembers()
-
-    if (teamMembers) setTeamMembers(teamMembers)
+    await teamMembersStore.fetchAllTeamMembers()
   },
   { deep: true }
 )
@@ -79,7 +75,7 @@ watchOnce(
 
               <ul>
                 <li
-                  v-for="member in teamMembers"
+                  v-for="member in teamMembersStore.members"
                   :key="member.id"
                   :class="`leading-[2] has-wow-text-${paramCase(member.class)}`"
                 >

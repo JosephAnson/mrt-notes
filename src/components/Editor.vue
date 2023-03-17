@@ -2,7 +2,6 @@
 import { EditorContent } from '@tiptap/vue-3'
 import EditorSpellOccurranceModalButton from '~/components/EditorSpellOccurranceModalButton.vue'
 import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
-import { useTeamMembers } from '~/composables/state'
 import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
 import { IMAGE_MARKER } from '~/utils/constants'
@@ -21,7 +20,7 @@ const emits = defineEmits(['update:modelValue', 'update:json'])
 
 const { modelValue } = toRefs(props)
 
-const teamMembers = useTeamMembers()
+const teamMembersStore = useTeamMembersStore()
 
 const editor = useEditor(modelValue, emits)
 
@@ -94,10 +93,14 @@ function setColor(event: Event) {
       </button>
     </div>
 
-    <Field v-if="teamMembers.length" label="Players:" class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start">
+    <Field
+      v-if="teamMembersStore.members.length"
+      label="Players:"
+      class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+    >
       <div class="flex flex-wrap">
         <a
-          v-for="teamMember in teamMembers"
+          v-for="teamMember in teamMembersStore.members"
           :key="teamMember.id"
           class="mr-2 last:mr-0 cursor-pointer"
           :class="`has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"

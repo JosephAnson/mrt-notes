@@ -1,19 +1,7 @@
 import type { Member, WowClassesUnion } from '~/types'
 import type { Database } from '~/supabase.types'
-import { useTeamMembers } from '~/composables/state'
 
 const teamMembersColumns = 'id, name, class'
-
-type TeamMembersRow = Database['public']['Tables']['team_members']['Row']
-export function setTeamMembers(members: Pick<TeamMembersRow, 'id' | 'name' | 'class'>[]) {
-  const teamMembers = useTeamMembers()
-
-  teamMembers.value = members.map((item) => ({
-    id: item.id,
-    class: item.class as WowClassesUnion,
-    name: item.name,
-  }))
-}
 
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
@@ -24,9 +12,9 @@ export async function getAllTeamMembers() {
     .eq('user_id', user.value?.id)
     .order('order')
 
-  return data
+  return data as Member[]
 }
-export async function updateMembers(members: Member[]) {
+export async function updateTeamMembers(members: Member[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
   const { data } = await client
@@ -41,42 +29,28 @@ export async function updateMembers(members: Member[]) {
       }))
     )
     .select(teamMembersColumns)
-
   return data
-
-  openSnackbar('Saved')
 }
 
-export async function addTeamMember(playerName: string, playerClass: WowClassesUnion) {
+export async function addTeamMember(playerName: string, playerClass: WowClassesUnion, order: number) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  const teamMembers = useTeamMembers()
 
   const { data } = await client
     .from('team_members')
     .insert({
       name: playerName,
       class: playerClass,
-      order: teamMembers.value.length + 1,
+      order,
       user_id: user.value?.id,
     })
     .select(teamMembersColumns)
     .single()
 
-  if (data) {
-    teamMembers.value?.push({
-      id: data.id,
-      class: data.class as WowClassesUnion,
-      name: data.name,
-    })
-  }
+  return data
 }
 
 export async function removeTeamMember(player: Member) {
   const client = useSupabaseClient<Database>()
-
-  const teamMembers = useTeamMembers()
-  teamMembers.value = teamMembers.value?.filter((t) => t.id !== player.id) || []
-
   return client.from('team_members').delete().match({ id: player.id })
 }
