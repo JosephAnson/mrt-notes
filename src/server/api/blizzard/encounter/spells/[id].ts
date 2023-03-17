@@ -17,7 +17,13 @@ interface Encounter {
   sections: EncounterSection[]
 }
 
-export default defineEventHandler(async (event): Promise<{ id: number; name: string; spells: EncounterSpell[] }> => {
+interface EncouterSpells {
+  id: number
+  name: string
+  spells: EncounterSpell[]
+}
+
+export default defineEventHandler(async (event): Promise<EncouterSpells> => {
   if (!event.context.params) {
     throw createError({
       statusCode: 400,
@@ -26,6 +32,15 @@ export default defineEventHandler(async (event): Promise<{ id: number; name: str
   }
 
   const id = Number(event.context.params.id)
+
+  const storageKey = `encounter-spells:${id}`
+  const storedSpells = await useStorage().getItem<EncouterSpells>(storageKey)
+  if (storedSpells)
+    return {
+      id: storedSpells.id,
+      name: storedSpells.name,
+      spells: storedSpells.spells,
+    }
 
   const wowClient = await useWoWClient()
 
@@ -39,10 +54,13 @@ export default defineEventHandler(async (event): Promise<{ id: number; name: str
   function generateAllSpells(sections: EncounterSection[]) {
     for (const section of sections) {
       if (section.spell) spells.push(section.spell)
+      if (section.sections) generateAllSpells(section.sections)
     }
   }
 
   if (data.sections) generateAllSpells(data.sections)
+
+  await useStorage().setItem(storageKey, { id, name: data.name, spells })
 
   return { id, name: data.name, spells }
 })

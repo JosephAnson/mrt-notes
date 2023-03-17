@@ -5,7 +5,12 @@ interface EncounterInstance {
   name: string
 }
 
-export default defineEventHandler(async (event) => {
+interface EncounterInstances {
+  dungeons: EncounterInstance[]
+  raids: EncounterInstance[]
+}
+
+export default defineEventHandler(async (event): Promise<EncounterInstances> => {
   if (!event.context.params) {
     throw createError({
       statusCode: 400,
@@ -14,6 +19,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const id = Number(event.context.params.id)
+
+  const storageKey = `expansion-instances:${id}`
+  const encounterInstances = await useStorage().getItem<EncounterInstances>(storageKey)
+  if (encounterInstances) return encounterInstances
 
   const wowClient = await useWoWClient()
 
@@ -24,6 +33,8 @@ export default defineEventHandler(async (event) => {
     resource: 'expansion',
     id,
   })
+
+  await useStorage().setItem(storageKey, data)
 
   return data
 })

@@ -1,53 +1,75 @@
 <script setup>
-const { data: expansions } = await useFetch('/api/blizzard/expansion/all')
-const { data: expansionInstances } = await useFetch('/api/blizzard/expansion/instances/503', {
-  pick: ['dungeons', 'raids'],
+const expansionSelect = ref(503)
+const instanceSelect = ref(1200)
+const encounterSelect = ref(2480)
+
+const { data: expansions } = await useFetch('/api/blizzard/expansion/all', {
+  onResponse({ response }) {
+    expansionSelect.value = response._data.at(-1).id
+    return response._data
+  },
 })
-const { data: instance } = await useFetch('/api/blizzard/instance/1200')
-const { data: spellData } = await useFetch('/api/blizzard/encounter/spells/2500')
+
+const instancesUrl = computed(() => `/api/blizzard/expansion/instances/${expansionSelect.value}`)
+const { data: expansionInstances } = await useFetch(instancesUrl, {
+  pick: ['dungeons', 'raids'],
+  onResponse({ response }) {
+    instanceSelect.value = response._data.raids.at(-1).id
+    return response._data
+  },
+})
+
+const instanceUrl = computed(() => `/api/blizzard/instance/${instanceSelect.value}`)
+const { data: instance } = await useFetch(instanceUrl, {
+  onResponse({ response }) {
+    encounterSelect.value = response._data.encounters[0].id
+    return response._data
+  },
+})
+
+const encounterUrl = computed(() => `/api/blizzard/encounter/spells/${encounterSelect.value}`)
+const { data: spellData } = await useFetch(encounterUrl)
 </script>
 
 <template>
   <Section>
     <Container class="text-xs">
-      <Heading>{{ spellData.name }} Spells - 2500</Heading>
+      <Heading>Expansions</Heading>
+      <Select v-model:value="expansionSelect">
+        <option v-for="expansion in expansions" :key="expansion.id" :value="expansion.id">{{ expansion.name }}</option>
+      </Select>
+      <hr />
+
+      <div v-if="expansionInstances && expansionInstances?.raids && expansionInstances.dungeons">
+        <Heading>Expansion Instances ({{ expansionSelect }})</Heading>
+
+        <Select v-model:value="instanceSelect">
+          <optgroup label="raids">Raids</optgroup>
+          <option v-for="expansion in expansionInstances.raids" :key="expansion.id" :value="expansion.id">
+            {{ expansion.name }}
+          </option>
+          <optgroup label="dungeons">Dungeons</optgroup>
+          <option v-for="expansion in expansionInstances.dungeons" :key="expansion.id" :value="expansion.id">
+            {{ expansion.name }}
+          </option>
+        </Select>
+        <hr />
+      </div>
+
+      <Heading>Encounters - instance({{ instanceSelect }})</Heading>
+      <Select v-model:value="encounterSelect">
+        <option v-for="encounter in instance.encounters" :key="encounter.id" :value="encounter.id">
+          {{ encounter.name }}
+        </option>
+      </Select>
+
+      <hr />
+
+      <Heading>{{ spellData.name }} Spells - {{ encounterSelect }}</Heading>
       <div v-for="spell in spellData.spells" :key="spell.id" class="flex">
         {{ spell.name }}
         <SpellImage v-model="spell.id"></SpellImage>
       </div>
-      <hr />
-      <Heading>Encounters - instance(1200)</Heading>
-      <pre>{{
-        instance.encounters.map((expansion) => ({
-          id: expansion.id,
-          name: expansion.name,
-        }))
-      }}</pre>
-      <hr />
-      <Heading>Expansion Instances (503)</Heading>
-      <Heading h4>Raids</Heading>
-      <pre>{{
-        expansionInstances.raids.map((expansion) => ({
-          id: expansion.id,
-          name: expansion.name,
-        }))
-      }}</pre>
-      <hr />
-      <Heading h4>Dungeons</Heading>
-      <pre>{{
-        expansionInstances.dungeons.map((expansion) => ({
-          id: expansion.id,
-          name: expansion.name,
-        }))
-      }}</pre>
-      <hr />
-      <Heading>Expansions</Heading>
-      <pre>{{
-        expansions.map((expansion) => ({
-          id: expansion.id,
-          name: expansion.name,
-        }))
-      }}</pre>
     </Container>
   </Section>
 </template>
