@@ -3,17 +3,6 @@ import type { Profile } from '~/types'
 
 const profileColumns = 'id, username, avatar_url'
 
-export async function useAsyncGetProfile() {
-  const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfile())
-
-  if (asyncProfile.value)
-    setProfile({
-      id: asyncProfile.value.id,
-      username: asyncProfile.value.username,
-      avatar_url: asyncProfile.value.avatar_url,
-    })
-}
-
 export function setProfile({ id, username, avatar_url }: Profile) {
   const profile = useProfile()
   profile.value.id = id

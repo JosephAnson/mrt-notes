@@ -1,27 +1,26 @@
 <script lang="ts" setup async>
 import { paramCase } from 'change-case'
-import { getAllUserNotes } from '~/services/notes'
-import { getAllTeamMembers } from '~/services/teamMembers'
 
 const user = useSupabaseUser()
-const notes = useNotes()
+const notesStore = useNotesStore()
+const userStore = useUserStore()
 const teamMembers = useTeamMembers()
 const profile = useProfile()
 
-const { data: asyncNotes } = await useAsyncData('notes', async () => await getAllUserNotes())
+await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
+await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id || ''))
 const { data: asyncTeamMembers } = await useAsyncData('teamMembers', async () => await getAllTeamMembers())
+
 if (user.value) {
-  if (asyncNotes.value) setNotes(asyncNotes.value)
   if (asyncTeamMembers.value) setTeamMembers(asyncTeamMembers.value)
 }
 // Watch to see if user changes to re-fetch notes
 watchOnce(
   () => user.value,
   async () => {
-    const notes = await getAllUserNotes()
+    await notesStore.fetchAllUserNotes(user.value?.id || '')
     const teamMembers = await getAllTeamMembers()
 
-    if (notes) setNotes(notes)
     if (teamMembers) setTeamMembers(teamMembers)
   },
   { deep: true }
@@ -61,10 +60,10 @@ watchOnce(
             <div class="w-full lg:w-2/3 lg:pr-8">
               <CreateNote />
 
-              <section v-if="notes.length">
+              <section v-if="notesStore.notes.user.length">
                 <Heading>My Notes</Heading>
                 <div class="mb-8">
-                  <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+                  <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
                 </div>
               </section>
             </div>

@@ -7,13 +7,13 @@ definePageMeta({
   middleware: 'note-edit',
 })
 
+const notesStore = useNotesStore()
+
 const { data: note } = await useAsyncData('notes', async () => {
   const route = useRoute()
   const { data } = await getNote(getRouterParamsAsString(route.params.id))
   return data
 })
-
-const groups = useGroups()
 
 const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
   note.value?.categories?.includes(category.id)
@@ -51,7 +51,7 @@ function save() {
 async function deleteNoteAndRedirect() {
   if (note.value) {
     const router = useRouter()
-    await deleteNote(note.value.id)
+    await notesStore.deleteNote(note.value.id)
     router.push('/')
   }
 }

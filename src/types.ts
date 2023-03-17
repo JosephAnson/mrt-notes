@@ -18,6 +18,15 @@ export interface Note {
   user_id: string
 }
 
+export type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
+export interface Favourite {
+  id: number
+  created_at: string
+  user_id: string
+  note_id: number
+  note: Note
+}
+
 export interface EditorData {
   value: string
   json: JSONContent
@@ -70,3 +79,5 @@ export interface SpellIdInformation {
   tooltip: string
   name: string
 }
+
+export type NoteTypes = 'search' | 'user' | 'recentlyModified' | 'recentlyCreated'

@@ -8,16 +8,9 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-const isDev = process.env.NODE_ENV === 'development'
-
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@unocss/nuxt', '@nuxtjs/web-vitals'],
+  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@unocss/nuxt', '@nuxtjs/web-vitals', '@pinia/nuxt'],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
-  webVitals: isDev
-    ? {
-        provider: 'vercel',
-      }
-    : {},
   app: {
     head: {
       title: 'MRT Notes',
@@ -42,7 +35,7 @@ export default defineNuxtConfig({
     },
   },
   imports: {
-    dirs: ['services'],
+    dirs: ['services', 'store'],
   },
   css: ['~/assets/styles/main.scss'],
   srcDir: 'src/',
@@ -86,5 +79,11 @@ export default defineNuxtConfig({
     },
     transformers: [transformerDirectives(), transformerVariantGroup()],
     safelist: 'text-l text-xl text-2xl'.split(' '),
+  },
+  pinia: {
+    autoImports: ['defineStore', ['defineStore', 'definePiniaStore']],
+  },
+  webVitals: {
+    provider: 'vercel',
   },
 })

@@ -1,6 +1,7 @@
 import type { PostgrestSingleResponse } from '@supabase/postgrest-js'
+import type { Ref } from 'vue'
 import type { Database } from '~/supabase.types'
-import type { Note, NotesRow, ProfilesRow } from '~/types'
+import type { Note, NotesAndProfile, NotesRow } from '~/types'
 
 const noteColumns = 'id, name, description, editor_string, user_id ( id, username ), created_at, updated_at, categories'
 
@@ -10,8 +11,6 @@ const defaultEditorValue =
   'Phase 1<br><br><br>' +
   'Phase 2<br><br><br>' +
   'Phase 3<br><br><br>'
-
-type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
 
 export async function createNewNote(name: string, editor_string = defaultEditorValue) {
   if (!name && name.length <= 0) return openSnackbar('Please enter a name')
@@ -85,14 +84,13 @@ export function createNotes(item: NotesAndProfile): Note {
   }
 }
 
-export function setNotes(newNotes: NotesAndProfile[]) {
-  const notes = useNotes()
-  notes.value = newNotes.map(createNotes)
+export function setNotes(store: Ref<Note[]>, newNotes: NotesAndProfile[]) {
+  store.value = newNotes.map(createNotes)
 }
 
-export async function getAllUserNotes() {
+export async function fetchAllUserNotes() {
   const user = useSupabaseUser()
-  return getAllNotesByUserId(user.value?.id || '')
+  return await fetchAllNotesByUserId(user.value?.id || '')
 }
 
 export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; limit?: number } = {}) {
@@ -106,13 +104,13 @@ export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; li
   return data as NotesAndProfile[]
 }
 
-export async function searchAllNotes(name: string, categories: string[]) {
+export async function searchAllNotes(name: string, categories: string[] | null) {
   const client = useSupabaseClient<Database>()
   const query = []
 
   if (name) query.push(`'${name}'`)
 
-  if (categories.length) {
+  if (categories && categories.length) {
     for (let i = 0; i < categories.length; i++) {
       const category = categories[i]
       const sections = category.split('/')
@@ -127,7 +125,7 @@ export async function searchAllNotes(name: string, categories: string[]) {
     .from('notes')
     .select(noteColumns)
     .order('created_at')
-    .containedBy('categories', categories)
+    .containedBy('categories', categories || '')
     .limit(50)
     .textSearch('fts', query.join(' OR '), {
       type: 'websearch',
@@ -137,7 +135,7 @@ export async function searchAllNotes(name: string, categories: string[]) {
   return data as NotesAndProfile[]
 }
 
-export async function getAllNotesByUserId(user_id: String): Promise<NotesAndProfile[]> {
+export async function fetchAllNotesByUserId(user_id: String): Promise<NotesAndProfile[]> {
   const client = useSupabaseClient<Database>()
   const { data } = await client.from('notes').select(noteColumns).eq('user_id', user_id).order('created_at')
 
@@ -146,12 +144,8 @@ export async function getAllNotesByUserId(user_id: String): Promise<NotesAndProf
 
 export async function deleteNote(id: number) {
   const client = useSupabaseClient<Database>()
-  const notes = useNotes()
-
   await deleteGroupsWithNoteId(id)
 
   await client.from('notes').delete().match({ id })
-
-  notes.value = notes.value?.filter((t) => t.id !== id) || []
   openSnackbar({ message: 'Note Deleted', background: 'bg-red-700' })
 }

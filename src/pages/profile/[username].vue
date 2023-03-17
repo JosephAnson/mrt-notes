@@ -1,23 +1,17 @@
 <script setup lang="ts">
 import { capitalCase } from 'change-case'
-import { useSupabaseUser } from '#imports'
-import { getAllNotesByUserId, setNotes } from '~/services/notes'
-import { getProfileByUsername } from '~/services/profile'
 
-const route = useRoute()
-const notes = useNotes()
 const user = useSupabaseUser()
+const route = useRoute()
+const notesStore = useNotesStore()
+const userStore = useUserStore()
 
+await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 const usernameParam = getRouterParamsAsString(route.params.username)
 
 const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam))
 
-const { data: asyncNotes } = await useAsyncData(
-  'notes',
-  async () => await getAllNotesByUserId(asyncProfile.value?.id || '')
-)
-
-if (asyncNotes.value) setNotes(asyncNotes.value)
+await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(asyncProfile.value?.id || ''))
 </script>
 
 <template>
@@ -29,8 +23,8 @@ if (asyncNotes.value) setNotes(asyncNotes.value)
         <CreateNote v-if="user?.id === asyncProfile?.id" />
 
         <Heading h2> {{ capitalCase(asyncProfile?.username || '') }}'s Notes </Heading>
-        <div v-if="notes.length">
-          <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+        <div v-if="notesStore.notes.user.length">
+          <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
         </div>
         <Heading v-else h2> {{ asyncProfile.username }} doesn't have any notes </Heading>
       </div>

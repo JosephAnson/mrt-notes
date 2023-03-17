@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { createNotes } from '~/services/notes'
+const notesStore = useNotesStore()
 
-const { data: recentlyModifiedNotes } = await useAsyncData(
-  'recentlyModifiedNotes',
-  async () => await getAllNotes({ order: 'updated_at', limit: 5 })
-)
-
-const notes = recentlyModifiedNotes.value?.map(createNotes) || []
+await useAsyncData('recentlyModifiedNotes', async () => await notesStore.fetchRecentlyModifiedNotes())
 </script>
 
 <template>
-  <section v-if="notes.length">
+  <section v-if="notesStore.notes.recentlyModified.length">
     <Heading>Recently Modified Notes</Heading>
     <div class="mb-8">
-      <NoteItem v-for="note in notes" :key="note.id" :note="note" :show-edit="false" :show-delete="false" />
+      <NoteItem
+        v-for="note in notesStore.notes.recentlyModified"
+        :key="note.id"
+        :note="note"
+        :show-edit="false"
+        :show-delete="false"
+      />
     </div>
   </section>
 </template>
