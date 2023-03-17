@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import Draggable from 'vuedraggable'
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, TransitionRoot } from '@headlessui/vue'
+import Draggable from 'vuedraggable'
 import { GroupType } from '~/types'
-import type { GroupTypeUnion } from '~/types'
 
 const props = defineProps({
   noteId: {
@@ -11,29 +10,14 @@ const props = defineProps({
   },
 })
 
-const { data: asyncGroups } = await useAsyncData('groups', async () => {
-  const { data } = await getAllGroups(props.noteId)
-  return data
-})
-
-const groups = useGroups()
+const groupsStore = useGroupsStore()
 const teamMembersStore = useTeamMembersStore()
 
-const debouncedUpdateGroups = useDebounceFn(() => {
-  updateGroups(props.noteId, groups.value)
-}, 2000)
+await useAsyncData('groups', async () => await groupsStore.fetchAllGroups(props.noteId))
 
-if (asyncGroups.value) {
-  setGroups(
-    asyncGroups.value.map((item, index) => ({
-      id: item.id,
-      note: { value: item.editor_string || '', json: {} },
-      order: index,
-      type: (item.type as GroupTypeUnion) || 'Players',
-      players: item.players || [],
-    }))
-  )
-}
+const debouncedUpdateGroups = useDebounceFn(() => {
+  updateGroups(props.noteId, groupsStore.groups)
+}, 2000)
 
 const query = ref('')
 const filteredMembers = computed(() =>
@@ -50,10 +34,12 @@ const filteredMembers = computed(() =>
     <div class="flex justify-between mb-4 items-center">
       <div class="notification">Add groups to show messages only to certain players</div>
       <div class="groups__actions buttons">
-        <Button type="is-primary" @click="createNewGroup(noteId, groups.length + 1)"> Add Group </Button>
+        <Button type="is-primary" @click="groupsStore.addGroup(noteId, groupsStore.groups.length + 1)">
+          Add Group
+        </Button>
       </div>
     </div>
-    <Draggable v-model="groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
+    <Draggable v-model="groupsStore.groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
       <template #item="{ element }">
         <div class="flex w-full bg-gray-800 py-2 px-4 mb-2 rounded-1">
           <span class="i-carbon-draggable mr-2 text-2xl handle" />
@@ -144,7 +130,7 @@ const filteredMembers = computed(() =>
             </Field>
           </div>
 
-          <a class="i-carbon-trash-can w-8 mt-2 ml-2 flex-grow-0" @click="deleteGroup(element.id)" />
+          <a class="i-carbon-trash-can w-8 mt-2 ml-2 flex-grow-0" @click="groupsStore.deleteGroup(element.id)" />
         </div>
       </template>
     </Draggable>

@@ -6,8 +6,8 @@ const editor = reactive<EditorData>({
   json: {},
 })
 
-const groups = useGroups()
-groups.value = []
+const groupsStore = useGroupsStore()
+groupsStore.clearGroups()
 </script>
 
 <template>

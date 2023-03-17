@@ -7,7 +7,7 @@ const props = defineProps({
   noteJson: Object as PropType<JSONContent>,
 })
 
-const groups = useGroups()
+const groupsStore = useGroupsStore()
 const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {
@@ -21,7 +21,7 @@ function copyToClipboard(string: string) {
 const preview = computed(() => {
   let preview = `${createPreviewString(props.noteString)}\n`
 
-  for (const group of groups.value) preview += createPreviewString(group.note.value)
+  for (const group of groupsStore.groups) preview += createPreviewString(group.note.value)
 
   return preview
 })
@@ -29,7 +29,7 @@ const preview = computed(() => {
 const mrtString = computed(() => {
   let MRTNote = createMRTString(props.noteJson)
 
-  for (const group of groups.value) MRTNote += createMRTGroupString(group)
+  for (const group of groupsStore.groups) MRTNote += createMRTGroupString(group)
 
   return MRTNote
 })

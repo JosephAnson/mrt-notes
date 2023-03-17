@@ -1,43 +1,25 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
 import { useSupabaseUser } from '#imports'
-import type { GroupTypeUnion } from '~/types'
 import { editorExtensions } from '~/utils/editor'
 
 const user = useSupabaseUser()
 const route = useRoute()
+const groupsStore = useGroupsStore()
 
 const { data: note } = await useAsyncData('notes', async () => {
   const { data } = await getNote(getRouterParamsAsString(route.params.id))
   return data
 })
-
-const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id?.id))
-
-const editorString = computed(() => note.value?.editor_string || '')
-const json = computed(() => generateJSON(editorString.value, editorExtensions))
-
-const { data: asyncGroups } = await useAsyncData('groups', async () => {
+await useAsyncData('groups', async () => {
   if (note.value) {
-    const { data } = await getAllGroups(note.value.id)
-    return data
+    await groupsStore.fetchAllGroups(note.value.id)
   }
 })
 
-if (asyncGroups.value) {
-  setGroups(
-    asyncGroups.value.map((item, index) => ({
-      id: item.id,
-      note: {
-        value: item.editor_string || '',
-        json: generateJSON(item.editor_string || '', editorExtensions),
-      },
-      order: index,
-      type: (item.type as GroupTypeUnion) || 'Players',
-      players: item.players || [],
-    }))
-  )
-}
+const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id?.id))
+const editorString = computed(() => note.value?.editor_string || '')
+const json = computed(() => generateJSON(editorString.value, editorExtensions))
 </script>
 
 <template>

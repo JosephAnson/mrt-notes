@@ -1,48 +1,39 @@
 import type { Database } from '~/supabase.types'
-import { useGroups } from '~/composables/state'
 import type { Group, GroupTypeUnion } from '~/types'
 
 const groupColumns = 'id, type, note_id, players, editor_string, order'
 
-export function setGroups(newGroups: Group[]) {
-  const groups = useGroups()
-  groups.value = newGroups
-}
-
-export async function createNewGroup(
-  note_id: number,
-  order: number,
-  type: GroupTypeUnion = 'Healers',
+export async function createNewGroup({
+  note_id,
+  order,
+  type = 'Healers',
   editor_string = '',
+  players,
+  user_id,
+}: {
+  note_id: number
+  order: number
+  type?: GroupTypeUnion
+  editor_string?: string
   players?: string[]
-) {
+  user_id: string
+}) {
   const client = useSupabaseClient<Database>()
-  const user = useSupabaseUser()
-  const groups = useGroups()
 
-  if (user.value) {
-    const { data } = await client
-      .from('groups')
-      .insert({
-        note_id,
-        order: groups.value.length + 1,
-        players,
-        type,
-        user_id: user.value.id,
-        editor_string,
-      })
-      .select(groupColumns)
-      .single()
+  const { data } = await client
+    .from('groups')
+    .insert({
+      note_id,
+      order,
+      players,
+      type,
+      user_id,
+      editor_string,
+    })
+    .select(groupColumns)
+    .single()
 
-    if (data) {
-      groups.value?.push({
-        id: data.id,
-        note: { value: data.editor_string || '', json: {} },
-        type: (data.type as GroupTypeUnion) || 'Players',
-        players: data.players || [],
-      })
-    }
-  }
+  return data
 }
 
 export async function updateGroups(note_id: number, groups: Group[]) {
@@ -67,21 +58,19 @@ export async function updateGroups(note_id: number, groups: Group[]) {
       )
       .select(groupColumns)
 
-    openSnackbar('Saved')
+    openSnackbar('Updated groups')
   }
 }
 
-export async function getAllGroups(noteId: number | string) {
+export async function getAllGroups(noteId: number) {
   const client = useSupabaseClient<Database>()
-  return client.from('groups').select(groupColumns).eq('note_id', noteId).order('order')
+  const { data } = await client.from('groups').select(groupColumns).eq('note_id', noteId).order('order')
+  return data
 }
 
-export async function deleteGroup(id: number) {
+export async function deleteGroupById(id: number) {
   const client = useSupabaseClient<Database>()
   await client.from('groups').delete().match({ id })
-
-  const groups = useGroups()
-  groups.value = groups.value?.filter((t) => t.id !== id) || []
 }
 
 export async function deleteGroupsWithNoteId(note_id: number) {
