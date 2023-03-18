@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
+import { useNoteStore } from '~/store/note'
 import type { EditorData } from '~/types'
 
 definePageMeta({
   middleware: 'note-edit',
 })
 
+const noteStore = useNoteStore()
 const notesStore = useNotesStore()
 
 const { data: note } = await useAsyncData('notes', async () => {
@@ -57,34 +59,17 @@ async function deleteNoteAndRedirect() {
   }
 }
 
-const { data: spellData, pending } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
+await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
+  onResponse({ response }) {
+    noteStore.setSpells(response._data.spells)
+    return response._data
+  },
+})
 </script>
 
 <template>
   <Section>
     <Container v-if="note">
-      <Field label="Spells" stacked>
-        <div v-if="!pending && spellData">
-          <div v-for="spell in spellData.spells" :key="spell.id" class="flex space-between group relative">
-            {{ spell.name }} (hover for info)
-
-            <img
-              v-if="spell.spellIdInformation"
-              :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
-              :alt="spell.spellIdInformation.name"
-            />
-            <SpellInformation
-              class="hidden !absolute top-100% left-0 group-hover:block pointerevents-none"
-              :icon="spell.spellIdInformation.icon"
-              :tooltip="spell.spellIdInformation.tooltip"
-            ></SpellInformation>
-          </div>
-        </div>
-        <div v-else class="flex items-center">
-          Loading Spells
-          <div class="i-carbon-fire origin-center w-8 h-8 animate-spin animate-3s ml-2"></div>
-        </div>
-      </Field>
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 

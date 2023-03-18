@@ -1,7 +1,7 @@
 import type { SpellIdInformation } from '~/types'
 import { useWoWClient } from '~/utils/blizzard'
 
-interface EncounterSpell {
+export interface EncounterSpell {
   id: number
   name: string
   spellIdInformation: SpellIdInformation
@@ -19,13 +19,13 @@ interface Encounter {
   sections: EncounterSection[]
 }
 
-interface EncouterSpells {
+export interface EncounterSpells {
   id: number
   name: string
   spells: EncounterSpell[]
 }
 
-export default defineEventHandler(async (event): Promise<EncouterSpells> => {
+export default defineEventHandler(async (event): Promise<EncounterSpells> => {
   if (!event.context.params) {
     throw createError({
       statusCode: 400,
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event): Promise<EncouterSpells> => {
   const id = Number(event.context.params.id)
 
   const storageKey = `encounter-spells:${id}`
-  const storedSpells = await useStorage().getItem<EncouterSpells>(storageKey)
+  const storedSpells = await useStorage().getItem<EncounterSpells>(storageKey)
   if (storedSpells)
     return {
       id: storedSpells.id,

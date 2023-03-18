@@ -21,6 +21,7 @@ const emits = defineEmits(['update:modelValue', 'update:json'])
 const { modelValue } = toRefs(props)
 
 const teamMembersStore = useTeamMembersStore()
+const noteStore = useNoteStore()
 
 const editor = useEditor(modelValue, emits)
 
@@ -96,13 +97,13 @@ function setColor(event: Event) {
     <Field
       v-if="teamMembersStore.members.length"
       label="Players:"
-      class="p-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+      class="px-2 mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
     >
       <div class="flex flex-wrap">
         <a
           v-for="teamMember in teamMembersStore.members"
           :key="teamMember.id"
-          class="mr-2 last:mr-0 cursor-pointer"
+          class="space-between cursor-pointer mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
           :class="`has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
           @click.prevent="createPlayerSnippet(teamMember)"
         >
@@ -110,7 +111,30 @@ function setColor(event: Event) {
         </a>
       </div>
     </Field>
+    <Field label="Encounter Spells: " class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start">
+      <div v-if="noteStore.spells" class="flex flex-wrap">
+        <div
+          v-for="spell in noteStore.spells"
+          :key="spell.id"
+          class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
+          @click="addImageToEditor(createEdtiorSpellIdImageData(spell.spellIdInformation.icon, spell.id))"
+        >
+          {{ spell.name }}
 
+          <img
+            v-if="spell.spellIdInformation"
+            class="w-4 h-4 ml-1"
+            :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
+            :alt="spell.spellIdInformation.name"
+          />
+          <SpellInformation
+            class="hidden !absolute top-100% left-0 group-hover:block pointerevents-none w-100 !max-w-none"
+            :icon="spell.spellIdInformation.icon"
+            :tooltip="spell.spellIdInformation.tooltip"
+          ></SpellInformation>
+        </div>
+      </div>
+    </Field>
     <div class="p-2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />
     </div>
