@@ -61,8 +61,11 @@ export interface Database {
           created_at: string
           description: string | null
           editor_string: string | null
+          encounter: number | null
+          expansion: number | null
           fts: unknown | null
           id: number
+          instance: number | null
           name: string
           updated_at: string
           user_id: string
@@ -72,8 +75,11 @@ export interface Database {
           created_at?: string
           description?: string | null
           editor_string?: string | null
+          encounter?: number | null
+          expansion?: number | null
           fts?: unknown | null
           id?: number
+          instance?: number | null
           name?: string
           updated_at?: string
           user_id: string
@@ -83,8 +89,11 @@ export interface Database {
           created_at?: string
           description?: string | null
           editor_string?: string | null
+          encounter?: number | null
+          expansion?: number | null
           fts?: unknown | null
           id?: number
+          instance?: number | null
           name?: string
           updated_at?: string
           user_id?: string

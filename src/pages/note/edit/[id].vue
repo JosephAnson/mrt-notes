@@ -1,29 +1,26 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
-import type { EditorData, Node } from '~/types'
-import { flattenedNoteCategories } from '~/utils/constants'
+import { useNoteStore } from '~/store/note'
+import type { EditorData } from '~/types'
 
 definePageMeta({
   middleware: 'note-edit',
 })
 
+const noteStore = useNoteStore()
 const notesStore = useNotesStore()
 
 const { data: note } = await useAsyncData('notes', async () => {
   const route = useRoute()
-  const { data } = await getNote(getRouterParamsAsString(route.params.id))
-  return data
+  return await getNote(getRouterParamsAsString(route.params.id))
 })
-
-const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
-  note.value?.categories?.includes(category.id)
-)
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)
 const description = ref(note.value?.description || '')
-const categories = ref<Node[]>(selectedCategoryList)
-const categoryIds = computed<string[]>(() => categories.value.map((category) => category.id))
+const expansion = ref(note.value?.expansion || 503)
+const instance = ref(note.value?.instance || 1200)
+const encounter = ref(note.value?.encounter || 2480)
 
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
@@ -38,9 +35,12 @@ const debouncedUpdateNote = useDebounceFn(
         name: name.value,
         description: description.value,
         editor_string: editor.value,
-        categories: categoryIds.value,
+        expansion: expansion.value,
+        instance: instance.value,
+        encounter: encounter.value,
       })
       saving.value = false
+      openSnackbar('Saved note')
     }
   },
   DEBOUNCE_TYPING_TIMER,
@@ -59,6 +59,13 @@ async function deleteNoteAndRedirect() {
     router.push('/')
   }
 }
+
+await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
+  onResponse({ response }) {
+    noteStore.setSpells(response._data.spells)
+    return response._data
+  },
+})
 </script>
 
 <template>
@@ -83,13 +90,14 @@ async function deleteNoteAndRedirect() {
         <Field label="Description" stacked>
           <Input v-model="description" type="textarea" @update:model-value="save"></Input>
         </Field>
-        <Field label="Tags" stacked>
-          <NoteCategories
-            v-model="categories"
-            class="bg-primary-700 p-1 rounded"
-            @update:model-value="save"
-          ></NoteCategories>
-        </Field>
+        <EncounterSelector
+          v-model:expansion="expansion"
+          v-model:instance="instance"
+          v-model:encounter="encounter"
+          @update:expansion="save"
+          @update:instance="save"
+          @update:encounter="save"
+        ></EncounterSelector>
       </section>
       <section>
         <div class="md:grid grid-cols-12 gap-8">

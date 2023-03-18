@@ -11,7 +11,7 @@ import { IMAGE_MARKER, IMAGE_SPELLID } from './constants'
 import type { SpellIdInformation } from '~/types'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
 
-export function createEdtiorSpellIdImageData(icon: string, spellId: string) {
+export function createEdtiorSpellIdImageData(icon: string, spellId: string | number) {
   return {
     src: `https://wow.zamimg.com/images/wow/icons/small/${icon}.jpg`,
     alt: IMAGE_SPELLID,
