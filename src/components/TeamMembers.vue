@@ -39,7 +39,7 @@ const debouncedUpdateMembers = useDebounceFn(
         <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
         <Field class="w-full !mb-0 mr-2 !inline-block !sm:flex" :label-for="`player-${index}`" label="Player">
-          <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @update:modelValue="debouncedUpdateMembers" />
+          <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @update:model-value="debouncedUpdateMembers" />
 
           <Select
             v-model:value="element.class"

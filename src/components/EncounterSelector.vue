@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import Loading from '~/components/Loading.vue'
+
 const props = withDefaults(
   defineProps<{
     expansion: number
@@ -24,7 +26,7 @@ const { data: expansions } = await useFetch('/api/blizzard/expansion/all', {
 
 const isMPlusDungeons = computed(() => expansionSelect.value === 505)
 
-const { data: expansionInstances } = await useFetch(
+const { data: expansionInstances, pending: expansionInstancesPending } = await useFetch(
   () => `/api/blizzard/expansion/instances/${expansionSelect.value}`,
   {
     pick: ['dungeons', 'raids'],
@@ -39,47 +41,72 @@ const { data: expansionInstances } = await useFetch(
   }
 )
 
-const { data: instance } = await useFetch(() => `/api/blizzard/instance/${instanceSelect.value}`, {
-  onResponse({ response }) {
-    encounterSelect.value = response._data.encounters[0].id
-    return response._data
-  },
-})
+const { data: instance, pending: instancePending } = await useFetch(
+  () => `/api/blizzard/instance/${instanceSelect.value}`,
+  {
+    onResponse({ response }) {
+      encounterSelect.value = response._data.encounters[0].id
+      return response._data
+    },
+  }
+)
 </script>
 
 <template>
   <Field label="Expansions" stacked>
     <Select v-model:value="expansionSelect">
-      <option v-for="expansion in expansions" :key="expansion.id" :value="expansion.id">
-        {{ expansion.name }}
+      <option v-for="expansionItem in expansions" :key="expansionItem.id" :value="expansionItem.id">
+        {{ expansionItem.name }}
       </option>
     </Select>
   </Field>
 
-  <Field
-    v-if="expansionSelect && expansionInstances && expansionInstances?.raids && expansionInstances.dungeons"
-    label="Instances"
-    stacked
-  >
-    <Select v-model:value="instanceSelect">
-      <template v-if="!isMPlusDungeons">
-        <optgroup label="raids">Raids</optgroup>
-        <option v-for="expansion in expansionInstances.raids" :key="expansion.id" :value="expansion.id">
-          {{ expansion.name }}
+  <div v-if="!expansionInstancesPending">
+    <Field
+      v-if="expansionSelect && expansionInstances && expansionInstances?.raids && expansionInstances.dungeons"
+      label="Instances"
+      stacked
+    >
+      <Select v-model:value="instanceSelect">
+        <template v-if="!isMPlusDungeons">
+          <optgroup label="raids">Raids</optgroup>
+          <option
+            v-for="expansionInstance in expansionInstances.raids"
+            :key="expansionInstance.id"
+            :value="expansionInstance.id"
+          >
+            {{ expansionInstance.name }}
+          </option>
+        </template>
+        <optgroup label="dungeons">Dungeons</optgroup>
+        <option
+          v-for="expansionInstance in expansionInstances.dungeons"
+          :key="expansionInstance.id"
+          :value="expansionInstance.id"
+        >
+          {{ expansionInstance.name }}
         </option>
-      </template>
-      <optgroup label="dungeons">Dungeons</optgroup>
-      <option v-for="expansion in expansionInstances.dungeons" :key="expansion.id" :value="expansion.id">
-        {{ expansion.name }}
-      </option>
-    </Select>
-  </Field>
+      </Select>
+    </Field>
 
-  <Field v-if="instanceSelect && instance?.encounters" label="Encounters" stacked>
-    <Select v-model:value="encounterSelect">
-      <option v-for="encounter in instance.encounters" :key="encounter.id" :value="encounter.id">
-        {{ encounter.name }}
-      </option>
-    </Select>
-  </Field>
+    <div v-if="!instancePending">
+      <Field v-if="instanceSelect && instance?.encounters" label="Encounters" stacked>
+        <Select v-model:value="encounterSelect">
+          <option
+            v-for="instanceEncounter in instance.encounters"
+            :key="instanceEncounter.id"
+            :value="instanceEncounter.id"
+          >
+            {{ instanceEncounter.name }}
+          </option>
+        </Select>
+      </Field>
+    </div>
+    <div v-else>
+      <Loading>Loading Encounters</Loading>
+    </div>
+  </div>
+  <div v-else>
+    <Loading>Loading Instances</Loading>
+  </div>
 </template>

@@ -16,5 +16,5 @@ export function openSnackbar(params: (SnackbarProps & Record<string, any>) | str
 
   const component = createApp(Snackbar, params)
 
-  component.mount(document.createElement('div'))
+  if (process.client) component.mount(document.createElement('div'))
 }

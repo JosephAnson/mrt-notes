@@ -111,7 +111,12 @@ function setColor(event: Event) {
         </a>
       </div>
     </Field>
-    <Field label="Encounter Spells: " class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start">
+
+    <Field
+      key="encounter-spells"
+      label="Encounter Spells: "
+      class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+    >
       <div v-if="noteStore.spells" class="flex flex-wrap">
         <div
           v-for="spell in noteStore.spells"
@@ -136,6 +141,7 @@ function setColor(event: Event) {
         </div>
       </div>
     </Field>
+
     <div class="p-2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />
     </div>
