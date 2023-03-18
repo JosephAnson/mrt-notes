@@ -46,11 +46,20 @@ function save() {
 }
 
 async function deleteNoteAndRedirect() {
-  if (note.value) {
-    const router = useRouter()
-    await notesStore.deleteNote(note.value.id)
-    router.push('/')
-  }
+  openDialog({
+    message: 'Are you sure you want to delete the note?',
+    cancelText: 'No',
+    confirmText: 'Yes',
+    onConfirm: async () => {
+      openSnackbar('deletedd')
+
+      if (note.value) {
+        const router = useRouter()
+        await notesStore.deleteNote(note.value.id)
+        router.push('/')
+      }
+    },
+  })
 }
 
 await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {

@@ -1,5 +1,4 @@
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
 import type { PropType } from 'vue'
 
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
@@ -135,10 +134,15 @@ export default defineComponent({
               </section>
 
               <footer class="flex justify-between">
-                <Button v-if="showCancel" class="mr-2" @click="cancel('button')" @keyup.enter="cancel('button')">
+                <Button
+                  v-if="showCancel"
+                  class="mr-2 bg-red-700"
+                  @click="cancel('button')"
+                  @keyup.enter="cancel('button')"
+                >
                   {{ cancelText }}
                 </Button>
-                <Button class="button" @click="confirm" @keyup.enter="confirm">
+                <Button @click="confirm" @keyup.enter="confirm">
                   {{ confirmText }}
                 </Button>
               </footer>
