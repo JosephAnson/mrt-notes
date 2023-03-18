@@ -62,7 +62,7 @@ async function deleteNoteAndRedirect() {
   })
 }
 
-await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
+const { pending: spellsLoading } = await useLazyFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
   onResponse({ response }) {
     noteStore.setSpells(response._data.spells)
     return response._data
@@ -98,6 +98,7 @@ await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
           v-model:instance="instance"
           v-model:encounter="encounter"
         ></EncounterSelector>
+        <Loading v-if="spellsLoading">Spells Loading</Loading>
       </section>
       <section>
         <div class="md:grid grid-cols-12 gap-8">
