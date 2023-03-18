@@ -74,8 +74,6 @@ export async function updateNote({
       })
       .select(noteColumns)
       .single()
-
-  openSnackbar('Saved note')
 }
 
 export function createNotes(item: NotesAndProfile): Note {

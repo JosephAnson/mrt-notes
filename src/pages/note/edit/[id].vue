@@ -40,6 +40,7 @@ const debouncedUpdateNote = useDebounceFn(
         encounter: encounter.value,
       })
       saving.value = false
+      openSnackbar('Saved note')
     }
   },
   DEBOUNCE_TYPING_TIMER,

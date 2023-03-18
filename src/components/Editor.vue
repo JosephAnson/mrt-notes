@@ -131,6 +131,7 @@ function setColor(event: Event) {
             class="hidden !absolute top-100% left-0 group-hover:block pointerevents-none w-100 !max-w-none"
             :icon="spell.spellIdInformation.icon"
             :tooltip="spell.spellIdInformation.tooltip"
+            :show-icon="false"
           ></SpellInformation>
         </div>
       </div>

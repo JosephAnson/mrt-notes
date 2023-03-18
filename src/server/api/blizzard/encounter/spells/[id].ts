@@ -51,14 +51,15 @@ export default defineEventHandler(async (event): Promise<EncounterSpells> => {
     id,
   })
 
-  const spells: EncounterSpell[] = []
+  const spellsMap: Record<number, EncounterSpell> = {}
 
   async function generateAllSpells(sections: EncounterSection[]) {
     for (const section of sections) {
       if (section.spell) {
         const spellIdInformation = await $fetch<SpellIdInformation>(`/api/spell/${section.spell.id}`)
 
-        spells.push({ ...section.spell, spellIdInformation })
+        if (!(section.spell.id in spellIdInformation))
+          spellsMap[section.spell.id] = { ...section.spell, spellIdInformation }
       }
       if (section.sections) await generateAllSpells(section.sections)
     }
@@ -66,7 +67,8 @@ export default defineEventHandler(async (event): Promise<EncounterSpells> => {
 
   if (data.sections) await generateAllSpells(data.sections)
 
-  await useStorage().setItem(storageKey, { id, name: data.name, spells })
+  const spells = Object.values(spellsMap)
 
+  await useStorage().setItem(storageKey, { id, name: data.name, spells })
   return { id, name: data.name, spells }
 })
