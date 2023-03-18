@@ -130,7 +130,7 @@ export default defineComponent({
                 </p>
 
                 <Field v-if="hasInput">
-                  <Input v-bind="inputAttrs" ref="input" v-model="prompt" class="input" @keyup.enter="confirm" />
+                  <Input v-bind="inputAttrs" v-model="prompt" class="input" @keyup.enter="confirm" />
                 </Field>
               </section>
 

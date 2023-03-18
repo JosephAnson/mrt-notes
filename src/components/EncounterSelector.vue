@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import Loading from '~/components/Loading.vue'
-
 const props = withDefaults(
   defineProps<{
     expansion: number
@@ -17,12 +15,7 @@ const emits = defineEmits(['update:expansion', 'update:instance', 'update:encoun
 
 const { expansion: expansionSelect, instance: instanceSelect, encounter: encounterSelect } = useVModels(props, emits)
 
-const { data: expansions } = await useFetch('/api/blizzard/expansion/all', {
-  onResponse({ response }) {
-    expansionSelect.value = response._data.at(-1).id
-    return response._data
-  },
-})
+const { data: expansions } = await useFetch('/api/blizzard/expansion/all')
 
 const isMPlusDungeons = computed(() => expansionSelect.value === 505)
 
@@ -30,25 +23,11 @@ const { data: expansionInstances, pending: expansionInstancesPending } = await u
   () => `/api/blizzard/expansion/instances/${expansionSelect.value}`,
   {
     pick: ['dungeons', 'raids'],
-    onResponse({ response }) {
-      if (isMPlusDungeons.value) {
-        instanceSelect.value = response._data.dungeons[0].id
-      } else {
-        instanceSelect.value = response._data.raids.at(-1).id
-      }
-      return response._data
-    },
   }
 )
 
 const { data: instance, pending: instancePending } = await useFetch(
-  () => `/api/blizzard/instance/${instanceSelect.value}`,
-  {
-    onResponse({ response }) {
-      encounterSelect.value = response._data.encounters[0].id
-      return response._data
-    },
-  }
+  () => `/api/blizzard/instance/${instanceSelect.value}`
 )
 </script>
 

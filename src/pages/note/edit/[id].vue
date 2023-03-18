@@ -17,6 +17,7 @@ const { data: note } = await useAsyncData('notes', async () => {
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)
+
 const description = ref(note.value?.description || '')
 const expansion = ref(note.value?.expansion || 503)
 const instance = ref(note.value?.instance || 1200)
@@ -27,29 +28,21 @@ const editor = reactive<EditorData>({
   json: generateJSON(note.value?.editor_string || '', editorExtensions),
 })
 
-const debouncedUpdateNote = useDebounceFn(
-  () => {
-    if (note.value) {
-      updateNote({
-        id: note.value.id,
-        name: name.value,
-        description: description.value,
-        editor_string: editor.value,
-        expansion: expansion.value,
-        instance: instance.value,
-        encounter: encounter.value,
-      })
-      saving.value = false
-      openSnackbar('Saved note')
-    }
-  },
-  DEBOUNCE_TYPING_TIMER,
-  { maxWait: 5000 }
-)
-
 function save() {
   saving.value = true
-  debouncedUpdateNote()
+  if (note.value) {
+    updateNote({
+      id: note.value.id,
+      name: name.value,
+      description: description.value,
+      editor_string: editor.value,
+      expansion: expansion.value,
+      instance: instance.value,
+      encounter: encounter.value,
+    })
+    saving.value = false
+    openSnackbar('Saved note')
+  }
 }
 
 async function deleteNoteAndRedirect() {
@@ -79,24 +72,22 @@ await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
             <p class="mr-4">Saving</p>
             <div class="i-carbon-catalog animate-spin h-6 w-6"></div>
           </div>
-          <Button class="bg-red-700 flex-shrink-0" @click="deleteNoteAndRedirect"> Delete Note </Button>
+          <Button class="bg-red-700 flex-shrink-0 mr-4" @click="deleteNoteAndRedirect"> Delete Note </Button>
+          <Button class="flex-shrink-0" @click="save"> Save Note </Button>
         </div>
       </div>
 
       <section class="bg-primary-500 p-4 mb-6 rounded">
         <Field label="Title" stacked>
-          <Input v-model="name" @update:model-value="save"></Input>
+          <Input v-model="name"></Input>
         </Field>
         <Field label="Description" stacked>
-          <Input v-model="description" type="textarea" @update:model-value="save"></Input>
+          <Input v-model="description" type="textarea"></Input>
         </Field>
         <EncounterSelector
           v-model:expansion="expansion"
           v-model:instance="instance"
           v-model:encounter="encounter"
-          @update:expansion="save"
-          @update:instance="save"
-          @update:encounter="save"
         ></EncounterSelector>
       </section>
       <section>
@@ -106,12 +97,7 @@ await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
               <Heading h2> General Tactic </Heading>
             </div>
 
-            <Editor
-              v-model="editor.value"
-              class="block"
-              @update:model-value="save"
-              @update:json="editor.json = $event"
-            />
+            <Editor v-model="editor.value" class="block" @update:json="editor.json = $event" />
 
             <TeamGroups class="mb-8" :note-id="note.id" />
 
