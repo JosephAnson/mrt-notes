@@ -1,8 +1,10 @@
+import type { SpellIdInformation } from '~/types'
 import { useWoWClient } from '~/utils/blizzard'
 
 interface EncounterSpell {
   id: number
   name: string
+  spellIdInformation: SpellIdInformation
 }
 interface EncounterSection {
   id: number
@@ -51,14 +53,18 @@ export default defineEventHandler(async (event): Promise<EncouterSpells> => {
 
   const spells: EncounterSpell[] = []
 
-  function generateAllSpells(sections: EncounterSection[]) {
+  async function generateAllSpells(sections: EncounterSection[]) {
     for (const section of sections) {
-      if (section.spell) spells.push(section.spell)
-      if (section.sections) generateAllSpells(section.sections)
+      if (section.spell) {
+        const spellIdInformation = await $fetch<SpellIdInformation>(`/api/spell/${section.spell.id}`)
+
+        spells.push({ ...section.spell, spellIdInformation })
+      }
+      if (section.sections) await generateAllSpells(section.sections)
     }
   }
 
-  if (data.sections) generateAllSpells(data.sections)
+  if (data.sections) await generateAllSpells(data.sections)
 
   await useStorage().setItem(storageKey, { id, name: data.name, spells })
 

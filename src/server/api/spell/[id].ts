@@ -12,19 +12,14 @@ export default defineEventHandler(async (event): Promise<SpellIdInformation> => 
   const storageKey = `spell:${spellId}`
 
   const storedIcon = await useStorage().getItem(storageKey)
-  if (storedIcon)
-    return {
-      icon: storedIcon.icon,
-      tooltip: storedIcon.tooltip,
-      name: storedIcon.name,
-    }
+  if (storedIcon) return storedIcon
 
   try {
     const { icon, tooltip, name } = await $fetch<SpellIdInformation>(`${SPELL_INFO_BASE_URL}${spellId}`)
 
-    await useStorage().setItem(storageKey, { icon, tooltip, name })
-
-    return { icon, tooltip, name }
+    const returnObj = { icon, tooltip, name }
+    await useStorage().setItem(storageKey, returnObj)
+    return returnObj
   } catch {
     throw createError({
       statusCode: 404,
