@@ -8,8 +8,7 @@ const route = useRoute()
 const groupsStore = useGroupsStore()
 
 const { data: note } = await useAsyncData('notes', async () => {
-  const { data } = await getNote(getRouterParamsAsString(route.params.id))
-  return data
+  return await getNote(getRouterParamsAsString(route.params.id))
 })
 await useAsyncData('groups', async () => {
   if (note.value) {
@@ -17,7 +16,7 @@ await useAsyncData('groups', async () => {
   }
 })
 
-const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id?.id))
+const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user?.id))
 const editorString = computed(() => note.value?.editor_string || '')
 const json = computed(() => generateJSON(editorString.value, editorExtensions))
 </script>

@@ -1,9 +1,9 @@
-import type { PostgrestSingleResponse } from '@supabase/postgrest-js'
 import type { Ref } from 'vue'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 
-const noteColumns = 'id, name, description, editor_string, user_id ( id, username ), created_at, updated_at, categories'
+const noteColumns =
+  'id, name, description, editor_string, user:user_id( id, username ), created_at, updated_at, expansion, instance, encounter'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -34,9 +34,10 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
   }
 }
 
-export async function getNote(id: string): Promise<PostgrestSingleResponse<NotesAndProfile>> {
+export async function getNote(id: string) {
   const client = useSupabaseClient<Database>()
-  return client.from('notes').select(noteColumns).match({ id }).single()
+  const { data } = await client.from('notes').select(noteColumns).match({ id }).single()
+  return data as NotesAndProfile
 }
 
 export async function updateNote({
@@ -44,13 +45,17 @@ export async function updateNote({
   name,
   description,
   editor_string,
-  categories,
+  expansion,
+  encounter,
+  instance,
 }: {
   id: number
   name: string
   description: string
   editor_string: string
-  categories: string[]
+  expansion: number
+  instance: number
+  encounter: number
 }) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
@@ -62,25 +67,30 @@ export async function updateNote({
         name,
         id,
         description,
-        categories,
+        expansion,
+        instance,
+        encounter,
         user_id: user.value.id,
       })
       .select(noteColumns)
       .single()
 
-  openSnackbar('Saved')
+  openSnackbar('Saved note')
 }
 
 export function createNotes(item: NotesAndProfile): Note {
   return {
     id: item.id,
     name: item.name,
-    user_id: item.user_id.id,
-    username: item.user_id.username,
+    user_id: item.user.id,
+    username: item.user.username,
     description: item.description,
     created_at: item.created_at,
     updated_at: item.updated_at,
     editor_string: item.editor_string || '',
+    encounter: item.encounter,
+    instance: item.instance,
+    expansion: item.expansion,
   }
 }
 
@@ -104,28 +114,16 @@ export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; li
   return data as NotesAndProfile[]
 }
 
-export async function searchAllNotes(name: string, categories: string[] | null) {
+export async function searchAllNotes(name: string) {
   const client = useSupabaseClient<Database>()
   const query = []
 
   if (name) query.push(`'${name}'`)
 
-  if (categories && categories.length) {
-    for (let i = 0; i < categories.length; i++) {
-      const category = categories[i]
-      const sections = category.split('/')
-      sections.pop()
-      if (sections) query.push(sections.join('/'))
-
-      query.push(category)
-    }
-  }
-
   const { data } = await client
     .from('notes')
     .select(noteColumns)
     .order('created_at')
-    .containedBy('categories', categories || '')
     .limit(50)
     .textSearch('fts', query.join(' OR '), {
       type: 'websearch',

@@ -24,21 +24,22 @@ const { data: expansions } = await useFetch('/api/blizzard/expansion/all', {
 
 const isMPlusDungeons = computed(() => expansionSelect.value === 505)
 
-const instancesUrl = computed(() => `/api/blizzard/expansion/instances/${expansionSelect.value}`)
-const { data: expansionInstances } = await useFetch(instancesUrl, {
-  pick: ['dungeons', 'raids'],
-  onResponse({ response }) {
-    if (isMPlusDungeons.value) {
-      instanceSelect.value = response._data.dungeons[0].id
-    } else {
-      instanceSelect.value = response._data.raids.at(-1).id
-    }
-    return response._data
-  },
-})
+const { data: expansionInstances } = await useFetch(
+  () => `/api/blizzard/expansion/instances/${expansionSelect.value}`,
+  {
+    pick: ['dungeons', 'raids'],
+    onResponse({ response }) {
+      if (isMPlusDungeons.value) {
+        instanceSelect.value = response._data.dungeons[0].id
+      } else {
+        instanceSelect.value = response._data.raids.at(-1).id
+      }
+      return response._data
+    },
+  }
+)
 
-const instanceUrl = computed(() => `/api/blizzard/instance/${instanceSelect.value}`)
-const { data: instance } = await useFetch(instanceUrl, {
+const { data: instance } = await useFetch(() => `/api/blizzard/instance/${instanceSelect.value}`, {
   onResponse({ response }) {
     encounterSelect.value = response._data.encounters[0].id
     return response._data
@@ -56,7 +57,7 @@ const { data: instance } = await useFetch(instanceUrl, {
   </Field>
 
   <Field
-    v-if="expansionInstances && expansionInstances?.raids && expansionInstances.dungeons"
+    v-if="expansionSelect && expansionInstances && expansionInstances?.raids && expansionInstances.dungeons"
     label="Instances"
     stacked
   >
@@ -74,7 +75,7 @@ const { data: instance } = await useFetch(instanceUrl, {
     </Select>
   </Field>
 
-  <Field label="Encounters" stacked>
+  <Field v-if="instanceSelect && instance?.encounters" label="Encounters" stacked>
     <Select v-model:value="encounterSelect">
       <option v-for="encounter in instance.encounters" :key="encounter.id" :value="encounter.id">
         {{ encounter.name }}

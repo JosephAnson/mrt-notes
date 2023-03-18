@@ -3,18 +3,16 @@ const expansion = ref(503)
 const instance = ref(1200)
 
 const encounter = ref(2480)
-const encounterUrl = computed(() => `/api/blizzard/encounter/spells/${encounter.value}`)
-const { data: spellData, pending } = await useFetch(encounterUrl)
+const { data: spellData, pending } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
 </script>
 
 <template>
   <Section>
     <Container>
-      {{ encounter }}
       <EncounterSelector v-model:expansion="expansion" v-model:instance="instance" v-model:encounter="encounter" />
 
       <Field label="Spells" stacked>
-        <div v-if="!pending">
+        <div v-if="!pending && spellData">
           <div v-for="spell in spellData.spells" :key="spell.id" class="flex space-between group relative">
             {{ spell.name }} (hover for info)
 

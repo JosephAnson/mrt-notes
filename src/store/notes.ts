@@ -39,8 +39,8 @@ export const useNotesStore = defineStore('notes', {
       this.setNotes('recentlyCreated', notes)
       return notes
     },
-    async fetchSearchNotes(name: string, categories: string[] | null) {
-      const notes = await searchAllNotes(name, categories)
+    async fetchSearchNotes(name: string) {
+      const notes = await searchAllNotes(name)
       this.setNotes('search', notes)
       return notes
     },

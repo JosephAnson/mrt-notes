@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
-import type { EditorData, Node } from '~/types'
-import { flattenedNoteCategories } from '~/utils/constants'
+import type { EditorData } from '~/types'
 
 definePageMeta({
   middleware: 'note-edit',
@@ -11,19 +10,15 @@ const notesStore = useNotesStore()
 
 const { data: note } = await useAsyncData('notes', async () => {
   const route = useRoute()
-  const { data } = await getNote(getRouterParamsAsString(route.params.id))
-  return data
+  return await getNote(getRouterParamsAsString(route.params.id))
 })
-
-const selectedCategoryList = flattenedNoteCategories?.filter((category) =>
-  note.value?.categories?.includes(category.id)
-)
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)
 const description = ref(note.value?.description || '')
-const categories = ref<Node[]>(selectedCategoryList)
-const categoryIds = computed<string[]>(() => categories.value.map((category) => category.id))
+const expansion = ref(note.value?.expansion || 503)
+const instance = ref(note.value?.instance || 1200)
+const encounter = ref(note.value?.encounter || 2480)
 
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
@@ -38,7 +33,9 @@ const debouncedUpdateNote = useDebounceFn(
         name: name.value,
         description: description.value,
         editor_string: editor.value,
-        categories: categoryIds.value,
+        expansion: expansion.value,
+        instance: instance.value,
+        encounter: encounter.value,
       })
       saving.value = false
     }
@@ -59,11 +56,35 @@ async function deleteNoteAndRedirect() {
     router.push('/')
   }
 }
+
+const { data: spellData, pending } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
 </script>
 
 <template>
   <Section>
     <Container v-if="note">
+      <Field label="Spells" stacked>
+        <div v-if="!pending && spellData">
+          <div v-for="spell in spellData.spells" :key="spell.id" class="flex space-between group relative">
+            {{ spell.name }} (hover for info)
+
+            <img
+              v-if="spell.spellIdInformation"
+              :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
+              :alt="spell.spellIdInformation.name"
+            />
+            <SpellInformation
+              class="hidden !absolute top-100% left-0 group-hover:block pointerevents-none"
+              :icon="spell.spellIdInformation.icon"
+              :tooltip="spell.spellIdInformation.tooltip"
+            ></SpellInformation>
+          </div>
+        </div>
+        <div v-else class="flex items-center">
+          Loading Spells
+          <div class="i-carbon-fire origin-center w-8 h-8 animate-spin animate-3s ml-2"></div>
+        </div>
+      </Field>
       <div class="flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 
@@ -83,13 +104,14 @@ async function deleteNoteAndRedirect() {
         <Field label="Description" stacked>
           <Input v-model="description" type="textarea" @update:model-value="save"></Input>
         </Field>
-        <Field label="Tags" stacked>
-          <NoteCategories
-            v-model="categories"
-            class="bg-primary-700 p-1 rounded"
-            @update:model-value="save"
-          ></NoteCategories>
-        </Field>
+        <EncounterSelector
+          v-model:expansion="expansion"
+          v-model:instance="instance"
+          v-model:encounter="encounter"
+          @update:expansion="save"
+          @update:instance="save"
+          @update:encounter="save"
+        ></EncounterSelector>
       </section>
       <section>
         <div class="md:grid grid-cols-12 gap-8">

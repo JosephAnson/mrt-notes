@@ -16,9 +16,12 @@ export interface Note {
   updated_at: string
   editor_string: string
   user_id: string
+  expansion: number | null
+  instance: number | null
+  encounter: number | null
 }
 
-export type NotesAndProfile = NotesRow & { user_id: ProfilesRow }
+export type NotesAndProfile = NotesRow & { user: ProfilesRow }
 export interface Favourite {
   id: number
   created_at: string
