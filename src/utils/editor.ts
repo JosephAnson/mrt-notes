@@ -11,7 +11,7 @@ import { IMAGE_MARKER, IMAGE_SPELLID } from './constants'
 import type { SpellIdInformation } from '~/types'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
 
-export function createEdtiorSpellIdImageData(icon: string, spellId: string | number) {
+export function createEditorSpellIdImageData(icon: string, spellId: string | number) {
   return {
     src: `https://wow.zamimg.com/images/wow/icons/small/${icon}.jpg`,
     alt: IMAGE_SPELLID,
@@ -113,7 +113,7 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
 
             openSnackbar(`Loading icon for spell id: ${spellId}`)
 
-            const { src, title, alt } = createEdtiorSpellIdImageData(icon, spellId)
+            const { src, title, alt } = createEditorSpellIdImageData(icon, spellId)
             jsonContent.push(
               createImageNode({
                 editor,

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { SpellIdInformation } from '~/types'
-import { createEdtiorSpellIdImageData } from '~/utils/editor'
+import { createEditorSpellIdImageData } from '~/utils/editor'
 
 const emits = defineEmits(['input'])
 
@@ -15,7 +15,7 @@ async function createSpellSnippet(spellId: string) {
 
     const { icon } = await $fetch<SpellIdInformation>(`/api/spell/${spellId}`)
 
-    emits('input', createEdtiorSpellIdImageData(icon, spellId))
+    emits('input', createEditorSpellIdImageData(icon, spellId))
 
     modalActive.value = false
   }

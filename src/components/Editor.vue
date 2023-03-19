@@ -5,7 +5,7 @@ import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
 import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
 import { IMAGE_MARKER } from '~/utils/constants'
-import { useEditor } from '~/utils/editor'
+import { createEditorSpellIdImageData, useEditor } from '~/utils/editor'
 
 const props = withDefaults(
   defineProps<{
@@ -36,6 +36,18 @@ async function createPlayerSnippet(player: Member) {
     color: wowColors[player.class],
   })
   editor.value?.commands.insertContent(insertString)
+  editor.value?.commands.unsetMark('textStyle')
+  editor.value?.commands.insertContent(' ')
+  editor.value?.commands.focus()
+}
+
+async function createSpellSnippet(spellName: string, imageData: { src: string; alt: string; title?: string }) {
+  addImageToEditor(imageData)
+  editor.value?.commands.insertContent(' ')
+  editor.value?.commands.setMark('textStyle', {
+    color: '#FFBB33',
+  })
+  editor.value?.commands.insertContent(spellName)
   editor.value?.commands.unsetMark('textStyle')
   editor.value?.commands.insertContent(' ')
   editor.value?.commands.focus()
@@ -122,16 +134,17 @@ function setColor(event: Event) {
           v-for="spell in noteStore.spells"
           :key="spell.id"
           class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
-          @click="addImageToEditor(createEdtiorSpellIdImageData(spell.spellIdInformation.icon, spell.id))"
+          @click="createSpellSnippet(spell.name, createEditorSpellIdImageData(spell.spellIdInformation.icon, spell.id))"
         >
-          {{ spell.name }}
-
           <img
             v-if="spell.spellIdInformation"
-            class="w-4 h-4 ml-1"
+            class="w-4 h-4 mr-1"
             :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
             :alt="spell.spellIdInformation.name"
           />
+
+          <span class="color-[#FFBB33]">{{ spell.name }}</span>
+
           <SpellInformation
             class="hidden !absolute top-100% left-0 group-hover:block pointerevents-none w-100 !max-w-none"
             :icon="spell.spellIdInformation.icon"
