@@ -8,18 +8,19 @@ interface Expansions {
   tiers: Tier[]
 }
 
-export default defineEventHandler(async (): Promise<Tier[]> => {
-  const wowClient = await useWoWClient()
+export default cachedEventHandler(
+  async (): Promise<Tier[]> => {
+    const wowClient = await useWoWClient()
 
-  const storageKey = `all-expansions`
-  const allExpansions = await useStorage().getItem<Tier[]>(storageKey)
-  if (allExpansions) return allExpansions
+    const storageKey = `all-expansions`
 
-  const {
-    data: { tiers },
-  } = await wowClient.journal<Expansions>({ resource: 'expansion' })
+    const {
+      data: { tiers },
+    } = await wowClient.journal<Expansions>({ resource: 'expansion' })
 
-  await useStorage().setItem(storageKey, tiers)
-
-  return tiers
-})
+    return tiers
+  },
+  {
+    maxAge: 60 * 60 * 24 * 7,
+  }
+)

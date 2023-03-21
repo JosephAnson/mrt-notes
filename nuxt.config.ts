@@ -86,4 +86,13 @@ export default defineNuxtConfig({
   webVitals: {
     provider: 'vercel',
   },
+  nitro: {
+    // Development
+    devStorage: {
+      db: {
+        driver: 'fs',
+        base: './data/db',
+      },
+    },
+  },
 })
