@@ -106,54 +106,59 @@ function setColor(event: Event) {
       </button>
     </div>
 
-    <Field
-      v-if="teamMembersStore.members.length"
-      label="Players:"
-      class="px-2 mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
-    >
-      <div class="flex flex-wrap">
-        <a
-          v-for="teamMember in teamMembersStore.members"
-          :key="teamMember.id"
-          class="space-between cursor-pointer mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
-          :class="`has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
-          @click.prevent="createPlayerSnippet(teamMember)"
-        >
-          {{ teamMember.name }}
-        </a>
-      </div>
-    </Field>
-
-    <Field
-      key="encounter-spells"
-      label="Encounter Spells: "
-      class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
-    >
-      <div v-if="noteStore.spells" class="flex flex-wrap">
-        <div
-          v-for="spell in noteStore.spells"
-          :key="spell.id"
-          class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
-          @click="createSpellSnippet(spell.name, createEditorSpellIdImageData(spell.spellIdInformation.icon, spell.id))"
-        >
-          <img
-            v-if="spell.spellIdInformation"
-            class="w-4 h-4 mr-1"
-            :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
-            :alt="spell.spellIdInformation.name"
-          />
-
-          <span class="color-[#FFBB33]">{{ spell.name }}</span>
-
-          <SpellInformation
-            class="hidden !absolute top-100% left-0 group-hover:block w-100 !max-w-none"
-            :icon="spell.spellIdInformation.icon"
-            :tooltip="spell.spellIdInformation.tooltip"
-            :show-icon="false"
-          ></SpellInformation>
+    <div>
+      <Field
+        v-if="teamMembersStore.members.length"
+        label="Players:"
+        class="px-2 mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+      >
+        <div class="flex flex-wrap">
+          <a
+            v-for="teamMember in teamMembersStore.members"
+            :key="teamMember.id"
+            class="space-between cursor-pointer mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
+            :class="`has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
+            @click.prevent="createPlayerSnippet(teamMember)"
+          >
+            {{ teamMember.name }}
+          </a>
         </div>
-      </div>
-    </Field>
+      </Field>
+    </div>
+    <div>
+      <Field
+        key="encounter-spells"
+        label="Encounter Spells: "
+        class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+      >
+        <div v-if="noteStore.spells" class="flex flex-wrap">
+          <div
+            v-for="spell in noteStore.spells"
+            :key="`encounter-spells-${spell.id}`"
+            class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
+            @click="
+              createSpellSnippet(spell.name, createEditorSpellIdImageData(spell.spellIdInformation.icon, spell.id))
+            "
+          >
+            <img
+              v-if="spell.spellIdInformation"
+              class="w-4 h-4 mr-1"
+              :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
+              :alt="spell.spellIdInformation.name"
+            />
+
+            <span class="color-[#FFBB33]">{{ spell.name }}</span>
+
+            <SpellInformation
+              class="hidden !absolute top-100% left-0 group-hover:block w-100 !max-w-none"
+              :icon="spell.spellIdInformation.icon"
+              :tooltip="spell.spellIdInformation.tooltip"
+              :show-icon="false"
+            ></SpellInformation>
+          </div>
+        </div>
+      </Field>
+    </div>
 
     <div class="p-2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />

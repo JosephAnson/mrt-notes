@@ -107,7 +107,7 @@ const { pending: spellsLoading } = await useLazyFetch(() => `/api/blizzard/encou
               <Heading h2> General Tactic </Heading>
             </div>
 
-            <Editor v-model="editor.value" class="block" @update:json="editor.json = $event" />
+            <Editor key="main-editor" v-model="editor.value" class="block" @update:json="editor.json = $event" />
 
             <TeamGroups class="mb-8" :note-id="note.id" />
 
