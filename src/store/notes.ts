@@ -30,12 +30,12 @@ export const useNotesStore = defineStore('notes', {
       return notes
     },
     async fetchRecentlyModifiedNotes() {
-      const notes = await getAllNotes({ order: 'updated_at', limit: 5 })
+      const notes = await $fetch('/api/notes/recentlyModifiedNotes')
       this.setNotes('recentlyModified', notes)
       return notes
     },
     async fetchRecentlyCreatedNotes() {
-      const notes = await getAllNotes({ limit: 5 })
+      const notes = await $fetch('/api/notes/recentlyCreatedNotes')
       this.setNotes('recentlyCreated', notes)
       return notes
     },

@@ -2,9 +2,6 @@ import type { Ref } from 'vue'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 
-const noteColumns =
-  'id, name, description, editor_string, user:user_id( id, username ), created_at, updated_at, expansion, instance, encounter'
-
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
   'All Phases<br><br><br>' +
@@ -27,7 +24,7 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
         name,
         user_id: user.value.id,
       })
-      .select(noteColumns)
+      .select(NOTE_COLUMNS)
       .single()
 
     if (data) await router.push(`/note/edit/${data.id}`)
@@ -36,7 +33,7 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
 
 export async function getNote(id: string) {
   const client = useSupabaseClient<Database>()
-  const { data } = await client.from('notes').select(noteColumns).match({ id }).single()
+  const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).single()
   return data as NotesAndProfile
 }
 
@@ -72,7 +69,7 @@ export async function updateNote({
         encounter,
         user_id: user.value.id,
       })
-      .select(noteColumns)
+      .select(NOTE_COLUMNS)
       .single()
 }
 
@@ -105,7 +102,7 @@ export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; li
   const client = useSupabaseClient<Database>()
   const { data } = await client
     .from('notes')
-    .select(noteColumns)
+    .select(NOTE_COLUMNS)
     .order(order || 'created_at', { ascending: false })
     .limit(limit || 50)
 
@@ -120,7 +117,7 @@ export async function searchAllNotes(name: string) {
 
   const { data } = await client
     .from('notes')
-    .select(noteColumns)
+    .select(NOTE_COLUMNS)
     .order('created_at')
     .limit(50)
     .textSearch('fts', query.join(' OR '), {
@@ -133,7 +130,7 @@ export async function searchAllNotes(name: string) {
 
 export async function fetchAllNotesByUserId(user_id: String): Promise<NotesAndProfile[]> {
   const client = useSupabaseClient<Database>()
-  const { data } = await client.from('notes').select(noteColumns).eq('user_id', user_id).order('created_at')
+  const { data } = await client.from('notes').select(NOTE_COLUMNS).eq('user_id', user_id).order('created_at')
 
   return data as NotesAndProfile[]
 }
