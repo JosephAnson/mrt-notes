@@ -1,5 +1,13 @@
 import type { Note, NoteTypes, NotesAndProfile } from '~/types'
-import { createNotes, deleteNote, fetchAllNotesByUserId, getAllNotes, searchAllNotes } from '~/services/notes'
+import {
+  createNotes,
+  deleteNote,
+  fetchAllNotesByUserId,
+  fetchRecentlyCreatedNotes,
+  fetchRecentlyModifiedNotes,
+  getAllNotes,
+  searchAllNotes,
+} from '~/services/notes'
 
 export interface NoteState {
   notes: {
@@ -25,17 +33,16 @@ export const useNotesStore = defineStore('notes', {
     },
     async fetchAllUserNotes(userID: string) {
       const notes = await fetchAllNotesByUserId(userID)
-
       this.setNotes('user', notes)
       return notes
     },
     async fetchRecentlyModifiedNotes() {
-      const notes = await $fetch('/api/notes/recentlyModifiedNotes')
+      const notes = await fetchRecentlyModifiedNotes()
       this.setNotes('recentlyModified', notes)
       return notes
     },
     async fetchRecentlyCreatedNotes() {
-      const notes = await $fetch('/api/notes/recentlyCreatedNotes')
+      const notes = await fetchRecentlyCreatedNotes()
       this.setNotes('recentlyCreated', notes)
       return notes
     },

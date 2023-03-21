@@ -129,10 +129,15 @@ export async function searchAllNotes(name: string) {
 }
 
 export async function fetchAllNotesByUserId(user_id: String): Promise<NotesAndProfile[]> {
-  const client = useSupabaseClient<Database>()
-  const { data } = await client.from('notes').select(NOTE_COLUMNS).eq('user_id', user_id).order('created_at')
+  return await $fetch(`/api/notes/user/${user_id}`)
+}
 
-  return data as NotesAndProfile[]
+export async function fetchRecentlyModifiedNotes(): Promise<NotesAndProfile[]> {
+  return await $fetch('/api/notes/recentlyModifiedNotes')
+}
+
+export async function fetchRecentlyCreatedNotes(): Promise<NotesAndProfile[]> {
+  return await $fetch('/api/notes/recentlyCreatedNotes')
 }
 
 export async function deleteNote(id: number) {
