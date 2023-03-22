@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import type { MostFavouriteNotes } from '~/server/api/notes/mostFavouriteNotes'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 
@@ -136,6 +137,10 @@ export async function fetchRecentlyModifiedNotes(): Promise<NotesAndProfile[]> {
 
 export async function fetchRecentlyCreatedNotes(): Promise<NotesAndProfile[]> {
   return await $fetch('/api/notes/recentlyCreatedNotes')
+}
+
+export async function fetchMostFavouriteNotes(): Promise<MostFavouriteNotes[]> {
+  return await $fetch('/api/notes/mostFavouriteNotes')
 }
 
 export async function deleteNote(id: number) {

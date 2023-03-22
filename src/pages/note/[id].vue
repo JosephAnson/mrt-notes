@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
+import { capitalCase } from 'change-case'
 import { useSupabaseUser } from '#imports'
 import { editorExtensions } from '~/utils/editor'
 
@@ -25,11 +26,21 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
   <Section>
     <Container>
       <div class="flex justify-between mb-4">
-        <Heading h1> Mrt Notes </Heading>
+        <div>
+          <Heading h1> {{ capitalCase(note?.name) || 'No Name' }} - MRT Note </Heading>
 
-        <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex">
-          <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>
-        </NuxtLink>
+          <Heading v-if="note.user.username" h2>
+            {{ `written by ${capitalCase(note.user.username)}` }}
+          </Heading>
+        </div>
+
+        <div class="flex items-center">
+          <FavouriteButton :note-id="note.id"></FavouriteButton>
+
+          <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex ml-6">
+            <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>
+          </NuxtLink>
+        </div>
       </div>
 
       <section>

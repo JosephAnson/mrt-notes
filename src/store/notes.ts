@@ -3,6 +3,7 @@ import {
   createNotes,
   deleteNote,
   fetchAllNotesByUserId,
+  fetchMostFavouriteNotes,
   fetchRecentlyCreatedNotes,
   fetchRecentlyModifiedNotes,
   getAllNotes,
@@ -15,6 +16,7 @@ export interface NoteState {
     user: Note[]
     recentlyCreated: Note[]
     recentlyModified: Note[]
+    mostFavourite: Note[]
   }
 }
 
@@ -25,6 +27,7 @@ export const useNotesStore = defineStore('notes', {
       user: [],
       recentlyCreated: [],
       recentlyModified: [],
+      mostFavourite: [],
     },
   }),
   actions: {
@@ -45,6 +48,14 @@ export const useNotesStore = defineStore('notes', {
       const notes = await fetchRecentlyCreatedNotes()
       this.setNotes('recentlyCreated', notes)
       return notes
+    },
+    async fetchMostFavouriteNotes() {
+      const favourites = await fetchMostFavouriteNotes()
+      this.setNotes(
+        'mostFavourite',
+        favourites.map((favourite) => favourite.note)
+      )
+      return this.notes.mostFavourite
     },
     async fetchSearchNotes(name?: string) {
       const notes = name ? await searchAllNotes(name) : await getAllNotes({ limit: 30 })

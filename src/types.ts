@@ -83,4 +83,4 @@ export interface SpellIdInformation {
   name: string
 }
 
-export type NoteTypes = 'search' | 'user' | 'recentlyModified' | 'recentlyCreated'
+export type NoteTypes = 'search' | 'user' | 'recentlyModified' | 'recentlyCreated' | 'mostFavourite'

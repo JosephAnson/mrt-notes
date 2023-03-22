@@ -87,8 +87,9 @@ watchOnce(
         </div>
       </div>
       <div class="md:grid grid-cols-12 gap-8">
-        <RecentlyCreateNotes class="sm:col-span-12 md:col-span-6" />
+        <MostFavouriteNotes class="sm:col-span-12 md:col-span-6" />
         <RecentlyModifiedNotes class="sm:col-span-12 md:col-span-6" />
+        <RecentlyCreateNotes class="sm:col-span-12 md:col-span-6" />
       </div>
     </Container>
   </Section>

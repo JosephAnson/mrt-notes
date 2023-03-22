@@ -1,18 +1,25 @@
+import { createNotes } from '~/services/notes'
 import type { Database } from '~/supabase.types'
-import type { Favourite } from '~/types'
+import type { Favourite, NotesAndProfile } from '~/types'
+import { NOTE_COLUMNS } from '~/utils/constants'
 
 export async function getUserFavourites(userId: string | undefined): Promise<Favourite[]> {
   const client = useSupabaseClient<Database>()
   if (!userId) return []
 
-  const { data, error } = await client
+  const { data: favourites, error } = await client
     .from('favourites')
-    .select('id, user_id, note_id, note:note_id(*), created_at')
+    .select(`id, user_id, note_id, note:note_id(${NOTE_COLUMNS}), created_at`)
     .eq('user_id', userId)
 
   if (error) throw new Error(error.message)
 
-  return data as unknown as Favourite[]
+  const returnObj = favourites.map((favourite) => ({
+    ...favourite,
+    note: createNotes(favourite.note as NotesAndProfile),
+  }))
+
+  return returnObj as Favourite[]
 }
 
 export async function addFavourite(noteId: number, userId: string): Promise<Favourite> {

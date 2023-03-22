@@ -23,12 +23,12 @@ export const useUserStore = defineStore('user', {
     async removeUserFavourite(noteId: number, userId: string) {
       await removeFavourite(noteId, userId)
       this.favourites = this.favourites.filter((item) => item.note_id !== noteId)
-      openSnackbar({ message: 'Removed from favourites', background: 'bg-red-700' })
+      openSnackbar({ message: 'Removed from account favourites', background: 'bg-red-700' })
     },
     async addUserFavourite(noteId: number, userId: string) {
       const favourite = await addFavourite(noteId, userId)
       this.favourites = [...this.favourites, favourite]
-      openSnackbar('Added to favourites')
+      openSnackbar('Added to account favourites')
     },
     async toggleUserFavourite(noteId: number) {
       const user = useSupabaseUser()
