@@ -12,8 +12,6 @@ export default cachedEventHandler(
   async (): Promise<Tier[]> => {
     const wowClient = await useWoWClient()
 
-    const storageKey = `all-expansions`
-
     const {
       data: { tiers },
     } = await wowClient.journal<Expansions>({ resource: 'expansion' })

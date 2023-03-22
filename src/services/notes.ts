@@ -99,14 +99,12 @@ export async function fetchAllUserNotes() {
 }
 
 export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; limit?: number } = {}) {
-  const client = useSupabaseClient<Database>()
-  const { data } = await client
-    .from('notes')
-    .select(NOTE_COLUMNS)
-    .order(order || 'created_at', { ascending: false })
-    .limit(limit || 50)
-
-  return data as NotesAndProfile[]
+  return await $fetch(`/api/notes/find/all`, {
+    query: {
+      limit,
+      order,
+    },
+  })
 }
 
 export async function searchAllNotes(name: string) {
