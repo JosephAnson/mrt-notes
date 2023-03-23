@@ -6,18 +6,20 @@
       features:
     </p>
     <ul>
-      <li>Create, share and export mrt notes</li>
-      <li>Share Profile</li>
+      <li>Create, share, favorite and export mrt notes</li>
+      <li>Share Profiles</li>
       <li>Preview Notes</li>
     </ul>
     <p>Editor Features:</p>
     <ul>
+      <li>Based on boss selection automatically generate buttons to add boss spells to your note</li>
       <li>
         Auto transform pasted MRT note, current support is:
         <ul>
           <li>Spells</li>
           <li>Colors</li>
           <li>Raid Markers</li>
+          <li>Timers</li>
         </ul>
       </li>
       <li>Change color of text</li>
