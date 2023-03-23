@@ -18,7 +18,7 @@ const notesStore = useNotesStore()
 const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
 const createdOn = useDateFormat(props.note.created_at, format)
-const updatedOn = useDateFormat(props.note.updated_at, format)
+const updatedOn = useTimeAgo(props.note.updated_at)
 
 const canEdit = computed(() => isUsers && props.showEdit)
 </script>
@@ -44,7 +44,7 @@ const canEdit = computed(() => isUsers && props.showEdit)
         <span>Updated: {{ updatedOn }}</span>
         <span v-if="user" class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
         <FavouriteButton v-if="user" :note-id="props.note.id" class="mt-2 sm:mt-0">
-          {{ props.note.favourites_count }}
+          Favourites {{ props.note.favourites_count }}
         </FavouriteButton>
       </div>
       <Field v-if="props.note.description" stacked class="line-clamp-3 pt-2 !mb-0">
