@@ -4,4 +4,4 @@ export const IMAGE_MARKER = 'IMAGE_MARKER'
 export const IMAGE_SPELLID = 'IMAGE_SPELLID'
 
 export const NOTE_COLUMNS =
-  'id, name, description, editor_string, user:user_id( id, username ), created_at, updated_at, expansion, instance, encounter'
+  'id, favourites_count(count), name, description, editor_string, user:user_id( id, username ), created_at, updated_at, expansion, instance, encounter'

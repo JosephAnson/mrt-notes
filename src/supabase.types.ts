@@ -147,7 +147,12 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      favourites_count: {
+        Row: {
+          count: number | null
+          note_id: number | null
+        }
+      }
     }
     Functions: {
       array_to_string_immutable: {

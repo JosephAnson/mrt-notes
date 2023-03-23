@@ -17,7 +17,8 @@ await useAsyncData('groups', async () => {
   }
 })
 
-const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user?.id))
+const noteName = computed(() => (note.value?.name ? capitalCase(note.value.name) : 'No Name'))
+const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id))
 const editorString = computed(() => note.value?.editor_string || '')
 const json = computed(() => generateJSON(editorString.value, editorExtensions))
 </script>
@@ -27,15 +28,15 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
     <Container>
       <div class="flex justify-between mb-4">
         <div>
-          <Heading h1> {{ capitalCase(note?.name) || 'No Name' }} - MRT Note </Heading>
+          <Heading h1> {{ noteName }} </Heading>
 
-          <Heading v-if="note.user.username" h2>
-            {{ `written by ${capitalCase(note.user.username)}` }}
+          <Heading v-if="note?.username" h2>
+            {{ `by ${capitalCase(note.username)}` }}
           </Heading>
         </div>
 
         <div class="flex items-center">
-          <FavouriteButton :note-id="note.id"></FavouriteButton>
+          <FavouriteButton v-if="user && note" :note-id="note.id">{{ note.favourites_count }}</FavouriteButton>
 
           <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex ml-6">
             <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>

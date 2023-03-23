@@ -1,14 +1,15 @@
 import { serverSupabaseClient } from '#supabase/server'
 import type { Database } from '~/supabase.types'
-import type { NotesAndProfile } from '~/types'
+import type { Note, NotesAndProfile } from '~/types'
 import { NOTE_COLUMNS } from '~/utils/constants'
+import { createNote } from '~/utils/createNote'
 
 export default cachedEventHandler(
-  async (event): Promise<NotesAndProfile[]> => {
+  async (event): Promise<Note[]> => {
     const client = serverSupabaseClient<Database>(event)
     const { data } = await client.from('notes').select(NOTE_COLUMNS).order('created_at', { ascending: false }).limit(5)
 
-    return data as NotesAndProfile[]
+    return (data as NotesAndProfile[]).map((note) => createNote(note))
   },
   {
     maxAge: 10,

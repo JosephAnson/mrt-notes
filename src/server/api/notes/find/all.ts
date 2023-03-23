@@ -2,6 +2,7 @@ import { serverSupabaseClient } from '#supabase/server'
 import type { Database } from '~/supabase.types'
 import type { NotesAndProfile, NotesRow } from '~/types'
 import { NOTE_COLUMNS } from '~/utils/constants'
+import { createNote } from '~/utils/createNote'
 
 type NotesOrder = keyof NotesRow
 
@@ -18,7 +19,7 @@ export default cachedEventHandler(
       .order(order || 'created_at', { ascending: false })
       .limit(limit || 50)
 
-    return data as NotesAndProfile[]
+    return (data as NotesAndProfile[]).map((note) => createNote(note))
   },
   {
     maxAge: 60,

@@ -2,6 +2,7 @@ import { serverSupabaseClient } from '#supabase/server'
 import type { Database } from '~/supabase.types'
 import type { NotesAndProfile } from '~/types'
 import { NOTE_COLUMNS } from '~/utils/constants'
+import { createNote } from '~/utils/createNote'
 
 export default eventHandler(async (event) => {
   if (!event.context.params) {
@@ -18,5 +19,5 @@ export default eventHandler(async (event) => {
     .eq('user_id', event.context.params.id)
     .order('created_at')
 
-  return data as NotesAndProfile[]
+  return (data as NotesAndProfile[]).map((note) => createNote(note))
 })

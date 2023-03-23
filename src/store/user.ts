@@ -21,13 +21,17 @@ export const useUserStore = defineStore('user', {
       return this.favourites
     },
     async removeUserFavourite(noteId: number, userId: string) {
+      const notesStore = useNotesStore()
       await removeFavourite(noteId, userId)
       this.favourites = this.favourites.filter((item) => item.note_id !== noteId)
+      notesStore.changeFavouriteAmount(noteId, -1)
       openSnackbar({ message: 'Removed from account favourites', background: 'bg-red-700' })
     },
     async addUserFavourite(noteId: number, userId: string) {
+      const notesStore = useNotesStore()
       const favourite = await addFavourite(noteId, userId)
       this.favourites = [...this.favourites, favourite]
+      notesStore.changeFavouriteAmount(noteId, 1)
       openSnackbar('Added to account favourites')
     },
     async toggleUserFavourite(noteId: number) {

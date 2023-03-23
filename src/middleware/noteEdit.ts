@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   const note = await getNote(getRouterParamsAsString(to.params.id))
-  const isUsers = isUsersNote(user.value.id, note?.user?.id)
+  const isUsers = isUsersNote(user.value.id, note?.user_id)
 
   if (!isUsers) {
     return navigateToPreviewOrHome()

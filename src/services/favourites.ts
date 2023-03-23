@@ -1,4 +1,4 @@
-import { createNotes } from '~/services/notes'
+import { createNote } from '~/utils/createNote'
 import type { Database } from '~/supabase.types'
 import type { Favourite, NotesAndProfile } from '~/types'
 import { NOTE_COLUMNS } from '~/utils/constants'
@@ -16,7 +16,7 @@ export async function getUserFavourites(userId: string | undefined): Promise<Fav
 
   const returnObj = favourites.map((favourite) => ({
     ...favourite,
-    note: createNotes(favourite.note as NotesAndProfile),
+    note: createNote(favourite.note as NotesAndProfile),
   }))
 
   return returnObj as Favourite[]

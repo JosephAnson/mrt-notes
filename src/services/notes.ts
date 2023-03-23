@@ -1,7 +1,7 @@
 import type { Ref } from 'vue'
-import type { MostFavouriteNotes } from '~/server/api/notes/mostFavouriteNotes'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
+import { createNote } from '~/utils/createNote'
 
 const defaultEditorValue =
   'Fight summary<br><br><br>' +
@@ -32,10 +32,10 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
   }
 }
 
-export async function getNote(id: string) {
+export async function getNote(id: string): Promise<Note> {
   const client = useSupabaseClient<Database>()
   const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).single()
-  return data as NotesAndProfile
+  return createNote(data as NotesAndProfile)
 }
 
 export async function updateNote({
@@ -74,24 +74,8 @@ export async function updateNote({
       .single()
 }
 
-export function createNotes(item: NotesAndProfile): Note {
-  return {
-    id: item.id,
-    name: item.name,
-    user_id: item.user.id,
-    username: item.user.username,
-    description: item.description,
-    created_at: item.created_at,
-    updated_at: item.updated_at,
-    editor_string: item.editor_string || '',
-    encounter: item.encounter,
-    instance: item.instance,
-    expansion: item.expansion,
-  }
-}
-
 export function setNotes(store: Ref<Note[]>, newNotes: NotesAndProfile[]) {
-  store.value = newNotes.map(createNotes)
+  store.value = newNotes.map(createNote)
 }
 
 export async function fetchAllUserNotes() {
@@ -124,22 +108,22 @@ export async function searchAllNotes(name: string) {
       config: 'english',
     })
 
-  return data as NotesAndProfile[]
+  return (data as NotesAndProfile[]).map((note) => createNote(note))
 }
 
-export async function fetchAllNotesByUserId(user_id: String): Promise<NotesAndProfile[]> {
+export async function fetchAllNotesByUserId(user_id: String) {
   return await $fetch(`/api/notes/user/${user_id}`)
 }
 
-export async function fetchRecentlyModifiedNotes(): Promise<NotesAndProfile[]> {
+export async function fetchRecentlyModifiedNotes() {
   return await $fetch('/api/notes/recentlyModifiedNotes')
 }
 
-export async function fetchRecentlyCreatedNotes(): Promise<NotesAndProfile[]> {
+export async function fetchRecentlyCreatedNotes() {
   return await $fetch('/api/notes/recentlyCreatedNotes')
 }
 
-export async function fetchMostFavouriteNotes(): Promise<MostFavouriteNotes[]> {
+export async function fetchMostFavouriteNotes() {
   return await $fetch('/api/notes/mostFavouriteNotes')
 }
 
