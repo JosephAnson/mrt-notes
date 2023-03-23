@@ -78,6 +78,14 @@ function isEveryone(string: String) {
   return string.includes('everyone')
 }
 
+function isTank(string: String) {
+  return string.includes('tank')
+}
+
+function isHealer(string: String) {
+  return string.includes('healer')
+}
+
 export async function createNodesOnPaste(editor: Editor, content: Slice | Node) {
   const jsonContent: Node[] = []
   const nodeList: Node[] = []
@@ -122,7 +130,7 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
                 title,
               })
             )
-          } else if (isTime(string) || isText(string) || isEveryone(string)) {
+          } else if (isTime(string) || isText(string) || isEveryone(string) || isTank(string) || isHealer(string)) {
             jsonContent.push(createTextNode(editor, `{${string}}`))
           } else if (newString && isHexColor(color)) {
             jsonContent.push(createTextNode(editor, newString, { color: `#${color}` }))
