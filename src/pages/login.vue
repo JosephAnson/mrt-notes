@@ -18,14 +18,22 @@ const returnUrl = computed(() => (route.currentRoute.value.query as { returnUrl?
         <Button @click="signInWithOtp(email, returnUrl)"> Sign In </Button>
       </div>
 
-      <Button
-        v-if="!user"
-        class="flex items-center !bg-[#5865f2] !hover:bg-[#7983f5]"
-        @click="login('discord', returnUrl)"
-      >
-        <span class="i-carbon-logo-discord inline-block mr-2 text-xl" />
-        Login with Discord
-      </Button>
+      <div v-if="!user" class="flex flex-wrap">
+        <Button
+          class="flex items-center !bg-[#5865f2] !hover:bg-[#7983f5] mb-2 mr-2"
+          @click="login('discord', returnUrl)"
+        >
+          <span class="i-carbon-logo-discord inline-block mr-2 text-xl" />
+          Login with Discord
+        </Button>
+        <Button
+          class="flex items-center !bg-[#db4437] !hover:bg-[#D52E29] mb-2 mr-2"
+          @click="login('google', returnUrl)"
+        >
+          <span class="i-carbon-logo-google inline-block mr-2 text-xl" />
+          Login with Google
+        </Button>
+      </div>
       <Button v-else @click="client.auth.signOut()"> Logout </Button>
     </Container>
   </Section>
