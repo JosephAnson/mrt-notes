@@ -30,7 +30,8 @@ export const useNotesStore = defineStore('notes', {
     },
   }),
   actions: {
-    async fetchAllUserNotes(userID: string) {
+    async fetchAllUserNotes(userID?: string) {
+      if (!userID) return this.notes.user
       const notes = await fetchAllNotesByUserId(userID)
       this.notes.user = notes
       return notes

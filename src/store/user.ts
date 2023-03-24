@@ -13,11 +13,10 @@ export const useUserStore = defineStore('user', {
     hasFavourite(noteId: number) {
       return this.favourites.find((item) => item.note_id === noteId)
     },
-    async fetchUserFavourites(userID: string | undefined) {
-      if (userID) {
-        this.favourites = await getUserFavourites(userID)
-      }
+    async fetchUserFavourites(userID?: string) {
+      if (!userID) return this.favourites
 
+      this.favourites = await getUserFavourites(userID)
       return this.favourites
     },
     async removeUserFavourite(noteId: number, userId: string) {

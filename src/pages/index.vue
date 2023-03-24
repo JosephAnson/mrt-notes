@@ -9,7 +9,7 @@ const profileStore = useProfileStore()
 const teamMembersStore = useTeamMembersStore()
 
 await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
-await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id || ''))
+await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id))
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
 // Watch to see if user changes to re-fetch notes
@@ -17,6 +17,7 @@ watchOnce(
   () => user.value,
   async () => {
     await notesStore.fetchAllUserNotes(user.value?.id || '')
+    await userStore.fetchUserFavourites(user.value?.id)
     await teamMembersStore.fetchAllTeamMembers()
   },
   { deep: true }

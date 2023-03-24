@@ -6,6 +6,8 @@ const teamMembersColumns = 'id, name, class'
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
+  if (!user) return []
+
   const { data } = await client
     .from('team_members')
     .select(teamMembersColumns)
