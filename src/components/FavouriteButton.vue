@@ -11,14 +11,16 @@ const hasFavourite = computed(() => userStore.hasFavourite(props.noteId))
 
 <template>
   <Tooltip :disabled="!user" :label="hasFavourite ? 'Remove from favourite notes' : 'Add to favourite notes'">
-    <button class="flex items-center">
-      {{ props.count }} Favourite{{ props.count === 1 ? '' : 's' }}
+    <Button
+      class="flex items-center bg-transparent !hover:bg-red-500"
+      @click="userStore.toggleUserFavourite(props.noteId)"
+    >
+      Favourite
       <span
         v-if="user"
-        class="inline-block ml-1 color-red-500 text-base"
+        class="inline-block ml-2 color-white text-base"
         :class="hasFavourite ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
-        @click="userStore.toggleUserFavourite(props.noteId)"
       />
-    </button>
+    </Button>
   </Tooltip>
 </template>
