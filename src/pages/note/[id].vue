@@ -25,18 +25,18 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
 
 <template>
   <Section>
-    <Container>
+    <Container v-if="note">
       <div class="flex justify-between mb-4">
         <div>
           <Heading h1> {{ noteName }} </Heading>
 
-          <Heading v-if="note?.username" h2>
+          <Heading v-if="note.username" h2>
             {{ `by ${capitalCase(note.username)}` }}
           </Heading>
         </div>
 
         <div class="flex items-center">
-          <FavouriteButton v-if="user && note" :note-id="note.id">{{ note.favourites_count }}</FavouriteButton>
+          <FavouriteButton :note-id="note.id" :count="note.favourites_count"></FavouriteButton>
 
           <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex ml-6">
             <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>
