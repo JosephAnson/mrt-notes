@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useProfileStore } from '~/store/profile'
-
 const client = useSupabaseAuthClient()
 const user = useSupabaseUser()
 const router = useRouter()

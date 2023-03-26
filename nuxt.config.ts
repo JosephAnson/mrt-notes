@@ -9,7 +9,16 @@ import {
 } from 'unocss'
 
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@unocss/nuxt', '@nuxtjs/web-vitals', '@pinia/nuxt'],
+  modules: [
+    '@vueuse/nuxt',
+    '@nuxtjs/supabase',
+    '@unocss/nuxt',
+    '@nuxtjs/web-vitals',
+    '@pinia/nuxt',
+    '@nuxtjs/robots',
+    '@nuxtjs/html-validator',
+    'nuxt-typed-router',
+  ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   app: {
     head: {
@@ -94,5 +103,8 @@ export default defineNuxtConfig({
         base: './data/db',
       },
     },
+  },
+  htmlValidator: {
+    usePrettier: true,
   },
 })

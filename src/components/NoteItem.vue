@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/store/user'
 import type { Note } from '~/types'
 const props = withDefaults(
   defineProps<{
@@ -45,8 +44,14 @@ const canEdit = computed(() => isUsers && props.showEdit)
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
         <span>Updated: {{ updatedOn }}</span>
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
-        {{ props.note.favourites_count }} Favourite{{ props.note.favourites_count === 1 ? '' : 's' }}
-        <span v-if="user" class="inline-block ml-1 color-red-500 text-base i-carbon-favorite-filled" />
+        <div class="inline-flex items-center">
+          {{ props.note.favourites_count }} Favourite{{ props.note.favourites_count === 1 ? '' : 's' }}
+          <span
+            v-if="user"
+            class="inline-block ml-1 color-red-500 text-base"
+            :class="props.note.favourites_count > 0 ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
+          />
+        </div>
       </div>
       <Field v-if="props.note.description" stacked class="line-clamp-3 pt-2 !mb-0">
         <p>{{ props.note.description }}</p>

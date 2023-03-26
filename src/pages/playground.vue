@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useNoteStore } from '~/store/note'
 import type { EditorData } from '~/types'
 
 const editor = reactive<EditorData>({

@@ -1,6 +1,5 @@
 <script lang="ts" setup async>
 import { paramCase } from 'change-case'
-import { useTeamMembersStore } from '~/store/teamMembers'
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
@@ -27,7 +26,7 @@ watchOnce(
 <template>
   <Section>
     <Container>
-      <div class="md:flex justify-between mb-8 mb:mb-0">
+      <div class="md:flex justify-between mb-8 md:mb-0">
         <div>
           <Heading h1> Website to handle all your World of Warcraft MRT Notes </Heading>
         </div>

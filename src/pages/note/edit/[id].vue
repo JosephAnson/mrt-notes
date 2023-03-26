@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
-import { useNoteStore } from '~/store/note'
 import type { EditorData } from '~/types'
 
 definePageMeta({
