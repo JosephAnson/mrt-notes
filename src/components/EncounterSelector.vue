@@ -25,10 +25,16 @@ const { data: expansionInstances, pending: expansionInstancesPending } = await u
     pick: ['dungeons', 'raids'],
   }
 )
+watch(expansionInstances, (newExpansionInstances) => {
+  if (newExpansionInstances) instanceSelect.value = newExpansionInstances.raids.at(-1)?.id
+})
 
 const { data: instance, pending: instancePending } = await useLazyFetch(
   () => `/api/blizzard/instance/${instanceSelect.value}`
 )
+watch(instance, (newInstance) => {
+  if (newInstance) encounterSelect.value = newInstance.encounters[0].id
+})
 </script>
 
 <template>

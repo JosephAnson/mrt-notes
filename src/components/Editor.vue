@@ -127,6 +127,7 @@ function setColor(event: Event) {
     </div>
     <div>
       <Field
+        v-if="noteStore.spells.length"
         key="encounter-spells"
         label="Encounter Spells: "
         class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start first:mt-2"
