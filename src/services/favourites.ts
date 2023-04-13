@@ -1,7 +1,7 @@
-import { createNote } from '~/utils/createNote'
 import type { Database } from '~/supabase.types'
 import type { Favourite, NotesAndProfile } from '~/types'
 import { NOTE_COLUMNS } from '~/utils/constants'
+import { createNote } from '~/utils/createNote'
 
 export async function getUserFavourites(userId: string | undefined): Promise<Favourite[]> {
   const client = useSupabaseClient<Database>()
@@ -14,12 +14,10 @@ export async function getUserFavourites(userId: string | undefined): Promise<Fav
 
   if (error) throw new Error(error.message)
 
-  const returnObj = favourites.map((favourite) => ({
+  return favourites.map((favourite) => ({
     ...favourite,
     note: createNote(favourite.note as NotesAndProfile),
   }))
-
-  return returnObj as Favourite[]
 }
 
 export async function addFavourite(noteId: number, userId: string): Promise<Favourite> {
@@ -29,11 +27,12 @@ export async function addFavourite(noteId: number, userId: string): Promise<Favo
     .from('favourites')
     .insert({ user_id: userId, note_id: noteId })
     .select('*')
+    .returns<Favourite>()
     .single()
 
   if (error) throw new Error(error.message)
 
-  return data as Favourite
+  return data
 }
 
 export async function removeFavourite(noteId: number, userId: string) {

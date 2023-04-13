@@ -1,6 +1,6 @@
 function navigateToPreviewOrHome() {
-  const route = useRoute()
-  return navigateTo(route.params?.id ? `/note/${route.params.id}` : '/')
+  const route = useRoute<'note-id'>()
+  return navigateTo(`/note/${route.params.id}`)
 }
 
 export default defineNuxtRouteMiddleware(async (to) => {

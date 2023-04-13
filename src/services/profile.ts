@@ -7,9 +7,14 @@ export async function getProfile() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
 
-  const { data } = await client.from('profiles').select(profileColumns).eq('id', user.value?.id).single()
+  const { data } = await client
+    .from('profiles')
+    .select(profileColumns)
+    .eq('id', user.value?.id)
+    .returns<Profile[]>()
+    .single()
 
-  return data as Profile
+  return data
 }
 
 export async function getProfileByUsername(username: string) {

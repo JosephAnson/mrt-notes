@@ -32,10 +32,12 @@ export async function createNewNote(name: string, editor_string = defaultEditorV
   }
 }
 
-export async function getNote(id: string): Promise<Note> {
+export async function getNote(id: string): Promise<Note | undefined> {
   const client = useSupabaseClient<Database>()
-  const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).single()
-  return createNote(data as NotesAndProfile)
+  const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).returns<NotesAndProfile[]>().single()
+
+  if (!data) return
+  return createNote(data)
 }
 
 export async function updateNote({
@@ -107,8 +109,11 @@ export async function searchAllNotes(name: string) {
       type: 'websearch',
       config: 'english',
     })
+    .returns<NotesAndProfile[]>()
 
-  return (data as NotesAndProfile[]).map((note) => createNote(note))
+  if (!data) return []
+
+  return data.map((note) => createNote(note))
 }
 
 export async function fetchAllNotesByUserId(user_id: String) {

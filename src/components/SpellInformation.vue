@@ -3,7 +3,7 @@ const props = withDefaults(
   defineProps<{
     icon: string
     tooltip: string
-    showIcon: boolean
+    showIcon?: boolean
   }>(),
   { showIcon: true }
 )

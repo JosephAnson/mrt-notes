@@ -43,7 +43,7 @@ watchOnce(
       </div>
       <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
         Set your username on your account if you want to share your profile
-        <nuxt-link to="account"> <Button class="ml-4">Set Username</Button></nuxt-link>
+        <nuxt-link to="/account"> <Button class="ml-4">Set Username</Button></nuxt-link>
       </Notification>
       <div class="user-information mb-8">
         <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">

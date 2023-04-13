@@ -28,7 +28,7 @@ const username = ref<string>(profileStore.username || '')
             </Field>
 
             <Field v-if="profileStore.profile.username" stacked>
-              <NuxtLink :to="`profile/${profileStore.profile.username}`">
+              <NuxtLink :to="`/profile/${profileStore.profile.username}`">
                 <Button>View Profile</Button>
               </NuxtLink>
             </Field>

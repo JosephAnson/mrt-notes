@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Note } from '~/types'
+
 const props = withDefaults(
   defineProps<{
     note: Note
@@ -14,7 +15,6 @@ const props = withDefaults(
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
-const userStore = useUserStore()
 
 const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)

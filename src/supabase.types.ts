@@ -5,19 +5,19 @@ export interface Database {
     Tables: {
       favourites: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: number
           note_id: number
           user_id: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: number
           note_id: number
           user_id: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           id?: number
           note_id?: number
           user_id?: string

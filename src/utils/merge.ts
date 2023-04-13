@@ -1,8 +1,10 @@
 /**
  * Merge function to replace Object.assign with deep merging possibility
  */
-const isObject = (item: any) => typeof item === 'object' && !Array.isArray(item)
-const mergeFn = (target: Record<string, any>, source: Record<string, any>, deep = false) => {
+function isObject(item: any) {
+  return typeof item === 'object' && !Array.isArray(item)
+}
+function mergeFn(target: Record<string, any>, source: Record<string, any>, deep = false) {
   if (deep || !Object.assign) {
     const isDeep = (prop: string) => isObject(source[prop]) && target !== null && isObject(target[prop])
 

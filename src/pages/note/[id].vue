@@ -5,7 +5,7 @@ import { useSupabaseUser } from '#imports'
 import { editorExtensions } from '~/utils/editor'
 
 const user = useSupabaseUser()
-const route = useRoute()
+const route = useRoute<'note-id'>()
 const groupsStore = useGroupsStore()
 
 const { data: note } = await useAsyncData('notes', async () => {

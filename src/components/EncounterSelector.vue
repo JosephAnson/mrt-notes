@@ -26,7 +26,8 @@ const { data: expansionInstances, pending: expansionInstancesPending } = await u
   }
 )
 watch(expansionInstances, (newExpansionInstances) => {
-  if (newExpansionInstances) instanceSelect.value = newExpansionInstances.raids.at(-1)?.id
+  if (newExpansionInstances)
+    instanceSelect.value = newExpansionInstances.raids[newExpansionInstances.raids.length - 1].id
 })
 
 const { data: instance, pending: instancePending } = await useLazyFetch(

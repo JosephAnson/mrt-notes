@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { paramCase } from 'change-case'
+import type { Ref } from 'vue'
 import Draggable from 'vuedraggable'
-import type { Ref } from '#imports'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 

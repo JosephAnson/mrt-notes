@@ -13,8 +13,9 @@ export async function getAllTeamMembers() {
     .select(teamMembersColumns)
     .eq('user_id', user.value?.id)
     .order('order')
+    .returns<Member[]>()
 
-  return data as Member[]
+  return data
 }
 export async function updateTeamMembers(members: Member[]) {
   const client = useSupabaseClient<Database>()
