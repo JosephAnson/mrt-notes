@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
     '@unocss/nuxt',
-    '@nuxtjs/web-vitals',
+    // '@nuxtjs/web-vitals',
     '@pinia/nuxt',
     '@nuxtjs/robots',
     '@nuxtjs/html-validator',
