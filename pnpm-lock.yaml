@@ -5,6 +5,7 @@ specifiers:
   '@fortawesome/fontawesome-free': ^6.4.0
   '@headlessui/vue': ^1.7.13
   '@iconify-json/carbon': ^1.1.16
+  '@nuxtjs/google-adsense': ^2.1.0
   '@nuxtjs/html-validator': ^1.2.4
   '@nuxtjs/robots': ^3.0.0
   '@nuxtjs/supabase': ^0.3.5
@@ -52,6 +53,7 @@ specifiers:
 dependencies:
   '@fortawesome/fontawesome-free': 6.4.0
   '@headlessui/vue': 1.7.13_vue@3.2.47
+  '@nuxtjs/google-adsense': 2.1.0
   '@nuxtjs/html-validator': 1.2.4
   '@nuxtjs/robots': 3.0.0
   '@nuxtjs/web-vitals': 0.2.4
@@ -1038,6 +1040,15 @@ packages:
       - vls
       - vti
       - vue-tsc
+
+  /@nuxtjs/google-adsense/2.1.0:
+    resolution: {integrity: sha512-ken1aITTBEluqyT9yvpdzMYaRDR3SOPcWeGOQHYj/pfw/IJb/Ye0Ylj7rF8gVyBurCbsbTV2pGlEDoalBDYMbg==}
+    dependencies:
+      '@nuxt/kit': 3.4.1
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: false
 
   /@nuxtjs/html-validator/1.2.4:
     resolution: {integrity: sha512-IKy/+lR516ls7gXbXsCzLKdIhzyjxo5b7//6yZ8hNIvaLljb3yyCTiEM139B7RchIvIyBpf0GJ5GKWn2rPmRhw==}

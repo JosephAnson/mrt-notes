@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     '@nuxtjs/html-validator',
     'nuxt-typed-router',
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: process.env.GOOGLE_ADSENSE_ID,
+      },
+    ],
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   app: {
