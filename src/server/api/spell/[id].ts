@@ -1,6 +1,10 @@
 import type { SpellIdInformation } from '~/types'
 import { SPELL_INFO_BASE_URL } from '~/utils/constants'
 
+interface Response extends SpellIdInformation {
+  error: string
+}
+
 export default cachedEventHandler(
   async (event): Promise<SpellIdInformation> => {
     if (!event.context.params) {
@@ -12,14 +16,24 @@ export default cachedEventHandler(
     const spellId = event.context.params.id
 
     try {
-      const { icon, tooltip, name } = await $fetch<SpellIdInformation>(`${SPELL_INFO_BASE_URL}${spellId}`)
+      const { icon, tooltip, name, error } = await $fetch<Response>(`${SPELL_INFO_BASE_URL}${spellId}`)
+
+      if (error) {
+        return {
+          icon: 'trade_engineering',
+          tooltip:
+            '<a class="whtt-name" href="/spell=106727/unknown"><b class="whtt-name">Unknown</b></a><br />Instant',
+          name: 'Unknown',
+        }
+      }
 
       return { icon, tooltip, name }
     } catch {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Icon Not Found',
-      })
+      return {
+        icon: 'trade_engineering',
+        tooltip: '<a class="whtt-name" href="/spell=106727/unknown"><b class="whtt-name">Unknown</b></a><br />Instant',
+        name: 'Unknown',
+      }
     }
   },
   {

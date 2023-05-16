@@ -15,7 +15,7 @@ export function createEditorSpellIdImageData(icon: string, spellId: string | num
   return {
     src: `https://wow.zamimg.com/images/wow/icons/small/${icon}.jpg`,
     alt: IMAGE_SPELLID,
-    title: `{spell: ${spellId}}`,
+    title: `{spell:${spellId}}`,
   }
 }
 
@@ -66,24 +66,36 @@ function isSpell(string: String) {
   return string.includes('spell:')
 }
 
-function isTime(string: String) {
-  return string.includes('time:')
-}
+const VALID_TAGS = [
+  'text',
+  'everyone',
+  'tank',
+  '/tank',
+  'healer',
+  '/healer',
+  'h',
+  '/h',
+  't',
+  '/t',
+  'p1',
+  'p1.5',
+  'p2',
+  'p2.5',
+  'p3',
+  'p3.5',
+  'p4',
+  'p4.5',
+  'p5',
+  '/p',
+  'g135',
+  'g246',
+  '/g',
+]
 
-function isText(string: String) {
-  return string.includes('text')
-}
+function isValidTag(string: any) {
+  if (string.includes('time:')) return true
 
-function isEveryone(string: String) {
-  return string.includes('everyone')
-}
-
-function isTank(string: String) {
-  return string.includes('tank')
-}
-
-function isHealer(string: String) {
-  return string.includes('healer')
+  return VALID_TAGS.includes(string.toLowerCase())
 }
 
 export async function createNodesOnPaste(editor: Editor, content: Slice | Node) {
@@ -130,7 +142,7 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
                 title,
               })
             )
-          } else if (isTime(string) || isText(string) || isEveryone(string) || isTank(string) || isHealer(string)) {
+          } else if (isValidTag(string)) {
             jsonContent.push(createTextNode(editor, `{${string}}`))
           } else if (newString && isHexColor(color)) {
             jsonContent.push(createTextNode(editor, newString, { color: `#${color}` }))
