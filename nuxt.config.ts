@@ -64,7 +64,7 @@ export default defineNuxtConfig({
       presetWebFonts({
         provider: 'google',
         fonts: {
-          sans: ['Montserrat:400,700', 'Source Sans Pro'],
+          sans: ['Montserrat:400,700', 'Source Sans Pro:400,700'],
         },
       }),
     ],
