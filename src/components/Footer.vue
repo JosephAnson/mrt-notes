@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <footer class="py-10">
     <div class="container">
@@ -13,6 +15,9 @@
             <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
             Submit issues or request features
           </Button>
+          <NuxtLink to="/privacyPolicy">
+            <Button class="ml-4 !px-2 bg-transparent" aria-label="Twitter Share Button"> Privacy Policy </Button>
+          </NuxtLink>
           <Button class="ml-4 !px-2 bg-transparent" aria-label="Twitter Share Button" @click="tweet">
             <div class="i-carbon-logo-twitter"></div
           ></Button>
