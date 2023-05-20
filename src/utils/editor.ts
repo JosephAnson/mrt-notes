@@ -68,6 +68,8 @@ function isSpell(string: String) {
 
 const VALID_TAGS = [
   'text',
+  '/text',
+  'potion',
   'everyone',
   'tank',
   '/tank',
