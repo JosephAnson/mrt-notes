@@ -81,8 +81,8 @@ router.afterEach(() => {
           >
             Report issue
           </a>
-          <a v-if="!user" class="text-sm font-semibold leading-6 text-white" @click="login"> Login </a>
-          <a v-else class="text-sm font-semibold leading-6 text-white" @click="logout"> Logout </a>
+          <a v-if="!user" class="text-sm font-semibold leading-6 text-white cursor-pointer" @click="login"> Login </a>
+          <a v-else class="text-sm font-semibold leading-6 text-white cursor-pointer" @click="logout"> Logout </a>
         </div>
       </nav>
       <Dialog as="div" class="lg:hidden" :open="mobileMenuOpen" @close="mobileMenuOpen = false">
@@ -123,8 +123,8 @@ router.afterEach(() => {
                   <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
                   Submit issues or request features
                 </Button>
-                <Button v-if="!user" class="w-full" @click="login"> Login </Button>
-                <Button v-else class="w-full" @click="logout"> Logout </Button>
+                <Button v-if="!user" class="w-full cursor-pointer" @click="login"> Login </Button>
+                <Button v-else class="w-full cursor-pointer" @click="logout"> Logout </Button>
               </div>
             </div>
           </div>
