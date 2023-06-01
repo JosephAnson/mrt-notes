@@ -96,16 +96,14 @@ export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; li
 
 export async function searchAllNotes(name: string) {
   const client = useSupabaseClient<Database>()
-  const query = []
-
-  if (name) query.push(`'${name}'`)
+  const query = name.split(' ').join(' OR ')
 
   const { data } = await client
     .from('notes')
     .select(NOTE_COLUMNS)
     .order('created_at')
     .limit(50)
-    .textSearch('fts', query.join(' OR '), {
+    .textSearch('fts', query, {
       type: 'websearch',
       config: 'english',
     })
