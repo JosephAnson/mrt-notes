@@ -93,6 +93,7 @@ watchOnce(
       </div>
     </Container>
   </Section>
+  <adsbygoogle />
   <Section class="bg-primary-800">
     <Container>
       <SiteInfo />
