@@ -11,6 +11,8 @@ await useAsyncData('userFavourites', async () => await userStore.fetchUserFavour
 await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id))
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
+const { data: encounters } = await useLazyAsyncData('encounters', async () => await getLatestEncounters())
+
 // Watch to see if user changes to re-fetch notes
 watchOnce(
   () => user.value,
@@ -49,6 +51,17 @@ watchOnce(
         <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">
           <Heading class="mr-4 !mb-0" h2> Login to get started</Heading>
           <NuxtLink to="login"><Button>Login</Button></NuxtLink>
+        </div>
+
+        <div class="mt-4">
+          <Heading h3>Search by encounter</Heading>
+          <div class="flex flex-wrap gap-2 mb-2">
+            <NuxtLink v-for="encounter in encounters" :key="encounter" :to="`/search?q=${encounter}`">
+              <Button>
+                {{ encounter }}
+              </Button>
+            </NuxtLink>
+          </div>
         </div>
 
         <div v-if="user">

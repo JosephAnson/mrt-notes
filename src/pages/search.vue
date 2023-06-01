@@ -10,17 +10,7 @@ const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
 await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 await useAsyncData('notes', async () => await notesStore.fetchSearchNotes(q || ''))
 
-const { data: expansions } = await useLazyFetch('/api/blizzard/expansion/all')
-const { data: expansionInstances } = await useLazyFetch(
-  () => `/api/blizzard/expansion/instances/${expansions.value.at(-1).id}`,
-  {
-    pick: ['raids'],
-  }
-)
-const { data: instance } = await useLazyFetch(
-  () => `/api/blizzard/instance/${expansionInstances.value.raids.at(-1).id}`
-)
-const encounters = computed(() => instance.value.encounters.map((i) => i.name))
+const { data: encounters } = await useLazyAsyncData('encounters', async () => await getLatestEncounters())
 
 const search = ref(q || '')
 
