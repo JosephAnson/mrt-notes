@@ -27,15 +27,21 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
   <Section>
     <Container v-if="note">
       <div class="flex justify-between mb-4">
-        <div>
+        <div class="flex">
           <Heading h1> {{ noteName }} </Heading>
 
-          <Heading v-if="note.username" h2>
-            {{ `by ${capitalCase(note.username)}` }}
-          </Heading>
+          <NuxtLink v-if="note.username" :to="`/profile/${note.username}`">
+            <Heading h2 styled="h1">
+              {{ `&nbsp;by ${capitalCase(note.username)}` }}
+            </Heading>
+          </NuxtLink>
         </div>
 
         <div class="flex items-center">
+          <NuxtLink v-if="note.username" :to="`/profile/${note.username}`" class="flex ml-6">
+            <Button> Visit User Profile </Button>
+          </NuxtLink>
+
           <FavouriteButton :note-id="note.id" :count="note.favourites_count"></FavouriteButton>
 
           <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex ml-6">
