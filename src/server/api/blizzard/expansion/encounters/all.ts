@@ -36,6 +36,8 @@ export default cachedEventHandler(
     return expansionList
   },
   {
+    name: 'expansion-encounters',
+    group: 'expansion',
     maxAge: 60 * 60 * 24 * 14,
   }
 )

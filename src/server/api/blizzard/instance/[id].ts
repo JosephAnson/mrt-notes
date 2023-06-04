@@ -33,5 +33,7 @@ export default cachedEventHandler(
   },
   {
     maxAge: 60 * 60 * 24 * 14,
+    name: 'instance',
+    group: 'instance',
   }
 )

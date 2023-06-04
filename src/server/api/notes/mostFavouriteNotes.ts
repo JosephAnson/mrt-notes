@@ -26,6 +26,8 @@ export default cachedEventHandler(
     })) as MostFavouriteNotes[]
   },
   {
+    name: 'notes-most-favourite',
+    group: 'notes',
     maxAge: 10,
   }
 )

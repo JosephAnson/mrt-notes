@@ -37,6 +37,8 @@ export default cachedEventHandler(
     }
   },
   {
+    name: 'spell',
+    group: 'spell',
     maxAge: 60 * 60 * 24 * 7,
   }
 )

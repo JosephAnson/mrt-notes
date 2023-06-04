@@ -19,6 +19,8 @@ export default cachedEventHandler(
     return tiers
   },
   {
+    name: 'expansion-all',
+    group: 'expansion',
     maxAge: 60 * 60 * 24 * 60,
   }
 )

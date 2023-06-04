@@ -34,6 +34,8 @@ export default cachedEventHandler(
     return data
   },
   {
+    name: 'expansion-instances',
+    group: 'expansion',
     maxAge: 60 * 60 * 24 * 14,
   }
 )

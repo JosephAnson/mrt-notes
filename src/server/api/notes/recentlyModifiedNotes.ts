@@ -12,6 +12,8 @@ export default cachedEventHandler(
     return (data as NotesAndProfile[]).map((note) => createNote(note))
   },
   {
+    name: 'notes-recently-modified',
+    group: 'notes',
     maxAge: 10,
   }
 )
