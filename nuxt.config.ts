@@ -102,12 +102,9 @@ export default defineNuxtConfig({
     provider: 'vercel',
   },
   nitro: {
-    // Development
-    devStorage: {
-      db: {
-        driver: 'fs',
-        base: './data/db',
-      },
+    storage: {
+      cache: { driver: 'vercelKV' },
+      data: { driver: 'vercelKV' },
     },
   },
   htmlValidator: {
