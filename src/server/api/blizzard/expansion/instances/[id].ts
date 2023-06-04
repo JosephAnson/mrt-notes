@@ -1,11 +1,11 @@
 import { useWoWClient } from '~/utils/blizzard'
 
-interface EncounterInstance {
+export interface EncounterInstance {
   id: number
   name: string
 }
 
-interface EncounterInstances {
+export interface EncounterInstances {
   dungeons: EncounterInstance[]
   raids: EncounterInstance[]
 }
@@ -34,6 +34,6 @@ export default cachedEventHandler(
     return data
   },
   {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 14,
   }
 )

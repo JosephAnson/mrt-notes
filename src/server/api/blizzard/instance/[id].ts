@@ -5,7 +5,7 @@ interface Instance {
   name: string
 }
 
-interface InstanceReturn {
+export interface InstanceReturn {
   id: number
   name: string
   encounters: Instance[]
@@ -32,6 +32,6 @@ export default cachedEventHandler(
     return data
   },
   {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 14,
   }
 )

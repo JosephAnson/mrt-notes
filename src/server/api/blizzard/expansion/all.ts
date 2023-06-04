@@ -19,6 +19,6 @@ export default cachedEventHandler(
     return tiers
   },
   {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 60,
   }
 )

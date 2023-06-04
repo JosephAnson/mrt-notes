@@ -64,6 +64,6 @@ export default cachedEventHandler(
     return { id: Number(id), name: data.name, spells }
   },
   {
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 365,
   }
 )

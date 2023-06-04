@@ -54,7 +54,10 @@ watchOnce(
         </div>
 
         <div class="mt-4">
-          <Heading h2 styled="h3">Search by encounter</Heading>
+          <div class="flex items-center mb-4">
+            <Heading h2 styled="h3" class="!mb-0">Search by encounter</Heading>
+            <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters"> View all </NuxtLink>
+          </div>
           <div class="flex flex-wrap gap-2 mb-2">
             <Button v-for="encounter in encounters" :key="encounter" :to="`/search?q=${encounter}`">
               {{ encounter }}
