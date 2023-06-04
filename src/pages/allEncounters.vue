@@ -9,6 +9,7 @@ const { results } = useFuse(input, expansions.value, {
   matchAllWhenSearchEmpty: true,
   fuseOptions: {
     keys: [
+      'name',
       'instances.raids.name',
       'instances.dungeons.name',
       'instances.raids.encounters.name',

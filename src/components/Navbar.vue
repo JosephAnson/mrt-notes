@@ -29,6 +29,7 @@ function logout() {
 
 const navigation = computed(() => [
   { name: 'Search', to: '/search', show: true },
+  { name: 'Encounters', to: '/allencounters', show: true },
   { name: 'Playground', to: '/playground', show: true },
   { name: 'My Notes', to: `/profile/${profileStore.username}`, show: user.value && profileStore.username },
   { name: profileStore.username ? `Account (${profileStore.username})` : 'Account', to: '/account', show: user.value },
