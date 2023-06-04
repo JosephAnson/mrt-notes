@@ -72,7 +72,7 @@ const { pending: spellsLoading } = await useLazyFetch(() => `/api/blizzard/encou
 <template>
   <Section>
     <Container v-if="note">
-      <div class="flex justify-between mb-4">
+      <div class="md:flex justify-between mb-4">
         <Heading h1> Mrt Notes </Heading>
 
         <div class="flex items-center">

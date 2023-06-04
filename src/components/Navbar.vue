@@ -62,7 +62,7 @@ router.afterEach(() => {
             @click="mobileMenuOpen = true"
           >
             <span class="sr-only">Open main menu</span>
-            <div class="i-carbon-menu h-6 w-6" aria-hidden="true" />
+            <span class="i-carbon-menu h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
@@ -114,8 +114,7 @@ router.afterEach(() => {
               </div>
               <div class="py-6 space-y-2">
                 <Button
-                  tag="a"
-                  class="!px-2 flex items-center text-center justify-center"
+                  class="!px-2 flex items-center text-center justify-center w-full"
                   href="https://github.com/JosephAnson/mrt-notes/issues"
                   target="_blank"
                   rel="noopener noreferrer nofollow"

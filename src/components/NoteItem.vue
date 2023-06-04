@@ -58,13 +58,9 @@ const canEdit = computed(() => isUsers && props.showEdit)
       </Field>
     </div>
     <div class="flex flex-col">
-      <NuxtLink v-if="canEdit" :to="`/note/edit/${props.note.id}`" class="mr-2 mb-2 inline-block w-full">
-        <Button class="w-full">Edit</Button>
-      </NuxtLink>
+      <Button v-if="canEdit" :to="`/note/edit/${props.note.id}`" class="mr-2 mb-2 inline-block w-full"> Edit </Button>
 
-      <NuxtLink :to="`/note/${props.note.id}`" class="mr-2 mb-2 inline-block w-full">
-        <Button class="w-full">View</Button>
-      </NuxtLink>
+      <Button :to="`/note/${props.note.id}`" class="mr-2 mb-2 inline-block w-full">View</Button>
 
       <Button
         v-if="isUsers && props.showDelete"

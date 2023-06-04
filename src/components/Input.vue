@@ -11,8 +11,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const input = useVModel(props, 'modelValue', emit)
 
+    const newID = inject('labelFor', props.id)
+
     return {
       input,
+      newID,
     }
   },
 })
@@ -21,7 +24,7 @@ export default defineComponent({
 <template>
   <textarea
     v-if="type === 'textarea'"
-    :id="id"
+    :id="newID"
     v-model="input"
     :placeholder="placeholder"
     class="color-black rounded w-full p-2 block focus:ring-indigo-500 focus:border-indigo-500"
@@ -33,7 +36,7 @@ export default defineComponent({
   />
   <input
     v-else
-    :id="id"
+    :id="newID"
     v-model="input"
     :type="type"
     :placeholder="placeholder"

@@ -50,6 +50,8 @@ function getHeaderClass(type: HeadingSizesType) {
       return 'text-xl md:text-2xl mb-4'
     case 'h4':
       return 'md:text-l mb-2'
+    case 'p':
+      return 'text-base'
     default:
       return 'text-xl md:text-xl mb-3'
   }

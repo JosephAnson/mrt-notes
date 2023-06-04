@@ -27,8 +27,8 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
   <Section>
     <Container v-if="note">
       <div class="mb-4">
-        <div class="flex justify-between">
-          <div class="flex">
+        <div class="md:flex justify-between">
+          <div class="flex mb-4 md:mb-0">
             <Heading h1 class="!mb-1"> {{ noteName }} </Heading>
 
             <NuxtLink v-if="note.username" :to="`/profile/${note.username}`">
@@ -38,16 +38,14 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
             </NuxtLink>
           </div>
 
-          <div class="flex items-center">
-            <NuxtLink v-if="note.username" :to="`/profile/${note.username}`" class="flex ml-6">
-              <Button> Visit User Profile </Button>
-            </NuxtLink>
-
+          <div class="flex items-center grid gap-4">
             <FavouriteButton :note-id="note.id" :count="note.favourites_count"></FavouriteButton>
 
-            <NuxtLink v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="flex ml-6">
-              <Button class="bg-red-700 flex-shrink-0"> Edit Note </Button>
-            </NuxtLink>
+            <Button v-if="note.username" :to="`/profile/${note.username}`" class="flex"> Visit User Profile </Button>
+
+            <Button v-if="noteIsUsers" :to="`/note/edit/${route.params.id}`" class="bg-red-700 flex-shrink-0">
+              Edit Note
+            </Button>
           </div>
         </div>
 

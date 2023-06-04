@@ -6,6 +6,7 @@ export default defineComponent({
     label: { type: String, default: null },
     stacked: { type: Boolean, default: false },
     labelFor: { type: String, required: false },
+    srOnly: { type: Boolean, default: false },
   },
   setup(props) {
     provide('labelFor', props.labelFor)
@@ -15,7 +16,7 @@ export default defineComponent({
 
 <template>
   <div class="field items-center mb-4 last-child:mb-0" :class="{ flex: !stacked }">
-    <label v-if="label" :for="labelFor" class="label mr-4 inline-block" :class="{ 'mb-2': stacked }">
+    <label v-if="label" :for="labelFor" class="label mr-4 inline-block" :class="{ 'mb-2': stacked, 'sr-only': srOnly }">
       {{ label }}
     </label>
     <slot />

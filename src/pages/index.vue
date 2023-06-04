@@ -50,21 +50,19 @@ watchOnce(
       <div class="user-information mb-8">
         <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">
           <Heading class="mr-4 !mb-0" h2> Login to get started</Heading>
-          <NuxtLink to="login"><Button>Login</Button></NuxtLink>
+          <Button to="login">Login</Button>
         </div>
 
         <div class="mt-4">
-          <Heading h3>Search by encounter</Heading>
+          <Heading h2 styled="h3">Search by encounter</Heading>
           <div class="flex flex-wrap gap-2 mb-2">
-            <NuxtLink v-for="encounter in encounters" :key="encounter" :to="`/search?q=${encounter}`">
-              <Button>
-                {{ encounter }}
-              </Button>
-            </NuxtLink>
+            <Button v-for="encounter in encounters" :key="encounter" :to="`/search?q=${encounter}`">
+              {{ encounter }}
+            </Button>
           </div>
         </div>
 
-        <div v-if="user">
+        <div v-if="user" class="mt-4">
           <div class="flex flex-wrap">
             <div class="w-full lg:w-2/3 lg:pr-8">
               <CreateNote />
@@ -81,9 +79,7 @@ watchOnce(
               <div class="flex justify-between items-center">
                 <Heading>Your Team</Heading>
 
-                <NuxtLink class="mr-2" to="team">
-                  <Button>Edit your team</Button>
-                </NuxtLink>
+                <Button class="mr-2" to="team"> Edit your team </Button>
               </div>
 
               <ul>

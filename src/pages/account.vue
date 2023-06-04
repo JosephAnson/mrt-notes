@@ -28,9 +28,7 @@ const username = ref<string>(profileStore.username || '')
             </Field>
 
             <Field v-if="profileStore.profile.username" stacked>
-              <NuxtLink :to="`/profile/${profileStore.profile.username}`">
-                <Button>View Profile</Button>
-              </NuxtLink>
+              <Button :to="`/profile/${profileStore.profile.username}`"> View Profile </Button>
             </Field>
             <Field v-if="user?.email" label-for="avatar_url" label="Email" stacked>
               <Input id="avatar_url" v-model="user.email" type="text" disabled />
