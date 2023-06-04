@@ -16,7 +16,9 @@ export default cachedEventHandler(
 
     const expansions = await $fetch('/api/blizzard/expansion/all')
 
-    for (const expansion of expansions) {
+    const expansionWithoutMythicPlus = expansions.filter((i) => i.name !== 'Mythic+ Dungeons')
+
+    for (const expansion of expansionWithoutMythicPlus) {
       const expansionInstance = await $fetch(`/api/blizzard/expansion/instances/${expansion.id}/`)
 
       expansionList.push({
@@ -24,16 +26,20 @@ export default cachedEventHandler(
         name: expansion.name,
         instances: {
           raids: await Promise.all(
-            expansionInstance.raids.map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`))
+            expansionInstance.raids.reverse().map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`))
           ),
           dungeons: await Promise.all(
-            expansionInstance.dungeons.map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`))
+            expansionInstance.dungeons
+              .reverse()
+              .map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`))
           ),
         },
       })
     }
 
-    return expansionList
+    return expansionList.sort((a, b) => {
+      return b.id - a.id
+    })
   },
   {
     name: 'expansion-encounters',

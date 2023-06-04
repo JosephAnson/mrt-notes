@@ -16,6 +16,8 @@ const { results } = useFuse(input, expansions.value, {
     ],
   },
 })
+
+const resultsItem = computed(() => results.value.map((i) => i.item))
 </script>
 
 <template>
@@ -32,7 +34,7 @@ const { results } = useFuse(input, expansions.value, {
         <div>
           <Heading h2> Raids </Heading>
 
-          <div v-for="expansion in results.map((i) => i.item)" :key="expansion.id" class="mb-12">
+          <div v-for="expansion in resultsItem" :key="expansion.id" class="mb-12">
             <div class="mb-8">
               <Heading h3> {{ expansion.name }} Raids </Heading>
               <div v-for="raid in expansion.instances.raids" :key="raid.id" class="mb-4">
@@ -50,7 +52,7 @@ const { results } = useFuse(input, expansions.value, {
         <div>
           <Heading h2> Dungeons</Heading>
 
-          <div v-for="expansion in results.map((i) => i.item).reverse()" :key="expansion.id" class="mb-12">
+          <div v-for="expansion in resultsItem" :key="expansion.id" class="mb-12">
             <div class="mb-8">
               <Heading h3> {{ expansion.name }} Dungeons </Heading>
               <div v-for="raid in expansion.instances.dungeons" :key="raid.id" class="mb-4">
