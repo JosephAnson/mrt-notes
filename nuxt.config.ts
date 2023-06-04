@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         {
           hid: 'description',
           name: 'description',
-          content: 'MRT Notes allows you to generate ert note snippets',
+          content: 'MRT Notes: Your Ultimate Raid Planning Companion',
         },
       ],
       htmlAttrs: {

@@ -30,7 +30,7 @@ watchOnce(
     <Container>
       <div class="md:flex justify-between mb-8 md:mb-0">
         <div>
-          <Heading h1> Website to handle all your World of Warcraft MRT Notes </Heading>
+          <Heading h1> Welcome to MRT Notes: Your Ultimate Raid Planning Companion </Heading>
         </div>
 
         <Button
@@ -43,6 +43,10 @@ watchOnce(
           Download MRT WoW Addon</Button
         >
       </div>
+    </Container>
+  </Section>
+  <Section>
+    <Container>
       <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
         Set your username on your account if you want to share your profile
         <nuxt-link to="/account"> <Button class="ml-4">Set Username</Button></nuxt-link>
