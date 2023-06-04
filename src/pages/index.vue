@@ -53,18 +53,6 @@ watchOnce(
           <Button to="login">Login</Button>
         </div>
 
-        <div class="mt-4">
-          <div class="flex items-center mb-4">
-            <Heading h2 styled="h3" class="!mb-0">Search by encounter</Heading>
-            <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters"> View all </NuxtLink>
-          </div>
-          <div class="flex flex-wrap gap-2 mb-2">
-            <Button v-for="encounter in encounters" :key="encounter" :to="`/search?q=${encounter}`">
-              {{ encounter }}
-            </Button>
-          </div>
-        </div>
-
         <div v-if="user" class="mt-4">
           <div class="flex flex-wrap">
             <div class="w-full lg:w-2/3 lg:pr-8">
@@ -95,6 +83,25 @@ watchOnce(
                 </li>
               </ul>
             </aside>
+          </div>
+        </div>
+
+        <div class="mt-4 mb-8 bg-gray-900 p-4 rounded">
+          <div class="flex items-center mb-4">
+            <Heading h2 styled="h3" class="!mb-0">Search by encounter</Heading>
+            <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters"> View all </NuxtLink>
+          </div>
+          <Heading>Raids</Heading>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <Button v-for="encounter in encounters.raids" :key="encounter" :to="`/search?q=${encounter}`">
+              {{ encounter }}
+            </Button>
+          </div>
+          <Heading>Mythic+ Dungeons</Heading>
+          <div class="flex flex-wrap gap-2 mb-2">
+            <Button v-for="encounter in encounters.dungeons" :key="encounter" :to="`/search?q=${encounter}`">
+              {{ encounter }}
+            </Button>
           </div>
         </div>
       </div>
