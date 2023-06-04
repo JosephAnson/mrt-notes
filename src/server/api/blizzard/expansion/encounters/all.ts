@@ -37,9 +37,7 @@ export default cachedEventHandler(
       })
     }
 
-    return expansionList.sort((a, b) => {
-      return b.id - a.id
-    })
+    return expansionList
   },
   {
     name: 'expansion-encounters',

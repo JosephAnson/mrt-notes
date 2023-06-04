@@ -16,7 +16,9 @@ export default cachedEventHandler(
       data: { tiers },
     } = await wowClient.journal<Expansions>({ resource: 'expansion' })
 
-    return tiers
+    return tiers.sort((a, b) => {
+      return b.id - a.id
+    })
   },
   {
     name: 'expansion-all',

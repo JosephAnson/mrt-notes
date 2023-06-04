@@ -55,7 +55,7 @@ watch(instance, (newInstance) => {
     >
       <Select v-model:value="instanceSelect">
         <template v-if="!isMPlusDungeons">
-          <optgroup label="raids">Raids</optgroup>
+          <optgroup label="Raids">Raids</optgroup>
           <option
             v-for="expansionInstance in expansionInstances.raids"
             :key="expansionInstance.id"
@@ -64,7 +64,7 @@ watch(instance, (newInstance) => {
             {{ expansionInstance.name }}
           </option>
         </template>
-        <optgroup label="dungeons">Dungeons</optgroup>
+        <optgroup label="Dungeons">Dungeons</optgroup>
         <option
           v-for="expansionInstance in expansionInstances.dungeons"
           :key="expansionInstance.id"
