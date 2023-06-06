@@ -1,5 +1,5 @@
-import type { SpellIdInformation } from '~/types'
-import { useWoWClient } from '~/utils/blizzard'
+import type { SpellIdInformation } from '../../../../../types'
+import { useWoWClient } from '../../../../../utils/blizzard'
 
 export interface EncounterSpell {
   id: number

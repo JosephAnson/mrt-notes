@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useFuse } from '@vueuse/integrations/useFuse'
-import type { ExpansionList } from '~/server/api/blizzard/expansion/encounters/all'
+import type { ExpansionList } from '~/server/api/blizzard/encounter/all'
 
-const { data: expansions } = await useFetch<ExpansionList>('/api/blizzard/expansion/encounters/all')
+const { data: expansions } = await useFetch<ExpansionList>('/api/blizzard/encounter/all')
 
 const input = ref('')
 const { results } = useFuse(input, expansions.value, {
@@ -26,7 +26,7 @@ const resultsItem = computed(() => results.value.map((i) => i.item))
     <Container>
       <div class="flex justify-between mb-8">
         <Heading h1 class="!mb-0"> Search Expansion</Heading>
-        <Field label="Search" class="w-128">
+        <Field label="Search" class="w-128" label-for="encounter-search">
           <Input v-model="input" placeholder="Search for an encounter" />
         </Field>
       </div>

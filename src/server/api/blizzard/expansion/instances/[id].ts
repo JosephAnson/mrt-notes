@@ -1,4 +1,4 @@
-import { useWoWClient } from '~/utils/blizzard'
+import { useWoWClient } from '../../../../../utils/blizzard'
 
 export interface EncounterInstance {
   id: number

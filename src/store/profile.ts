@@ -50,7 +50,7 @@ export const useProfileStore = defineStore('profile', {
     },
     async fetchProfile() {
       const profile = await getProfile()
-      this.setProfile(profile)
+      if (profile) this.setProfile(profile)
       return this.profile
     },
   },

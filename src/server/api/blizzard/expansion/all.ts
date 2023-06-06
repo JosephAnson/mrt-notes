@@ -1,4 +1,4 @@
-import { useWoWClient } from '~/utils/blizzard'
+import { useWoWClient } from '../../../../utils/blizzard'
 
 interface Tier {
   id: number

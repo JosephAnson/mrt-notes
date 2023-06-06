@@ -9,6 +9,7 @@ import {
 } from 'unocss'
 
 export default defineNuxtConfig({
+  devtools: true,
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
@@ -17,7 +18,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/robots',
     '@nuxtjs/html-validator',
-    'nuxt-typed-router',
     [
       '@nuxtjs/google-adsense',
       {
@@ -109,5 +109,8 @@ export default defineNuxtConfig({
   },
   htmlValidator: {
     usePrettier: true,
+  },
+  experimental: {
+    typedPages: true,
   },
 })

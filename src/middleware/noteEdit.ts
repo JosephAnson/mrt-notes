@@ -1,5 +1,5 @@
 function navigateToPreviewOrHome() {
-  const route = useRoute<'note-id'>()
+  const route = useRoute('note-id')
   return navigateTo(`/note/${route.params.id}`)
 }
 

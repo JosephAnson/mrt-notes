@@ -2,7 +2,7 @@
 import { capitalCase } from 'change-case'
 
 const user = useSupabaseUser()
-const route = useRoute<'profile-username'>()
+const route = useRoute('profile-username')
 const notesStore = useNotesStore()
 const userStore = useUserStore()
 

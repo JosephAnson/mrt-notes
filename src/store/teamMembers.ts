@@ -45,7 +45,7 @@ export const useTeamMembersStore = defineStore('teamMembers', {
     },
     async fetchAllTeamMembers() {
       const members = await getAllTeamMembers()
-      this.setTeamMembers(members)
+      if (members) this.setTeamMembers(members)
     },
   },
 })

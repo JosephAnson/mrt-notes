@@ -1,5 +1,5 @@
-import type { EncounterInstance } from '~/server/api/blizzard/expansion/instances/[id]'
-import type { InstanceReturn } from '~/server/api/blizzard/instance/[id]'
+import type { EncounterInstance } from '../expansion/instances/[id]'
+import type { InstanceReturn } from '../instance/[id]'
 
 export interface ExpansionList {
   id: number

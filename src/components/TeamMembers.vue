@@ -30,7 +30,7 @@ const debouncedUpdateMembers = useDebounceFn(
       </option>
     </Select>
 
-    <Button type="is-primary" @click="teamMembersStore.addMember(playerName, playerClass)"> Add </Button>
+    <Button @click="teamMembersStore.addMember(playerName, playerClass)"> Add </Button>
   </Field>
 
   <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
