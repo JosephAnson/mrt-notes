@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <footer class="py-10">
     <div class="container">
