@@ -29,8 +29,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://mrt-notes.vercel.app/',
-      siteName: 'MRT Notes',
-      siteDescription: 'MRT Notes: Your Ultimate Raid Planning Companion',
+      siteName: 'MRT Notes: Your Ultimate Raid Planning Companion',
+      siteDescription:
+        "MRT Notes is the ultimate website dedicated to making raid leaders' lives easier with efficient MRT note planning. Create, share, and export comprehensive raid notes effortlessly. Streamline your raid organization process with boss spell automation, customizable note grouping, and advanced editor tools. Join MRT Notes and revolutionize your raid planning experience.",
       language: 'en',
     },
   },

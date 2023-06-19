@@ -1,3 +1,15 @@
+<script setup lang="ts">
+useHead({
+  meta: [
+    {
+      name: 'keywords',
+      value:
+        'MRT Notes, raid planning, raid leaders, MRT note, raid organization, boss spell automation, note sharing, raid notes, raid strategy, raid coordination',
+    },
+  ],
+})
+</script>
+
 <template>
   <div>
     <SeoKit />
