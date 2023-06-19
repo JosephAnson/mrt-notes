@@ -1,5 +1,6 @@
 <template>
   <div>
+    <SeoKit />
     <Navbar />
     <NuxtPage />
     <Footer />

@@ -16,7 +16,6 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     // '@nuxtjs/web-vitals',
     '@pinia/nuxt',
-    '@nuxtjs/robots',
     '@nuxtjs/html-validator',
     [
       '@nuxtjs/google-adsense',
@@ -26,6 +25,15 @@ export default defineNuxtConfig({
     ],
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
+  extends: ['nuxt-seo-kit'],
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://mrt-notes.vercel.app/',
+      siteName: 'MRT Notes',
+      siteDescription: 'MRT Notes: Your Ultimate Raid Planning Companion',
+      language: 'en',
+    },
+  },
   app: {
     head: {
       title: 'MRT Notes',
