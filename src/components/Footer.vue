@@ -12,7 +12,7 @@
           <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
           Submit issues or request features
         </Button>
-        <Button to="/privacyPolicy" class="!px-2 bg-transparent text-left" aria-label="Twitter Share Button">
+        <Button to="/privacypolicy" class="!px-2 bg-transparent text-left" aria-label="Twitter Share Button">
           Privacy Policy
         </Button>
         <Button
