@@ -15,6 +15,7 @@ const props = withDefaults(
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
+const userStore = useUserStore()
 
 const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
@@ -22,6 +23,8 @@ const createdOn = useDateFormat(props.note.created_at, format)
 const updatedOn = useTimeAgo(props.note.updated_at)
 
 const canEdit = computed(() => isUsers && props.showEdit)
+
+const hasFavourite = computed(() => userStore.hasFavourite(props.note.id))
 </script>
 
 <template>
@@ -32,7 +35,7 @@ const canEdit = computed(() => isUsers && props.showEdit)
           {{ props.note.name }}
         </Heading>
       </NuxtLink>
-      <div class="flex flex-col sm:flex-row sm:items-center text-gray-300 text-sm">
+      <div class="flex flex-col flex-wrap sm:flex-row sm:items-center text-gray-300 text-sm">
         <nuxt-link v-if="props.note.username" :to="`/profile/${props.note.username}`">
           <span class="i-carbon-user inline-block" /> {{ props.note.username }}
         </nuxt-link>
@@ -44,12 +47,12 @@ const canEdit = computed(() => isUsers && props.showEdit)
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
         <span>Updated: {{ updatedOn }}</span>
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
-        <div class="inline-flex items-center">
+        <div class="inline-flex items-center cursor-pointer" @click="userStore.toggleUserFavourite(props.note.id)">
           {{ props.note.favourites_count }} Favourite{{ props.note.favourites_count === 1 ? '' : 's' }}
           <span
             v-if="user"
             class="inline-block ml-1 color-red-500 text-base"
-            :class="props.note.favourites_count > 0 ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
+            :class="hasFavourite ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
           />
         </div>
       </div>
@@ -69,8 +72,6 @@ const canEdit = computed(() => isUsers && props.showEdit)
       >
         Delete Note
       </Button>
-
-      <FavouriteButton :note-id="props.note.id" :count="props.note.favourites_count" class="sm:mt-0"> </FavouriteButton>
     </div>
   </div>
 </template>
