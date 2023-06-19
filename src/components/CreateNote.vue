@@ -4,7 +4,7 @@ const noteName = ref('')
 
 <template>
   <Heading h3> Create New Note </Heading>
-  <form class="mb-8 flex" @submit.prevent="createNewNote(noteName)">
+  <form class="flex" @submit.prevent="createNewNote(noteName)">
     <Field sr-only label="Enter name for note" class="w-full" label-for="create-note">
       <Input v-model="noteName" class="mr-2" placeholder="Enter name for note" />
     </Field>

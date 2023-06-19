@@ -24,13 +24,17 @@ const noteName = computed(() => (note.value?.name ? capitalCase(note.value?.name
 const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id))
 const editorString = computed(() => note.value?.editor_string || '')
 const json = computed(() => generateJSON(editorString.value, editorExtensions))
+
+useSeoMeta({
+  title: noteName,
+})
 </script>
 
 <template>
   <Section>
     <Container v-if="note">
       <div class="md:grid grid-cols-12 gap-8">
-        <div class="sm:col-span-12 md:col-span-8">
+        <div class="sm:col-span-12 md:col-span-9">
           <div class="mb-4">
             <div class="md:flex justify-between">
               <div class="flex mb-4 md:mb-0">
@@ -64,9 +68,9 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
             <NotePreview :note-json="json" :note-string="editorString" />
           </section>
         </div>
-        <div class="sm:col-span-12 md:col-span-4">
+        <div v-if="note && notesStore.notes?.user?.length" class="sm:col-span-12 md:col-span-3">
           <Heading h2> {{ note.username }}'s Notes </Heading>
-          <div v-if="notesStore.notes.user.length">
+          <div v-if="notesStore.notes.user.length" class="overflow-y-auto h-screen">
             <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
           </div>
         </div>

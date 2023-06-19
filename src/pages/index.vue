@@ -26,11 +26,11 @@ watchOnce(
 </script>
 
 <template>
-  <Section>
+  <Section class="bg-primary-500">
     <Container>
-      <div class="md:flex justify-between mb-8 md:mb-0">
+      <div class="md:flex justify-between">
         <div>
-          <Heading h1> Welcome to MRT Notes: Your Ultimate Raid Planning Companion </Heading>
+          <Heading h1 class="!mb-0"> Welcome to MRT Notes: Your Ultimate Raid Planning Companion </Heading>
         </div>
 
         <Button
@@ -52,12 +52,12 @@ watchOnce(
         <nuxt-link to="/account"> <Button class="ml-4">Set Username</Button></nuxt-link>
       </Notification>
       <div class="user-information mb-8">
-        <div v-if="!user" class="bg-primary-700 p-8 rounded flex items-center">
+        <div v-if="!user" class="bg-gray-900 p-8 rounded flex items-center">
           <Heading class="mr-4 !mb-0" h2> Login to get started</Heading>
           <Button to="login">Login</Button>
         </div>
 
-        <div v-if="user" class="mt-4">
+        <div v-if="user" class="mt-4 bg-gray-900 p-4 rounded">
           <div class="flex flex-wrap">
             <div class="w-full lg:w-2/3 lg:pr-8">
               <CreateNote />
@@ -96,13 +96,13 @@ watchOnce(
             <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters"> View all </NuxtLink>
           </div>
           <Heading>Raids</Heading>
-          <div class="flex flex-wrap gap-2 mb-4">
+          <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
             <Button v-for="encounter in encounters.raids" :key="encounter" :to="`/search?q=${encounter}`">
               {{ encounter }}
             </Button>
           </div>
           <Heading>Mythic+ Dungeons</Heading>
-          <div class="flex flex-wrap gap-2 mb-2">
+          <div v-if="encounters?.dungeons" class="flex flex-wrap gap-2 mb-2">
             <Button v-for="encounter in encounters.dungeons" :key="encounter" :to="`/search?q=${encounter}`">
               {{ encounter }}
             </Button>

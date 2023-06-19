@@ -20,7 +20,7 @@ await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(async
       <div v-if="asyncProfile">
         <Heading h1> {{ capitalCase(asyncProfile?.username || '') }}'s Profile </Heading>
 
-        <CreateNote v-if="user?.id === asyncProfile?.id" />
+        <CreateNote v-if="user?.id === asyncProfile?.id" class="mb-8" />
 
         <Heading h2> {{ capitalCase(asyncProfile?.username || '') }}'s Notes </Heading>
         <div v-if="notesStore.notes.user.length">

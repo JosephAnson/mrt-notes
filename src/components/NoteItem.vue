@@ -28,7 +28,7 @@ const hasFavourite = computed(() => userStore.hasFavourite(props.note.id))
 </script>
 
 <template>
-  <div v-if="props.note" class="flex justify-between w-full bg-gray-800 p-4 rounded mb-2">
+  <div v-if="props.note" class="flex justify-between w-full bg-primary-600 p-4 rounded mb-2">
     <div class="mr-4 flex-1">
       <NuxtLink :to="canEdit ? `/note/edit/${props.note.id}` : `/note/${props.note.id}`">
         <Heading h4 class="line-clamp-3 flex items-center">
