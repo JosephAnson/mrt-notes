@@ -69,9 +69,10 @@ useSeoMeta({
           </section>
         </div>
         <div v-if="note && notesStore.notes?.user?.length" class="sm:col-span-12 md:col-span-3">
-          <Heading h2> {{ note.username }}'s Notes </Heading>
+          <Heading v-if="note?.username" h2> {{ capitalCase(note.username) }}'s Notes </Heading>
+          <Heading v-else h2> Related Notes </Heading>
           <div v-if="notesStore.notes.user.length" class="overflow-y-auto h-screen">
-            <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
+            <NoteItem v-for="userNote in notesStore.notes.user" :key="userNote.id" :note="userNote" />
           </div>
         </div>
       </div>
