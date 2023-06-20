@@ -11,7 +11,7 @@ const props = withDefaults(
 
 <template>
   <div
-    class="wowhead-tooltip wowhead-tooltip-width-restriction mb-2 relative pointer-events-none"
+    class="wowhead-tooltip wowhead-tooltip-width-restriction mb-2 relative"
     :class="{ 'pl-12': props.showIcon }"
     :style="{ visibility: 'visible' }"
   >

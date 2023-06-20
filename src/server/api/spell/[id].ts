@@ -22,16 +22,22 @@ export default cachedEventHandler(
         return {
           icon: 'trade_engineering',
           tooltip:
-            '<a class="whtt-name" href="/spell=106727/unknown"><b class="whtt-name">Unknown</b></a><br />Instant',
+            '<a class="whtt-name" href="https://www.wowhead.com/spell=106727/unknown"><b class="whtt-name">Unknown</b></a><br />Instant',
           name: 'Unknown',
         }
       }
 
-      return { icon, tooltip, name }
+      const includeWowHeadURLinTooltip = tooltip.replace(
+        'href="',
+        'rel="noreferrer nofollow" target="_blank" href="https://www.wowhead.com'
+      )
+
+      return { icon, tooltip: includeWowHeadURLinTooltip, name }
     } catch {
       return {
         icon: 'trade_engineering',
-        tooltip: '<a class="whtt-name" href="/spell=106727/unknown"><b class="whtt-name">Unknown</b></a><br />Instant',
+        tooltip:
+          '<a class="whtt-name" href="https://www.wowhead.com/spell=106727/unknown"><b class="whtt-name">Unknown</b></a><br />Instant',
         name: 'Unknown',
       }
     }
