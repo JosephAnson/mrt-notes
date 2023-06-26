@@ -29,7 +29,7 @@
     "@unocss/nuxt": "^0.53.1",
     "@unocss/reset": "^0.53.1",
     "@vercel/analytics": "^1.0.1",
-    "@vercel/kv": "^0.2.1",
+    "@vercel/kv": "^0.2.2",
     "@vueuse/core": "^10.2.0",
     "@vueuse/integrations": "^10.2.0",
     "@vueuse/nuxt": "^10.2.0",
