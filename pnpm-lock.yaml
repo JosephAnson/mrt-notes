@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -90,8 +90,8 @@ dependencies:
     specifier: ^2.1.4
     version: 2.1.4(typescript@5.1.3)(vue@3.3.4)
   supabase:
-    specifier: ^1.69.3
-    version: 1.69.3
+    specifier: ^1.75.3
+    version: 1.75.3
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
@@ -8825,8 +8825,8 @@ packages:
       ts-interface-checker: 0.1.13
     dev: false
 
-  /supabase@1.69.3:
-    resolution: {integrity: sha512-ggYDytUzkh/c3NW6imFD+BC6q51h8hurYuIXSYB3NIFEu7C0JECAhzuKejw0wJIwBo18TpHuFWgXjn3VZwBcPw==}
+  /supabase@1.75.3:
+    resolution: {integrity: sha512-o6rd6v09QstJACYbcNPHaPPnCSi6CO5o2g4ZiZ45V+RYBQasPk8UCOqzJEzi/Ahizq3rb1bJBdwYdEpDmlepPg==}
     engines: {npm: '>=8'}
     hasBin: true
     requiresBuild: true
