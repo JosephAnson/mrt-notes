@@ -17,6 +17,7 @@ export default cachedEventHandler(
   {
     name: 'notes-recently-created',
     group: 'notes',
+    swr: true,
     maxAge: 10,
   }
 )

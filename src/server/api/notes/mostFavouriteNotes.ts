@@ -31,6 +31,7 @@ export default cachedEventHandler(
   {
     name: 'notes-most-favourite',
     group: 'notes',
+    swr: true,
     maxAge: 10,
   }
 )
