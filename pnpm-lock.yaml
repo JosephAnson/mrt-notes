@@ -11,9 +11,6 @@ dependencies:
   '@headlessui/vue':
     specifier: ^1.7.14
     version: 1.7.14(vue@3.3.4)
-  '@nuxtjs/google-adsense':
-    specifier: ^2.1.0
-    version: 2.1.0
   '@nuxtjs/html-validator':
     specifier: ^1.4.0
     version: 1.4.0
@@ -1415,15 +1412,6 @@ packages:
       - vls
       - vti
       - vue-tsc
-
-  /@nuxtjs/google-adsense@2.1.0:
-    resolution: {integrity: sha512-ken1aITTBEluqyT9yvpdzMYaRDR3SOPcWeGOQHYj/pfw/IJb/Ye0Ylj7rF8gVyBurCbsbTV2pGlEDoalBDYMbg==}
-    dependencies:
-      '@nuxt/kit': 3.5.3
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-    dev: false
 
   /@nuxtjs/html-validator@1.4.0:
     resolution: {integrity: sha512-mmldGjiGdevrQlXFMdQksCk3mG5uCaWyMbw038Y1lnrIaPTqjeccLigCwDXtx0jAAH/u26Xi9adZ49SveUuKBw==}

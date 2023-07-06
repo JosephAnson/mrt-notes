@@ -17,12 +17,6 @@ export default defineNuxtConfig({
     // '@nuxtjs/web-vitals',
     '@pinia/nuxt',
     '@nuxtjs/html-validator',
-    [
-      '@nuxtjs/google-adsense',
-      {
-        id: process.env.GOOGLE_ADSENSE_ID,
-      },
-    ],
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   extends: ['nuxt-seo-kit'],
@@ -54,6 +48,17 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://wow.zamimg.com/css/universal.css',
+        },
+        {
+          rel: 'stylesheet',
+          href: '',
+        },
+      ],
+      script: [
+        {
+          async: true,
+          crossorigin: 'anonymous',
+          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7716403137825737',
         },
       ],
     },
