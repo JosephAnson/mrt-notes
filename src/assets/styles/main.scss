@@ -5,7 +5,7 @@ $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import '@fortawesome/fontawesome-free/scss/solid';
 @import '@fortawesome/fontawesome-free/scss/brands';
 
-@import "@unocss/reset/tailwind.css";
+@import "@unocss/reset/tailwind-compat.css";
 
 html,
 body,

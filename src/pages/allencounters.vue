@@ -31,7 +31,7 @@ const resultsItem = computed(() => results.value.map((i) => i.item))
         </Field>
       </div>
 
-      <div class="grid grid-cols-2 gap-12">
+      <div class="md:grid grid-cols-2 gap-12">
         <div>
           <Heading h2> Raids </Heading>
 
