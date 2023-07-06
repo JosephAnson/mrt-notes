@@ -60,7 +60,7 @@ router.afterEach(() => {
         <div class="flex lg:hidden">
           <button
             type="button"
-            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-indigo-300"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-indigo-300 bg-transparent"
             @click="mobileMenuOpen = true"
           >
             <span class="sr-only">Open main menu</span>

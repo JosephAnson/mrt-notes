@@ -10,13 +10,11 @@ import {
 
 export default defineNuxtConfig({
   devtools: true,
-  modules: [
+  modules:  [
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
     '@unocss/nuxt',
-    // '@nuxtjs/web-vitals',
     '@pinia/nuxt',
-    '@nuxtjs/html-validator',
     [
       '@nuxtjs/google-adsense',
       {
@@ -56,10 +54,6 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://wow.zamimg.com/css/universal.css',
-        },
-        {
-          rel: 'stylesheet',
-          href: '',
         },
       ],
     },
@@ -112,9 +106,6 @@ export default defineNuxtConfig({
   },
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']],
-  },
-  webVitals: {
-    provider: 'vercel',
   },
   nitro: {
     storage: {
