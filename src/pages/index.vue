@@ -116,6 +116,7 @@ watchOnce(
       </div>
     </Container>
   </Section>
+  <Adsbygoogle ad-slot="9899893676" ad-format="fluid" ad-layout="in-article"></Adsbygoogle>
   <Section class="bg-primary-800">
     <Container>
       <SiteInfo />

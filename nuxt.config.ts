@@ -17,6 +17,12 @@ export default defineNuxtConfig({
     // '@nuxtjs/web-vitals',
     '@pinia/nuxt',
     '@nuxtjs/html-validator',
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: process.env.GOOGLE_ADSENSE_ID,
+      },
+    ],
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   extends: ['nuxt-seo-kit'],
