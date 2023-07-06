@@ -63,7 +63,9 @@ async function searchNotes() {
         </div>
       </div>
 
-      <NoteItem v-for="note in notesStore.notes.search" :key="note.id" :note="note" />
+      <div id="notelist">
+        <NoteItem v-for="note in notesStore.notes.search" :key="note.id" :note="note" />
+      </div>
     </Container>
   </Section>
 </template>
