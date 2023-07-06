@@ -17,6 +17,8 @@ await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(async
 <template>
   <Section>
     <Container>
+      <Ad ad-slot="8629692962"></Ad>
+
       <div v-if="asyncProfile">
         <Heading h1> {{ capitalCase(asyncProfile?.username || '') }}'s Profile </Heading>
 

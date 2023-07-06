@@ -45,6 +45,7 @@ watchOnce(
       </div>
     </Container>
   </Section>
+  <Ad ad-slot="8629692962"></Ad>
   <Section>
     <Container>
       <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
@@ -116,7 +117,9 @@ watchOnce(
       </div>
     </Container>
   </Section>
-  <Adsbygoogle ad-slot="9899893676" ad-format="fluid" ad-layout="in-article"></Adsbygoogle>
+
+  <Ad ad-slot="9899893676" ad-layout="in-article"></Ad>
+
   <Section class="bg-primary-800">
     <Container>
       <SiteInfo />

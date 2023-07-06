@@ -46,6 +46,8 @@
           </ul>
         </div>
       </section>
+      <Ad ad-slot="8629692962"></Ad>
+
       <section>
         <Heading h3 styled="h2">Advanced Editor Tools</Heading>
         <div class="prose max-w-full">

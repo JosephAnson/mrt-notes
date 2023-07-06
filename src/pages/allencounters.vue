@@ -35,7 +35,9 @@ const resultsItem = computed(() => results.value.map((i) => i.item))
         <div>
           <Heading h2> Raids </Heading>
 
-          <div v-for="expansion in resultsItem" :key="expansion.id" class="mb-12">
+          <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
+            <Ad v-if='index===1' ad-slot="5501746994" ></Ad>
+
             <div class="mb-8">
               <Heading h3> {{ expansion.name }} Raids </Heading>
               <div v-for="raid in expansion.instances.raids" :key="raid.id" class="mb-4">
@@ -53,7 +55,9 @@ const resultsItem = computed(() => results.value.map((i) => i.item))
         <div>
           <Heading h2> Dungeons</Heading>
 
-          <div v-for="expansion in resultsItem" :key="expansion.id" class="mb-12">
+          <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
+            <Ad v-if='index === 1' ad-slot="7513403484"></Ad>
+
             <div class="mb-8">
               <Heading h3> {{ expansion.name }} Dungeons </Heading>
               <div v-for="raid in expansion.instances.dungeons" :key="raid.id" class="mb-4">

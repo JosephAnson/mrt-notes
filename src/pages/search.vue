@@ -64,6 +64,8 @@ async function searchNotes() {
       </div>
 
       <div id="notelist">
+        <Ad ad-slot="8629692962"></Ad>
+
         <NoteItem v-for="note in notesStore.notes.search" :key="note.id" :note="note" />
       </div>
     </Container>

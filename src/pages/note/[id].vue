@@ -32,6 +32,8 @@ useSeoMeta({
 
 <template>
   <Section>
+    <Ad ad-slot="8629692962"></Ad>
+
     <Container v-if="note">
       <div class="md:grid grid-cols-12 gap-8">
         <div class="sm:col-span-12 md:col-span-9">

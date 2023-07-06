@@ -21,6 +21,8 @@ export default defineNuxtConfig({
       '@nuxtjs/google-adsense',
       {
         id: process.env.GOOGLE_ADSENSE_ID,
+        pageLevelAds: true,
+        test: process.env.NODE_ENV === 'development',
       },
     ],
   ],
@@ -58,13 +60,6 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: '',
-        },
-      ],
-      script: [
-        {
-          async: true,
-          crossorigin: 'anonymous',
-          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7716403137825737',
         },
       ],
     },
