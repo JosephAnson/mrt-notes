@@ -17,5 +17,5 @@ const { data: spellIDInformation } = useFetch<SpellIdInformation>(spellIDInforma
     v-if="spellIDInformation"
     :src="`https://wow.zamimg.com/images/wow/icons/medium/${spellIDInformation.icon}.jpg`"
     :alt="spellIDInformation.name"
-  />
+  >
 </template>

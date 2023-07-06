@@ -9,7 +9,7 @@ function mergeFn(target: Record<string, any>, source: Record<string, any>, deep 
     const isDeep = (prop: string) => isObject(source[prop]) && target !== null && isObject(target[prop])
 
     const replaced: Record<string, any> = Object.getOwnPropertyNames(source)
-      .map((prop) => ({
+      .map(prop => ({
         [prop]: isDeep(prop) ? mergeFn(target[prop], source[prop], deep) : source[prop],
       }))
       .reduce((a, b) => ({ ...a, ...b }), {})
@@ -18,7 +18,8 @@ function mergeFn(target: Record<string, any>, source: Record<string, any>, deep 
       ...target,
       ...replaced,
     }
-  } else {
+  }
+  else {
     return Object.assign(target, source)
   }
 }

@@ -20,7 +20,7 @@
           aria-label="Twitter Share Button"
           @click="tweet"
         >
-          <span class="i-carbon-logo-twitter inline-block text-xl"></span>
+          <span class="i-carbon-logo-twitter inline-block text-xl" />
         </Button>
       </div>
     </div>

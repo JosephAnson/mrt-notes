@@ -9,7 +9,7 @@ const props = withDefaults(
   }>(),
   {
     type: 'button',
-  }
+  },
 )
 
 const component = computed(() => {

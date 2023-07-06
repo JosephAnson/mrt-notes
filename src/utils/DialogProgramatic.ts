@@ -8,8 +8,8 @@ interface DialogProps {
   cancelText?: string
   hasInput?: boolean
   inputAttrs?: object
-  onConfirm: Function
-  onCancel?: Function
+  onConfirm: (value?: string) => void
+  onCancel?: () => void
   ariaRole?: string
   animation?: string
 }

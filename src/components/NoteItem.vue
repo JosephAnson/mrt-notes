@@ -10,7 +10,7 @@ const props = withDefaults(
   {
     showDelete: true,
     showEdit: true,
-  }
+  },
 )
 
 const user = useSupabaseUser()
@@ -42,11 +42,11 @@ const hasFavourite = computed(() => userStore.hasFavourite(props.note.id))
         <span
           v-if="props.note.username"
           class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"
-        ></span>
+        />
         <span>Created on: {{ createdOn }}</span>
-        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
+        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2" />
         <span>Updated: {{ updatedOn }}</span>
-        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"></span>
+        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2" />
         <div class="inline-flex items-center cursor-pointer" @click="userStore.toggleUserFavourite(props.note.id)">
           {{ props.note.favourites_count }} Favourite{{ props.note.favourites_count === 1 ? '' : 's' }}
           <span
@@ -61,9 +61,13 @@ const hasFavourite = computed(() => userStore.hasFavourite(props.note.id))
       </Field>
     </div>
     <div class="flex flex-col">
-      <Button v-if="canEdit" :to="`/note/edit/${props.note.id}`" class="mr-2 mb-2 inline-block w-full"> Edit </Button>
+      <Button v-if="canEdit" :to="`/note/edit/${props.note.id}`" class="mr-2 mb-2 inline-block w-full">
+        Edit
+      </Button>
 
-      <Button :to="`/note/${props.note.id}`" class="mr-2 mb-2 inline-block w-full">View</Button>
+      <Button :to="`/note/${props.note.id}`" class="mr-2 mb-2 inline-block w-full">
+        View
+      </Button>
 
       <Button
         v-if="isUsers && props.showDelete"

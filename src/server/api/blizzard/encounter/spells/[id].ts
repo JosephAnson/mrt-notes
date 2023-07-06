@@ -67,5 +67,5 @@ export default cachedEventHandler(
     name: 'encounter-spells',
     group: 'encounter',
     maxAge: 60 * 60 * 24 * 365,
-  }
+  },
 )

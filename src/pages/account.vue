@@ -18,17 +18,21 @@ const username = ref<string>(profileStore.username || '')
 <template>
   <Section>
     <Container>
-      <Heading h1>Account</Heading>
+      <Heading h1>
+        Account
+      </Heading>
 
       <div class="md:grid grid-cols-12 gap-8">
         <div class="col-span-12 xl:col-span-6">
           <div class="max-w-lg">
             <Field v-if="profileStore.profile.avatar_url" label-for="avatar" stacked>
-              <img class="w-48 rounded-full" :src="profileStore.profile.avatar_url" />
+              <img class="w-48 rounded-full" :src="profileStore.profile.avatar_url">
             </Field>
 
             <Field v-if="profileStore.profile.username" stacked>
-              <Button :to="`/profile/${profileStore.profile.username}`"> View Profile </Button>
+              <Button :to="`/profile/${profileStore.profile.username}`">
+                View Profile
+              </Button>
             </Field>
             <Field v-if="user?.email" label-for="avatar_url" label="Email" stacked>
               <Input id="avatar_url" v-model="user.email" type="text" disabled />

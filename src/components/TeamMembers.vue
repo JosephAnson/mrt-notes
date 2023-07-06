@@ -16,7 +16,7 @@ const debouncedUpdateMembers = useDebounceFn(
     teamMembersStore.updateMembers()
   },
   DEBOUNCE_TYPING_TIMER,
-  { maxWait: 5000 }
+  { maxWait: 5000 },
 )
 </script>
 
@@ -30,7 +30,9 @@ const debouncedUpdateMembers = useDebounceFn(
       </option>
     </Select>
 
-    <Button @click="teamMembersStore.addMember(playerName, playerClass)"> Add </Button>
+    <Button @click="teamMembersStore.addMember(playerName, playerClass)">
+      Add
+    </Button>
   </Field>
 
   <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
@@ -52,7 +54,9 @@ const debouncedUpdateMembers = useDebounceFn(
           </Select>
         </Field>
 
-        <Button class="delete" @click="teamMembersStore.removeMember(element)"> Delete </Button>
+        <Button class="delete" @click="teamMembersStore.removeMember(element)">
+          Delete
+        </Button>
       </div>
     </template>
   </Draggable>

@@ -9,7 +9,7 @@ const props = withDefaults(
     expansion: 503,
     instance: 1200,
     encounter: 2480,
-  }
+  },
 )
 const emits = defineEmits(['update:expansion', 'update:instance', 'update:encounter'])
 
@@ -23,7 +23,7 @@ const { data: expansionInstances, pending: expansionInstancesPending } = await u
   () => `/api/blizzard/expansion/instances/${expansionSelect.value}`,
   {
     pick: ['dungeons', 'raids'],
-  }
+  },
 )
 watch(expansionInstances, (newExpansionInstances) => {
   if (newExpansionInstances)
@@ -31,7 +31,7 @@ watch(expansionInstances, (newExpansionInstances) => {
 })
 
 const { data: instance, pending: instancePending } = await useLazyFetch(
-  () => `/api/blizzard/instance/${instanceSelect.value}`
+  () => `/api/blizzard/instance/${instanceSelect.value}`,
 )
 watch(instance, (newInstance) => {
   if (newInstance) encounterSelect.value = newInstance.encounters[0].id
@@ -55,7 +55,9 @@ watch(instance, (newInstance) => {
     >
       <Select v-model:value="instanceSelect">
         <template v-if="!isMPlusDungeons">
-          <optgroup label="Raids">Raids</optgroup>
+          <optgroup label="Raids">
+            Raids
+          </optgroup>
           <option
             v-for="expansionInstance in expansionInstances.raids"
             :key="expansionInstance.id"
@@ -64,7 +66,9 @@ watch(instance, (newInstance) => {
             {{ expansionInstance.name }}
           </option>
         </template>
-        <optgroup label="Dungeons">Dungeons</optgroup>
+        <optgroup label="Dungeons">
+          Dungeons
+        </optgroup>
         <option
           v-for="expansionInstance in expansionInstances.dungeons"
           :key="expansionInstance.id"

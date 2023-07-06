@@ -12,12 +12,12 @@ export default cachedEventHandler(
     const client = serverSupabaseClient<Database>(event)
     const { data } = await client.from('notes').select(NOTE_COLUMNS).order('created_at', { ascending: false }).limit(5)
 
-    return (data as NotesAndProfile[]).map((note) => createNote(note))
+    return (data as NotesAndProfile[]).map(note => createNote(note))
   },
   {
     name: 'notes-recently-created',
     group: 'notes',
     swr: true,
     maxAge: 10,
-  }
+  },
 )

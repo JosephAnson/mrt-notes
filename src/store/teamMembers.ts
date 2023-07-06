@@ -11,7 +11,7 @@ export const useTeamMembersStore = defineStore('teamMembers', {
   }),
   actions: {
     setTeamMembers(members: Member[]) {
-      this.members = members.map((item) => ({
+      this.members = members.map(item => ({
         id: item.id,
         class: item.class as WowClassesUnion,
         name: item.name,
@@ -32,7 +32,7 @@ export const useTeamMembersStore = defineStore('teamMembers', {
     },
     async removeMember(player: Member) {
       await removeTeamMember(player)
-      this.members = this.members.filter((t) => t.id !== player.id) || []
+      this.members = this.members.filter(t => t.id !== player.id) || []
 
       openSnackbar({ message: `Removed: ${player.name}`, background: 'bg-red-700' })
 

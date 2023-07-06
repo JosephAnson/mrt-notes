@@ -13,7 +13,7 @@ const props = withDefaults(
   }>(),
   {
     modelValue: '',
-  }
+  },
 )
 
 const emits = defineEmits(['update:modelValue', 'update:json'])
@@ -76,7 +76,7 @@ function setColor(event: Event) {
           type="color"
           :value="editor?.getAttributes('textStyle').color"
           @input="setColor"
-        />
+        >
         <span
           class="i-carbon-text-color text-3xl inline-block pointer-events-none"
           :style="{ color: editor?.getAttributes('textStyle').color }"
@@ -88,20 +88,26 @@ function setColor(event: Event) {
         class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
         @click.stop="addImageToEditor({ src: marker.src, alt: IMAGE_MARKER })"
       >
-        <img class="object-contain w-full h-full" :src="marker.src" />
+        <img class="object-contain w-full h-full" :src="marker.src">
       </a>
 
-      <EditorTimeModalButton @input="addStringToEditor"> Time </EditorTimeModalButton>
-      <EditorSpellModalButton @input="addImageToEditor"> Spell ID </EditorSpellModalButton>
-      <EditorSpellOccurranceModalButton @input="addStringToEditor"> Spell Occurrence </EditorSpellOccurranceModalButton>
+      <EditorTimeModalButton @input="addStringToEditor">
+        Time
+      </EditorTimeModalButton>
+      <EditorSpellModalButton @input="addImageToEditor">
+        Spell ID
+      </EditorSpellModalButton>
+      <EditorSpellOccurranceModalButton @input="addStringToEditor">
+        Spell Occurrence
+      </EditorSpellOccurranceModalButton>
 
-      <button :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
+      <button class="bg-transparent" :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
         <span class="text-xl i-carbon-undo inline-block mr-2" />
       </button>
-      <button :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
+      <button class="bg-transparent" :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
         <span class="text-xl i-carbon-redo inline-block mr-2" />
       </button>
-      <button @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
+      <button class="bg-transparent" @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
         <span class="text-xl i-carbon-text-clear-format text-white inline-block mr-2" />
       </button>
     </div>
@@ -146,7 +152,7 @@ function setColor(event: Event) {
               class="w-4 h-4 mr-1"
               :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
               :alt="spell.spellIdInformation.name"
-            />
+            >
 
             <span class="color-[#FFBB33]">{{ spell.name }}</span>
 
@@ -155,7 +161,7 @@ function setColor(event: Event) {
               :icon="spell.spellIdInformation.icon"
               :tooltip="spell.spellIdInformation.tooltip"
               :show-icon="false"
-            ></SpellInformation>
+            />
           </div>
         </div>
       </Field>

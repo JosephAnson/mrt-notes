@@ -21,7 +21,7 @@ watchOnce(
     await userStore.fetchUserFavourites(user.value?.id)
     await teamMembersStore.fetchAllTeamMembers()
   },
-  { deep: true }
+  { deep: true },
 )
 </script>
 
@@ -30,7 +30,9 @@ watchOnce(
     <Container>
       <div class="md:flex justify-between">
         <div>
-          <Heading h1 class="!mb-0"> Welcome to MRT Notes: Your Ultimate Raid Planning Companion </Heading>
+          <Heading h1 class="!mb-0">
+            Welcome to MRT Notes: Your Ultimate Raid Planning Companion
+          </Heading>
         </div>
 
         <Button
@@ -40,22 +42,30 @@ watchOnce(
           href="https://www.curseforge.com/wow/addons/method-raid-tools"
           class="!bg-[#F16436]"
         >
-          Download MRT WoW Addon</Button
-        >
+          Download MRT WoW Addon
+        </Button>
       </div>
     </Container>
   </Section>
-  <Ad ad-slot="8629692962"></Ad>
+  <Ad ad-slot="8629692962" />
   <Section>
     <Container>
       <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
         Set your username on your account if you want to share your profile
-        <nuxt-link to="/account"> <Button class="ml-4">Set Username</Button></nuxt-link>
+        <nuxt-link to="/account">
+          <Button class="ml-4">
+            Set Username
+          </Button>
+        </nuxt-link>
       </Notification>
       <div class="user-information mb-8">
         <div v-if="!user" class="bg-gray-900 p-4 rounded flex items-center">
-          <Heading class="mr-4 !mb-0" h2> Login to get started</Heading>
-          <Button to="login">Login</Button>
+          <Heading class="mr-4 !mb-0" h2>
+            Login to get started
+          </Heading>
+          <Button to="login">
+            Login
+          </Button>
         </div>
 
         <div v-if="user" class="mt-4 bg-gray-900 p-4 rounded">
@@ -75,7 +85,9 @@ watchOnce(
               <div class="flex justify-between items-center">
                 <Heading>Your Team</Heading>
 
-                <Button class="mr-2" to="team"> Edit your team </Button>
+                <Button class="mr-2" to="team">
+                  Edit your team
+                </Button>
               </div>
 
               <ul>
@@ -93,8 +105,12 @@ watchOnce(
 
         <div class="mt-4 mb-8 bg-gray-900 p-4 rounded">
           <div class="flex items-center mb-4">
-            <Heading h2 styled="h3" class="!mb-0">Search by encounter</Heading>
-            <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters"> View all </NuxtLink>
+            <Heading h2 styled="h3" class="!mb-0">
+              Search by encounter
+            </Heading>
+            <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters">
+              View all
+            </NuxtLink>
           </div>
           <Heading>Raids</Heading>
           <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
@@ -118,7 +134,7 @@ watchOnce(
     </Container>
   </Section>
 
-  <Ad ad-slot="9899893676" ad-layout="in-article"></Ad>
+  <Ad ad-slot="9899893676" ad-layout="in-article" />
 
   <Section class="bg-primary-800">
     <Container>

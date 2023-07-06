@@ -4,7 +4,7 @@ const emits = defineEmits(['input'])
 const modalActive = ref(false)
 const time = ref('')
 
-function createTimeSnippet(value: String) {
+function createTimeSnippet(value: string) {
   openSnackbar(`Time entered is: ${value}`)
 
   emits('input', `{time:${value}}`)
@@ -16,7 +16,7 @@ function createTimeSnippet(value: String) {
 
 <template>
   <a class="mr-2" href="#" @click="modalActive = true">
-    <slot></slot>
+    <slot />
   </a>
 
   <Modal v-model:active="modalActive">
@@ -25,8 +25,12 @@ function createTimeSnippet(value: String) {
     </Field>
 
     <footer>
-      <Button class="mr-2" @click="modalActive = false"> Cancel </Button>
-      <Button @click="createTimeSnippet(time)"> Done </Button>
+      <Button class="mr-2" @click="modalActive = false">
+        Cancel
+      </Button>
+      <Button @click="createTimeSnippet(time)">
+        Done
+      </Button>
     </footer>
   </Modal>
 </template>

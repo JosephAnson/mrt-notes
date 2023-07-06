@@ -23,7 +23,7 @@ export async function getProfileByUsername(username: string) {
   return data
 }
 
-export async function usernameExists(username: String) {
+export async function usernameExists(username: string) {
   const client = useSupabaseClient<Database>()
   const { data } = await client.from('profiles').select('username').eq('username', username)
 

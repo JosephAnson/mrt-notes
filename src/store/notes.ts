@@ -48,7 +48,7 @@ export const useNotesStore = defineStore('notes', {
     },
     async fetchMostFavouriteNotes() {
       const favourites = await fetchMostFavouriteNotes()
-      this.notes.mostFavourite = favourites.map((favourite) => favourite.note)
+      this.notes.mostFavourite = favourites.map(favourite => favourite.note)
       return this.notes.mostFavourite
     },
     async fetchSearchNotes(name?: string) {
@@ -68,9 +68,8 @@ export const useNotesStore = defineStore('notes', {
       for (const key in this.notes) {
         const noteKey = key as NoteTypes
         this.notes[noteKey].forEach((note) => {
-          if (note.id === noteId) {
+          if (note.id === noteId)
             note.favourites_count += changeBy
-          }
         })
       }
     },

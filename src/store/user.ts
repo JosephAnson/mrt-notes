@@ -11,7 +11,7 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     hasFavourite(noteId: number) {
-      return this.favourites.find((item) => item.note_id === noteId)
+      return this.favourites.find(item => item.note_id === noteId)
     },
     async fetchUserFavourites(userID?: string) {
       if (!userID) return this.favourites
@@ -22,7 +22,7 @@ export const useUserStore = defineStore('user', {
     async removeUserFavourite(noteId: number, userId: string) {
       const notesStore = useNotesStore()
       await removeFavourite(noteId, userId)
-      this.favourites = this.favourites.filter((item) => item.note_id !== noteId)
+      this.favourites = this.favourites.filter(item => item.note_id !== noteId)
       notesStore.changeFavouriteAmount(noteId, -1)
       openSnackbar({ message: 'Removed from account favourites', background: 'bg-red-700' })
     },
@@ -38,11 +38,10 @@ export const useUserStore = defineStore('user', {
       const userId = user.value?.id
 
       if (userId) {
-        if (this.hasFavourite(noteId)) {
+        if (this.hasFavourite(noteId))
           this.removeUserFavourite(noteId, userId)
-        } else {
+        else
           this.addUserFavourite(noteId, userId)
-        }
       }
     },
   },

@@ -22,7 +22,7 @@ function createSpellOccurrenceSnippet() {
 
 <template>
   <a class="mr-2" href="#" @click="modalActive = true">
-    <slot></slot>
+    <slot />
   </a>
 
   <Modal v-model:active="modalActive">
@@ -37,8 +37,12 @@ function createSpellOccurrenceSnippet() {
     </Field>
 
     <footer>
-      <Button class="mr-2" @click="modalActive = false"> Cancel </Button>
-      <Button @click="createSpellOccurrenceSnippet"> Done </Button>
+      <Button class="mr-2" @click="modalActive = false">
+        Cancel
+      </Button>
+      <Button @click="createSpellOccurrenceSnippet">
+        Done
+      </Button>
     </footer>
   </Modal>
 </template>

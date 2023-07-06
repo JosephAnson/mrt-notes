@@ -3,12 +3,12 @@ import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 import { createNote } from '~/utils/createNote'
 
-const defaultEditorValue =
-  'Fight summary<br><br><br>' +
-  'All Phases<br><br><br>' +
-  'Phase 1<br><br><br>' +
-  'Phase 2<br><br><br>' +
-  'Phase 3<br><br><br>'
+const defaultEditorValue
+  = 'Fight summary<br><br><br>'
+  + 'All Phases<br><br><br>'
+  + 'Phase 1<br><br><br>'
+  + 'Phase 2<br><br><br>'
+  + 'Phase 3<br><br><br>'
 
 export async function createNewNote(name: string, editor_string = defaultEditorValue) {
   if (!name && name.length <= 0) return openSnackbar('Please enter a name')
@@ -59,7 +59,7 @@ export async function updateNote({
 }) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  if (user.value)
+  if (user.value) {
     await client
       .from('notes')
       .upsert({
@@ -74,6 +74,7 @@ export async function updateNote({
       })
       .select(NOTE_COLUMNS)
       .single()
+  }
 }
 
 export function setNotes(store: Ref<Note[]>, newNotes: NotesAndProfile[]) {
@@ -86,7 +87,7 @@ export async function fetchAllUserNotes() {
 }
 
 export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; limit?: number } = {}) {
-  return await $fetch(`/api/notes/find/all`, {
+  return await $fetch('/api/notes/find/all', {
     query: {
       limit,
       order,
@@ -111,10 +112,10 @@ export async function searchAllNotes(name: string) {
 
   if (!data) return []
 
-  return data.map((note) => createNote(note))
+  return data.map(note => createNote(note))
 }
 
-export async function fetchAllNotesByUserId(user_id: String) {
+export async function fetchAllNotesByUserId(user_id: string) {
   return await $fetch(`/api/notes/user/${user_id}`)
 }
 

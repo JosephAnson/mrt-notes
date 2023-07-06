@@ -20,23 +20,25 @@ const debouncedUpdateGroups = useDebounceFn(
     updateGroups(props.noteId, groupsStore.groups)
   },
   DEBOUNCE_TYPING_TIMER,
-  { maxWait: 5000 }
+  { maxWait: 5000 },
 )
 
 const query = ref('')
 const filteredMembers = computed(() =>
   query.value === ''
     ? teamMembersStore.members
-    : teamMembersStore.members.filter((member) =>
-        member.name.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, ''))
-      )
+    : teamMembersStore.members.filter(member =>
+      member.name.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, '')),
+    ),
 )
 </script>
 
 <template>
   <div class="box groups">
     <div class="flex justify-between mb-4 items-center">
-      <div class="notification">Add groups to show messages only to certain players</div>
+      <div class="notification">
+        Add groups to show messages only to certain players
+      </div>
       <div class="groups__actions buttons">
         <Button type="is-primary" @click="groupsStore.addGroup(noteId, groupsStore.groups.length + 1)">
           Add Group

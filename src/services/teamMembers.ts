@@ -29,7 +29,7 @@ export async function updateTeamMembers(members: Member[]) {
         user_id: user.value?.id,
         order: index,
         class: member.class,
-      }))
+      })),
     )
     .select(teamMembersColumns)
   return data

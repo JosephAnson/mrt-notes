@@ -18,14 +18,16 @@ const { results } = useFuse(input, expansions.value, {
   },
 })
 
-const resultsItem = computed(() => results.value.map((i) => i.item))
+const resultsItem = computed(() => results.value.map(i => i.item))
 </script>
 
 <template>
   <Section>
     <Container>
       <div class="flex justify-between mb-8">
-        <Heading h1 class="!mb-0"> Search Expansion</Heading>
+        <Heading h1 class="!mb-0">
+          Search Expansion
+        </Heading>
         <Field label="Search" class="w-128" label-for="encounter-search">
           <Input v-model="input" placeholder="Search for an encounter" />
         </Field>
@@ -33,15 +35,21 @@ const resultsItem = computed(() => results.value.map((i) => i.item))
 
       <div class="md:grid grid-cols-2 gap-12">
         <div>
-          <Heading h2> Raids </Heading>
+          <Heading h2>
+            Raids
+          </Heading>
 
           <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
-            <Ad v-if='index===1' ad-slot="5501746994" ></Ad>
+            <Ad v-if="index === 1" ad-slot="5501746994" />
 
             <div class="mb-8">
-              <Heading h3> {{ expansion.name }} Raids </Heading>
+              <Heading h3>
+                {{ expansion.name }} Raids
+              </Heading>
               <div v-for="raid in expansion.instances.raids" :key="raid.id" class="mb-4">
-                <Heading h4> {{ raid.name }}</Heading>
+                <Heading h4>
+                  {{ raid.name }}
+                </Heading>
 
                 <div class="flex flex-wrap gap-2 mb-2">
                   <Button v-for="instance in raid.encounters" :key="instance.id" :to="`/search?q=${instance.name}`">
@@ -53,15 +61,21 @@ const resultsItem = computed(() => results.value.map((i) => i.item))
           </div>
         </div>
         <div>
-          <Heading h2> Dungeons</Heading>
+          <Heading h2>
+            Dungeons
+          </Heading>
 
           <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
-            <Ad v-if='index === 1' ad-slot="7513403484"></Ad>
+            <Ad v-if="index === 1" ad-slot="7513403484" />
 
             <div class="mb-8">
-              <Heading h3> {{ expansion.name }} Dungeons </Heading>
+              <Heading h3>
+                {{ expansion.name }} Dungeons
+              </Heading>
               <div v-for="raid in expansion.instances.dungeons" :key="raid.id" class="mb-4">
-                <Heading h4> {{ raid.name }}</Heading>
+                <Heading h4>
+                  {{ raid.name }}
+                </Heading>
 
                 <div class="flex flex-wrap gap-2 mb-2">
                   <Button v-for="instance in raid.encounters" :key="instance.id" :to="`/search?q=${instance.name}`">

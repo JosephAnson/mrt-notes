@@ -46,5 +46,5 @@ export default defineComponent({
       'bg-white': !disabled,
     }"
     :disabled="disabled"
-  />
+  >
 </template>
