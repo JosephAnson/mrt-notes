@@ -31,8 +31,10 @@ onMounted(() => {
         <div class="p-4">
           <div class="flex items-start">
             <div class="flex-1">
-              <p class="font-semibold mb-2">Recent Updates</p>
-              <slot></slot>
+              <p class="font-semibold mb-2">
+                Recent Updates
+              </p>
+              <slot />
             </div>
             <div class="flex flex-shrink-0">
               <button

@@ -36,9 +36,8 @@ export function convertSliceToHex(text: Slice | Node) {
 
 export function convertJsonContentToHex(content: JSONContent) {
   content.content?.forEach((item: JSONContent) => {
-    if (item.marks?.[0]?.attrs?.color) {
+    if (item.marks?.[0]?.attrs?.color)
       item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
-    }
 
     convertJsonContentToHex(item)
   })
@@ -58,11 +57,11 @@ function createImageNode({ editor, src, alt, title }: { editor: Editor; src: str
   return editor.schema.nodes.image.create({ src, alt, title })
 }
 
-function isMarker(string: String) {
-  return markers.find((marker) => marker.name === string.slice(1, -1))
+function isMarker(string: string) {
+  return markers.find(marker => marker.name === string.slice(1, -1))
 }
 
-function isSpell(string: String) {
+function isSpell(string: string) {
   return string.includes('spell:')
 }
 
@@ -109,8 +108,8 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
   })
 
   for (const item of nodeList) {
-    const regex =
-      /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|{([\S\w\s]+?)}|\|cff([\S\w\s]+?)\|r|\|cF3([\S\w\s]+?)\|r/gim
+    const regex
+      = /({skull}|{cross}|{circle}|{star}|{square}|{triangle}|{diamond}|{moon})|{([\S\w\s]+?)}|\|cff([\S\w\s]+?)\|r|\|cF3([\S\w\s]+?)\|r/gim
     const splitText = item.text?.split(regex)
 
     if (splitText && splitText.length > 1) {
@@ -127,9 +126,10 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
                 editor,
                 src: marker.src,
                 alt: IMAGE_MARKER,
-              })
+              }),
             )
-          } else if (spell) {
+          }
+          else if (spell) {
             const spellId = string.replace('spell:', '').trim()
             const { icon } = await $fetch<SpellIdInformation>(`/api/spell/${spellId}`)
 
@@ -142,18 +142,22 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
                 src,
                 alt,
                 title,
-              })
+              }),
             )
-          } else if (isValidTag(string)) {
+          }
+          else if (isValidTag(string)) {
             jsonContent.push(createTextNode(editor, `{${string}}`))
-          } else if (newString && isHexColor(color)) {
+          }
+          else if (newString && isHexColor(color)) {
             jsonContent.push(createTextNode(editor, newString, { color: `#${color}` }))
-          } else {
+          }
+          else {
             jsonContent.push(createTextNode(editor, string))
           }
         }
       }
-    } else {
+    }
+    else {
       jsonContent.push(item)
     }
 
@@ -227,7 +231,7 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
 
   watch(
     () => initialValue.value,
-    (value) => setContent(value)
+    value => setContent(value),
   )
 
   function setContent(value: string) {

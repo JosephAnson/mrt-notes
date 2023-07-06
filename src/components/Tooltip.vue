@@ -72,7 +72,9 @@ export default defineComponent({
         class="absolute top-100% bg-black/50 whitespace-nowrap py-1 px-2 shadow rounded"
         :class="[contentClass]"
       >
-        <template v-if="label">{{ label }}</template>
+        <template v-if="label">
+          {{ label }}
+        </template>
         <template v-else-if="$slots.content">
           <slot name="content" />
         </template>

@@ -8,20 +8,22 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
 
   for (const contentItem of paragraphContent) {
     if (contentItem.type === 'text') {
-      if (!contentItem.marks) {
+      if (!contentItem.marks)
         previewString += contentItem.text
-      } else {
+      else
         previewString += `|cff${contentItem.marks[0].attrs?.color?.replace('#', '')}${contentItem.text}|r`
-      }
-    } else if (contentItem.type === 'image') {
+    }
+    else if (contentItem.type === 'image') {
       if (contentItem.attrs?.alt === IMAGE_MARKER) {
-        const marker = markers.find((item) => contentItem.attrs?.src === item.src)
+        const marker = markers.find(item => contentItem.attrs?.src === item.src)
 
         if (marker) previewString += `{${marker.name}}`
-      } else if (contentItem.attrs?.alt === IMAGE_SPELLID) {
+      }
+      else if (contentItem.attrs?.alt === IMAGE_SPELLID) {
         previewString += contentItem.attrs.title
       }
-    } else if (contentItem.type === 'hardBreak') {
+    }
+    else if (contentItem.type === 'hardBreak') {
       previewString += '\n'
     }
   }
@@ -43,11 +45,12 @@ export function createMRTString(json?: JSONContent) {
           case 'paragraph':
             previewString += `${createParagraphContent(contentItem.content)}\n`
         }
-      } else {
+      }
+      else {
         // if the content is missing then still add new line for paragraph
         switch (contentItem.type) {
           case 'paragraph':
-            previewString += `\n`
+            previewString += '\n'
         }
       }
     }

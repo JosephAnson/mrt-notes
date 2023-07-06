@@ -22,5 +22,5 @@ export default eventHandler(async (event) => {
     .eq('user_id', event.context.params.id)
     .order('created_at')
 
-  return (data as NotesAndProfile[]).map((note) => createNote(note))
+  return (data as NotesAndProfile[]).map(note => createNote(note))
 })

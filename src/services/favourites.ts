@@ -14,7 +14,7 @@ export async function getUserFavourites(userId: string | undefined): Promise<Fav
 
   if (error) throw new Error(error.message)
 
-  return favourites.map((favourite) => ({
+  return favourites.map(favourite => ({
     ...favourite,
     note: createNote(favourite.note as NotesAndProfile),
   }))

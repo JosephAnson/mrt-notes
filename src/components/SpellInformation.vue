@@ -5,7 +5,7 @@ const props = withDefaults(
     tooltip: string
     showIcon?: boolean
   }>(),
-  { showIcon: true }
+  { showIcon: true },
 )
 </script>
 
@@ -19,20 +19,20 @@ const props = withDefaults(
       <div class="iconmedium" data-env="live" data-tree="live" data-game="wow" data-type="spell">
         <ins
           :style="`background-image: url('https://wow.zamimg.com/images/wow/icons/medium/${props.icon}.jpg');`"
-        ></ins>
-        <del></del>
+        />
+        <del />
       </div>
     </div>
 
     <table class="!w-full">
       <tbody>
         <tr>
-          <td v-html="props.tooltip"></td>
-          <th style="background-position: right top"></th>
+          <td v-html="props.tooltip" />
+          <th style="background-position: right top" />
         </tr>
         <tr>
-          <th style="background-position: left bottom"></th>
-          <th style="background-position: right bottom"></th>
+          <th style="background-position: left bottom" />
+          <th style="background-position: right bottom" />
         </tr>
       </tbody>
     </table>

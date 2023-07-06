@@ -54,7 +54,7 @@ export async function updateGroups(note_id: number, groups: Group[]) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
           user_id: user.value.id,
-        }))
+        })),
       )
       .select(groupColumns)
 

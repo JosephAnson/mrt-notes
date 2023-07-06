@@ -122,7 +122,7 @@ export default defineComponent({
       () => props.active,
       (value) => {
         modelState.isActive = value
-      }
+      },
     )
 
     watch(
@@ -135,7 +135,7 @@ export default defineComponent({
         //     (root.$el as HTMLElement).focus();
         //   }
         // });
-      }
+      },
     )
 
     /**

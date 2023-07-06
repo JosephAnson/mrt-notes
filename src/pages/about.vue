@@ -4,10 +4,14 @@
   <Section>
     <Container>
       <header>
-        <Heading h1>Welcome to MRT Notes: Your Ultimate Raid Planning Companion</Heading>
+        <Heading h1>
+          Welcome to MRT Notes: Your Ultimate Raid Planning Companion
+        </Heading>
       </header>
       <section>
-        <Heading h2>Experience the power of MRT Notes</Heading>
+        <Heading h2>
+          Experience the power of MRT Notes
+        </Heading>
         <div class="prose max-w-full">
           <p>
             A dedicated website designed to revolutionize raid leaders' lives by providing comprehensive planning and
@@ -18,7 +22,9 @@
         </div>
       </section>
       <section>
-        <Heading h3 styled="h2">Key Features</Heading>
+        <Heading h3 styled="h2">
+          Key Features
+        </Heading>
         <div class="prose max-w-full">
           <ul>
             <li>Effortless Note Creation: Create detailed and structured MRT notes effortlessly.</li>
@@ -31,7 +37,9 @@
         </div>
       </section>
       <section>
-        <Heading h3 styled="h2">Boss Spell Automation</Heading>
+        <Heading h3 styled="h2">
+          Boss Spell Automation
+        </Heading>
         <div class="prose max-w-full">
           <ul>
             <li>
@@ -46,10 +54,12 @@
           </ul>
         </div>
       </section>
-      <Ad ad-slot="8629692962"></Ad>
+      <Ad ad-slot="8629692962" />
 
       <section>
-        <Heading h3 styled="h2">Advanced Editor Tools</Heading>
+        <Heading h3 styled="h2">
+          Advanced Editor Tools
+        </Heading>
         <div class="prose max-w-full">
           <ul>
             <li>

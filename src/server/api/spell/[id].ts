@@ -29,11 +29,12 @@ export default cachedEventHandler(
 
       const includeWowHeadURLinTooltip = tooltip.replace(
         'href="',
-        'rel="noreferrer nofollow" target="_blank" href="https://www.wowhead.com'
+        'rel="noreferrer nofollow" target="_blank" href="https://www.wowhead.com',
       )
 
       return { icon, tooltip: includeWowHeadURLinTooltip, name }
-    } catch {
+    }
+    catch {
       return {
         icon: 'trade_engineering',
         tooltip:
@@ -46,5 +47,5 @@ export default cachedEventHandler(
     name: 'spell',
     group: 'spell',
     maxAge: 60 * 60 * 24 * 7,
-  }
+  },
 )

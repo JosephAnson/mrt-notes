@@ -73,37 +73,49 @@ const { pending: spellsLoading } = await useLazyFetch(() => `/api/blizzard/encou
   <Section>
     <Container v-if="note">
       <div class="md:flex justify-between mb-4">
-        <Heading h1> Mrt Notes </Heading>
+        <Heading h1>
+          Mrt Notes
+        </Heading>
 
         <div class="flex items-center">
           <div v-if="saving" class="flex item-center mr-4">
-            <p class="mr-4">Saving</p>
-            <div class="i-carbon-catalog animate-spin h-6 w-6"></div>
+            <p class="mr-4">
+              Saving
+            </p>
+            <div class="i-carbon-catalog animate-spin h-6 w-6" />
           </div>
-          <Button class="bg-red-700 flex-shrink-0 mr-4" @click="deleteNoteAndRedirect"> Delete Note </Button>
-          <Button class="flex-shrink-0" @click="save"> Save Note </Button>
+          <Button class="bg-red-700 flex-shrink-0 mr-4" @click="deleteNoteAndRedirect">
+            Delete Note
+          </Button>
+          <Button class="flex-shrink-0" @click="save">
+            Save Note
+          </Button>
         </div>
       </div>
 
       <section class="bg-primary-500 p-4 mb-6 rounded">
         <Field label="Title" stacked>
-          <Input v-model="name"></Input>
+          <Input v-model="name" />
         </Field>
         <Field label="Description" stacked>
-          <Input v-model="description" type="textarea"></Input>
+          <Input v-model="description" type="textarea" />
         </Field>
         <EncounterSelector
           v-model:expansion="expansion"
           v-model:instance="instance"
           v-model:encounter="encounter"
-        ></EncounterSelector>
-        <Loading v-if="spellsLoading">Spells Loading</Loading>
+        />
+        <Loading v-if="spellsLoading">
+          Spells Loading
+        </Loading>
       </section>
       <section>
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
             <div class="flex justify-between">
-              <Heading h2> General Tactic </Heading>
+              <Heading h2>
+                General Tactic
+              </Heading>
             </div>
 
             <Editor key="main-editor" v-model="editor.value" class="block" @update:json="editor.json = $event" />

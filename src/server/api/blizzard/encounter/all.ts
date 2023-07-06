@@ -16,7 +16,7 @@ export default cachedEventHandler(
 
     const expansions = await $fetch('/api/blizzard/expansion/all')
 
-    const expansionWithoutMythicPlus = expansions.filter((i) => i.name !== 'Mythic+ Dungeons')
+    const expansionWithoutMythicPlus = expansions.filter(i => i.name !== 'Mythic+ Dungeons')
 
     for (const expansion of expansionWithoutMythicPlus) {
       const expansionInstance = await $fetch(`/api/blizzard/expansion/instances/${expansion.id}/`)
@@ -26,12 +26,12 @@ export default cachedEventHandler(
         name: expansion.name,
         instances: {
           raids: await Promise.all(
-            expansionInstance.raids.reverse().map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`))
+            expansionInstance.raids.reverse().map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`)),
           ),
           dungeons: await Promise.all(
             expansionInstance.dungeons
               .reverse()
-              .map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`))
+              .map((i: EncounterInstance) => $fetch(`/api/blizzard/instance/${i.id}/`)),
           ),
         },
       })
@@ -43,5 +43,5 @@ export default cachedEventHandler(
     name: 'expansion-encounters',
     group: 'expansion',
     maxAge: 60 * 60 * 24 * 14,
-  }
+  },
 )

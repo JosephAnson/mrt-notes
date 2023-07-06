@@ -14,7 +14,7 @@ export const useProfileStore = defineStore('profile', {
     },
   }),
   getters: {
-    username: (state) => state.profile.username,
+    username: state => state.profile.username,
   },
   actions: {
     setProfile({ id, username, avatar_url }: Profile) {
@@ -28,7 +28,8 @@ export const useProfileStore = defineStore('profile', {
           message: 'Username cannot be empty!',
           background: 'bg-red-700',
         })
-      } else {
+      }
+      else {
         const usernameExist = await usernameExists(userName)
 
         if (usernameExist) {
@@ -36,7 +37,8 @@ export const useProfileStore = defineStore('profile', {
             message: 'Username exists try another!',
             background: 'bg-red-700',
           })
-        } else {
+        }
+        else {
           const user = useSupabaseUser()
           if (!user.value) throw new Error('User not logged in')
 

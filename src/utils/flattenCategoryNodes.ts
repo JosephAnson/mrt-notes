@@ -6,10 +6,10 @@ export function flattenCategoryNodes(nodes: Node[]) {
     if (node.children) {
       result.push({ id: node.id, label: node.label })
 
-      for (const child of node.children) {
+      for (const child of node.children)
         result.push(child)
-      }
-    } else {
+    }
+    else {
       result.push(node)
     }
   }

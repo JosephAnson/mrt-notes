@@ -20,14 +20,14 @@ export const useGroupsStore = defineStore('Groups', {
     },
     async deleteGroup(id: number) {
       await deleteGroupById(id)
-      this.groups = this.groups.filter((t) => t.id !== id) || []
+      this.groups = this.groups.filter(t => t.id !== id) || []
     },
     async addGroup(
       note_id: number,
       order: number,
       type: GroupTypeUnion = 'Healers',
       editor_string = '',
-      players?: string[]
+      players?: string[],
     ) {
       const user = useSupabaseUser()
       if (user.value) {
@@ -48,7 +48,8 @@ export const useGroupsStore = defineStore('Groups', {
             players: newGroup.players || [],
           })
         }
-      } else {
+      }
+      else {
         openSnackbar({ message: 'Need to be logged in to add group', background: 'bg-red-700' })
       }
     },
@@ -63,7 +64,7 @@ export const useGroupsStore = defineStore('Groups', {
             order: index,
             type: (item.type as GroupTypeUnion) || 'Players',
             players: item.players || [],
-          }))
+          })),
         )
       }
     },

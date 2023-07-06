@@ -15,7 +15,7 @@ watchOnce(
   async () => {
     await profileStore.fetchProfile()
   },
-  { deep: true }
+  { deep: true },
 )
 
 function login() {
@@ -124,8 +124,12 @@ router.afterEach(() => {
                   <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
                   Submit issues or request features
                 </Button>
-                <Button v-if="!user" class="w-full cursor-pointer" @click="login"> Login </Button>
-                <Button v-else class="w-full cursor-pointer" @click="logout"> Logout </Button>
+                <Button v-if="!user" class="w-full cursor-pointer" @click="login">
+                  Login
+                </Button>
+                <Button v-else class="w-full cursor-pointer" @click="logout">
+                  Logout
+                </Button>
               </div>
             </div>
           </div>

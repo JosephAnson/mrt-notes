@@ -6,5 +6,5 @@ export async function getLatestEncounters() {
 
   const dungeonInstances = await $fetch(`/api/blizzard/expansion/instances/${expansions[0].id}`)
 
-  return { raids: raids.encounters.map((i) => i.name), dungeons: dungeonInstances.dungeons.map((i) => i.name) }
+  return { raids: raids.encounters.map(i => i.name), dungeons: dungeonInstances.dungeons.map(i => i.name) }
 }

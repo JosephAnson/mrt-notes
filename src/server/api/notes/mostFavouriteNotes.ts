@@ -23,7 +23,7 @@ export default cachedEventHandler(
       .order('count', { ascending: false })
       .limit(5)
 
-    return data?.map((favouriteNote) => ({
+    return data?.map(favouriteNote => ({
       ...favouriteNote,
       note: createNote(favouriteNote.note as NotesAndProfile),
     })) as MostFavouriteNotes[]
@@ -33,5 +33,5 @@ export default cachedEventHandler(
     group: 'notes',
     swr: true,
     maxAge: 10,
-  }
+  },
 )

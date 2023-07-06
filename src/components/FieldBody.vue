@@ -24,7 +24,7 @@ export default defineComponent({
                 description: props.description,
                 type: props.type,
               },
-              () => [element]
+              () => [element],
             )
           }
           return h(Field, { type: props.type }, () => element)

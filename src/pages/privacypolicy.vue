@@ -3,7 +3,9 @@
 <template>
   <Section>
     <Container>
-      <Heading h1>GDPR Compliance Statement</Heading>
+      <Heading h1>
+        GDPR Compliance Statement
+      </Heading>
 
       <div class="prose">
         <p>
@@ -100,11 +102,9 @@
         </p>
 
         <p>
-          <em
-            >Please note that this is a general example, and you should tailor it to your specific website, data
+          <em>Please note that this is a general example, and you should tailor it to your specific website, data
             processing activities, and legal requirements. It's advisable to seek legal advice to ensure compliance with
-            applicable laws and regulations.</em
-          >
+            applicable laws and regulations.</em>
         </p>
       </div>
     </Container>

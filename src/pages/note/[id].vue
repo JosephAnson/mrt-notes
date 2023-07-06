@@ -13,9 +13,8 @@ const { data: note } = await useAsyncData('notes', async () => {
   return await getNote(getRouterParamsAsString(route.params.id))
 })
 await useAsyncData('groups', async () => {
-  if (note.value) {
+  if (note.value)
     await groupsStore.fetchAllGroups(note.value.id)
-  }
 })
 
 await useAsyncData('userNotes', async () => await notesStore.fetchAllUserNotes(note.value?.user_id || ''))
@@ -32,7 +31,7 @@ useSeoMeta({
 
 <template>
   <Section>
-    <Ad ad-slot="8629692962"></Ad>
+    <Ad ad-slot="8629692962" />
 
     <Container v-if="note">
       <div class="md:grid grid-cols-12 gap-8">
@@ -40,7 +39,9 @@ useSeoMeta({
           <div class="mb-4">
             <div class="md:flex justify-between">
               <div class="flex mb-4 md:mb-0">
-                <Heading h1 class="!mb-1"> {{ noteName }} </Heading>
+                <Heading h1 class="!mb-1">
+                  {{ noteName }}
+                </Heading>
 
                 <NuxtLink v-if="note.username" :to="`/profile/${note.username}`">
                   <Heading h2 styled="h1" class="!mb-1">
@@ -50,7 +51,7 @@ useSeoMeta({
               </div>
 
               <div class="flex items-center grid gap-4">
-                <FavouriteButton :note-id="note.id" :count="note.favourites_count"></FavouriteButton>
+                <FavouriteButton :note-id="note.id" :count="note.favourites_count" />
 
                 <Button v-if="note.username" :to="`/profile/${note.username}`" class="flex">
                   Visit User Profile
@@ -63,7 +64,9 @@ useSeoMeta({
             </div>
 
             <div v-if="note.description" class="mb-4">
-              <p class="text-gray-500">{{ note.description }}</p>
+              <p class="text-gray-500">
+                {{ note.description }}
+              </p>
             </div>
           </div>
           <section>
@@ -71,8 +74,12 @@ useSeoMeta({
           </section>
         </div>
         <div v-if="note && notesStore.notes?.user?.length" class="sm:col-span-12 md:col-span-3">
-          <Heading v-if="note?.username" h2> {{ capitalCase(note.username) }}'s Notes </Heading>
-          <Heading v-else h2> Related Notes </Heading>
+          <Heading v-if="note?.username" h2>
+            {{ capitalCase(note.username) }}'s Notes
+          </Heading>
+          <Heading v-else h2>
+            Related Notes
+          </Heading>
           <div v-if="notesStore.notes.user.length" class="overflow-y-auto h-screen">
             <NoteItem v-for="userNote in notesStore.notes.user" :key="userNote.id" :note="userNote" />
           </div>

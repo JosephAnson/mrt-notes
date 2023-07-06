@@ -22,11 +22,11 @@ export default cachedEventHandler(
       .order(order || 'created_at', { ascending: false })
       .limit(limit || 50)
 
-    return (data as NotesAndProfile[]).map((note) => createNote(note))
+    return (data as NotesAndProfile[]).map(note => createNote(note))
   },
   {
     name: 'notes-find-all',
     group: 'notes',
     maxAge: 60,
-  }
+  },
 )

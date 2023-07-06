@@ -17,20 +17,28 @@ await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(async
 <template>
   <Section>
     <Container>
-      <Ad ad-slot="8629692962"></Ad>
+      <Ad ad-slot="8629692962" />
 
       <div v-if="asyncProfile">
-        <Heading h1> {{ capitalCase(asyncProfile?.username || '') }}'s Profile </Heading>
+        <Heading h1>
+          {{ capitalCase(asyncProfile?.username || '') }}'s Profile
+        </Heading>
 
         <CreateNote v-if="user?.id === asyncProfile?.id" class="mb-8" />
 
-        <Heading h2> {{ capitalCase(asyncProfile?.username || '') }}'s Notes </Heading>
+        <Heading h2>
+          {{ capitalCase(asyncProfile?.username || '') }}'s Notes
+        </Heading>
         <div v-if="notesStore.notes.user.length">
           <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
         </div>
-        <Heading v-else h2> {{ asyncProfile.username }} doesn't have any notes </Heading>
+        <Heading v-else h2>
+          {{ asyncProfile.username }} doesn't have any notes
+        </Heading>
       </div>
-      <Heading v-else h1>No profile found</Heading>
+      <Heading v-else h1>
+        No profile found
+      </Heading>
     </Container>
   </Section>
 </template>

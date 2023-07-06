@@ -10,12 +10,16 @@ const returnUrl = computed(() => (route.currentRoute.value.query as { returnUrl?
 <template>
   <Section>
     <Container>
-      <Heading h1>Login</Heading>
+      <Heading h1>
+        Login
+      </Heading>
       <div class="mb-8">
         <Field label-for="email" label="Email" stacked>
           <Input id="email" v-model="email" type="email" />
         </Field>
-        <Button @click="signInWithOtp(email, returnUrl)"> Sign In </Button>
+        <Button @click="signInWithOtp(email, returnUrl)">
+          Sign In
+        </Button>
       </div>
 
       <div v-if="!user" class="flex flex-wrap">
@@ -34,7 +38,9 @@ const returnUrl = computed(() => (route.currentRoute.value.query as { returnUrl?
           Login with Google
         </Button>
       </div>
-      <Button v-else @click="client.auth.signOut()"> Logout </Button>
+      <Button v-else @click="client.auth.signOut()">
+        Logout
+      </Button>
     </Container>
   </Section>
 </template>
