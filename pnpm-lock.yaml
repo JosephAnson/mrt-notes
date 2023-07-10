@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -48,8 +48,8 @@ dependencies:
     specifier: ^0.53.4
     version: 0.53.4(postcss@8.4.25)(vite@4.4.0)(webpack@5.88.1)
   '@unocss/reset':
-    specifier: ^0.53.4
-    version: 0.53.4
+    specifier: ^0.53.5
+    version: 0.53.5
   '@vercel/analytics':
     specifier: ^1.0.1
     version: 1.0.1
@@ -2593,6 +2593,10 @@ packages:
   /@unocss/reset@0.53.4:
     resolution: {integrity: sha512-NMqntd9CE9EpdtI2ELGCZg9Z2ySMdo/ljepP8QwfRmWbYaXUf3T/GJsOTqewbhNgJUGYinbs1OtiN0yG5xZjJQ==}
 
+  /@unocss/reset@0.53.5:
+    resolution: {integrity: sha512-tH8K4jw76mbWA67UUHKV6zxiwOsiG+byrHoG3lz8hr+cm6OgEJ3WjNNp7dZINmr7S7ylWO6igbxGQpsAuIQZCw==}
+    dev: false
+
   /@unocss/scope@0.53.4:
     resolution: {integrity: sha512-vomyjd6i27V5G2awPoo9FoUit6qYyDyO0kroLzYPPNgq5M5jQFrZuQYc24dQ+JeJAQ3hlCGl8VM2v3Aj0PyUFg==}
 
@@ -3850,7 +3854,7 @@ packages:
       readable-stream: 3.6.2
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /consola@3.2.3:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
