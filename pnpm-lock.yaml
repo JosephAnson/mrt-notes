@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -87,8 +87,8 @@ dependencies:
     specifier: ^2.1.4
     version: 2.1.4(typescript@5.1.6)(vue@3.3.4)
   supabase:
-    specifier: ^1.77.1
-    version: 1.77.1
+    specifier: ^1.77.6
+    version: 1.77.6
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
@@ -3850,7 +3850,7 @@ packages:
       readable-stream: 3.6.2
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /consola@3.2.3:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
@@ -8754,8 +8754,8 @@ packages:
       ts-interface-checker: 0.1.13
     dev: false
 
-  /supabase@1.77.1:
-    resolution: {integrity: sha512-ug5Pr6vRRbAYUEqiP1+VomJQ9A5G+XDqhOSZTzw3uAcD3YZrGKldeCuIpAv2oVRoYqStcV7BrgSEK9fWQ7J2oA==}
+  /supabase@1.77.6:
+    resolution: {integrity: sha512-eBVTStN/55RMmf2pNTpmd28afNj5Pn7ta0JudpWDylcaIJH0W+oAnuWdwovCkFWIa5W+nBwoajYRvQKHzwMkkQ==}
     engines: {npm: '>=8'}
     hasBin: true
     requiresBuild: true
