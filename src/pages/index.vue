@@ -47,7 +47,7 @@ watchOnce(
       </div>
     </Container>
   </Section>
-  <Ad ad-slot="8629692962" />
+  <Ad max-height ad-slot="8629692962" />
   <Section>
     <Container>
       <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
