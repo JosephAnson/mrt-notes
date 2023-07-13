@@ -15,16 +15,8 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@unocss/nuxt',
     '@pinia/nuxt',
-    [
-      '@nuxtjs/google-adsense',
-      {
-        id: process.env.GOOGLE_ADSENSE_ID,
-        pageLevelAds: true,
-        test: process.env.NODE_ENV === 'development',
-      },
-    ],
   ],
-  plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
+  plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }, { src: '~/plugins/adSense.ts', mode: 'client' }],
   extends: ['nuxt-seo-kit'],
   runtimeConfig: {
     public: {
@@ -54,6 +46,13 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://wow.zamimg.com/css/universal.css',
+        },
+      ],
+      script: [
+        {
+          async: true,
+          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7716403137825737',
+          crossorigin: 'anonymous',
         },
       ],
     },

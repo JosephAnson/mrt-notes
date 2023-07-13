@@ -40,7 +40,7 @@ const resultsItem = computed(() => results.value.map(i => i.item))
           </Heading>
 
           <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
-            <Ad v-if="index === 1" ad-slot="5501746994" />
+            <Ad v-if="index === 1" ad-slot="5501746994" ad-format="fluid" ad-layout-key="-fv+64+31-d5+c4" />
 
             <div class="mb-8">
               <Heading h3>
@@ -66,7 +66,7 @@ const resultsItem = computed(() => results.value.map(i => i.item))
           </Heading>
 
           <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
-            <Ad v-if="index === 1" ad-slot="7513403484" />
+            <Ad v-if="index === 1" ad-slot="7513403484" ad-format="fluid" ad-layout-key="-fv+64+31-d5+c4" />
 
             <div class="mb-8">
               <Heading h3>
