@@ -48,7 +48,7 @@ watchOnce(
     </Container>
   </Section>
   <Ad ad-slot="8629692962" />
-  <Section>
+  <div>
     <Container>
       <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
         Set your username on your account if you want to share your profile
@@ -132,7 +132,7 @@ watchOnce(
         <MostFavouriteNotes class="sm:col-span-12 md:col-span-6" />
       </div>
     </Container>
-  </Section>
+  </div>
 
   <Ad ad-slot="9899893676" ad-layout="in-article" />
 

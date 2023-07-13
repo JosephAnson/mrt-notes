@@ -46,9 +46,15 @@ onMounted(() => {
         :data-ad-client="adClient"
         :data-ad-slot="props.adSlot"
         :data-ad-format="props.adFormat"
-        data-full-width-responsive="true"
+        data-full-width-responsive="false"
         v-bind="attrs"
       />
     </Container>
   </div>
 </template>
+
+<style>
+.adsbygoogle :deep(iframe) {
+  width: 100% !important;
+}
+</style>

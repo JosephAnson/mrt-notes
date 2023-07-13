@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@pinia/nuxt',
   ],
-  plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }, { src: '~/plugins/adSense.ts', mode: 'client' }],
+  plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   extends: ['nuxt-seo-kit'],
   runtimeConfig: {
     public: {
