@@ -47,7 +47,7 @@
     "@iconify-json/carbon": "^1.1.18",
     "@nuxt/devtools": "^0.6.7",
     "@nuxtjs/supabase": "^0.3.8",
-    "@types/node": "^20.4.0",
+    "@types/node": "^20.6.1",
     "autoprefixer": "10.4.14",
     "eslint": "^8.44.0",
     "eslint-plugin-yml": "^1.8.0",
