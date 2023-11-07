@@ -1,4 +1,10 @@
-export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export interface Database {
   public: {
@@ -22,6 +28,20 @@ export interface Database {
           note_id?: number
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'favourites_note_id_fkey'
+            columns: ['note_id']
+            referencedRelation: 'notes'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'favourites_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       groups: {
         Row: {
@@ -54,6 +74,20 @@ export interface Database {
           type?: string | null
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'groups_note_id_fkey'
+            columns: ['note_id']
+            referencedRelation: 'notes'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'groups_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       notes: {
         Row: {
@@ -98,6 +132,14 @@ export interface Database {
           updated_at?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'notes_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -118,6 +160,14 @@ export interface Database {
           updated_at?: string | null
           username?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_id_fkey'
+            columns: ['id']
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
       }
       team_members: {
         Row: {
@@ -144,6 +194,14 @@ export interface Database {
           order?: number | null
           user_id?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'team_members_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
     Views: {
@@ -152,6 +210,14 @@ export interface Database {
           count: number | null
           note_id: number | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'favourites_note_id_fkey'
+            columns: ['note_id']
+            referencedRelation: 'notes'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
     Functions: {

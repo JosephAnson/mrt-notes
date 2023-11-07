@@ -2,9 +2,6 @@ import type { Database } from '../../../supabase.types'
 import type { Note, NotesAndProfile } from '../../../types'
 import { NOTE_COLUMNS } from '../../../utils/constants'
 import { createNote } from '../../../utils/createNote'
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import { serverSupabaseClient } from '#supabase/server'
 
 export default cachedEventHandler(

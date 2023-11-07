@@ -1,11 +1,11 @@
 import type { EncounterSpell } from '~/server/api/blizzard/encounter/spells/[id]'
 
-export interface NoteState {
+export interface NoteStoreState {
   spells: EncounterSpell[]
 }
 
 export const useNoteStore = defineStore('note', {
-  state: (): NoteState => ({
+  state: (): NoteStoreState => ({
     spells: [],
   }),
   actions: {
