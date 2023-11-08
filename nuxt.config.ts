@@ -19,6 +19,7 @@ export default defineNuxtConfig({
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
   extends: ['nuxt-seo-kit'],
   runtimeConfig: {
+    indexable: true,
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://mrt-notes.vercel.app/',
       siteName: 'MRT Notes: Your Ultimate Raid Planning Companion',

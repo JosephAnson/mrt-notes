@@ -45,7 +45,7 @@ router.afterEach(() => {
 </script>
 
 <template>
-  <header class="bg-primary-100">
+  <div class="bg-primary-100">
     <Container>
       <nav class="flex items-center justify-between py-3" aria-label="Global">
         <div class="flex lg:flex-1">
@@ -87,7 +87,8 @@ router.afterEach(() => {
           <a v-else class="text-sm font-semibold leading-6 text-white cursor-pointer" @click="logout"> Logout </a>
         </div>
       </nav>
-      <Dialog as="div" class="lg:hidden" :open="mobileMenuOpen" @close="mobileMenuOpen = false">
+
+      <Dialog :open="mobileMenuOpen" @close="mobileMenuOpen = false">
         <div class="fixed inset-0 z-10" />
         <DialogPanel
           class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
@@ -136,5 +137,5 @@ router.afterEach(() => {
         </DialogPanel>
       </Dialog>
     </Container>
-  </header>
+  </div>
 </template>
