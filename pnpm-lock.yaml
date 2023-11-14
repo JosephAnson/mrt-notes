@@ -45,8 +45,8 @@ dependencies:
     specifier: ^0.55.7
     version: 0.55.7(postcss@8.4.29)(vite@4.5.0)(webpack@5.89.0)
   '@unocss/reset':
-    specifier: ^0.55.7
-    version: 0.55.7
+    specifier: ^0.57.4
+    version: 0.57.4
   '@vercel/analytics':
     specifier: ^1.1.1
     version: 1.1.1
@@ -1666,6 +1666,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -2808,6 +2809,10 @@ packages:
   /@unocss/reset@0.55.7:
     resolution: {integrity: sha512-yvmLhxqUNgf6wue7IvhV/FdrQW9H9LF1Bmmhwwaiz2aV0E74aN4pbuYPZwNq3YafsQvNQ0UdtuXjddY4QMRCPw==}
 
+  /@unocss/reset@0.57.4:
+    resolution: {integrity: sha512-4i2d5SrERGDJmN18CY5pgkPqZ3PMvAoDHe7MSF1Eqtv4YW6CsxohrTmAJtS3B/2xw68ngtnbf0EFMbwyUwW+ug==}
+    dev: false
+
   /@unocss/scope@0.55.7:
     resolution: {integrity: sha512-r0CaS1aSpcC37ztqOJ3qaWIzM6zwdlX8r0rib2vTvWTckw1J0ocVhjNkWRBM9kRWte006JhecdiZzXNHA40akg==}
 
@@ -3936,7 +3941,7 @@ packages:
       readable-stream: 3.6.2
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /consola@3.2.3:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
@@ -6253,6 +6258,9 @@ packages:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
