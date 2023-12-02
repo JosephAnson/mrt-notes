@@ -21,7 +21,7 @@ jobs:
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
            
-      - run: pnpm ci
+      - run: pnpm install
       - run: pnpm run lint:fix
 
       - uses: autofix-ci/action@d3e591514b99d0fca6779455ff8338516663f7cc
