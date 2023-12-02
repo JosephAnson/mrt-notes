@@ -13,10 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 16
-
+          version: 8
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+           
       - run: npm ci
       - run: npm run lint:fix
 
