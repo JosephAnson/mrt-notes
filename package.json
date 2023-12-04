@@ -12,7 +12,7 @@
     "gen-types": "supabase gen types typescript --project-id \"tcqilgocqemuhfpezlwa\" --schema public > src/supabase.types.ts"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.4.2",
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "@headlessui/vue": "^1.7.16",
     "@nuxtjs/web-vitals": "^0.2.6",
     "@pinia/nuxt": "^0.4.11",

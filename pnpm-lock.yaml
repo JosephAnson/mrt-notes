@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fortawesome/fontawesome-free':
-    specifier: ^6.4.2
-    version: 6.4.2
+    specifier: ^6.5.1
+    version: 6.5.1
   '@headlessui/vue':
     specifier: ^1.7.16
     version: 1.7.16(vue@3.3.8)
@@ -1165,8 +1165,8 @@ packages:
     resolution: {integrity: sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==}
     engines: {node: '>=14'}
 
-  /@fortawesome/fontawesome-free@6.4.2:
-    resolution: {integrity: sha512-m5cPn3e2+FDCOgi1mz0RexTUvvQibBebOUlUlW0+YrMjDTPkiJ6VTKukA1GRsvRw+12KyJndNjj0O4AgTxm2Pg==}
+  /@fortawesome/fontawesome-free@6.5.1:
+    resolution: {integrity: sha512-CNy5vSwN3fsUStPRLX7fUYojyuzoEMSXPl7zSLJ8TgtRfjv24LOnOWKT2zYwaHZCJGkdyRnTmstR0P+Ah503Gw==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: false
