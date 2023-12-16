@@ -9,15 +9,6 @@ const profileStore = useProfileStore()
 
 await useAsyncData('nav-profile', async () => await profileStore.fetchProfile())
 
-// Watch to see if user changes to re-fetch notes
-watchOnce(
-  () => user.value,
-  async () => {
-    await profileStore.fetchProfile()
-  },
-  { deep: true },
-)
-
 function login() {
   router.push(`/login?returnUrl=${window.location.href}`)
 }
