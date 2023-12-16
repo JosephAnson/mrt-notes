@@ -9,7 +9,7 @@ const teamMembersStore = useTeamMembersStore()
 await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id))
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
-const { data: encounters } = await useLazyAsyncData('encounters', async () => await getLatestEncounters())
+const { data: encounters } = await useAsyncData('encounters', async () => await getLatestEncounters())
 
 // Watch to see if user changes to re-fetch notes
 watchOnce(

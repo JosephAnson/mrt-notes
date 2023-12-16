@@ -15,11 +15,11 @@ const emits = defineEmits(['update:expansion', 'update:instance', 'update:encoun
 
 const { expansion: expansionSelect, instance: instanceSelect, encounter: encounterSelect } = useVModels(props, emits)
 
-const { data: expansions } = await useLazyFetch('/api/blizzard/expansion/all')
+const { data: expansions } = await useFetch('/api/blizzard/expansion/all')
 
 const isMPlusDungeons = computed(() => expansionSelect.value === 505)
 
-const { data: expansionInstances, pending: expansionInstancesPending } = await useLazyFetch(
+const { data: expansionInstances, pending: expansionInstancesPending } = await useFetch(
   () => `/api/blizzard/expansion/instances/${expansionSelect.value}`,
   {
     pick: ['dungeons', 'raids'],
@@ -30,7 +30,7 @@ watch(expansionInstances, (newExpansionInstances) => {
     instanceSelect.value = newExpansionInstances.raids[newExpansionInstances.raids.length - 1].id
 })
 
-const { data: instance, pending: instancePending } = await useLazyFetch(
+const { data: instance, pending: instancePending } = await useFetch(
   () => `/api/blizzard/instance/${instanceSelect.value}`,
 )
 watch(instance, (newInstance) => {

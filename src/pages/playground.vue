@@ -14,7 +14,7 @@ const expansion = ref(503)
 const instance = ref(1200)
 const encounter = ref(2480)
 
-const { pending: spellsLoading } = await useLazyFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
+const { pending: spellsLoading } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
   onResponse({ response }) {
     noteStore.setSpells(response._data.spells)
     return response._data

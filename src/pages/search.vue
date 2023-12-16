@@ -8,7 +8,7 @@ const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
 
 await useAsyncData('notes', async () => await notesStore.fetchSearchNotes(q || ''))
 
-const { data: encounters } = await useLazyAsyncData('encounters', async () => await getLatestEncounters())
+const { data: encounters } = await useAsyncData('encounters', async () => await getLatestEncounters())
 
 const search = ref(q || '')
 
