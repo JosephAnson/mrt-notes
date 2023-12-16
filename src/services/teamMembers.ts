@@ -6,7 +6,7 @@ const teamMembersColumns = 'id, name, class'
 export async function getAllTeamMembers() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
-  if (!user) return []
+  if (!user.value?.id) return []
 
   const { data } = await client
     .from('team_members')
@@ -17,6 +17,7 @@ export async function getAllTeamMembers() {
 
   return data
 }
+
 export async function updateTeamMembers(members: Member[]) {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
