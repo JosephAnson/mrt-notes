@@ -7,9 +7,7 @@ definePageMeta({
 
 const user = useSupabaseUser()
 const profileStore = useProfileStore()
-const userStore = useUserStore()
 
-await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 await useAsyncData('profile', async () => await profileStore.fetchProfile())
 
 const username = ref<string>(profileStore.username || '')
@@ -60,15 +58,6 @@ const username = ref<string>(profileStore.username || '')
                 {{ provider.toUpperCase() }}
               </span>
             </Field>
-          </div>
-        </div>
-
-        <div class="col-span-12 xl:col-span-6">
-          <Heading>Favourites</Heading>
-          <div v-if="userStore.favourites.length">
-            <NoteItem v-for="favourite in userStore.favourites" :key="favourite.id" :note="favourite.note">
-              {{ favourite }}
-            </NoteItem>
           </div>
         </div>
       </div>

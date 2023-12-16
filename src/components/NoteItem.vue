@@ -15,7 +15,6 @@ const props = withDefaults(
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
-const userStore = useUserStore()
 
 const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
@@ -23,8 +22,6 @@ const createdOn = useDateFormat(props.note.created_at, format)
 const updatedOn = useTimeAgo(props.note.updated_at)
 
 const canEdit = computed(() => isUsers && props.showEdit)
-
-const hasFavourite = computed(() => userStore.hasFavourite(props.note.id))
 </script>
 
 <template>
@@ -47,14 +44,6 @@ const hasFavourite = computed(() => userStore.hasFavourite(props.note.id))
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2" />
         <span>Updated: {{ updatedOn }}</span>
         <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2" />
-        <div class="inline-flex items-center cursor-pointer" @click="userStore.toggleUserFavourite(props.note.id)">
-          {{ props.note.favourites_count }} Favourite{{ props.note.favourites_count === 1 ? '' : 's' }}
-          <span
-            v-if="user"
-            class="inline-block ml-1 color-red-500 text-base"
-            :class="hasFavourite ? 'i-carbon-favorite-filled' : 'i-carbon-favorite'"
-          />
-        </div>
       </div>
       <Field v-if="props.note.description" stacked class="line-clamp-3 pt-2 !mb-0">
         <p>{{ props.note.description }}</p>

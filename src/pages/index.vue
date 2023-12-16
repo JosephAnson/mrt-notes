@@ -3,11 +3,9 @@ import { paramCase } from 'change-case'
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
-const userStore = useUserStore()
 const profileStore = useProfileStore()
 const teamMembersStore = useTeamMembersStore()
 
-await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id))
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
@@ -18,7 +16,6 @@ watchOnce(
   () => user.value,
   async () => {
     await notesStore.fetchAllUserNotes(user.value?.id || '')
-    await userStore.fetchUserFavourites(user.value?.id)
     await teamMembersStore.fetchAllTeamMembers()
   },
   { deep: true },
@@ -130,7 +127,6 @@ watchOnce(
         <div class="md:grid grid-cols-12 gap-8">
           <RecentlyModifiedNotes class="sm:col-span-12 md:col-span-6" />
           <RecentlyCreateNotes class="sm:col-span-12 md:col-span-6" />
-          <MostFavouriteNotes class="sm:col-span-12 md:col-span-6" />
         </div>
       </Container>
     </div>

@@ -2,7 +2,6 @@ import type { Note, NoteTypes } from '~/types'
 import {
   deleteNote,
   fetchAllNotesByUserId,
-  fetchMostFavouriteNotes,
   fetchRecentlyCreatedNotes,
   fetchRecentlyModifiedNotes,
   getAllNotes,
@@ -15,7 +14,6 @@ export interface NoteState {
     user: Note[]
     recentlyCreated: Note[]
     recentlyModified: Note[]
-    mostFavourite: Note[]
   }
 }
 
@@ -26,7 +24,6 @@ export const useNotesStore = defineStore('notes', {
       user: [],
       recentlyCreated: [],
       recentlyModified: [],
-      mostFavourite: [],
     },
   }),
   actions: {
@@ -46,11 +43,6 @@ export const useNotesStore = defineStore('notes', {
       this.notes.recentlyCreated = notes
       return notes
     },
-    async fetchMostFavouriteNotes() {
-      const favourites = await fetchMostFavouriteNotes()
-      this.notes.mostFavourite = favourites.map(favourite => favourite.note)
-      return this.notes.mostFavourite
-    },
     async fetchSearchNotes(name?: string) {
       const notes = name ? await searchAllNotes(name) : await getAllNotes({ limit: 30 })
       this.notes.search = notes
@@ -62,15 +54,6 @@ export const useNotesStore = defineStore('notes', {
       for (const key in this.notes) {
         const noteKey = key as NoteTypes
         this.notes[noteKey] = this.notes[noteKey]?.filter((t: Note) => t.id !== id) || []
-      }
-    },
-    changeFavouriteAmount(noteId: number, changeBy: number) {
-      for (const key in this.notes) {
-        const noteKey = key as NoteTypes
-        this.notes[noteKey].forEach((note) => {
-          if (note.id === noteId)
-            note.favourites_count += changeBy
-        })
       }
     },
   },

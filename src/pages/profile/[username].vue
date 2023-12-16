@@ -4,9 +4,7 @@ import { capitalCase } from 'change-case'
 const user = useSupabaseUser()
 const route = useRoute('profile-username')
 const notesStore = useNotesStore()
-const userStore = useUserStore()
 
-await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 const usernameParam = getRouterParamsAsString(route.params.username)
 
 const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam))

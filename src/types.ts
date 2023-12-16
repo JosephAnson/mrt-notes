@@ -19,17 +19,9 @@ export interface Note {
   expansion: number | null
   instance: number | null
   encounter: number | null
-  favourites_count: number
 }
 
-export type NotesAndProfile = NotesRow & { user: ProfilesRow; favourites_count: { count: number }[] }
-export interface Favourite {
-  id: number
-  created_at: string
-  user_id: string
-  note_id: number
-  note: Note
-}
+export type NotesAndProfile = NotesRow & { user: ProfilesRow }
 
 export interface EditorData {
   value: string

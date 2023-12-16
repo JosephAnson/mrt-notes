@@ -51,8 +51,6 @@ useSeoMeta({
               </div>
 
               <div class="flex items-center grid gap-4">
-                <FavouriteButton :note-id="note.id" :count="note.favourites_count" />
-
                 <Button v-if="note.username" :to="`/profile/${note.username}`" class="flex">
                   Visit User Profile
                 </Button>

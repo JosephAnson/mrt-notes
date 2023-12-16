@@ -13,6 +13,5 @@ export function createNote(item: NotesAndProfile): Note {
     encounter: item.encounter,
     instance: item.instance,
     expansion: item.expansion,
-    favourites_count: item.favourites_count.length > 0 ? item.favourites_count[0].count : 0,
   }
 }

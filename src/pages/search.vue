@@ -3,11 +3,9 @@ const user = useSupabaseUser()
 const route = useRoute()
 const router = useRouter()
 const notesStore = useNotesStore()
-const userStore = useUserStore()
 
 const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
 
-await useAsyncData('userFavourites', async () => await userStore.fetchUserFavourites(user.value?.id))
 await useAsyncData('notes', async () => await notesStore.fetchSearchNotes(q || ''))
 
 const { data: encounters } = await useLazyAsyncData('encounters', async () => await getLatestEncounters())
