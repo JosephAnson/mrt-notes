@@ -2,8 +2,6 @@ import type { Note, NoteTypes } from '~/types'
 import {
   deleteNote,
   fetchAllNotesByUserId,
-  fetchRecentlyCreatedNotes,
-  fetchRecentlyModifiedNotes,
   getAllNotes,
   searchAllNotes,
 } from '~/services/notes'
@@ -31,16 +29,6 @@ export const useNotesStore = defineStore('notes', {
       if (!userID) return this.notes.user
       const notes = await fetchAllNotesByUserId(userID)
       this.notes.user = notes
-      return notes
-    },
-    async fetchRecentlyModifiedNotes() {
-      const notes = await fetchRecentlyModifiedNotes()
-      this.notes.recentlyModified = notes
-      return notes
-    },
-    async fetchRecentlyCreatedNotes() {
-      const notes = await fetchRecentlyCreatedNotes()
-      this.notes.recentlyCreated = notes
       return notes
     },
     async fetchSearchNotes(name?: string) {

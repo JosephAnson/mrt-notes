@@ -119,14 +119,6 @@ export async function fetchAllNotesByUserId(user_id: string) {
   return await $fetch(`/api/notes/user/${user_id}`)
 }
 
-export async function fetchRecentlyModifiedNotes() {
-  return await $fetch('/api/notes/recentlyModifiedNotes')
-}
-
-export async function fetchRecentlyCreatedNotes() {
-  return await $fetch('/api/notes/recentlyCreatedNotes')
-}
-
 export async function deleteNote(id: number) {
   const client = useSupabaseClient<Database>()
   await deleteGroupsWithNoteId(id)

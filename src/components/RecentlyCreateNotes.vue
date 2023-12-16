@@ -1,15 +1,13 @@
 <script setup lang="ts">
-const notesStore = useNotesStore()
-
-await useAsyncData('recentlyCreatedNotes', async () => await notesStore.fetchRecentlyCreatedNotes())
+const recentlyCreatedNotes = await useFetch('/api/notes/recentlyCreatedNotes')
 </script>
 
 <template>
-  <section v-if="notesStore.notes.recentlyCreated.length">
+  <section v-if="recentlyCreatedNotes.length">
     <Heading>Recently Created Notes</Heading>
     <div class="mb-8">
       <NoteItem
-        v-for="note in notesStore.notes.recentlyCreated"
+        v-for="note in recentlyCreated"
         :key="note.id"
         :note="note"
         :show-edit="false"
