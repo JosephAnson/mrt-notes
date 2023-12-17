@@ -3,13 +3,15 @@ const route = useRoute()
 const router = useRouter()
 const notesStore = useNotesStore()
 
-const q = route.query?.q ? getRouterParamsAsString(route.query.q) : null
+const q = computed(() => route.query?.q ? getRouterParamsAsString(route.query.q) : null)
 
-await useAsyncData('notes', async () => await notesStore.fetchSearchNotes(q || ''))
+await useAsyncData(`notes-${route.query.q}`, async () => await notesStore.fetchSearchNotes(q.value || ''), {
+  watch: [q],
+})
 
 const { data: encounters } = await useAsyncData('encounters', async () => await getLatestEncounters())
 
-const search = ref(q || '')
+const search = ref(q.value || '')
 
 function filterEncounter(encounter: string) {
   search.value = encounter
@@ -17,7 +19,7 @@ function filterEncounter(encounter: string) {
   searchNotes()
 }
 async function searchNotes() {
-  router.push({
+  await router.push({
     name: 'search',
     query: {
       q: search.value,
@@ -45,7 +47,7 @@ async function searchNotes() {
           </Button>
         </form>
 
-        <div class="flex flex-wrap">
+        <div v-if="encounters" class="flex flex-wrap">
           <Heading h2 styled="h4">
             Search by encounter
           </Heading>
