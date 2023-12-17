@@ -22,7 +22,7 @@ export function createEditorSpellIdImageData(icon: string, spellId: string | num
 export function convertSliceToHex(text: Slice | Node) {
   text.content?.forEach((item) => {
     if (item.marks[0]?.attrs?.color) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-expect-error
       // Value can be set, ignore type issue
       item.marks[0].attrs.color = convertRgbColorsToHex(item.marks[0]?.attrs?.color)
@@ -53,7 +53,7 @@ function createTextNode(editor: Editor, text: string, { color }: { color?: strin
   return editor.schema.text(text, marks)
 }
 
-function createImageNode({ editor, src, alt, title }: { editor: Editor; src: string; alt: string; title?: string }) {
+function createImageNode({ editor, src, alt, title }: { editor: Editor, src: string, alt: string, title?: string }) {
   return editor.schema.nodes.image.create({ src, alt, title })
 }
 
@@ -165,7 +165,7 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
   }
 
   if (jsonContent.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // eslint-disable-next-line ts/ban-ts-comment
     // @ts-expect-error
     content.content = Fragment.fromArray(jsonContent)
   }
@@ -213,7 +213,7 @@ export function useEditor(initialValue: Ref<string>, emit: any) {
         return true
       },
       // function exists, the types are wrong
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // eslint-disable-next-line ts/ban-ts-comment
       // @ts-expect-error
       transformPasted: async (pastedText: Slice) => {
         if (editor.value) {

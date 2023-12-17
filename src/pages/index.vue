@@ -1,5 +1,5 @@
 <script lang="ts" setup async>
-import { paramCase } from 'change-case'
+import { kebabCase } from 'change-case'
 
 const user = useSupabaseUser()
 const notesStore = useNotesStore()
@@ -50,11 +50,9 @@ watchOnce(
       <Container>
         <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
           Set your username on your account if you want to share your profile
-          <nuxt-link to="/account">
-            <Button class="ml-4">
-              Set Username
-            </Button>
-          </nuxt-link>
+          <Button to="/account" class="ml-4">
+            Set Username
+          </Button>
         </Notification>
         <div class="user-information mb-8">
           <div v-if="!user" class="bg-gray-900 p-4 rounded flex items-center">
@@ -92,7 +90,7 @@ watchOnce(
                   <li
                     v-for="member in teamMembersStore.members"
                     :key="member.id"
-                    :class="`leading-[2] has-wow-text-${paramCase(member.class)}`"
+                    :class="`leading-[2] has-wow-text-${kebabCase(member.class)}`"
                   >
                     {{ member.name }}
                   </li>

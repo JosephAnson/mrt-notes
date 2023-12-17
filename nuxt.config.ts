@@ -63,6 +63,13 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/main.scss'],
   srcDir: 'src/',
+  supabase: {
+    redirectOptions: {
+      login: '/login',
+      callback: '/confirm',
+      exclude: ['*'],
+    },
+  },
   unocss: {
     presets: [
       presetWind({

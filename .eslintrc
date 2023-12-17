@@ -1,8 +1,0 @@
-{
-  "extends": ["@antfu"],
-  "rules": {
-    "antfu/if-newline": 0,
-    "n/prefer-global/process": "off"
-  }
-}
-

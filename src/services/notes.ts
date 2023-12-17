@@ -86,7 +86,7 @@ export async function fetchAllUserNotes() {
   return await fetchAllNotesByUserId(user.value?.id || '')
 }
 
-export async function getAllNotes({ order, limit }: { order?: keyof NotesRow; limit?: number } = {}) {
+export async function getAllNotes({ order, limit }: { order?: keyof NotesRow, limit?: number } = {}) {
   return await $fetch('/api/notes/find/all', {
     query: {
       limit,

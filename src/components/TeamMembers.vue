@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { paramCase } from 'change-case'
+import { kebabCase } from 'change-case'
 import type { Ref } from 'vue'
 import Draggable from 'vuedraggable'
 import type { WowClassesUnion } from '~/types'
@@ -24,7 +24,7 @@ const debouncedUpdateMembers = useDebounceFn(
   <Field label-for="player" label="Player">
     <Input v-model="playerName" class="mr-2" />
 
-    <Select v-model:value="playerClass" class="mr-2" :class="`has-wow-background-${paramCase(playerClass)}`">
+    <Select v-model:value="playerClass" class="mr-2" :class="`has-wow-background-${kebabCase(playerClass)}`">
       <option v-for="type in WowClasses" :key="type">
         {{ type }}
       </option>
@@ -45,7 +45,7 @@ const debouncedUpdateMembers = useDebounceFn(
 
           <Select
             v-model:value="element.class"
-            :class="`has-wow-background-${paramCase(element.class)}`"
+            :class="`has-wow-background-${kebabCase(element.class)}`"
             @update:value="debouncedUpdateMembers"
           >
             <option v-for="type in WowClasses" :key="type">

@@ -3,7 +3,7 @@ import type { NotesAndProfile } from '../../../../types'
 import { NOTE_COLUMNS } from '../../../../utils/constants'
 import { createNote } from '../../../../utils/createNote'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line ts/ban-ts-comment
 // @ts-expect-error
 import { serverSupabaseClient } from '#supabase/server'
 
@@ -15,7 +15,7 @@ export default eventHandler(async (event) => {
     })
   }
 
-  const client = serverSupabaseClient<Database>(event)
+  const client = await serverSupabaseClient<Database>(event)
   const { data } = await client
     .from('notes')
     .select(NOTE_COLUMNS)

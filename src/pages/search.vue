@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const user = useSupabaseUser()
 const route = useRoute()
 const router = useRouter()
 const notesStore = useNotesStore()

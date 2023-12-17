@@ -1,10 +1,9 @@
 <script setup lang="ts">
-const client = useSupabaseAuthClient()
+const client = useSupabaseClient()
 const user = useSupabaseUser()
 const route = useRouter()
 
 const email = ref('')
-const returnUrl = computed(() => `${(route.currentRoute.value.query as { returnUrl?: string })?.returnUrl}/confirm`)
 </script>
 
 <template>
@@ -17,7 +16,7 @@ const returnUrl = computed(() => `${(route.currentRoute.value.query as { returnU
         <Field label-for="email" label="Email" stacked>
           <Input id="email" v-model="email" type="email" />
         </Field>
-        <Button @click="signInWithOtp(email, returnUrl)">
+        <Button @click="signInWithOtp(email)">
           Sign In
         </Button>
       </div>
@@ -25,14 +24,14 @@ const returnUrl = computed(() => `${(route.currentRoute.value.query as { returnU
       <div v-if="!user" class="flex flex-wrap">
         <Button
           class="flex items-center !bg-[#5865f2] !hover:bg-[#7983f5] mb-2 mr-2"
-          @click="login('discord', returnUrl)"
+          @click="login('discord')"
         >
           <span class="i-carbon-logo-discord inline-block mr-2 text-xl" />
           Login with Discord
         </Button>
         <Button
           class="flex items-center !bg-[#db4437] !hover:bg-[#D52E29] mb-2 mr-2"
-          @click="login('google', returnUrl)"
+          @click="login('google')"
         >
           <span class="i-carbon-logo-google inline-block mr-2 text-xl" />
           Login with Google

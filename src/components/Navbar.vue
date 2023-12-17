@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
 
-const client = useSupabaseAuthClient()
+const client = useSupabaseClient()
 const user = useSupabaseUser()
 const router = useRouter()
 const profileStore = useProfileStore()

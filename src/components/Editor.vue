@@ -25,7 +25,7 @@ const noteStore = useNoteStore()
 
 const editor = useEditor(modelValue, emits)
 
-function addImageToEditor({ src, alt, title }: { src: string; alt: string; title?: string }) {
+function addImageToEditor({ src, alt, title }: { src: string, alt: string, title?: string }) {
   editor.value?.chain().focus().setImage({ src, alt, title }).run()
 }
 
@@ -41,7 +41,7 @@ async function createPlayerSnippet(player: Member) {
   editor.value?.commands.focus()
 }
 
-async function createSpellSnippet(spellName: string, imageData: { src: string; alt: string; title?: string }) {
+async function createSpellSnippet(spellName: string, imageData: { src: string, alt: string, title?: string }) {
   addImageToEditor(imageData)
   editor.value?.commands.insertContent(' ')
   editor.value?.commands.setMark('textStyle', {

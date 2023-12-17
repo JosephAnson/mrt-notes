@@ -51,7 +51,7 @@ export async function updateGroups(note_id: number, groups: Group[]) {
           order: index,
           players: group.players,
           type: group.type,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // eslint-disable-next-line ts/ban-ts-comment
           // @ts-expect-error
           user_id: user.value.id,
         })),

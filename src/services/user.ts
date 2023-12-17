@@ -1,10 +1,10 @@
-export async function login(provider: 'discord' | 'google', returnUrl?: string) {
-  const client = useSupabaseAuthClient()
+export async function login(provider: 'discord' | 'google') {
+  const client = useSupabaseClient()
 
   const { error } = await client.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: returnUrl || window.location.origin,
+      redirectTo: window.location.origin + '/confirm',
     },
   })
 
@@ -12,13 +12,13 @@ export async function login(provider: 'discord' | 'google', returnUrl?: string) 
 }
 
 export async function signInWithOtp(email: string, returnUrl?: string) {
-  const client = useSupabaseAuthClient()
+  const client = useSupabaseClient()
   const router = useRouter()
 
   const { error } = await client.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: returnUrl || window.location.origin,
+      emailRedirectTo: window.location.origin + '/confirm',
     },
   })
 
