@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, TransitionRoot } from '@headlessui/vue'
 import Draggable from 'vuedraggable'
-import { GroupType } from '~/types'
+import PlayerTags from '~/components/PlayerTags.vue'
+import { type Group, GroupType, type Member } from '~/types'
 
 const props = defineProps({
   noteId: {
@@ -12,6 +13,7 @@ const props = defineProps({
 
 const groupsStore = useGroupsStore()
 const teamMembersStore = useTeamMembersStore()
+const { members } = storeToRefs(teamMembersStore)
 
 await useAsyncData('groups', async () => await groupsStore.fetchAllGroups(props.noteId))
 
@@ -26,28 +28,40 @@ const debouncedUpdateGroups = useDebounceFn(
 const query = ref('')
 const filteredMembers = computed(() =>
   query.value === ''
-    ? teamMembersStore.members
-    : teamMembersStore.members.filter(member =>
+    ? members.value
+    : members.value.filter(member =>
       member.name.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, '')),
     ),
 )
+
+function getSelectedMembers(players: string[]) {
+  return members.value.filter(member => players.includes(member.name))
+}
+
+function onGroupMemberDelete(group: Group, member: Member) {
+  group.players = group.players.filter(player => player !== member.name)
+}
 </script>
 
 <template>
   <div class="box groups">
-    <div class="flex justify-between mb-4 items-center">
-      <div class="notification">
+    <div
+      class="flex justify-between items-center" :class="{
+        'mb-4': groupsStore.groups.length > 0,
+      }"
+    >
+      <div class="font-bold">
         Add groups to show messages only to certain players
       </div>
       <div class="groups__actions buttons">
-        <Button type="is-primary" @click="groupsStore.addGroup(noteId, groupsStore.groups.length + 1)">
+        <Button @click="groupsStore.addGroup(noteId, groupsStore.groups.length + 1)">
           Add Group
         </Button>
       </div>
     </div>
     <Draggable v-model="groupsStore.groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
       <template #item="{ element }">
-        <div class="flex w-full bg-gray-800 py-2 px-4 mb-2 rounded-1">
+        <Card class="flex w-full px-2 mb-2 rounded-1 !bg-gray-700">
           <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
           <div class="w-full">
@@ -59,7 +73,14 @@ const filteredMembers = computed(() =>
               </Select>
             </Field>
 
-            <Field v-if="element.type === 'Players'" stacked :label="`Players: ${element.players.join(',')}`">
+            <Field v-if="element.type === 'Players'" stacked>
+              <Field
+                label="Group Players:"
+                class="!mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+              >
+                <PlayerTags :members="getSelectedMembers(element.players)" delete @delete="onGroupMemberDelete(element, $event)" />
+              </Field>
+
               <Combobox v-model="element.players" multiple @update:model-value="debouncedUpdateGroups">
                 <div class="relative mt-1">
                   <div
@@ -127,17 +148,16 @@ const filteredMembers = computed(() =>
               </Combobox>
             </Field>
 
-            <Field stacked>
-              <Editor
-                v-model="element.note.value"
-                @update:json="element.note.json = $event"
-                @update:model-value="debouncedUpdateGroups"
-              />
-            </Field>
+            <Editor
+              v-model="element.note.value"
+              :members="element.type === 'Players' ? getSelectedMembers(element.players) : members"
+              @update:json="element.note.json = $event"
+              @update:model-value="debouncedUpdateGroups"
+            />
           </div>
 
-          <a class="i-carbon-trash-can w-8 mt-2 ml-2 flex-grow-0" @click="groupsStore.deleteGroup(element.id)" />
-        </div>
+          <a class="i-carbon-trash-can w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="groupsStore.deleteGroup(element.id)" />
+        </Card>
       </template>
     </Draggable>
   </div>

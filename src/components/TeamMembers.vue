@@ -35,29 +35,31 @@ const debouncedUpdateMembers = useDebounceFn(
     </Button>
   </Field>
 
-  <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
-    <template #item="{ element, index }">
-      <div class="bg-gray-800 flex justify-between py-2 px-4 items-center mb-2 rounded-1">
-        <span class="i-carbon-draggable mr-2 text-2xl handle" />
+  <template v-if="teamMembersStore.members?.length">
+    <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
+      <template #item="{ element, index }">
+        <Card class="flex justify-between px-4 items-center mb-2 rounded-1">
+          <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
-        <Field class="w-full !mb-0 mr-2 !inline-block !sm:flex" :label-for="`player-${index}`" label="Player">
-          <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @update:model-value="debouncedUpdateMembers" />
+          <Field class="w-full !mb-0 mr-2 !inline-block !sm:flex" :label-for="`player-${index}`" label="Player">
+            <Input v-model="element.name" class="w-full mr-2 my-2 sm:my-0" @update:model-value="debouncedUpdateMembers" />
 
-          <Select
-            v-model:value="element.class"
-            :class="`has-wow-background-${kebabCase(element.class)}`"
-            @update:value="debouncedUpdateMembers"
-          >
-            <option v-for="type in WowClasses" :key="type">
-              {{ type }}
-            </option>
-          </Select>
-        </Field>
+            <Select
+              v-model:value="element.class"
+              :class="`has-wow-background-${kebabCase(element.class)}`"
+              @update:value="debouncedUpdateMembers"
+            >
+              <option v-for="type in WowClasses" :key="type">
+                {{ type }}
+              </option>
+            </Select>
+          </Field>
 
-        <Button class="delete" @click="teamMembersStore.removeMember(element)">
-          Delete
-        </Button>
-      </div>
-    </template>
-  </Draggable>
+          <Button class="delete" @click="teamMembersStore.removeMember(element)">
+            Delete
+          </Button>
+        </Card>
+      </template>
+    </Draggable>
+  </template>
 </template>

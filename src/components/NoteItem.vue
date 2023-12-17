@@ -33,15 +33,15 @@ const canEdit = computed(() => isUsers && props.showEdit)
         </Heading>
       </NuxtLink>
       <div class="flex flex-col flex-wrap sm:flex-row sm:items-center text-gray-300 text-sm">
-        <nuxt-link v-if="props.note.username" :to="`/profile/${props.note.username}`">
-          <span class="i-carbon-user inline-block" /> {{ props.note.username }}
+        <nuxt-link v-if="props.note.username" class="flex items-center" :to="`/profile/${props.note.username}`">
+          <span class="i-carbon-user inline-block mr-1" /> {{ props.note.username }}
         </nuxt-link>
         <span
           v-if="props.note.username"
-          class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2"
+          class="hidden sm:inline-block border-r-1 border-solid h-4 border-white:25 pr-2 mr-2"
         />
         <span>Created on: {{ createdOn }}</span>
-        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white pr-2 mr-2" />
+        <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white:25 pr-2 mr-2" />
         <span>Updated: {{ updatedOn }}</span>
       </div>
       <Field v-if="props.note.description" stacked class="line-clamp-3 pt-2 !mb-0">

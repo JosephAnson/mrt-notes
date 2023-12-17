@@ -10,6 +10,7 @@ definePageMeta({
 const route = useRoute('note-edit-id')
 
 const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
+const teamMembersStore = useTeamMembersStore()
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)
@@ -110,11 +111,24 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
               </Heading>
             </div>
 
-            <Editor key="main-editor" v-model="editor.value" class="block" :spells="encounterSpells?.spells" @update:json="editor.json = $event" />
+            <Card class="mb-2">
+              <Editor
+                key="main-editor"
+                v-model="editor.value"
+                :members="teamMembersStore.members"
+                class="block"
+                :spells="encounterSpells?.spells"
+                @update:json="editor.json = $event"
+              />
+            </Card>
 
-            <TeamGroups class="mb-8" :note-id="note.id" />
+            <Card class="mb-2">
+              <TeamGroups :note-id="note.id" />
+            </Card>
 
-            <TeamMembers />
+            <Card class="mb-2">
+              <TeamMembers />
+            </Card>
           </div>
           <div class="sm:col-span-12 md:col-span-6">
             <NotePreview :note-json="editor.json" :note-string="editor.value" />

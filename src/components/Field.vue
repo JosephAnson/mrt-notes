@@ -15,10 +15,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="field items-center mb-4 last-child:mb-0" :class="{ flex: !stacked }">
+  <div class="field items-center mb-4 :not(:last-child):mb-2" :class="{ flex: !stacked }">
     <label v-if="label" :for="labelFor" class="label mr-4 inline-block" :class="{ 'mb-2': stacked, 'sr-only': srOnly }">
       {{ label }}
     </label>
     <slot />
   </div>
 </template>
+
+<style>
+.field:last-child {
+  margin-bottom: 0 !important;
+}
+</style>

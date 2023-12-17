@@ -2,6 +2,7 @@
 import { EditorContent } from '@tiptap/vue-3'
 import EditorSpellOccurranceModalButton from '~/components/EditorSpellOccurranceModalButton.vue'
 import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
+import PlayerTags from '~/components/PlayerTags.vue'
 import type { EncounterSpell } from '~/server/api/blizzard/encounter/spells/[id]'
 import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
@@ -12,18 +13,18 @@ const props = withDefaults(
   defineProps<{
     modelValue: string
     spells?: EncounterSpell[] | null
+    members?: Member[]
   }>(),
   {
     modelValue: '',
     spells: () => [],
+    members: () => [],
   },
 )
 
 const emits = defineEmits(['update:modelValue', 'update:json'])
 
 const { modelValue } = toRefs(props)
-
-const teamMembersStore = useTeamMembersStore()
 
 const editor = useEditor(modelValue, emits)
 
@@ -70,16 +71,16 @@ function setColor(event: Event) {
 </script>
 
 <template>
-  <div class="editor bg-gray-800 rounded mb-4">
-    <div class="toolbar flex flex-wrap p-2 bg-gray-700">
-      <div class="relative">
+  <div class="editor mb-4">
+    <div class="toolbar flex flex-wrap p-2 bg-gray-700 rounded">
+      <div class="relative h-6 of-hidden">
         <input
           class="absolute top-0 left-0 w-full h-full opacity-0"
           type="color"
           :value="editor?.getAttributes('textStyle').color"
           @input="setColor"
         >
-        <span
+        <div
           class="i-carbon-text-color text-3xl inline-block pointer-events-none"
           :style="{ color: editor?.getAttributes('textStyle').color }"
         />
@@ -114,31 +115,20 @@ function setColor(event: Event) {
       </button>
     </div>
 
-    <div>
-      <Field
-        v-if="teamMembersStore.members.length"
-        label="Players:"
-        class="px-2 mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
-      >
-        <div class="flex flex-wrap">
-          <a
-            v-for="teamMember in teamMembersStore.members"
-            :key="teamMember.id"
-            class="space-between cursor-pointer mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
-            :class="`has-wow-text-${teamMember.class.replace(' ', '-').toLowerCase()}`"
-            @click.prevent="createPlayerSnippet(teamMember)"
-          >
-            {{ teamMember.name }}
-          </a>
-        </div>
-      </Field>
-    </div>
+    <Field
+      v-if="members?.length"
+      label="Players:"
+      class="mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+    >
+      <PlayerTags :members="members" @click="createPlayerSnippet" />
+    </Field>
+
     <div>
       <Field
         v-if="spells?.length"
         key="encounter-spells"
         label="Encounter Spells: "
-        class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start first:mt-2"
+        class="!mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start first:mt-2"
       >
         <div v-if="spells" class="flex flex-wrap">
           <div
@@ -169,7 +159,7 @@ function setColor(event: Event) {
       </Field>
     </div>
 
-    <div class="p-2 pt-0">
+    <div class="p-y2 pt-0">
       <EditorContent class="editor-content" :editor="editor" />
     </div>
   </div>
