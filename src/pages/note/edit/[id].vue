@@ -47,7 +47,7 @@ async function deleteNoteAndRedirect() {
     cancelText: 'No',
     confirmText: 'Yes',
     onConfirm: async () => {
-      openSnackbar('deleted')
+      openSnackbar('Note has been deleted')
 
       if (note.value) {
         const router = useRouter()

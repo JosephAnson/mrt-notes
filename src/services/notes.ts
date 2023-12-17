@@ -95,5 +95,5 @@ export async function deleteNote(id: number) {
   await deleteGroupsWithNoteId(id)
 
   await client.from('notes').delete().match({ id })
-  openSnackbar({ message: 'Note Deleted', background: 'bg-red-700' })
+  openSnackbar({ message: 'Note has been deleted', background: 'bg-red-700' })
 }
