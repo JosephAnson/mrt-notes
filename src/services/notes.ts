@@ -3,35 +3,6 @@ import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 import { createNote } from '~/utils/createNote'
 
-const defaultEditorValue
-  = 'Fight summary<br><br><br>'
-  + 'All Phases<br><br><br>'
-  + 'Phase 1<br><br><br>'
-  + 'Phase 2<br><br><br>'
-  + 'Phase 3<br><br><br>'
-
-export async function createNewNote(name: string, editor_string = defaultEditorValue) {
-  if (!name && name.length <= 0) return openSnackbar('Please enter a name')
-
-  const client = useSupabaseClient<Database>()
-  const user = useSupabaseUser()
-  const router = useRouter()
-
-  if (user.value) {
-    const { data } = await client
-      .from('notes')
-      .insert({
-        editor_string,
-        name,
-        user_id: user.value.id,
-      })
-      .select(NOTE_COLUMNS)
-      .single()
-
-    if (data) await router.push(`/note/edit/${data.id}`)
-  }
-}
-
 export async function getNote(id: string): Promise<Note | undefined> {
   const client = useSupabaseClient<Database>()
   const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).returns<NotesAndProfile[]>().single()

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
 import { capitalCase } from 'change-case'
+import type { Ref } from 'vue'
 import { useSupabaseUser } from '#imports'
 import type { Note } from '~/types'
-import type { Ref } from 'vue'
 import { editorExtensions } from '~/utils/editor'
 
 const user = useSupabaseUser()

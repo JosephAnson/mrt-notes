@@ -3,8 +3,6 @@ import type { NotesAndProfile } from '../../../../types'
 import { NOTE_COLUMNS } from '../../../../utils/constants'
 import { createNote } from '../../../../utils/createNote'
 
-// eslint-disable-next-line ts/ban-ts-comment
-// @ts-expect-error
 import { serverSupabaseClient } from '#supabase/server'
 
 export default eventHandler(async (event) => {
@@ -21,6 +19,7 @@ export default eventHandler(async (event) => {
     .select(NOTE_COLUMNS)
     .eq('user_id', event.context.params.id)
     .order('created_at')
+    .returns<NotesAndProfile[]>()
 
-  return (data as NotesAndProfile[]).map(note => createNote(note))
+  return data?.map(note => createNote(note))
 })
