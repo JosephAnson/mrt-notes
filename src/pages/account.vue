@@ -10,6 +10,7 @@ const user = useSupabaseUser()
 
 const { data: profile } = await useFetch('/api/profile/get', {
   headers: useRequestHeaders(['cookie']),
+  watch: [user],
 })
 
 const username = ref<string>(profile.value?.username || '')

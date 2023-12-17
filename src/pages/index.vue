@@ -6,7 +6,7 @@ const teamMembersStore = useTeamMembersStore()
 
 const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
-const { data: profile } = await useFetch('/api/profile/get', {
+const { data: profile, execute } = await useFetch('/api/profile/get', {
   headers: useRequestHeaders(['cookie']),
 })
 
@@ -20,6 +20,10 @@ watchOnce(
   },
   { deep: true },
 )
+
+whenever(() => !!user.value, () => {
+  execute()
+})
 </script>
 
 <template>
@@ -49,6 +53,7 @@ watchOnce(
     <div>
       <Container>
         <Notification v-if="user && !profile?.username" class="inline-flex justify-between items-center mb-8">
+          {{ profile?.username }}
           Set your username on your account if you want to share your profile
           <Button to="/account" class="ml-4">
             Set Username

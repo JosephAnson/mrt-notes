@@ -8,6 +8,7 @@ const router = useRouter()
 
 const { data: profile } = await useFetch('/api/profile/get', {
   headers: useRequestHeaders(['cookie']),
+  watch: [user],
 })
 
 function login() {

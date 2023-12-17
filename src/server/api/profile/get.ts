@@ -1,6 +1,5 @@
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
 import type { Database } from '~/supabase.types'
-import type { Profile } from '~/types'
 
 const profileColumns = 'id, username, avatar_url'
 
@@ -14,7 +13,6 @@ export default eventHandler(async (event) => {
     .from('profiles')
     .select(profileColumns)
     .eq('id', user.id)
-    .returns<Profile[]>()
     .single()
 
   return data
