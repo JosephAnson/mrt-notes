@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const updateNumber = 1
+const updateNumber = 2
 const show = ref(false)
 
 const update = useLocalStorage('updates', 0)
