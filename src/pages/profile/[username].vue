@@ -27,8 +27,8 @@ await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(async
         <Heading h2>
           {{ capitalCase(asyncProfile?.username || '') }}'s Notes
         </Heading>
-        <div v-if="notesStore.notes.user.length">
-          <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
+        <div v-if="notesStore.user.length">
+          <NoteItem v-for="note in notesStore.user" :key="note.id" :note="note" />
         </div>
         <Heading v-else h2>
           {{ asyncProfile.username }} doesn't have any notes

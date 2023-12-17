@@ -2,13 +2,14 @@
 import { generateJSON } from '@tiptap/html'
 import { capitalCase } from 'change-case'
 import { useSupabaseUser } from '#imports'
+import type { Note } from '~/types'
+import type { Ref } from 'vue'
 import { editorExtensions } from '~/utils/editor'
 
 const user = useSupabaseUser()
 const route = useRoute('note-id')
 
-console.log('route id', route.params.id)
-const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
+const { data: note } = await useFetch(`/api/notes/${route.params.id}`) as unknown as { data: Ref<Note> }
 const { data: userNotes } = await useFetch(`/api/notes/user/${note.value?.user_id}`)
 
 const noteName = computed(() => (note.value?.name ? capitalCase(note.value?.name) : 'No Name'))

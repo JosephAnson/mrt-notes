@@ -69,10 +69,10 @@ watchOnce(
               <div class="w-full lg:w-2/3 lg:pr-8">
                 <CreateNote />
 
-                <section v-if="notesStore.notes.user.length">
+                <section v-if="notesStore.user.length">
                   <Heading>My Notes</Heading>
                   <div class="mb-8">
-                    <NoteItem v-for="note in notesStore.notes.user" :key="note.id" :note="note" />
+                    <NoteItem v-for="note in notesStore.user" :key="note.id" :note="note" />
                   </div>
                 </section>
               </div>

@@ -1,46 +1,39 @@
-import type { Note, NoteTypes } from '~/types'
+import type { Note } from '~/types'
 import {
-  deleteNote,
+  deleteNote as deleteNoteApi,
   fetchAllNotesByUserId,
   getAllNotes,
   searchAllNotes,
 } from '~/services/notes'
 
-export interface NoteState {
-  notes: {
-    search: Note[]
-    user: Note[]
-    recentlyCreated: Note[]
-    recentlyModified: Note[]
+export const useNotesStore = defineStore('notes', () => {
+  const search = ref<Note[]>([])
+  const user = ref<Note[]>([])
+
+  async function fetchAllUserNotes(userID?: string) {
+    if (!userID) return user.value
+    const notes = await fetchAllNotesByUserId(userID)
+    user.value = notes
+    return notes
   }
-}
 
-export const useNotesStore = defineStore('notes', {
-  state: (): NoteState => ({
-    notes: {
-      search: [],
-      user: [],
-    },
-  }),
-  actions: {
-    async fetchAllUserNotes(userID?: string) {
-      if (!userID) return this.notes.user
-      const notes = await fetchAllNotesByUserId(userID)
-      this.notes.user = notes
-      return notes
-    },
-    async fetchSearchNotes(name?: string) {
-      const notes = name ? await searchAllNotes(name) : await getAllNotes({ limit: 30 })
-      this.notes.search = notes
-      return notes
-    },
-    async deleteNote(id: number) {
-      await deleteNote(id)
+  async function fetchSearchNotes(name?: string) {
+    const notes = name ? await searchAllNotes(name) : await getAllNotes({ limit: 30 })
+    search.value = notes
+    return notes
+  }
+  async function deleteNote(id: number) {
+    await deleteNoteApi(id)
 
-      for (const key in this.notes) {
-        const noteKey = key as NoteTypes
-        this.notes[noteKey] = this.notes[noteKey]?.filter((t: Note) => t.id !== id) || []
-      }
-    },
-  },
+    user.value = user.value.filter(item => item.id !== id)
+    search.value = search.value.filter(item => item.id !== id)
+  }
+
+  return {
+    search,
+    user,
+    fetchAllUserNotes,
+    fetchSearchNotes,
+    deleteNote,
+  }
 })
