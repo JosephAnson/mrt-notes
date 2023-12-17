@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const client = useSupabaseClient()
 const user = useSupabaseUser()
-const route = useRouter()
 
 const email = ref('')
 </script>

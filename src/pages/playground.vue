@@ -5,7 +5,6 @@ const editor = reactive<EditorData>({
   value: '',
   json: {},
 })
-const noteStore = useNoteStore()
 const groupsStore = useGroupsStore()
 
 groupsStore.clearGroups()
@@ -14,12 +13,7 @@ const expansion = ref(503)
 const instance = ref(1200)
 const encounter = ref(2480)
 
-const { pending: spellsLoading } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
-  onResponse({ response }) {
-    noteStore.setSpells(response._data.spells)
-    return response._data
-  },
-})
+const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
 </script>
 
 <template>
@@ -45,7 +39,7 @@ const { pending: spellsLoading } = await useFetch(() => `/api/blizzard/encounter
       <section id="ERT-Editor">
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
-            <Editor v-model="editor.value" class="block" @update:json="editor.json = $event" />
+            <Editor v-model="editor.value" class="block" :spells="encounterSpells.spells" @update:json="editor.json = $event" />
 
             <p>Login for more features</p>
           </div>

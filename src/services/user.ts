@@ -4,21 +4,21 @@ export async function login(provider: 'discord' | 'google') {
   const { error } = await client.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: window.location.origin + '/confirm',
+      redirectTo: `${window.location.origin}/confirm`,
     },
   })
 
   if (error) return openSnackbar('Something went wrong !')
 }
 
-export async function signInWithOtp(email: string, returnUrl?: string) {
+export async function signInWithOtp(email: string) {
   const client = useSupabaseClient()
   const router = useRouter()
 
   const { error } = await client.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: window.location.origin + '/confirm',
+      emailRedirectTo: `${window.location.origin}/confirm`,
     },
   })
 

@@ -6,18 +6,10 @@ import { editorExtensions } from '~/utils/editor'
 
 const user = useSupabaseUser()
 const route = useRoute('note-id')
-const groupsStore = useGroupsStore()
-const notesStore = useNotesStore()
 
-const { data: note } = await useAsyncData('notes', async () => {
-  return await getNote(getRouterParamsAsString(route.params.id))
-})
-await useAsyncData('groups', async () => {
-  if (note.value)
-    await groupsStore.fetchAllGroups(note.value.id)
-})
-
-await useAsyncData('userNotes', async () => await notesStore.fetchAllUserNotes(note.value?.user_id || ''))
+console.log('route id', route.params.id)
+const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
+const { data: userNotes } = await useFetch(`/api/notes/user/${note.value?.user_id}`)
 
 const noteName = computed(() => (note.value?.name ? capitalCase(note.value?.name) : 'No Name'))
 const noteIsUsers = computed(() => isUsersNote(user.value?.id, note.value?.user_id))
@@ -71,15 +63,15 @@ useSeoMeta({
             <NotePreview :note-json="json" :note-string="editorString" />
           </section>
         </div>
-        <div v-if="note && notesStore.notes?.user?.length" class="sm:col-span-12 md:col-span-3">
+        <div v-if="note && userNotes?.length" class="sm:col-span-12 md:col-span-3">
           <Heading v-if="note?.username" h2>
             {{ capitalCase(note.username) }}'s Notes
           </Heading>
           <Heading v-else h2>
             Related Notes
           </Heading>
-          <div v-if="notesStore.notes.user.length" class="overflow-y-auto h-screen">
-            <NoteItem v-for="userNote in notesStore.notes.user" :key="userNote.id" :note="userNote" />
+          <div v-if="userNotes.length" class="overflow-y-auto h-screen">
+            <NoteItem v-for="userNote in userNotes" :key="userNote.id" :note="userNote" />
           </div>
         </div>
       </div>

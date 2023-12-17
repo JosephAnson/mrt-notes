@@ -20,8 +20,6 @@ export const useNotesStore = defineStore('notes', {
     notes: {
       search: [],
       user: [],
-      recentlyCreated: [],
-      recentlyModified: [],
     },
   }),
   actions: {

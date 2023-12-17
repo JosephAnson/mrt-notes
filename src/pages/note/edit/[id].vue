@@ -6,7 +6,6 @@ definePageMeta({
   middleware: 'note-edit',
 })
 
-const noteStore = useNoteStore()
 const notesStore = useNotesStore()
 const route = useRoute('note-edit-id')
 
@@ -61,12 +60,7 @@ async function deleteNoteAndRedirect() {
   })
 }
 
-const { pending: spellsLoading } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`, {
-  onResponse({ response }) {
-    noteStore.setSpells(response._data.spells)
-    return response._data
-  },
-})
+const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
 </script>
 
 <template>
@@ -118,7 +112,7 @@ const { pending: spellsLoading } = await useFetch(() => `/api/blizzard/encounter
               </Heading>
             </div>
 
-            <Editor key="main-editor" v-model="editor.value" class="block" @update:json="editor.json = $event" />
+            <Editor key="main-editor" v-model="editor.value" class="block" :spells="encounterSpells.spells" @update:json="editor.json = $event" />
 
             <TeamGroups class="mb-8" :note-id="note.id" />
 

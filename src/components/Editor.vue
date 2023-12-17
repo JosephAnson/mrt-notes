@@ -2,6 +2,7 @@
 import { EditorContent } from '@tiptap/vue-3'
 import EditorSpellOccurranceModalButton from '~/components/EditorSpellOccurranceModalButton.vue'
 import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
+import type { EncounterSpell } from '~/server/api/blizzard/encounter/spells/[id]'
 import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
 import { IMAGE_MARKER } from '~/utils/constants'
@@ -10,6 +11,7 @@ import { createEditorSpellIdImageData, useEditor } from '~/utils/editor'
 const props = withDefaults(
   defineProps<{
     modelValue: string
+    spells: EncounterSpell[]
   }>(),
   {
     modelValue: '',
@@ -21,7 +23,6 @@ const emits = defineEmits(['update:modelValue', 'update:json'])
 const { modelValue } = toRefs(props)
 
 const teamMembersStore = useTeamMembersStore()
-const noteStore = useNoteStore()
 
 const editor = useEditor(modelValue, emits)
 
@@ -133,14 +134,14 @@ function setColor(event: Event) {
     </div>
     <div>
       <Field
-        v-if="noteStore.spells.length"
+        v-if="spells.length"
         key="encounter-spells"
         label="Encounter Spells: "
         class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start first:mt-2"
       >
-        <div v-if="noteStore.spells" class="flex flex-wrap">
+        <div v-if="spells" class="flex flex-wrap">
           <div
-            v-for="spell in noteStore.spells"
+            v-for="spell in spells"
             :key="`encounter-spells-${spell.id}`"
             class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
             @click="
