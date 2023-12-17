@@ -3,13 +3,11 @@ import { capitalCase } from 'change-case'
 
 const user = useSupabaseUser()
 const route = useRoute('profile-username')
-const notesStore = useNotesStore()
 
 const usernameParam = getRouterParamsAsString(route.params.username)
 
-const { data: asyncProfile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam))
-
-await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(asyncProfile.value?.id || ''))
+const { data: profile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam))
+const { data: notes } = await useFetch(`/api/notes/user/${profile.value?.id}`)
 </script>
 
 <template>
@@ -17,21 +15,21 @@ await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(async
     <Container>
       <Ad ad-slot="8629692962" />
 
-      <div v-if="asyncProfile">
+      <div v-if="profile">
         <Heading h1>
-          {{ capitalCase(asyncProfile?.username || '') }}'s Profile
+          {{ capitalCase(profile?.username || '') }}'s Profile
         </Heading>
 
-        <CreateNote v-if="user?.id === asyncProfile?.id" class="mb-8" />
+        <CreateNote v-if="user?.id === profile?.id" class="mb-8" />
 
         <Heading h2>
-          {{ capitalCase(asyncProfile?.username || '') }}'s Notes
+          {{ capitalCase(profile?.username || '') }}'s Notes
         </Heading>
-        <div v-if="notesStore.user.length">
-          <NoteItem v-for="note in notesStore.user" :key="note.id" :note="note" />
+        <div v-if="notes?.length">
+          <NoteItem v-for="note in notes" :key="note.id" :note="note" />
         </div>
         <Heading v-else h2>
-          {{ asyncProfile.username }} doesn't have any notes
+          {{ profile.username }} doesn't have any notes
         </Heading>
       </div>
       <Heading v-else h1>

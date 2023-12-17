@@ -7,10 +7,12 @@ export async function getProfile() {
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
 
+  if (!user.value?.id) return
+
   const { data } = await client
     .from('profiles')
     .select(profileColumns)
-    .eq('id', user.value?.id)
+    .eq('id', user.value.id)
     .returns<Profile[]>()
     .single()
 

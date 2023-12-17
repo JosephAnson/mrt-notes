@@ -9,9 +9,7 @@ definePageMeta({
 const notesStore = useNotesStore()
 const route = useRoute('note-edit-id')
 
-const { data: note } = await useAsyncData('notes', async () => {
-  return await getNote(getRouterParamsAsString(route.params.id))
-})
+const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)

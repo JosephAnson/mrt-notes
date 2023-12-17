@@ -2,11 +2,11 @@
 import { kebabCase } from 'change-case'
 
 const user = useSupabaseUser()
-const notesStore = useNotesStore()
 const profileStore = useProfileStore()
 const teamMembersStore = useTeamMembersStore()
 
-await useAsyncData('notes', async () => await notesStore.fetchAllUserNotes(user.value?.id))
+const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
+
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
 
 const { data: encounters } = await useAsyncData('encounters', async () => await getLatestEncounters())
@@ -15,7 +15,6 @@ const { data: encounters } = await useAsyncData('encounters', async () => await 
 watchOnce(
   () => user.value,
   async () => {
-    await notesStore.fetchAllUserNotes(user.value?.id || '')
     await teamMembersStore.fetchAllTeamMembers()
   },
   { deep: true },
@@ -69,10 +68,10 @@ watchOnce(
               <div class="w-full lg:w-2/3 lg:pr-8">
                 <CreateNote />
 
-                <section v-if="notesStore.user.length">
+                <section v-if="notes?.length">
                   <Heading>My Notes</Heading>
                   <div class="mb-8">
-                    <NoteItem v-for="note in notesStore.user" :key="note.id" :note="note" />
+                    <NoteItem v-for="note in notes" :key="note.id" :note="note" />
                   </div>
                 </section>
               </div>
