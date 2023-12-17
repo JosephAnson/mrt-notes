@@ -21,9 +21,9 @@ useHead({
         <div class="prose text-sm">
           <strong class="!mb-1 block">Fixed: Page Loading Issues</strong>
           <p class="!m-0">
-            Fixes done to improve stability across the app, thank you to <NuxtLink to="/profile/Skeptikk">
+            Improve stability across the app, thank you to <NuxtLink to="/profile/Skeptikk">
               Skeptikk
-            </NuxtLink> for reporting these issue.
+            </NuxtLink> for reporting these issues.
           </p>
         </div>
       </UpdateNotification>

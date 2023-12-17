@@ -6,8 +6,9 @@ const teamMembersStore = useTeamMembersStore()
 
 const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
-const { data: profile, execute } = await useFetch('/api/profile/get', {
+const { data: profile, execute, pending } = await useFetch(`/api/profile/${user.value?.id}`, {
   headers: useRequestHeaders(['cookie']),
+  watch: [user],
 })
 
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
@@ -20,10 +21,6 @@ watchOnce(
   },
   { deep: true },
 )
-
-whenever(() => !!user.value, () => {
-  execute()
-})
 </script>
 
 <template>
@@ -52,8 +49,7 @@ whenever(() => !!user.value, () => {
     <Ad ad-slot="8629692962" />
     <div>
       <Container>
-        <Notification v-if="user && !profile?.username" class="inline-flex justify-between items-center mb-8">
-          {{ profile?.username }}
+        <Notification v-if="user && !pending && !profile?.username" class="inline-flex justify-between items-center mb-8">
           Set your username on your account if you want to share your profile
           <Button to="/account" class="ml-4">
             Set Username
