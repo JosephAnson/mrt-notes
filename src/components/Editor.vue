@@ -11,10 +11,11 @@ import { createEditorSpellIdImageData, useEditor } from '~/utils/editor'
 const props = withDefaults(
   defineProps<{
     modelValue: string
-    spells: EncounterSpell[]
+    spells?: EncounterSpell[] | null
   }>(),
   {
     modelValue: '',
+    spells: () => [],
   },
 )
 
@@ -134,7 +135,7 @@ function setColor(event: Event) {
     </div>
     <div>
       <Field
-        v-if="spells.length"
+        v-if="spells?.length"
         key="encounter-spells"
         label="Encounter Spells: "
         class="px-2 !mb-2 !mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start first:mt-2"

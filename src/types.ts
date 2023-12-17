@@ -46,7 +46,7 @@ export const WowClasses = [
   'Evoker',
   'Demon Hunter',
 ] as const
-export type WowClassesUnion = (typeof WowClasses)[number]
+export type WowClassesUnion = typeof WowClasses[number]
 
 export interface Member {
   id: number

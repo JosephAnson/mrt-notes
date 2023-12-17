@@ -8,7 +8,7 @@ definePageMeta({
   <Section>
     <Container>
       <Heading h1>
-        Team Members
+        Team Players
       </Heading>
       <TeamMembers />
     </Container>

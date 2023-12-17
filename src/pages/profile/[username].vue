@@ -6,7 +6,10 @@ const route = useRoute('profile-username')
 
 const usernameParam = getRouterParamsAsString(route.params.username)
 
-const { data: profile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam))
+const { data: profile } = await useAsyncData('profile', async () => await getProfileByUsername(usernameParam), {
+  watch: [user],
+  deep: true,
+})
 const { data: notes } = await useFetch(`/api/notes/user/${profile.value?.id}`)
 </script>
 

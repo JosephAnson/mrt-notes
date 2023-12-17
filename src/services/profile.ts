@@ -1,27 +1,14 @@
 import type { Database } from '~/supabase.types'
-import type { Profile } from '~/types'
 
 const profileColumns = 'id, username, avatar_url'
 
-export async function getProfile() {
+export async function getProfileByUsername(username: string) {
   const client = useSupabaseClient<Database>()
-  const user = useSupabaseUser()
-
-  if (!user.value?.id) return
-
   const { data } = await client
     .from('profiles')
     .select(profileColumns)
-    .eq('id', user.value.id)
-    .returns<Profile[]>()
+    .eq('username', `${username}`)
     .single()
-
-  return data
-}
-
-export async function getProfileByUsername(username: string) {
-  const client = useSupabaseClient<Database>()
-  const { data } = await client.from('profiles').select(profileColumns).ilike('username', `${username}`).single()
   return data
 }
 

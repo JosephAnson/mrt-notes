@@ -32,6 +32,7 @@ export async function updateTeamMembers(members: Member[]) {
         class: member.class,
       })),
     )
+    .returns<Member[]>()
     .select(teamMembersColumns)
   return data
 }
@@ -49,6 +50,7 @@ export async function addTeamMember(playerName: string, playerClass: WowClassesU
       user_id: user.value?.id,
     })
     .select(teamMembersColumns)
+    .returns<Member[]>()
     .single()
 
   return data

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
+import { deleteNote as deleteNoteApi } from '~/services/notes'
 import type { EditorData } from '~/types'
 
 definePageMeta({
   middleware: 'note-edit',
 })
 
-const notesStore = useNotesStore()
 const route = useRoute('note-edit-id')
 
 const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
@@ -51,7 +51,7 @@ async function deleteNoteAndRedirect() {
 
       if (note.value) {
         const router = useRouter()
-        await notesStore.deleteNote(note.value.id)
+        await deleteNoteApi(note.value.id)
         router.push('/')
       }
     },
@@ -110,7 +110,7 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
               </Heading>
             </div>
 
-            <Editor key="main-editor" v-model="editor.value" class="block" :spells="encounterSpells.spells" @update:json="editor.json = $event" />
+            <Editor key="main-editor" v-model="editor.value" class="block" :spells="encounterSpells?.spells" @update:json="editor.json = $event" />
 
             <TeamGroups class="mb-8" :note-id="note.id" />
 
