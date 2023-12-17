@@ -10,7 +10,7 @@ const defaultEditorValue
   + 'Phase 3<br><br><br>'
 
 export default eventHandler(async (event) => {
-  const query = getQuery(event)
+  const query = getQuery<{ name: string }>(event)
 
   if (!query) throw new Error('No body found')
   if (!query?.name) throw new Error('No name found')

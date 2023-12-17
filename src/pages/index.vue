@@ -2,14 +2,15 @@
 import { kebabCase } from 'change-case'
 
 const user = useSupabaseUser()
-const profileStore = useProfileStore()
 const teamMembersStore = useTeamMembersStore()
 
 const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
+const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
+const { data: profile } = await useFetch('/api/profile/get', {
+  headers: useRequestHeaders(['cookie']),
+})
 
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
-
-const { data: encounters } = await useAsyncData('encounters', async () => await getLatestEncounters())
 
 // Watch to see if user changes to re-fetch notes
 watchOnce(
@@ -47,7 +48,7 @@ watchOnce(
     <Ad ad-slot="8629692962" />
     <div>
       <Container>
-        <Notification v-if="user && !profileStore.username" class="inline-flex justify-between items-center mb-8">
+        <Notification v-if="user && !profile?.username" class="inline-flex justify-between items-center mb-8">
           Set your username on your account if you want to share your profile
           <Button to="/account" class="ml-4">
             Set Username

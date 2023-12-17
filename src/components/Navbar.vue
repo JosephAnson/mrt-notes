@@ -5,9 +5,10 @@ import { Dialog, DialogPanel } from '@headlessui/vue'
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 const router = useRouter()
-const profileStore = useProfileStore()
 
-await useAsyncData('nav-profile', async () => await profileStore.fetchProfile())
+const { data: profile } = await useFetch('/api/profile/get', {
+  headers: useRequestHeaders(['cookie']),
+})
 
 function login() {
   router.push(`/login?returnUrl=${window.location.href}`)
@@ -23,8 +24,14 @@ const navigation = computed(() => [
   { name: 'Search', to: '/search', show: true },
   { name: 'Encounters', to: '/allencounters', show: true },
   { name: 'Playground', to: '/playground', show: true },
-  { name: 'My Notes', to: `/profile/${profileStore.username}`, show: user.value && profileStore.username },
-  { name: profileStore.username ? `Account (${profileStore.username})` : 'Account', to: '/account', show: user.value },
+  ...(
+    profile.value?.username
+      ? [
+          { name: 'My Notes', to: `/profile/${profile.value.username}`, show: user.value && profile.value.username },
+          { name: `Account (${profile.value.username})`, to: '/account', show: user.value },
+        ]
+      : [{ name: 'Account', to: '/account', show: user.value }]
+  ),
   { name: 'Team', to: '/team', show: user.value },
 ])
 

@@ -9,7 +9,7 @@ await useAsyncData(`notes-${route.query.q}`, async () => await notesStore.fetchS
   watch: [q],
 })
 
-const { data: encounters } = await useAsyncData('encounters', async () => await getLatestEncounters())
+const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
 
 const search = ref(q.value || '')
 

@@ -7,9 +7,9 @@ import { serverSupabaseClient } from '#supabase/server'
 export default cachedEventHandler(
   async (event): Promise<Note[]> => {
     const client = await serverSupabaseClient<Database>(event)
-    const { data } = await client.from('notes').select(NOTE_COLUMNS).order('created_at', { ascending: false }).limit(5)
+    const { data } = await client.from('notes').select(NOTE_COLUMNS).order('created_at', { ascending: false }).limit(5).returns<NotesAndProfile[]>()
 
-    return (data as NotesAndProfile[]).map(note => createNote(note))
+    return data?.map(note => createNote(note)) || []
   },
   {
     name: 'notes-recently-created',

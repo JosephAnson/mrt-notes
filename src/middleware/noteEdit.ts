@@ -6,10 +6,10 @@ function navigateToPreviewOrHome() {
 export default defineNuxtRouteMiddleware(async (to) => {
   const user = useSupabaseUser()
 
-  if (!user.value)
+  if (!user.value || !user.value.id || !(to.params as { id?: string })?.id)
     return navigateToPreviewOrHome()
 
-  const note = await getNote(getRouterParamsAsString(to.params.id))
+  const note = await getNote(getRouterParamsAsString((to.params as { id: string }).id))
   const isUsers = isUsersNote(user.value.id, note?.user_id)
 
   if (!isUsers)

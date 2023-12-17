@@ -1,21 +1,53 @@
 <script setup lang="ts">
 import Notification from '~/components/Notification.vue'
+import { updateUsername, usernameExists } from '~/services/profile'
 
 definePageMeta({
   middleware: 'auth',
 })
 
 const user = useSupabaseUser()
-const profileStore = useProfileStore()
 
-await useAsyncData('profile', async () => await profileStore.fetchProfile())
+const { data: profile } = await useFetch('/api/profile/get', {
+  headers: useRequestHeaders(['cookie']),
+})
 
-const username = ref<string>(profileStore.username || '')
+const username = ref<string>(profile.value?.username || '')
+
+async function setUsername() {
+  if (!username.value) {
+    openSnackbar({
+      message: 'Username cannot be empty!',
+      background: 'bg-red-700',
+    })
+  }
+  else {
+    const usernameExist = await usernameExists(username.value)
+
+    if (usernameExist) {
+      openSnackbar({
+        message: 'Username exists try another!',
+        background: 'bg-red-700',
+      })
+    }
+    else {
+      const user = useSupabaseUser()
+      if (!user.value) throw new Error('User not logged in')
+
+      const data = await updateUsername(username.value, user.value.id)
+
+      if (data.username)
+        username.value = data.username
+
+      openSnackbar('Saved username')
+    }
+  }
+}
 </script>
 
 <template>
   <Section>
-    <Container>
+    <Container v-if="profile">
       <Heading h1>
         Account
       </Heading>
@@ -23,12 +55,12 @@ const username = ref<string>(profileStore.username || '')
       <div class="md:grid grid-cols-12 gap-8">
         <div class="col-span-12 xl:col-span-6">
           <div class="max-w-lg">
-            <Field v-if="profileStore.profile.avatar_url" label-for="avatar" stacked>
-              <img class="w-48 rounded-full" :src="profileStore.profile.avatar_url">
+            <Field v-if="profile.avatar_url" label-for="avatar" stacked>
+              <img class="w-48 rounded-full" :src="profile.avatar_url">
             </Field>
 
-            <Field v-if="profileStore.profile.username" stacked>
-              <Button :to="`/profile/${profileStore.profile.username}`">
+            <Field v-if="profile.username" stacked>
+              <Button :to="`/profile/${profile.username}`">
                 View Profile
               </Button>
             </Field>
@@ -39,14 +71,14 @@ const username = ref<string>(profileStore.username || '')
               <div class="flex">
                 <Input id="username" v-model="username" type="text" class="mr-2" />
                 <Button
-                  :disabled="username === profileStore.profile.username || !username"
-                  @click="username !== profileStore.profile.username && profileStore.setUsername(username)"
+                  :disabled="username === profile.username || !username"
+                  @click="username !== profile.username && setUsername()"
                 >
                   Set Username
                 </Button>
               </div>
             </Field>
-            <Notification v-if="!profileStore.profile.username">
+            <Notification v-if="!profile.username">
               Set a username if you want to share your profile
             </Notification>
             <Field v-if="user" label-for="signup with" label="Signed up with " stacked>
