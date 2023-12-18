@@ -52,7 +52,7 @@
     "autoprefixer": "10.4.15",
     "eslint": "8.55.0",
     "nuxt": "^3.8.2",
-    "postcss": "8.4.31",
+    "postcss": "8.4.32",
     "sass": "^1.69.5",
     "typescript": "^5.3.3",
     "unocss": "^0.58.0",
