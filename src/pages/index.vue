@@ -6,7 +6,7 @@ const teamMembersStore = useTeamMembersStore()
 
 const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
-const { data: profile, execute, pending } = await useFetch(`/api/profile/${user.value?.id}`, {
+const { data: profile, pending } = await useFetch(`/api/profile/${user.value?.id}`, {
   headers: useRequestHeaders(['cookie']),
   watch: [user],
 })
