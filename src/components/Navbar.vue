@@ -117,7 +117,7 @@ router.afterEach(() => {
               <div class="py-6 space-y-2">
                 <Button
                   class="!px-2 flex items-center text-center justify-center w-full"
-                  href="https://github.com/JosephAnson/mrt-notes/issues"
+                  to="https://github.com/JosephAnson/mrt-notes/issues"
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
