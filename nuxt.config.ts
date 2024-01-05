@@ -17,7 +17,14 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   plugins: [{ src: '~/plugins/vercel.ts', mode: 'client' }],
-  extends: ['nuxt-seo-kit'],
+  extends: ['nuxt-seo-kit', 'nuxt-umami'],
+  appConfig: {
+    umami: {
+      host: 'https://unami.josephanson.com/',
+      id: '15bee164-d93d-4458-8eab-f97bfb6132b2',
+      version: 2,
+    },
+  },
   runtimeConfig: {
     indexable: true,
     public: {
