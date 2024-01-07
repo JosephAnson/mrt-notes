@@ -55,9 +55,6 @@
         <ul>
           <li>Supabase: We use Supabase as a data storage and backend service provider.</li>
           <li>Google AdSense: We utilize Google AdSense for serving advertisements on our website.</li>
-          <li>
-            Vercel Analytics: We use Vercel Analytics to analyze website usage and gather statistical information.
-          </li>
         </ul>
         <p>
           Please refer to the respective service providers' privacy policies to understand how they handle personal
