@@ -1,7 +1,5 @@
 name: pr
 on: [pull_request]
-env:
-  VERCEL_ANALYTICS_ID: github
 jobs:
   lint:
     name: Lint

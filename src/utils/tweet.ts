@@ -4,7 +4,7 @@ export function tweet(): void {
   const left = (window.screen.width - width) / 2
   const top = (window.screen.height - height) / 2
   const url = `https://twitter.com/share?url=${encodeURIComponent(
-    'https://mrt-notes.vercel.app/',
+    'https://mrt-notes.josephanson.com/',
   )}&text=MRT Notes: Quick build MRT Notes to use in WoW&hashtags=MRTNotes`
   const opts = `status=1,width=${width},height=${height},top=${top},left=${left}`
 
