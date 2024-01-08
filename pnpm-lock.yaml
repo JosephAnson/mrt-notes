@@ -33,8 +33,8 @@ dependencies:
     specifier: ^2.1.13
     version: 2.1.13(@tiptap/pm@2.1.13)
   '@tiptap/vue-3':
-    specifier: ^2.1.13
-    version: 2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)(vue@3.4.5)
+    specifier: ^2.1.14
+    version: 2.1.14(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)(vue@3.4.5)
   '@unocss/nuxt':
     specifier: ^0.58.3
     version: 0.58.3(postcss@8.4.32)(vite@5.0.11)(webpack@5.89.0)
@@ -1400,6 +1400,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -1914,8 +1915,8 @@ packages:
       '@tiptap/core': 2.1.13(@tiptap/pm@2.1.13)
     dev: false
 
-  /@tiptap/extension-bubble-menu@2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13):
-    resolution: {integrity: sha512-Hm7e1GX3AI6lfaUmr6WqsS9MMyXIzCkhh+VQi6K8jj4Q4s8kY4KPoAyD/c3v9pZ/dieUtm2TfqrOCkbHzsJQBg==}
+  /@tiptap/extension-bubble-menu@2.1.14(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13):
+    resolution: {integrity: sha512-9+KsP2rCVymlSKXx7BhPF9xy7dj2/G7auu7qZ4AJzEbsLj1PMS8/pSjPUabCIN6z+9IeifOa2VKmXCnVfcpazw==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
@@ -1979,8 +1980,8 @@ packages:
       '@tiptap/pm': 2.1.13
     dev: false
 
-  /@tiptap/extension-floating-menu@2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13):
-    resolution: {integrity: sha512-9Oz7pk1Nts2+EyY+rYfnREGbLzQ5UFazAvRhF6zAJdvyuDmAYm0Jp6s0GoTrpV0/dJEISoFaNpPdMJOb9EBNRw==}
+  /@tiptap/extension-floating-menu@2.1.14(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13):
+    resolution: {integrity: sha512-o/yNaZ+ntMBCjFL95JyX6LoVb8fsrx0IsnlNtnGUVr8mpOg2JyeN2ZJpUhPo2aR7QuyfdR1XsGG4TRHJBp3fGg==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
@@ -2160,16 +2161,16 @@ packages:
       - '@tiptap/pm'
     dev: false
 
-  /@tiptap/vue-3@2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)(vue@3.4.5):
-    resolution: {integrity: sha512-sPMT+uXtPfYLQioXtxxMLij234++PEf5Z43/auOLu737pKdgBr7w0sC8oYiZMgFt9dNCZWBrvT0fupF8yQN8AQ==}
+  /@tiptap/vue-3@2.1.14(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)(vue@3.4.5):
+    resolution: {integrity: sha512-JNiWa063mkBfDoxheAELu+VC574Az9d3qrWfHgc5z/tDISAhADiSgVcZVag9Vf3MY6xrUMatciPe6Hrcvhu0EA==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
       vue: ^3.0.0
     dependencies:
       '@tiptap/core': 2.1.13(@tiptap/pm@2.1.13)
-      '@tiptap/extension-bubble-menu': 2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
-      '@tiptap/extension-floating-menu': 2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
+      '@tiptap/extension-bubble-menu': 2.1.14(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
+      '@tiptap/extension-floating-menu': 2.1.14(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
       '@tiptap/pm': 2.1.13
       vue: 3.4.5(typescript@5.3.3)
     dev: false
@@ -5959,6 +5960,9 @@ packages:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
