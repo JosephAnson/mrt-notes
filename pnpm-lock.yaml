@@ -24,8 +24,8 @@ dependencies:
     specifier: ^2.1.13
     version: 2.1.13(@tiptap/core@2.1.13)
   '@tiptap/html':
-    specifier: 2.1.13
-    version: 2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
+    specifier: 2.1.15
+    version: 2.1.15(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13)
   '@tiptap/pm':
     specifier: ^2.1.13
     version: 2.1.13
@@ -1400,6 +1400,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -2100,8 +2101,8 @@ packages:
       '@tiptap/core': 2.1.13(@tiptap/pm@2.1.13)
     dev: false
 
-  /@tiptap/html@2.1.13(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13):
-    resolution: {integrity: sha512-ozkMbAU3dxbUbIfvXulDvrNW0pxqEQ+75zkVGdDMouLhMjYLcWUZ/jzIYkUvZs7XDUwWFS2XNq/YDHXKbizmZw==}
+  /@tiptap/html@2.1.15(@tiptap/core@2.1.13)(@tiptap/pm@2.1.13):
+    resolution: {integrity: sha512-lqSSxh6V0WU7nPpy0rYK7XwDAk6IhZ9mbkW6sXGpsuJyi/p4a+vw51QhitPH54gAjSRzP/s/YE0coy/HIKrLnA==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
@@ -5959,6 +5960,9 @@ packages:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
