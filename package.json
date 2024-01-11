@@ -22,7 +22,7 @@
     "@tiptap/html": "2.1.13",
     "@tiptap/pm": "^2.1.13",
     "@tiptap/starter-kit": "^2.1.13",
-    "@tiptap/vue-3": "^2.1.13",
+    "@tiptap/vue-3": "^2.1.16",
     "@unocss/nuxt": "^0.58.3",
     "@unocss/reset": "^0.58.3",
     "@vueuse/core": "^10.7.1",
