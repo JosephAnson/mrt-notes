@@ -7,7 +7,18 @@ export default cachedEventHandler(
 
     const dungeonInstances = await $fetch(`/api/blizzard/expansion/instances/${expansions[0].id}`)
 
-    return { raids: raids.encounters.map(i => i.name), dungeons: dungeonInstances.dungeons.map(i => i.name) }
+    const currentRaid = raidInstances.raids[raidInstances.raids.length - 1]
+
+    const currentInstance = await $fetch(`/api/blizzard/instance/${currentRaid.id}`)
+
+    return {
+      expansions,
+      raids: raids.encounters,
+      dungeons: dungeonInstances.dungeons,
+      currentExpansion: expansions.filter(expansion => expansion.id !== 505)[0],
+      currentRaid,
+      currentInstance: currentInstance.encounters[0],
+    }
   },
   {
     name: 'blizzard-latest-encounters',

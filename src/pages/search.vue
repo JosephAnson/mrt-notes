@@ -55,13 +55,13 @@ async function searchNotes() {
             <label class="mb-1 block">Raids</label>
             <div class="flex flex-wrap gap-2 mb-4">
               <Button v-for="encounter in encounters.raids" :key="encounter" @click="filterEncounter(encounter)">
-                {{ encounter }}
+                {{ encounter.name }}
               </Button>
             </div>
             <label class="mb-1 block">Mythic+ Dungeons</label>
             <div class="flex flex-wrap gap-2 mb-4">
               <Button v-for="encounter in encounters.dungeons" :key="encounter" @click="filterEncounter(encounter)">
-                {{ encounter }}
+                {{ encounter.name }}
               </Button>
             </div>
           </div>

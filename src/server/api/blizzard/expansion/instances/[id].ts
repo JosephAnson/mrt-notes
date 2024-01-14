@@ -8,6 +8,8 @@ export interface EncounterInstance {
 export interface EncounterInstances {
   dungeons: EncounterInstance[]
   raids: EncounterInstance[]
+  currentRaid: EncounterInstance
+  currentDungeon: EncounterInstance
 }
 
 export default cachedEventHandler(
@@ -31,7 +33,12 @@ export default cachedEventHandler(
       id: Number(id),
     })
 
-    return data
+    return {
+      dungeons: data.dungeons,
+      raids: data.raids,
+      currentRaid: data.raids[data.raids.length - 1],
+      currentDungeon: data.dungeons[data.dungeons.length - 1],
+    }
   },
   {
     name: 'expansion-instances',

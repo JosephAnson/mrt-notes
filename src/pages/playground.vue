@@ -9,9 +9,11 @@ const groupsStore = useGroupsStore()
 
 groupsStore.clearGroups()
 
-const expansion = ref(503)
-const instance = ref(1200)
-const encounter = ref(2480)
+const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
+
+const expansion = ref(encounters.value.currentExpansion.id)
+const instance = ref(encounters.value.currentRaid.id)
+const encounter = ref(encounters.value.currentInstance.id)
 
 const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
 </script>

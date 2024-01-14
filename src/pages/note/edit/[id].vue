@@ -9,6 +9,7 @@ definePageMeta({
 
 const route = useRoute('note-edit-id')
 
+const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
 const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
 const teamMembersStore = useTeamMembersStore()
 
@@ -16,9 +17,9 @@ const name = ref(note.value?.name || '')
 const saving = ref(false)
 
 const description = ref(note.value?.description || '')
-const expansion = ref(note.value?.expansion || 503)
-const instance = ref(note.value?.instance || 1200)
-const encounter = ref(note.value?.encounter || 2480)
+const expansion = ref(note.value?.expansion || encounters.value.currentExpansion.id)
+const instance = ref(note.value?.instance || encounters.value.currentRaid.id)
+const encounter = ref(note.value?.encounter || encounters.value.currentInstance.id)
 
 const editor = reactive<EditorData>({
   value: note.value?.editor_string || '',
