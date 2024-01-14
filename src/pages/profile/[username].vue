@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { capitalCase } from 'change-case'
+import type { Note } from '~/types'
 
 const user = useSupabaseUser()
 const route = useRoute('profile-username')
@@ -11,6 +12,10 @@ const { data: profile } = await useAsyncData('profile', async () => await getPro
   deep: true,
 })
 const { data: notes } = await useFetch(`/api/notes/user/${profile.value?.id}`)
+
+function onDeleteNote(note: Note) {
+  notes.value = notes.value?.filter(n => n.id !== note.id)
+}
 </script>
 
 <template>
@@ -29,7 +34,7 @@ const { data: notes } = await useFetch(`/api/notes/user/${profile.value?.id}`)
           {{ capitalCase(profile?.username || '') }}'s Notes
         </Heading>
         <div v-if="notes?.length">
-          <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+          <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
         </div>
         <Heading v-else h2>
           {{ profile.username }} doesn't have any notes

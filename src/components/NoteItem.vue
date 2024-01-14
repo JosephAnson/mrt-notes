@@ -13,8 +13,11 @@ const props = withDefaults(
   },
 )
 
+const emits = defineEmits<{
+  (e: 'delete', note: Note): void
+}>()
+
 const user = useSupabaseUser()
-const notesStore = useNotesStore()
 
 const format = 'DD MMMM YYYY'
 const isUsers = isUsersNote(user.value?.id, props.note.user_id)
@@ -22,6 +25,22 @@ const createdOn = useDateFormat(props.note.created_at, format)
 const updatedOn = useTimeAgo(props.note.updated_at)
 
 const canEdit = computed(() => isUsers && props.showEdit)
+
+function onDelete() {
+  openDialog({
+    message: 'Are you sure you want to delete the note?',
+    cancelText: 'No',
+    confirmText: 'Yes',
+    onConfirm: async () => {
+      openSnackbar('Note has been deleted')
+
+      if (props.note) {
+        await deleteNote(props.note.id)
+        emits('delete', props.note)
+      }
+    },
+  })
+}
 </script>
 
 <template>
@@ -60,7 +79,7 @@ const canEdit = computed(() => isUsers && props.showEdit)
       <Button
         v-if="isUsers && props.showDelete"
         class="bg-red-700 !hover:bg-red-800 mb-2"
-        @click="notesStore.deleteNote(props.note.id)"
+        @click="onDelete"
       >
         Delete Note
       </Button>
