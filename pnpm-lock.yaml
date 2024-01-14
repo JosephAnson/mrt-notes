@@ -50,6 +50,9 @@ dependencies:
   '@vueuse/nuxt':
     specifier: ^10.7.2
     version: 10.7.2(nuxt@3.9.1)(vue@3.4.13)
+  '@vueuse/router':
+    specifier: ^10.7.2
+    version: 10.7.2(vue-router@4.2.5)(vue@3.4.13)
   blizzard.js:
     specifier: ^4.5.0
     version: 4.5.0
@@ -2974,6 +2977,19 @@ packages:
       - '@vue/composition-api'
       - rollup
       - supports-color
+      - vue
+    dev: false
+
+  /@vueuse/router@10.7.2(vue-router@4.2.5)(vue@3.4.13):
+    resolution: {integrity: sha512-TE9QtcqtZ793bwJWnlxn1gir7TXHJh5Y0KTIAS2DFOFvz4f3yTPmxAtIHC5e96oBVaVdnzxQQ9EsOhBDfBtCDg==}
+    peerDependencies:
+      vue-router: '>=4.0.0-rc.1'
+    dependencies:
+      '@vueuse/shared': 10.7.2(vue@3.4.13)
+      vue-demi: 0.14.6(vue@3.4.13)
+      vue-router: 4.2.5(vue@3.4.13)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
       - vue
     dev: false
 
