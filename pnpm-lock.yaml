@@ -46,7 +46,7 @@ dependencies:
     version: 10.7.2(vue@3.4.13)
   '@vueuse/integrations':
     specifier: ^10.7.2
-    version: 10.7.2(change-case@5.4.1)(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.4.13)
+    version: 10.7.2(change-case@5.4.2)(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.4.13)
   '@vueuse/nuxt':
     specifier: ^10.7.2
     version: 10.7.2(nuxt@3.9.1)(vue@3.4.13)
@@ -57,8 +57,8 @@ dependencies:
     specifier: ^4.5.0
     version: 4.5.0
   change-case:
-    specifier: ^5.4.1
-    version: 5.4.1
+    specifier: ^5.4.2
+    version: 5.4.2
   consola:
     specifier: ^3.2.3
     version: 3.2.3
@@ -1387,6 +1387,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     bundledDependencies:
       - napi-wasm
 
@@ -2906,7 +2907,7 @@ packages:
       vue: 3.4.13(typescript@5.3.3)
     dev: false
 
-  /@vueuse/integrations@10.7.2(change-case@5.4.1)(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.4.13):
+  /@vueuse/integrations@10.7.2(change-case@5.4.2)(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.4.13):
     resolution: {integrity: sha512-+u3RLPFedjASs5EKPc69Ge49WNgqeMfSxFn+qrQTzblPXZg6+EFzhjarS5edj2qAf6xQ93f95TUxRwKStXj/sQ==}
     peerDependencies:
       async-validator: '*'
@@ -2949,7 +2950,7 @@ packages:
     dependencies:
       '@vueuse/core': 10.7.2(vue@3.4.13)
       '@vueuse/shared': 10.7.2(vue@3.4.13)
-      change-case: 5.4.1
+      change-case: 5.4.2
       focus-trap: 7.5.4
       fuse.js: 7.0.0
       vue-demi: 0.14.6(vue@3.4.13)
@@ -3540,8 +3541,8 @@ packages:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
-  /change-case@5.4.1:
-    resolution: {integrity: sha512-Agf3w7rZRy4aLy0gQ0M/fhufTIxN17rFfUuQ8OxETDJhB8QdoxgDpd9FbbFOMocR7+3wiSv8KKrFVL6HfM1Ylw==}
+  /change-case@5.4.2:
+    resolution: {integrity: sha512-WB3UiTDpT+vrTilAWaJS4gaIH/jc1He4H9f6erQvraUYas90uWT0JOYFkG1imdNv710XJ6gJvqynrgOHc4ihDA==}
     dev: false
 
   /character-entities-legacy@1.1.4:
@@ -6004,6 +6005,9 @@ packages:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}

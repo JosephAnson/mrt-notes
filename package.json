@@ -30,7 +30,7 @@
     "@vueuse/nuxt": "^10.7.2",
     "@vueuse/router": "^10.7.2",
     "blizzard.js": "^4.5.0",
-    "change-case": "^5.4.1",
+    "change-case": "^5.4.2",
     "consola": "^3.2.3",
     "focus-trap": "^7.5.4",
     "fuse.js": "^7.0.0",
