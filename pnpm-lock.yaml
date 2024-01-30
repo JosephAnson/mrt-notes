@@ -24,8 +24,8 @@ dependencies:
     specifier: ^2.1.16
     version: 2.1.16(@tiptap/core@2.1.16)
   '@tiptap/html':
-    specifier: 2.1.13
-    version: 2.1.13(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
+    specifier: 2.2.0
+    version: 2.2.0(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16)
   '@tiptap/pm':
     specifier: ^2.1.16
     version: 2.1.16
@@ -2114,15 +2114,15 @@ packages:
       '@tiptap/core': 2.1.16(@tiptap/pm@2.1.16)
     dev: false
 
-  /@tiptap/html@2.1.13(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16):
-    resolution: {integrity: sha512-ozkMbAU3dxbUbIfvXulDvrNW0pxqEQ+75zkVGdDMouLhMjYLcWUZ/jzIYkUvZs7XDUwWFS2XNq/YDHXKbizmZw==}
+  /@tiptap/html@2.2.0(@tiptap/core@2.1.16)(@tiptap/pm@2.1.16):
+    resolution: {integrity: sha512-67NpSLdIhgV5vPupKBHMFK/L1RRK6CsrZ1lZ3DdCMretd3MCYfw9OvtfmmJ6uQZVdM9ErQczUfkf4/btWCj/nQ==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
     dependencies:
       '@tiptap/core': 2.1.16(@tiptap/pm@2.1.16)
       '@tiptap/pm': 2.1.16
-      zeed-dom: 0.9.26
+      zeed-dom: 0.10.11
     dev: false
 
   /@tiptap/pm@2.1.16:
@@ -9071,8 +9071,8 @@ packages:
     resolution: {integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==}
     dev: false
 
-  /zeed-dom@0.9.26:
-    resolution: {integrity: sha512-HWjX8rA3Y/RI32zby3KIN1D+mgskce+She4K7kRyyx62OiVxJ5FnYm8vWq0YVAja3Tf2S1M0XAc6O2lRFcMgcQ==}
+  /zeed-dom@0.10.11:
+    resolution: {integrity: sha512-7ukbu6aQKx34OQ7PfUIxOuAhk2MvyZY/t4/IJsVzy76zuMzfhE74+Dbyp8SHiUJPTPkF0FflP1KVrGJ7gk9IHw==}
     engines: {node: '>=14.13.1'}
     dependencies:
       css-what: 6.1.0
