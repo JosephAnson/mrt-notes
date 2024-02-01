@@ -111,13 +111,13 @@ watchOnce(
             </div>
             <Heading>Raids</Heading>
             <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
-              <Button v-for="encounter in encounters.raids" :key="encounter" :to="`/search?q=${encounter}#notelist`">
+              <Button v-for="encounter in encounters.raids" :key="encounter" :to="`/search?q=${encounter.name}#notelist`">
                 {{ encounter.name }}
               </Button>
             </div>
             <Heading>Mythic+ Dungeons</Heading>
             <div v-if="encounters?.dungeons" class="flex flex-wrap gap-2 mb-2">
-              <Button v-for="encounter in encounters.dungeons" :key="encounter" :to="`/search?q=${encounter}#notelist`">
+              <Button v-for="encounter in encounters.dungeons" :key="encounter" :to="`/search?q=${encounter.name}#notelist`">
                 {{ encounter.name }}
               </Button>
             </div>
