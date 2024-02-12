@@ -32,8 +32,6 @@ function onDelete() {
     cancelText: 'No',
     confirmText: 'Yes',
     onConfirm: async () => {
-      openSnackbar('Note has been deleted')
-
       if (props.note) {
         await deleteNote(props.note.id)
         emits('delete', props.note)

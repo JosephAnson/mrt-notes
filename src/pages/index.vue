@@ -1,5 +1,6 @@
 <script lang="ts" setup async>
 import { kebabCase } from 'change-case'
+import type { Note } from '~/types'
 
 const user = useSupabaseUser()
 const teamMembersStore = useTeamMembersStore()
@@ -12,6 +13,10 @@ const { data: profile, pending } = await useFetch(`/api/profile/${user.value?.id
 })
 
 await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
+
+function onDeleteNote(note: Note) {
+  notes.value = notes.value?.filter(n => n.id !== note.id)
+}
 
 // Watch to see if user changes to re-fetch notes
 watchOnce(
@@ -73,7 +78,7 @@ watchOnce(
                 <section v-if="notes?.length">
                   <Heading>My Notes</Heading>
                   <div class="mb-8">
-                    <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+                    <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
                   </div>
                 </section>
               </div>

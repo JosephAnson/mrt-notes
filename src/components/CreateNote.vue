@@ -23,7 +23,7 @@ async function createNote(name: string) {
     <Field sr-only label="Enter name for note" class="w-full" label-for="create-note">
       <Input v-model="noteName" class="mr-2" placeholder="Enter name for note" />
     </Field>
-    <Button tag="a" class="mr-2 flex-shrink-0" type="submit">
+    <Button class="mr-2 flex-shrink-0" type="submit">
       Create note
     </Button>
   </form>
