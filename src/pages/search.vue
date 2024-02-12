@@ -2,7 +2,7 @@
 import { useRouteQuery } from '@vueuse/router'
 import { getAllNotes, searchAllNotes } from '~/services/notes'
 
-const search = useRouteQuery<string>('search', '')
+const search = useRouteQuery<string>('q', '')
 
 const { data: notes } = await useAsyncData(`notes-${search.value}`, async () => {
   return search.value?.length ? await searchAllNotes(search.value) : await getAllNotes({ limit: 30 })
