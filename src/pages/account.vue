@@ -8,7 +8,7 @@ definePageMeta({
 
 const user = useSupabaseUser()
 
-const { data: profile } = await useFetch('/api/profile/get', {
+const { data: profile } = await useFetch(`/api/profile/${user.value?.id}`, {
   headers: useRequestHeaders(['cookie']),
   watch: [user],
 })
