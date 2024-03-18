@@ -50,7 +50,7 @@
     "autoprefixer": "10.4.16",
     "eslint": "8.56.0",
     "nuxt": "^3.9.1",
-    "postcss": "8.4.32",
+    "postcss": "8.4.36",
     "sass": "^1.69.7",
     "typescript": "^5.3.3",
     "unhead": "^1.8.9",
