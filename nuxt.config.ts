@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devtools: true,
   extends: ['nuxt-seo-kit', 'nuxt-umami'],
   modules: [
     '@vueuse/nuxt',
