@@ -1,12 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: true,
-  extends: ['nuxt-seo-kit', 'nuxt-umami'],
+  devtools: { enabled: true },
+  compatibilityDate: '2024-09-01',
+  future: {
+    compatibilityVersion: 4,
+  },
+  extends: [
+    'nuxt-umami',
+  ],
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
-    '@unocss/nuxt',
     '@pinia/nuxt',
+    '@nuxtjs/seo',
+    '@nuxtjs/tailwindcss',
+    '@nuxt/image',
+    '@nuxt/fonts',
+    'radix-vue/nuxt',
   ],
   appConfig: {
     umami: {
@@ -15,15 +25,12 @@ export default defineNuxtConfig({
       version: 2,
     },
   },
-  runtimeConfig: {
-    indexable: true,
-    public: {
-      siteUrl: 'https://mrt-notes.josephanson.app/',
-      siteName: 'MRT Notes: Your Ultimate Raid Planning Companion',
-      siteDescription:
-        'MRT Notes is the ultimate website dedicated to making raid leaders\' lives easier with efficient MRT note planning. Create, share, and export comprehensive raid notes effortlessly. Streamline your raid organization process with boss spell automation, customizable note grouping, and advanced editor tools. Join MRT Notes and revolutionize your raid planning experience.',
-      language: 'en',
-    },
+  site: {
+    siteUrl: 'https://mrt-notes.josephanson.app/',
+    siteName: 'MRT Notes: Your Ultimate Raid Planning Companion',
+    siteDescription:
+      'MRT Notes is the ultimate website dedicated to making raid leaders\' lives easier with efficient MRT note planning. Create, share, and export comprehensive raid notes effortlessly. Streamline your raid organization process with boss spell automation, customizable note grouping, and advanced editor tools. Join MRT Notes and revolutionize your raid planning experience.',
+    language: 'en',
   },
   app: {
     head: {
@@ -58,8 +65,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['services', 'store'],
   },
-  css: ['~/assets/styles/main.scss'],
-  srcDir: 'src/',
+  css: ['~~/app/assets/styles/main.scss', '~~/app/assets/styles/tailwind.css'],
   supabase: {
     redirectOptions: {
       login: '/login',
@@ -113,5 +119,28 @@ export default defineNuxtConfig({
   },
   experimental: {
     typedPages: true,
+  },
+  components: {
+    global: true,
+    dirs: ['~/components'],
+  },
+  fonts: {
+    families: [
+      // only resolve this font with the `google` provider
+      { name: 'Montserrat', provider: 'google', weights: [400, 500, 700] },
+    ],
+    defaults: {
+      weights: [400],
+      styles: ['normal', 'italic'],
+      subsets: [
+        'cyrillic-ext',
+        'cyrillic',
+        'greek-ext',
+        'greek',
+        'vietnamese',
+        'latin-ext',
+        'latin',
+      ],
+    },
   },
 })
