@@ -146,7 +146,7 @@ function setColor(event: Event) {
               :alt="spell.spellIdInformation.name"
             >
 
-            <span class="color-[#FFBB33]">{{ spell.name }}</span>
+            <span class="text-[#FFBB33]">{{ spell.name }}</span>
 
             <SpellInformation
               class="hidden !absolute top-100% left-0 group-hover:block w-100 !max-w-none"

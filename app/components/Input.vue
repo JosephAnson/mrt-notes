@@ -27,7 +27,7 @@ export default defineComponent({
     :id="newID"
     v-model="input"
     :placeholder="placeholder"
-    class="color-black rounded w-full p-2 block focus:ring-indigo-500 focus:border-indigo-500"
+    class="text-black rounded w-full p-2 block focus:ring-indigo-500 focus:border-indigo-500"
     :class="{
       'bg-gray-300 cursor-not-allowed': disabled,
       'bg-white': !disabled,
@@ -40,7 +40,7 @@ export default defineComponent({
     v-model="input"
     :type="type"
     :placeholder="placeholder"
-    class="color-black rounded w-full px-2 block h-8 focus:ring-indigo-500 focus:border-indigo-500"
+    class="text-black rounded w-full px-2 block h-8 focus:ring-indigo-500 focus:border-indigo-500"
     :class="{
       'bg-gray-300 cursor-not-allowed': disabled,
       'bg-white': !disabled,

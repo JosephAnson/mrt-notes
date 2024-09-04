@@ -68,7 +68,7 @@ function onDelete() {
           </Field>
         </div>
         <div class="flex flex-col gap-2">
-          <BaseButton v-if="canEdit" :to="`/note/edit/${props.note.id}`" as-child>
+          <BaseButton v-if="canEdit" as-child>
             <NuxtLink :to="`/note/edit/${props.note.id}`">
               Edit
             </NuxtLink>
@@ -82,7 +82,7 @@ function onDelete() {
 
           <BaseButton
             v-if="isUsers && props.showDelete"
-            class="bg-red-700 !hover:bg-red-800"
+            variant="destructive"
             @click="onDelete"
           >
             Delete Note

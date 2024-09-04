@@ -13,6 +13,7 @@
     "gen-types": "supabase gen types typescript --project-id \"tcqilgocqemuhfpezlwa\" --schema public > app/supabase.types.ts"
   },
   "dependencies": {
+    "@formbricks/js": "^2.2.0",
     "@headlessui/vue": "^1.7.22",
     "@pinia/nuxt": "^0.5.4",
     "@tailwindcss/typography": "^0.5.15",

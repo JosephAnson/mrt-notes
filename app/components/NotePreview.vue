@@ -45,7 +45,7 @@ const mrtString = computed(() => {
         Copy MRT String
       </BaseButton>
     </BaseCardBlock>
-    <div class="preview bg-white p-4 color-black text-sm h-64 overflow-y-scroll break-all text-xs">
+    <div class="preview bg-white p-4 text-black h-64 overflow-y-scroll break-all text-xs">
       <pre v-html="mrtString" />
     </div>
   </BaseCard>

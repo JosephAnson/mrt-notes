@@ -14,9 +14,10 @@ useHead({
 
 <template>
   <div>
-    <Navbar />
+    <TheHeader />
     <NuxtPage />
-    <Footer />
+    <TheFooter />
+    <TheFeedback />
 
     <div class="notices fixed bottom-10 right-10 z-10">
       <UpdateNotification>

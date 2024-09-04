@@ -30,7 +30,7 @@ watchOnce(
 
 <template>
   <div>
-    <Section class="bg-card">
+    <Section class="bg-secondary">
       <Container>
         <div class="md:flex justify-between">
           <div>
@@ -66,8 +66,10 @@ watchOnce(
               <Heading class="mr-4 !mb-0" h2>
                 Login to get started
               </Heading>
-              <BaseButton to="login">
-                Login
+              <BaseButton as-child>
+                <NuxtLink to="login">
+                  Login
+                </NuxtLink>
               </BaseButton>
             </BaseCardBlock>
           </BaseCard>
