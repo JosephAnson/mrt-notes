@@ -21,7 +21,7 @@ useHead({
 
     <div class="notices fixed bottom-10 right-10 z-10">
       <UpdateNotification>
-        <div class="prose text-sm">
+        <div class="prose prose-invert text-sm">
           <strong class="!mb-1 block">Fixed: Page Loading Issues</strong>
           <p class="!m-0">
             Improve stability across the app, thank you to <NuxtLink to="/profile/Skeptikk">

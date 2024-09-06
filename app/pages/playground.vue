@@ -30,20 +30,27 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
         </p>
       </div>
       <Ad ad-slot="8629692962" />
-      <EncounterSelector
-        v-model:expansion="expansion"
-        v-model:instance="instance"
-        v-model:encounter="encounter"
-      />
+      <BaseCard class="mb-4">
+        <BaseCardHeader>Select Encounter</BaseCardHeader>
+        <BaseCardContent>
+          <EncounterSelector
+            v-model:expansion="expansion"
+            v-model:instance="instance"
+            v-model:encounter="encounter"
+          />
+        </BaseCardContent>
+      </BaseCard>
+
       <Loading v-if="spellsLoading">
         Spells Loading
       </Loading>
       <section id="ERT-Editor">
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
-            <Card>
+            <BaseCard>
+              <BaseCardHeader>Input Note</BaseCardHeader>
               <Editor v-model="editor.value" class="block" :spells="encounterSpells.spells" @update:json="editor.json = $event" />
-            </Card>
+            </BaseCard>
 
             <p>Login for more features</p>
           </div>

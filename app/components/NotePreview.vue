@@ -37,25 +37,25 @@ const mrtString = computed(() => {
 
 <template>
   <BaseCard class="mb-4">
-    <BaseCardBlock class="flex justify-between items-center">
-      <Heading h3 class="mb-0">
-        MRT String
-      </Heading>
-      <BaseButton v-if="isSupported" @click="copyToClipboard(mrtString)">
-        Copy MRT String
-      </BaseButton>
-    </BaseCardBlock>
+    <BaseCardHeader>
+      <div class="flex justify-between items-center">
+        <div>
+          MRT String
+        </div>
+        <BaseButton v-if="isSupported" class="my-[-1rem]" @click="copyToClipboard(mrtString)">
+          Copy MRT String
+        </BaseButton>
+      </div>
+    </BaseCardHeader>
     <div class="preview bg-white p-4 text-black h-64 overflow-y-scroll break-all text-xs">
       <pre v-html="mrtString" />
     </div>
   </BaseCard>
 
   <BaseCard>
-    <BaseCardBlock class="flex justify-between">
-      <Heading h3 class="mb-0">
-        Preview
-      </Heading>
-    </BaseCardBlock>
+    <BaseCardHeader>
+      Preview
+    </BaseCardHeader>
     <div class="relative preview p-4 text-xs">
       <div
         class="absolute top-0 left-0 w-full h-full !bg-cover !bg-center z-1 grayscale !bg-no-repeat opacity-70"

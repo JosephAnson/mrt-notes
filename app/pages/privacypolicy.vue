@@ -1,4 +1,5 @@
-<script setup lang="ts"></script>
+<script setup lang='ts'>
+</script>
 
 <template>
   <Section>
@@ -7,7 +8,7 @@
         GDPR Compliance Statement
       </Heading>
 
-      <div class="prose">
+      <div class="prose prose-invert">
         <p>
           <em>MRT Notes</em> is committed to protecting the privacy and personal data of our users. We strive to comply
           with the General Data Protection Regulation (GDPR) and have implemented the necessary measures to ensure the
