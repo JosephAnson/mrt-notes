@@ -48,9 +48,10 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
-    "@iconify-json/carbon": "^1.2.1",
+    "@iconify/json": "^2.2.245",
     "@nuxt/devtools": "^1.4.1",
     "@nuxt/fonts": "^0.7.2",
+    "@nuxt/icon": "^1.5.1",
     "@nuxt/image": "1.7.0",
     "@nuxtjs/seo": "2.0.0-rc.19",
     "@nuxtjs/supabase": "^1.4.0",

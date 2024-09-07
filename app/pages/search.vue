@@ -27,9 +27,9 @@ function filterEncounter(encounter: string) {
       <BaseCard class="mb-8">
         <BaseCardBlock>
           <form class="flex w-full mb-4 gap-3" @submit.prevent>
-            <Field label-for="search" label="Search" class="w-full">
+            <BaseField label-for="search" label="Search" class="w-full">
               <BaseInput id="search" v-model="search" type="search" />
-            </Field>
+            </BaseField>
           </form>
 
           <div v-if="encounters" class="flex flex-wrap">
@@ -37,20 +37,20 @@ function filterEncounter(encounter: string) {
               Search by encounter
             </Heading>
             <div>
-              <Field label="Raids" stacked>
+              <BaseField label="Raids" stacked>
                 <div class="flex flex-wrap gap-2 mb-4">
                   <BaseButton v-for="encounter in encounters.raids" :key="encounter" size="sm" @click="filterEncounter(encounter.name)">
                     {{ encounter.name }}
                   </BaseButton>
                 </div>
-              </Field>
-              <Field label="Mythic+ Dungeons" stacked>
+              </BaseField>
+              <BaseField label="Mythic+ Dungeons" stacked>
                 <div class="flex flex-wrap gap-2 mb-4">
                   <BaseButton v-for="encounter in encounters.dungeons" :key="encounter" size="sm" @click="filterEncounter(encounter.name)">
                     {{ encounter.name }}
                   </BaseButton>
                 </div>
-              </Field>
+              </BaseField>
             </div>
           </div>
         </BaseCardBlock>

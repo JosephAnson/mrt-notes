@@ -115,16 +115,16 @@ function setColor(event: Event) {
       </button>
     </div>
 
-    <Field
+    <BaseField
       v-if="members?.length"
       label="Players:"
       class="mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
     >
       <PlayerTags :members="members" @click="createPlayerSnippet" />
-    </Field>
+    </BaseField>
 
     <div>
-      <Field
+      <BaseField
         v-if="spells?.length"
         key="encounter-spells"
         label="Encounter Spells: "
@@ -156,7 +156,7 @@ function setColor(event: Event) {
             />
           </div>
         </div>
-      </Field>
+      </BaseField>
     </div>
 
     <div class="p-y2 pt-0">

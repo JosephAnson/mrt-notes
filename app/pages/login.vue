@@ -1,41 +1,59 @@
 <script setup lang="ts">
 const client = useSupabaseClient()
 const user = useSupabaseUser()
-
 const email = ref('')
 </script>
 
 <template>
-  <Section>
+  <Section class="min-h-[80dvh] flex items-center">
     <Container>
-      <Heading h1>
-        Login
-      </Heading>
-      <div class="mb-8">
-        <Field label-for="email" label="Email" stacked>
-          <BaseInput id="email" v-model="email" type="email" />
-        </Field>
-        <BaseButton @click="signInWithOtp(email)">
-          Sign In
-        </BaseButton>
-      </div>
-
-      <div v-if="!user" class="flex flex-wrap">
-        <BaseButton
-          class="flex items-center !bg-[#5865f2] !hover:bg-[#7983f5] mb-2 mr-2"
-          @click="login('discord')"
-        >
-          <span class="i-carbon-logo-discord inline-block mr-2 text-xl" />
-          Login with Discord
-        </BaseButton>
-        <BaseButton
-          class="flex items-center !bg-[#db4437] !hover:bg-[#D52E29] mb-2 mr-2"
-          @click="login('google')"
-        >
-          <span class="i-carbon-logo-google inline-block mr-2 text-xl" />
-          Login with Google
-        </BaseButton>
-      </div>
+      {{ email }}
+      <BaseCard v-if="!user" class="w-full max-w-sm mx-auto">
+        <BaseCardHeader>
+          <BaseCardTitle>Login</BaseCardTitle>
+          <BaseCardDescription>Choose your preferred login method</BaseCardDescription>
+        </BaseCardHeader>
+        <form @submit="() => signInWithOtp(email)">
+          <BaseCardContent class="grid gap-4">
+            <BaseField label-for="email" label="Email" stacked>
+              <BaseInput id="email" v-model="email" type="email" />
+            </BaseField>
+          </BaseCardContent>
+          <BaseCardFooter>
+            <BaseButton class="w-full" type="submit">
+              Sign in
+            </BaseButton>
+          </BaseCardFooter>
+        </form>
+        <BaseCardFooter class="flex flex-col space-y-4">
+          <div class="relative w-full">
+            <div class="absolute inset-0 flex items-center">
+              <span class="w-full border-t" />
+            </div>
+            <div class="relative flex justify-center text-xs uppercase">
+              <span class="px-2 text-muted-foreground">
+                Or continue with
+              </span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4 w-full">
+            <BaseButton
+              variant="discord"
+              @click="login('discord')"
+            >
+              <Icon name="bi:discord" class="h-4 w-4 mr-2" />
+              Login with Discord
+            </BaseButton>
+            <BaseButton
+              variant="google"
+              @click="login('google')"
+            >
+              <Icon name="devicon-plain:google" class="h-4 w-4 mr-2" />
+              Login with Google
+            </BaseButton>
+          </div>
+        </BaseCardFooter>
+      </BaseCard>
       <BaseButton v-else @click="client.auth.signOut()">
         Logout
       </BaseButton>

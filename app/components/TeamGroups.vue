@@ -65,7 +65,7 @@ function onGroupMemberDelete(group: Group, member: Member) {
           <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
           <div class="w-full">
-            <Field label="Type" stacked>
+            <BaseField label="Type" stacked>
               <BaseSelect v-model:model-value="element.type" @update:value="debouncedUpdateGroups">
                 <BaseSelectTrigger>
                   <BaseSelectValue placeholder="Select a class type" />
@@ -76,15 +76,15 @@ function onGroupMemberDelete(group: Group, member: Member) {
                   </BaseSelectItem>
                 </BaseSelectContent>
               </BaseSelect>
-            </Field>
+            </BaseField>
 
-            <Field v-if="element.type === 'Players'" stacked>
-              <Field
+            <BaseField v-if="element.type === 'Players'" stacked>
+              <BaseField
                 label="Group Players:"
                 class="!mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
               >
                 <PlayerTags :members="getSelectedMembers(element.players)" delete @delete="onGroupMemberDelete(element, $event)" />
-              </Field>
+              </BaseField>
 
               <Combobox v-model="element.players" multiple @update:model-value="debouncedUpdateGroups">
                 <div class="relative mt-1">
@@ -151,7 +151,7 @@ function onGroupMemberDelete(group: Group, member: Member) {
                   </div>
                 </div>
               </Combobox>
-            </Field>
+            </BaseField>
 
             <Editor
               v-model="element.note.value"

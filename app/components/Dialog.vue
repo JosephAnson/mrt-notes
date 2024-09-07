@@ -128,9 +128,9 @@ export default defineComponent({
                   </template>
                 </p>
 
-                <Field v-if="hasInput">
+                <BaseField v-if="hasInput">
                   <BaseInput v-bind="inputAttrs" v-model="prompt" class="input" @keyup.enter="confirm" />
-                </Field>
+                </BaseField>
               </section>
 
               <footer class="flex justify-between">

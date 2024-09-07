@@ -28,13 +28,13 @@ function createSpellOccurrenceSnippet() {
   <Modal v-model:active="modalActive">
     <SpellIdInput v-model="spellOccurrence.spellId" />
 
-    <Field label="Enter the Time after spell cast? {00:10}" stacked>
+    <BaseField label="Enter the Time after spell cast? {00:10}" stacked>
       <BaseInput v-model="spellOccurrence.timeAfterSpellStarted" />
-    </Field>
+    </BaseField>
 
-    <Field label="Enter the cast number?" stacked>
+    <BaseField label="Enter the cast number?" stacked>
       <BaseInput v-model="spellOccurrence.occurrence" />
-    </Field>
+    </BaseField>
 
     <footer>
       <BaseButton class="mr-2" @click="modalActive = false">

@@ -56,21 +56,21 @@ async function setUsername() {
       <div class="md:grid grid-cols-12 gap-8">
         <div class="col-span-12 xl:col-span-6">
           <div class="max-w-lg">
-            <Field v-if="profile.avatar_url" label-for="avatar" stacked>
+            <BaseField v-if="profile.avatar_url" label-for="avatar" stacked>
               <img class="w-48 rounded-full" :src="profile.avatar_url">
-            </Field>
+            </BaseField>
 
-            <Field v-if="profile.username" stacked>
+            <BaseField v-if="profile.username" stacked>
               <BaseButton as-child>
                 <NuxtLink :to="`/profile/${profile.username}`">
                   View Profile
                 </NuxtLink>
               </BaseButton>
-            </Field>
-            <Field v-if="user?.email" label-for="avatar_url" label="Email" stacked>
+            </BaseField>
+            <BaseField v-if="user?.email" label-for="avatar_url" label="Email" stacked>
               <BaseInput id="avatar_url" v-model="user.email" type="text" disabled />
-            </Field>
-            <Field label-for="username" label="Username" stacked>
+            </BaseField>
+            <BaseField label-for="username" label="Username" stacked>
               <div class="flex">
                 <BaseInput id="username" v-model="username" type="text" class="mr-2" />
                 <BaseButton
@@ -80,11 +80,11 @@ async function setUsername() {
                   Set Username
                 </BaseButton>
               </div>
-            </Field>
+            </BaseField>
             <Notification v-if="!profile.username">
               Set a username if you want to share your profile
             </Notification>
-            <Field v-if="user" label-for="signup with" label="Signed up with " stacked>
+            <BaseField v-if="user" label-for="signup with" label="Signed up with " stacked>
               <span
                 v-for="provider in user.app_metadata.providers"
                 :key="provider"
@@ -92,7 +92,7 @@ async function setUsername() {
               >
                 {{ provider.toUpperCase() }}
               </span>
-            </Field>
+            </BaseField>
           </div>
         </div>
       </div>

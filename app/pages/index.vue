@@ -30,7 +30,7 @@ watchOnce(
 
 <template>
   <div>
-    <Section class="bg-secondary">
+    <Section class="bg-white/10">
       <Container>
         <div class="md:flex justify-between">
           <div>
@@ -149,7 +149,7 @@ watchOnce(
 
     <Ad ad-slot="9899893676" ad-layout="in-article" />
 
-    <Section class="bg-primary-800">
+    <Section class="bg-white/5">
       <Container>
         <SiteInfo />
       </Container>

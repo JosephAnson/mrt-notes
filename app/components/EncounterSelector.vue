@@ -27,7 +27,7 @@ watch(instance, (newInstance) => {
 
 <template>
   <div class="mb-4">
-    <Field label="Expansions" stacked>
+    <BaseField label="Expansions" stacked>
       <BaseSelect v-model="expansionSelect">
         <BaseSelectTrigger>
           <BaseSelectValue placeholder="Select an expansion" />
@@ -40,10 +40,10 @@ watch(instance, (newInstance) => {
           </BaseSelectGroup>
         </BaseSelectContent>
       </BaseSelect>
-    </Field>
+    </BaseField>
 
     <div v-if="!expansionInstancesPending">
-      <Field
+      <BaseField
         v-if="expansionSelect && expansionInstances && expansionInstances?.raids && expansionInstances.dungeons"
         label="Instances"
         stacked
@@ -81,10 +81,10 @@ watch(instance, (newInstance) => {
             </BaseSelectGroup>
           </BaseSelectContent>
         </BaseSelect>
-      </Field>
+      </BaseField>
 
       <div v-if="!instancePending">
-        <Field v-if="instanceSelect && instance?.encounters" label="Encounters" stacked>
+        <BaseField v-if="instanceSelect && instance?.encounters" label="Encounters" stacked>
           <BaseSelect v-model="encounterSelect">
             <BaseSelectTrigger>
               <BaseSelectValue placeholder="Select an encounter" />
@@ -99,7 +99,7 @@ watch(instance, (newInstance) => {
               </BaseSelectItem>
             </BaseSelectContent>
           </BaseSelect>
-        </Field>
+        </BaseField>
       </div>
       <div v-else>
         <Loading>Loading Encounters</Loading>

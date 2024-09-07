@@ -28,9 +28,9 @@ const resultsItem = computed(() => results.value.map(i => i.item))
         <Heading h1 class="!mb-0">
           Search Expansion
         </Heading>
-        <Field label="Search" class="w-128" label-for="encounter-search">
+        <BaseField label="Search" class="w-128" label-for="encounter-search">
           <BaseInput v-model="input" placeholder="Search for an encounter" />
-        </Field>
+        </BaseField>
       </div>
 
       <div class="md:grid grid-cols-2 gap-12">

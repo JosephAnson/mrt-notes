@@ -21,7 +21,7 @@ const debouncedUpdateMembers = useDebounceFn(
 </script>
 
 <template>
-  <Field label-for="player" label="Player" stacked>
+  <BaseField label-for="player" label="Player" stacked>
     <div class="flex w-full gap-4">
       <BaseInput v-model="playerName" />
 
@@ -42,7 +42,7 @@ const debouncedUpdateMembers = useDebounceFn(
         Add
       </BaseButton>
     </div>
-  </Field>
+  </BaseField>
 
   <template v-if="teamMembersStore.members?.length">
     <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
@@ -51,7 +51,7 @@ const debouncedUpdateMembers = useDebounceFn(
           <BaseCardBlock class="flex justify-between items-center">
             <span class="i-carbon-draggable mr-2 text-2xl handle" />
 
-            <Field class="w-full" :label-for="`player-${index}`" label="Player">
+            <BaseField class="w-full" :label-for="`player-${index}`" label="Player">
               <div class="flex gap-2 w-full">
                 <BaseInput v-model="element.name" @update:model-value="debouncedUpdateMembers" />
 
@@ -76,7 +76,7 @@ const debouncedUpdateMembers = useDebounceFn(
                   Delete
                 </BaseButton>
               </div>
-            </Field>
+            </BaseField>
           </BaseCardBlock>
         </BaseCard>
       </template>

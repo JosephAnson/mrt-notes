@@ -89,12 +89,12 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
 
       <BaseCard class="mb-8">
         <BaseCardBlock>
-          <Field label="Title" stacked>
+          <BaseField label="Title" stacked>
             <BaseInput v-model="name" />
-          </Field>
-          <Field label="Description" stacked>
+          </BaseField>
+          <BaseField label="Description" stacked>
             <BaseInput v-model="description" type="textarea" />
-          </Field>
+          </BaseField>
           <EncounterSelector
             v-model:expansion="expansion"
             v-model:instance="instance"

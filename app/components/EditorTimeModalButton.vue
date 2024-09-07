@@ -20,9 +20,9 @@ function createTimeSnippet(value: string) {
   </a>
 
   <Modal v-model:active="modalActive">
-    <Field label="Enter a time?" stacked>
+    <BaseField label="Enter a time?" stacked>
       <BaseInput v-model="time" placeholder="e.g. 10:00" />
-    </Field>
+    </BaseField>
 
     <footer>
       <BaseButton class="mr-2" @click="modalActive = false">

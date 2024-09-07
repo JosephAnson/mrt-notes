@@ -8,16 +8,7 @@ export default defineNuxtConfig({
   extends: [
     'nuxt-umami',
   ],
-  modules: [
-    '@vueuse/nuxt',
-    '@nuxtjs/supabase',
-    '@pinia/nuxt',
-    '@nuxtjs/seo',
-    '@nuxtjs/tailwindcss',
-    '@nuxt/image',
-    '@nuxt/fonts',
-    'radix-vue/nuxt',
-  ],
+  modules: ['@vueuse/nuxt', '@nuxtjs/supabase', '@pinia/nuxt', '@nuxtjs/seo', '@nuxtjs/tailwindcss', '@nuxt/image', '@nuxt/fonts', 'radix-vue/nuxt', '@nuxt/icon'],
   appConfig: {
     umami: {
       host: 'https://unami.josephanson.com/',
