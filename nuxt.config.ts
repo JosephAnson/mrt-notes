@@ -130,4 +130,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+  icon: {
+    serverBundle: {
+      collections: ['carbon', 'bi', 'devicon-plain'],
+    },
+  },
 })
