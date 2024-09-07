@@ -27,7 +27,7 @@ function filterEncounter(encounter: string) {
       <BaseCard class="mb-8">
         <BaseCardBlock>
           <form class="flex w-full mb-4 gap-3" @submit.prevent>
-            <BaseField label-for="search" label="Search" class="w-full">
+            <BaseField stacked label-for="search" label="Search" class="w-full">
               <BaseInput id="search" v-model="search" type="search" />
             </BaseField>
           </form>

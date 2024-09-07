@@ -26,7 +26,7 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
           Playground
         </Heading>
         <BaseNotification variant="destructive">
-          Warning this doesn't save at all
+          Warning this note will not be saved
         </BaseNotification>
       </div>
       <Ad ad-slot="8629692962" />
@@ -52,7 +52,11 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
               <Editor v-model="editor.value" class="block" :spells="encounterSpells.spells" @update:json="editor.json = $event" />
             </BaseCard>
 
-            <p>Login for more features</p>
+            <BaseButton as-child>
+              <NuxtLink to="/login">
+                Login for more features
+              </NuxtLink>
+            </BaseButton>
           </div>
           <div class="sm:col-span-12 md:col-span-6">
             <NotePreview :note-json="editor.json" :note-string="editor.value" :groups="[]" />

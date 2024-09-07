@@ -123,18 +123,18 @@ function setColor(event: Event) {
       <PlayerTags :members="members" @click="createPlayerSnippet" />
     </BaseField>
 
-    <div>
+    <div class="p-1">
       <BaseField
         v-if="spells?.length"
         key="encounter-spells"
         label="Encounter Spells: "
-        class="!mb-0 flex-wrap lg:flex lg:flex-nowrap lg:items-start first:mt-2"
+        sr-only
       >
         <div v-if="spells" class="flex flex-wrap">
           <div
             v-for="spell in spells"
             :key="`encounter-spells-${spell.id}`"
-            class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
+            class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-white/10 hover:bg-black rounded px-2"
             @click="
               createSpellSnippet(spell.name, createEditorSpellIdImageData(spell.spellIdInformation.icon, spell.id))
             "
