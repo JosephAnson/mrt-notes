@@ -54,12 +54,12 @@ watchOnce(
     <Ad ad-slot="8629692962" />
     <div>
       <Container>
-        <Notification v-if="user && !pending && !profile?.username" class="inline-flex justify-between items-center mb-8">
+        <BaseNotification v-if="user && !pending && !profile?.username">
           Set your username on your account if you want to share your profile
           <BaseButton to="/account" class="ml-4">
             Set Username
           </BaseButton>
-        </Notification>
+        </BaseNotification>
         <div class="user-information mb-8">
           <BaseCard v-if="!user">
             <BaseCardBlock class="flex items-center">
@@ -67,7 +67,7 @@ watchOnce(
                 Login to get started
               </Heading>
               <BaseButton as-child>
-                <NuxtLink to="login">
+                <NuxtLink to="/login">
                   Login
                 </NuxtLink>
               </BaseButton>

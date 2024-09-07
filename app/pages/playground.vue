@@ -25,9 +25,9 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
         <Heading h1>
           Playground
         </Heading>
-        <p class="mb-4 bg-red-700 py-2 px-4 inline-block rounded">
+        <BaseNotification variant="destructive">
           Warning this doesn't save at all
-        </p>
+        </BaseNotification>
       </div>
       <Ad ad-slot="8629692962" />
       <BaseCard class="mb-4">

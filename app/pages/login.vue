@@ -7,7 +7,6 @@ const email = ref('')
 <template>
   <Section class="min-h-[80dvh] flex items-center">
     <Container>
-      {{ email }}
       <BaseCard v-if="!user" class="w-full max-w-sm mx-auto">
         <BaseCardHeader>
           <BaseCardTitle>Login</BaseCardTitle>
@@ -54,9 +53,17 @@ const email = ref('')
           </div>
         </BaseCardFooter>
       </BaseCard>
-      <BaseButton v-else @click="client.auth.signOut()">
-        Logout
-      </BaseButton>
+      <BaseCard v-else class="w-full max-w-sm mx-auto">
+        <BaseCardHeader>
+          <BaseCardTitle>Logout</BaseCardTitle>
+          <BaseCardDescription>Click below to logout</BaseCardDescription>
+        </BaseCardHeader>
+        <BaseCardFooter>
+          <BaseButton @click="client.auth.signOut()">
+            Logout
+          </BaseButton>
+        </BaseCardFooter>
+      </BaseCard>
     </Container>
   </Section>
 </template>

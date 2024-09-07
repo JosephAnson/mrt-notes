@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import Notification from '~/components/Notification.vue'
 import { updateUsername, usernameExists } from '~/services/profile'
 
 definePageMeta({
@@ -76,9 +75,9 @@ async function setUsername() {
                 </BaseButton>
               </div>
             </BaseField>
-            <Notification v-if="!profile.username">
+            <BaseNotification>
               Set a username if you want to share your profile
-            </Notification>
+            </BaseNotification>
             <BaseField v-if="user" label-for="signup with" label="Signed up with " stacked>
               <span
                 v-for="provider in user.app_metadata.providers"
