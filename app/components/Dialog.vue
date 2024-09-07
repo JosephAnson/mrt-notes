@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { PropType } from 'vue'
-
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-reserved-component-names
@@ -133,10 +133,10 @@ export default defineComponent({
                 </BaseField>
               </section>
 
-              <footer class="flex justify-between">
+              <footer class="flex justify-between gap-2">
                 <BaseButton
                   v-if="showCancel"
-                  class="mr-2 bg-red-700"
+                  variant="destructive"
                   @click="cancel('button')"
                   @keyup.enter="cancel('button')"
                 >

@@ -17,9 +17,9 @@ function createTimeSnippet(value: string) {
 </script>
 
 <template>
-  <a class="mr-2" href="#" @click="modalActive = true">
+  <EditorToolbarButton href="#" @click="modalActive = true">
     <slot />
-  </a>
+  </EditorToolbarButton>
 
   <Modal v-model:active="modalActive">
     <BaseField label="Enter a time?" stacked>

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { EditorContent } from '@tiptap/vue-3'
-import EditorSpellOccurranceModalButton from '~/components/EditorSpellOccurranceModalButton.vue'
-import EditorTimeModalButton from '~/components/EditorTimeModalButton.vue'
+import type { EncounterSpell } from '~~/server/api/blizzard/encounter/spells/[id]'
 import PlayerTags from '~/components/PlayerTags.vue'
-import type { EncounterSpell } from '~/server/api/blizzard/encounter/spells/[id]'
 import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
 import { IMAGE_MARKER } from '~/utils/constants'
@@ -72,8 +70,8 @@ function setColor(event: Event) {
 
 <template>
   <div class="editor mb-4">
-    <div class="toolbar flex flex-wrap p-2 bg-gray-700 rounded">
-      <div class="relative h-6 of-hidden">
+    <div class="toolbar flex flex-wrap p-1 bg-white/10 rounded gap-1">
+      <EditorToolbarButton class="relative of-hidden">
         <input
           class="absolute top-0 left-0 w-full h-full opacity-0"
           type="color"
@@ -82,18 +80,17 @@ function setColor(event: Event) {
         >
         <Icon
           name="carbon:text-color"
-          class="text-3xl inline-block pointer-events-none"
+          class="inline-block pointer-events-none"
           :style="{ color: editor?.getAttributes('textStyle').color }"
         />
-      </div>
-      <a
+      </EditorToolbarButton>
+      <EditorToolbarButton
         v-for="marker in markers"
         :key="marker.name"
-        class="h-6 w-6 flex items-center cursor-pointer mr-1 last:mr-0"
         @click.stop="addImageToEditor({ src: marker.src, alt: IMAGE_MARKER })"
       >
         <img class="object-contain w-full h-full" :src="marker.src">
-      </a>
+      </EditorToolbarButton>
 
       <EditorTimeModalButton @input="addStringToEditor">
         Time
@@ -105,21 +102,21 @@ function setColor(event: Event) {
         Spell Occurrence
       </EditorSpellOccurranceModalButton>
 
-      <button class="bg-transparent" :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-        <Icon name="carbon:undo" class="text-xl inline-block mr-2" />
-      </button>
-      <button class="bg-transparent" :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-        <Icon name="carbon:redo" class="text-xl inline-block mr-2" />
-      </button>
-      <button class="bg-transparent" @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
-        <Icon name="carbon:text-clear-format" class="text-xl text-white inline-block mr-2" />
-      </button>
+      <EditorToolbarButton :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
+        <Icon name="carbon:undo" class="text-xl" />
+      </EditorToolbarButton>
+      <EditorToolbarButton :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
+        <Icon name="carbon:redo" class="text-xl" />
+      </EditorToolbarButton>
+      <EditorToolbarButton @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
+        <Icon name="carbon:text-clear-format" class="text-xl" />
+      </EditorToolbarButton>
     </div>
 
     <BaseField
       v-if="members?.length"
       label="Players:"
-      class="mt-2 !mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+      class="p-2"
     >
       <PlayerTags :members="members" @click="createPlayerSnippet" />
     </BaseField>

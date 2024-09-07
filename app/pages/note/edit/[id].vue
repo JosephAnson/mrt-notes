@@ -109,13 +109,11 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
       <section>
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
-            <div class="flex justify-between">
-              <Heading h2>
-                General Tactic
-              </Heading>
-            </div>
+            <Heading h2>
+              General Tactic
+            </Heading>
 
-            <BaseCard class="mb-2">
+            <BaseCard>
               <Editor
                 key="main-editor"
                 v-model="editor.value"
@@ -126,12 +124,16 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
               />
             </BaseCard>
 
-            <BaseCard class="mb-2">
-              <TeamGroups :note-id="note.id" />
+            <BaseCard>
+              <BaseCardBlock>
+                <TeamGroups :note-id="note.id" />
+              </BaseCardBlock>
             </BaseCard>
 
-            <BaseCard class="mb-2">
-              <TeamMembers />
+            <BaseCard>
+              <BaseCardBlock>
+                <TeamMembers />
+              </BaseCardBlock>
             </BaseCard>
           </div>
           <div class="sm:col-span-12 md:col-span-6">

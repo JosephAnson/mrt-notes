@@ -25,9 +25,9 @@ async function createSpellSnippet(spellId: string) {
 </script>
 
 <template>
-  <a class="mr-2" href="#" @click.stop="modalActive = true">
+  <EditorToolbarButton href="#" @click.stop="modalActive = true">
     <slot />
-  </a>
+  </EditorToolbarButton>
 
   <Modal v-model:active="modalActive">
     <SpellIdInput v-model="spellID" />

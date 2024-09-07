@@ -21,11 +21,11 @@ async function createNote(name: string) {
   <Heading h3>
     Create New Note
   </Heading>
-  <form class="flex" @submit.prevent="createNote(noteName)">
+  <form class="flex gap-4" @submit.prevent="createNote(noteName)">
     <BaseField sr-only label="Enter name for note" class="w-full" label-for="create-note">
-      <BaseInput v-model="noteName" class="mr-2" placeholder="Enter name for note" />
+      <BaseInput v-model="noteName" placeholder="Enter name for note" />
     </BaseField>
-    <BaseButton class="mr-2 flex-shrink-0" type="submit">
+    <BaseButton type="submit">
       Create note
     </BaseButton>
   </form>

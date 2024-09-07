@@ -18,17 +18,17 @@ function onDelete(teamMember: Member) {
 </script>
 
 <template>
-  <div v-if="props.members?.length" class="flex flex-wrap">
-    <a
+  <div v-if="props.members?.length" class="flex flex-wrap gap-1">
+    <BaseTag
       v-for="teamMember in props.members"
       :key="teamMember.id"
-      class="flex space-between cursor-pointer mr-1 mb-1 items-center bg-gray-900 hover:bg-black rounded px-2"
       :class="`has-wow-text-${teamMember.class?.replace(' ', '-').toLowerCase()}`"
+      class="cursor-pointer"
       @click.prevent="onClick(teamMember)"
     >
       {{ teamMember.name }}
 
       <Icon v-if="props.delete" name="carbon:trash-can" class="ml-2" @click="onDelete(teamMember)" />
-    </a>
+    </BaseTag>
   </div>
 </template>

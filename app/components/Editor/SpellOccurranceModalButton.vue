@@ -23,9 +23,9 @@ function createSpellOccurrenceSnippet() {
 </script>
 
 <template>
-  <a class="mr-2" href="#" @click="modalActive = true">
+  <EditorToolbarButton href="#" @click="modalActive = true">
     <slot />
-  </a>
+  </EditorToolbarButton>
 
   <Modal v-model:active="modalActive">
     <SpellIdInput v-model="spellOccurrence.spellId" />

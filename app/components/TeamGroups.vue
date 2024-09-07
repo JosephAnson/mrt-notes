@@ -44,7 +44,7 @@ function onGroupMemberDelete(group: Group, member: Member) {
 </script>
 
 <template>
-  <div class="box groups">
+  <div>
     <div
       class="flex justify-between items-center" :class="{
         'mb-4': groupsStore.groups.length > 0,
@@ -61,109 +61,111 @@ function onGroupMemberDelete(group: Group, member: Member) {
     </div>
     <Draggable v-model="groupsStore.groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
       <template #item="{ element }">
-        <BaseCard class="flex w-full px-2 mb-2 rounded-1 !bg-gray-700">
-          <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
+        <BaseCard>
+          <BaseCardBlock class="flex w-full px-2 mb-2">
+            <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
 
-          <div class="w-full">
-            <BaseField label="Type" stacked>
-              <BaseSelect v-model:model-value="element.type" @update:value="debouncedUpdateGroups">
-                <BaseSelectTrigger>
-                  <BaseSelectValue placeholder="Select a class type" />
-                </BaseSelectTrigger>
-                <BaseSelectContent>
-                  <BaseSelectItem v-for="type in GroupType" :key="type" :value="type">
-                    {{ type }}
-                  </BaseSelectItem>
-                </BaseSelectContent>
-              </BaseSelect>
-            </BaseField>
-
-            <BaseField v-if="element.type === 'Players'" stacked>
-              <BaseField
-                label="Group Players:"
-                class="!mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
-              >
-                <PlayerTags :members="getSelectedMembers(element.players)" delete @delete="onGroupMemberDelete(element, $event)" />
+            <div class="w-full">
+              <BaseField label="Type" stacked>
+                <BaseSelect v-model:model-value="element.type" @update:value="debouncedUpdateGroups">
+                  <BaseSelectTrigger>
+                    <BaseSelectValue placeholder="Select a class type" />
+                  </BaseSelectTrigger>
+                  <BaseSelectContent>
+                    <BaseSelectItem v-for="type in GroupType" :key="type" :value="type">
+                      {{ type }}
+                    </BaseSelectItem>
+                  </BaseSelectContent>
+                </BaseSelect>
               </BaseField>
 
-              <Combobox v-model="element.players" multiple @update:model-value="debouncedUpdateGroups">
-                <div class="relative mt-1">
-                  <div
-                    class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-300 sm:text-sm"
-                  >
-                    <ComboboxInput
-                      class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-                      @change="query = $event.target.value"
-                    />
+              <BaseField v-if="element.type === 'Players'" stacked>
+                <BaseField
+                  label="Group Players:"
+                  class="!mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
+                >
+                  <PlayerTags :members="getSelectedMembers(element.players)" delete @delete="onGroupMemberDelete(element, $event)" />
+                </BaseField>
 
-                    <TransitionRoot
-                      leave="transition ease-in duration-100"
-                      leave-from="opacity-100"
-                      leave-to="opacity-0"
-                      @after-leave="query = ''"
+                <Combobox v-model="element.players" multiple @update:model-value="debouncedUpdateGroups">
+                  <div class="relative mt-1">
+                    <div
+                      class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-300 sm:text-sm"
                     >
-                      <ComboboxOptions
-                        class="absolute z-5 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                      <ComboboxInput
+                        class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                        @change="query = $event.target.value"
+                      />
+
+                      <TransitionRoot
+                        leave="transition ease-in duration-100"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
+                        @after-leave="query = ''"
                       >
-                        <div
-                          v-if="filteredMembers.length === 0 && query !== ''"
-                          class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                        <ComboboxOptions
+                          class="absolute z-5 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                         >
-                          Nothing found.
-                        </div>
-                        <ComboboxOption
-                          v-for="member in filteredMembers"
-                          :key="member.id"
-                          v-slot="{ selected, active }"
-                          as="template"
-                          :value="member.name"
-                        >
-                          <li
-                            class="relative cursor-default select-none py-2 pl-10 pr-4"
-                            :class="{
-                              'bg-primary-100 text-white': active,
-                              'text-gray-900': !active,
-                            }"
+                          <div
+                            v-if="filteredMembers.length === 0 && query !== ''"
+                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
                           >
-                            <span
-                              class="block truncate"
+                            Nothing found.
+                          </div>
+                          <ComboboxOption
+                            v-for="member in filteredMembers"
+                            :key="member.id"
+                            v-slot="{ selected, active }"
+                            as="template"
+                            :value="member.name"
+                          >
+                            <li
+                              class="relative cursor-default select-none py-2 pl-10 pr-4"
                               :class="{
-                                'font-medium': selected,
-                                'font-normal': !selected,
+                                'bg-primary-100 text-white': active,
+                                'text-gray-900': !active,
                               }"
                             >
-                              {{ member.name }}
-                            </span>
-                            <span
-                              v-if="selected"
-                              class="absolute inset-y-0 left-0 flex items-center pl-3"
-                              :class="{
-                                'text-white': active,
-                                'text-primary-100': !active,
-                              }"
-                            >
-                              <Icon name="carbon:checkmark" class="h-5 w-5" aria-hidden="true" />
-                            </span>
-                          </li>
-                        </ComboboxOption>
-                      </ComboboxOptions>
-                    </TransitionRoot>
+                              <span
+                                class="block truncate"
+                                :class="{
+                                  'font-medium': selected,
+                                  'font-normal': !selected,
+                                }"
+                              >
+                                {{ member.name }}
+                              </span>
+                              <span
+                                v-if="selected"
+                                class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                :class="{
+                                  'text-white': active,
+                                  'text-primary-100': !active,
+                                }"
+                              >
+                                <Icon name="carbon:checkmark" class="h-5 w-5" aria-hidden="true" />
+                              </span>
+                            </li>
+                          </ComboboxOption>
+                        </ComboboxOptions>
+                      </TransitionRoot>
+                    </div>
                   </div>
-                </div>
-              </Combobox>
-            </BaseField>
+                </Combobox>
+              </BaseField>
 
-            <Editor
-              v-model="element.note.value"
-              :members="element.type === 'Players' ? getSelectedMembers(element.players) : members"
-              @update:json="element.note.json = $event"
-              @update:model-value="debouncedUpdateGroups"
-            />
-          </div>
+              <Editor
+                v-model="element.note.value"
+                :members="element.type === 'Players' ? getSelectedMembers(element.players) : members"
+                @update:json="element.note.json = $event"
+                @update:model-value="debouncedUpdateGroups"
+              />
+            </div>
 
-          <a class="w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="groupsStore.deleteGroup(element.id)">
-            <Icon name="carbon:trash-can" />
-          </a>
+            <a class="w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="groupsStore.deleteGroup(element.id)">
+              <Icon name="carbon:trash-can" />
+            </a>
+          </BaseCardBlock>
         </BaseCard>
       </template>
     </Draggable>
