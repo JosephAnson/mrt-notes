@@ -51,19 +51,16 @@ function onDelete() {
               {{ props.note.name }}
             </Heading>
           </NuxtLink>
-          <div class="flex flex-col flex-wrap sm:flex-row sm:items-center text-gray-300 text-sm">
-            <nuxt-link v-if="props.note.username" class="flex items-center" :to="`/profile/${props.note.username}`">
-              <span class="i-carbon-user inline-block mr-1" /> {{ props.note.username }}
-            </nuxt-link>
-            <span
-              v-if="props.note.username"
-              class="hidden sm:inline-block border-r-1 border-solid h-4 border-white:25 pr-2 mr-2"
-            />
-            <span>Created on: {{ createdOn }}</span>
-            <span class="hidden sm:inline-block border-r-1 border-solid h-4 border-white:25 pr-2 mr-2" />
-            <span>Updated: {{ updatedOn }}</span>
+          <div class="flex gap-2 items-center flex-wrap text-gray-300 text-sm">
+            <BaseTag as-child>
+              <NuxtLink v-if="props.note.username" class="flex items-center" :to="`/profile/${props.note.username}`">
+                <span class="i-carbon-user inline-block mr-1" /> {{ props.note.username }}
+              </NuxtLink>
+            </BaseTag>
+            <BaseTag>Created: {{ createdOn }}</BaseTag>
+            <BaseTag>Updated: {{ updatedOn }}</BaseTag>
           </div>
-          <BaseField v-if="props.note.description" stacked class="line-clamp-3 pt-2 !mb-0">
+          <BaseField v-if="props.note.description" stacked class="line-clamp-3">
             <p>{{ props.note.description }}</p>
           </BaseField>
         </div>
