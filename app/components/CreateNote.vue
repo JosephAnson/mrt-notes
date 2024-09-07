@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { toast } from 'vue-sonner'
+
 const router = useRouter()
 const noteName = ref('')
 
 async function createNote(name: string) {
-  if (!name && name.length <= 0) return openSnackbar('Please enter a name')
+  if (!name && name.length <= 0) return toast.warning('Please enter a name')
 
   const { data } = await $fetch('/api/notes/create', {
     query: {

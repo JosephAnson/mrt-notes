@@ -1,3 +1,4 @@
+import { toast } from 'vue-sonner'
 import type { Database } from '~/supabase.types'
 import type { Group, GroupTypeUnion } from '~/types'
 
@@ -58,7 +59,7 @@ export async function updateGroups(note_id: number, groups: Group[]) {
       )
       .select(groupColumns)
 
-    openSnackbar('Updated groups')
+    toast.success('Updated groups')
   }
 }
 

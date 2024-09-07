@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { toast } from 'vue-sonner'
 import Notification from '~/components/Notification.vue'
 import { updateUsername, usernameExists } from '~/services/profile'
 
@@ -17,19 +18,13 @@ const username = ref<string>(profile.value?.username || '')
 
 async function setUsername() {
   if (!username.value) {
-    openSnackbar({
-      message: 'Username cannot be empty!',
-      background: 'bg-red-700',
-    })
+    toast.error('Username cannot be empty!')
   }
   else {
     const usernameExist = await usernameExists(username.value)
 
     if (usernameExist) {
-      openSnackbar({
-        message: 'Username exists try another!',
-        background: 'bg-red-700',
-      })
+      toast.error('Username exists try another!')
     }
     else {
       const user = useSupabaseUser()
@@ -40,7 +35,7 @@ async function setUsername() {
       if (data.username)
         username.value = data.username
 
-      openSnackbar('Saved username')
+      toast.success('Saved username')
     }
   }
 }

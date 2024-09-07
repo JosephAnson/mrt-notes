@@ -1,4 +1,5 @@
 import type { Ref } from 'vue'
+import { toast } from 'vue-sonner'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 import { createNote } from '~/utils/createNote'
@@ -95,5 +96,5 @@ export async function deleteNote(id: number) {
   await deleteGroupsWithNoteId(id)
 
   await client.from('notes').delete().match({ id })
-  openSnackbar({ message: 'Note has been deleted', background: 'bg-red-700' })
+  toast.success('Note has been deleted')
 }

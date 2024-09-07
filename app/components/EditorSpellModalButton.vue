@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { toast } from 'vue-sonner'
 import type { SpellIdInformation } from '~/types'
 import { createEditorSpellIdImageData } from '~/utils/editor'
 
@@ -9,10 +10,10 @@ const spellID = ref('')
 
 async function createSpellSnippet(spellId: string) {
   if (!spellId) {
-    openSnackbar({ message: 'Enter a Spell ID!', background: 'bg-red-700' })
+    toast.warning('Enter a Spell ID!')
   }
   else {
-    openSnackbar(`Spell entered is: ${spellId}`)
+    toast.success(`Spell entered is: ${spellId}`)
 
     const { icon } = await $fetch<SpellIdInformation>(`/api/spell/${spellId}`)
 

@@ -1,4 +1,5 @@
 import { generateJSON } from '@tiptap/html'
+import { toast } from 'vue-sonner'
 import { createNewGroup, deleteGroupById } from '~/services/groups'
 import type { Group, GroupTypeUnion } from '~/types'
 import { editorExtensions } from '~/utils/editor'
@@ -50,7 +51,7 @@ export const useGroupsStore = defineStore('Groups', {
         }
       }
       else {
-        openSnackbar({ message: 'Need to be logged in to add group', background: 'bg-red-700' })
+        toast.error('Need to be logged in to add group')
       }
     },
     async fetchAllGroups(noteId: number) {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { JSONContent } from '@tiptap/vue-3'
+import { toast } from 'vue-sonner'
 import { createMRTGroupString, createMRTString, createPreviewString } from '~/utils/createMRTString'
 
 const props = defineProps({
@@ -12,10 +13,7 @@ const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {
   copy(string)
-  openSnackbar({
-    message: 'Copied to clipboard!',
-    background: 'bg-gray-900',
-  })
+  toast.success('Copied to clipboard!')
 }
 
 const preview = computed(() => {

@@ -1,3 +1,4 @@
+import { toast } from 'vue-sonner'
 import { addTeamMember, getAllTeamMembers, removeTeamMember, updateTeamMembers } from '~/services/teamMembers'
 import type { Member, WowClassesUnion } from '~/types'
 
@@ -14,7 +15,7 @@ export const useTeamMembersStore = defineStore('teamMembers', () => {
         name: teamMember.name,
       })
 
-      openSnackbar(`Added Member: ${teamMember.name}`)
+      toast.success(`Added Member: ${teamMember.name}`)
     }
   }
 
@@ -22,7 +23,7 @@ export const useTeamMembersStore = defineStore('teamMembers', () => {
     await removeTeamMember(player)
     members.value = members.value.filter(t => t.id !== player.id) || []
 
-    openSnackbar({ message: `Removed: ${player.name}`, background: 'bg-red-700' })
+    toast.success(`Removed: ${player.name}`)
 
     return members
   }
@@ -30,7 +31,7 @@ export const useTeamMembersStore = defineStore('teamMembers', () => {
   async function updateMembers() {
     await updateTeamMembers(members.value)
 
-    openSnackbar('Updated Members')
+    toast.success('Updated Members')
   }
 
   async function fetchAllTeamMembers() {

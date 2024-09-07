@@ -18,6 +18,7 @@ useHead({
     <NuxtPage />
     <TheFooter />
     <TheFeedback />
+    <BaseToaster theme="dark" rich-colors class="pointer-events-auto" />
 
     <div class="notices fixed bottom-10 right-10 z-10">
       <UpdateNotification>

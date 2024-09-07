@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { generateJSON } from '@tiptap/html'
+import { toast } from 'vue-sonner'
 import { deleteNote as deleteNoteApi } from '~/services/notes'
 import type { EditorData } from '~/types'
 
@@ -39,7 +40,7 @@ function save() {
       encounter: encounter.value,
     })
     saving.value = false
-    openSnackbar('Saved note')
+    toast.success('Saved note')
   }
 }
 
@@ -49,7 +50,7 @@ async function deleteNoteAndRedirect() {
     cancelText: 'No',
     confirmText: 'Yes',
     onConfirm: async () => {
-      openSnackbar('Note has been deleted')
+      toast.success('Note has been deleted')
 
       if (note.value) {
         const router = useRouter()

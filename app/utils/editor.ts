@@ -7,6 +7,7 @@ import StarterKit from '@tiptap/starter-kit'
 import type { Editor, JSONContent } from '@tiptap/vue-3'
 import { useEditor as tiptapUseEditor } from '@tiptap/vue-3'
 import type { Ref } from 'vue'
+import { toast } from 'vue-sonner'
 import { IMAGE_MARKER, IMAGE_SPELLID } from './constants'
 import type { SpellIdInformation } from '~/types'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
@@ -133,7 +134,7 @@ export async function createNodesOnPaste(editor: Editor, content: Slice | Node) 
             const spellId = string.replace('spell:', '').trim()
             const { icon } = await $fetch<SpellIdInformation>(`/api/spell/${spellId}`)
 
-            openSnackbar(`Loading icon for spell id: ${spellId}`)
+            toast.success(`Loading icon for spell id: ${spellId}`)
 
             const { src, title, alt } = createEditorSpellIdImageData(icon, spellId)
             jsonContent.push(

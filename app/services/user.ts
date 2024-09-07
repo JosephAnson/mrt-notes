@@ -1,3 +1,5 @@
+import { toast } from 'vue-sonner'
+
 export async function login(provider: 'discord' | 'google') {
   const client = useSupabaseClient()
 
@@ -8,7 +10,7 @@ export async function login(provider: 'discord' | 'google') {
     },
   })
 
-  if (error) return openSnackbar('Something went wrong !')
+  if (error) return toast.error('Something went wrong !')
 }
 
 export async function signInWithOtp(email: string) {
@@ -22,7 +24,7 @@ export async function signInWithOtp(email: string) {
     },
   })
 
-  if (error) return openSnackbar(`Something went wrong: ${error}`)
+  if (error) return toast.error(`Something went wrong: ${error}`)
 
   await router.push('/checkemail')
 }

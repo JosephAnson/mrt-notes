@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { toast } from 'vue-sonner'
+
 const emits = defineEmits(['input'])
 
 const modalActive = ref(false)
@@ -12,7 +14,7 @@ const spellOccurrence = reactive({
 function createSpellOccurrenceSnippet() {
   const insertString = `{time:${spellOccurrence.timeAfterSpellStarted},SCS:${spellOccurrence.spellId}:${spellOccurrence.occurrence}}`
 
-  openSnackbar(`Snippet entered is: ${insertString}`)
+  toast.success(`Snippet entered is: ${insertString}`)
 
   emits('input', insertString)
 
