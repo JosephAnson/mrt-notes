@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { kebabCase } from 'change-case'
-import type { Ref } from 'vue'
 import Draggable from 'vuedraggable'
+import type { Ref } from 'vue'
 import type { WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
@@ -49,7 +49,7 @@ const debouncedUpdateMembers = useDebounceFn(
       <template #item="{ element, index }">
         <BaseCard class="mb-2">
           <BaseCardBlock class="flex justify-between items-center">
-            <span class="i-carbon-draggable mr-2 text-2xl handle" />
+            <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
 
             <BaseField class="w-full" :label-for="`player-${index}`" label="Player">
               <div class="flex gap-2 w-full">

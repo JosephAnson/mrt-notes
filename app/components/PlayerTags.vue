@@ -28,7 +28,7 @@ function onDelete(teamMember: Member) {
     >
       {{ teamMember.name }}
 
-      <div v-if="props.delete" class="i-carbon-trash-can ml-2" @click="onDelete(teamMember)" />
+      <Icon v-if="props.delete" name="carbon:trash-can" class="ml-2" @click="onDelete(teamMember)" />
     </a>
   </div>
 </template>

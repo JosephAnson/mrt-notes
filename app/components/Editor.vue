@@ -80,8 +80,9 @@ function setColor(event: Event) {
           :value="editor?.getAttributes('textStyle').color"
           @input="setColor"
         >
-        <div
-          class="i-carbon-text-color text-3xl inline-block pointer-events-none"
+        <Icon
+          name="carbon:text-color"
+          class="text-3xl inline-block pointer-events-none"
           :style="{ color: editor?.getAttributes('textStyle').color }"
         />
       </div>
@@ -105,13 +106,13 @@ function setColor(event: Event) {
       </EditorSpellOccurranceModalButton>
 
       <button class="bg-transparent" :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-        <span class="text-xl i-carbon-undo inline-block mr-2" />
+        <Icon name="carbon:undo" class="text-xl inline-block mr-2" />
       </button>
       <button class="bg-transparent" :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-        <span class="text-xl i-carbon-redo inline-block mr-2" />
+        <Icon name="carbon:redo" class="text-xl inline-block mr-2" />
       </button>
       <button class="bg-transparent" @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
-        <span class="text-xl i-carbon-text-clear-format text-white inline-block mr-2" />
+        <Icon name="carbon:text-clear-format" class="text-xl text-white inline-block mr-2" />
       </button>
     </div>
 

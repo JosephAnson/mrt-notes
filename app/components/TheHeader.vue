@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
+import { ref } from 'vue'
 
 const client = useSupabaseClient()
 const user = useSupabaseUser()
@@ -63,7 +63,7 @@ router.afterEach(() => {
             @click="mobileMenuOpen = true"
           >
             <span class="sr-only">Open main menu</span>
-            <span class="i-carbon-menu h-6 w-6" aria-hidden="true" />
+            <Icon name="carbon:menu" class="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">

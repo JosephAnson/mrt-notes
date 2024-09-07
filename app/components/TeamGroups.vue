@@ -62,7 +62,7 @@ function onGroupMemberDelete(group: Group, member: Member) {
     <Draggable v-model="groupsStore.groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
       <template #item="{ element }">
         <BaseCard class="flex w-full px-2 mb-2 rounded-1 !bg-gray-700">
-          <span class="i-carbon-draggable mr-2 text-2xl handle" />
+          <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
 
           <div class="w-full">
             <BaseField label="Type" stacked>
@@ -142,7 +142,7 @@ function onGroupMemberDelete(group: Group, member: Member) {
                                 'text-primary-100': !active,
                               }"
                             >
-                              <span class="i-carbon-checkmark h-5 w-5" aria-hidden="true" />
+                              <Icon name="carbon:checkmark" class="h-5 w-5" aria-hidden="true" />
                             </span>
                           </li>
                         </ComboboxOption>
@@ -161,7 +161,9 @@ function onGroupMemberDelete(group: Group, member: Member) {
             />
           </div>
 
-          <a class="i-carbon-trash-can w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="groupsStore.deleteGroup(element.id)" />
+          <a class="w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="groupsStore.deleteGroup(element.id)">
+            <Icon name="carbon:trash-can" />
+          </a>
         </BaseCard>
       </template>
     </Draggable>
