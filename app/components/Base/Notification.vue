@@ -11,13 +11,13 @@ defineProps<{
 
 <template>
   <BaseCard :variant="variant">
-    <BaseCardHeader class-name="pb-3">
+    <BaseCardBlock class-name="pb-3">
       <BaseCardTitle v-if="title">
         {{ title }}
       </BaseCardTitle>
       <BaseCardDescription>
         <slot />
       </BaseCardDescription>
-    </BaseCardHeader>
+    </BaseCardBlock>
   </BaseCard>
 </template>

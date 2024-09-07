@@ -44,6 +44,7 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
       <Loading v-if="spellsLoading">
         Spells Loading
       </Loading>
+
       <section id="ERT-Editor">
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
