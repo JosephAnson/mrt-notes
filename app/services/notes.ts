@@ -1,5 +1,5 @@
-import type { Ref } from 'vue'
 import { toast } from 'vue-sonner'
+import type { Ref } from 'vue'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 import { createNote } from '~/utils/createNote'
@@ -74,7 +74,7 @@ export async function searchAllNotes(name: string) {
   const { data } = await client
     .from('notes')
     .select(NOTE_COLUMNS)
-    .order('created_at')
+    .order('created_at', { ascending: false })
     .limit(50)
     .textSearch('fts', query, {
       type: 'websearch',
