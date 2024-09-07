@@ -32,7 +32,7 @@ watchOnce(
   <div>
     <Section class="bg-white/10">
       <Container>
-        <div class="md:flex justify-between">
+        <div class="flex flex-col gap-4 md:flex-row justify-between">
           <div>
             <Heading h1 class="!mb-0">
               Welcome to MRT Notes: Your Ultimate Raid Planning Companion
