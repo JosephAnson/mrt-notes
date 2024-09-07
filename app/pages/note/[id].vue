@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { useSupabaseUser } from '#imports'
 import { generateJSON } from '@tiptap/html'
 import { capitalCase } from 'change-case'
+import { toast } from 'vue-sonner'
 import type { Ref } from 'vue'
-import { useSupabaseUser } from '#imports'
 import type { Note } from '~/types'
 import { editorExtensions } from '~/utils/editor'
 
@@ -20,6 +21,11 @@ const json = computed(() => generateJSON(editorString.value, editorExtensions))
 useSeoMeta({
   title: noteName,
 })
+
+if (!note.value) {
+  toast.error('Note is no longer available')
+  navigateTo('/')
+}
 </script>
 
 <template>
