@@ -25,9 +25,9 @@ const resultsItem = computed(() => results.value.map(i => i.item))
   <BaseSection>
     <BaseContainer>
       <div class="flex justify-between mb-8">
-        <Heading h1 class="!mb-0">
+        <BaseHeading h1 class="!mb-0">
           Search Expansion
-        </Heading>
+        </BaseHeading>
         <BaseField label="Search" class="w-128" label-for="encounter-search">
           <BaseInput v-model="input" placeholder="Search for an encounter" />
         </BaseField>
@@ -35,9 +35,9 @@ const resultsItem = computed(() => results.value.map(i => i.item))
 
       <div class="md:grid grid-cols-2 gap-12">
         <div>
-          <Heading h2>
+          <BaseHeading h2>
             Raids
-          </Heading>
+          </BaseHeading>
 
           <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
             <Ad v-if="index === 1" ad-slot="5501746994" ad-format="fluid" ad-layout-key="-fv+64+31-d5+c4" />
@@ -48,9 +48,9 @@ const resultsItem = computed(() => results.value.map(i => i.item))
               </BaseCardHeader>
               <BaseCardContent>
                 <div v-for="raid in expansion.instances.raids" :key="raid.id" class="mb-4">
-                  <Heading h4>
+                  <BaseHeading h4>
                     {{ raid.name }}
-                  </Heading>
+                  </BaseHeading>
 
                   <div class="flex flex-wrap gap-2 mb-2">
                     <BaseButton v-for="instance in raid.encounters" :key="instance.id" as-child>
@@ -65,9 +65,9 @@ const resultsItem = computed(() => results.value.map(i => i.item))
           </div>
         </div>
         <div>
-          <Heading h2>
+          <BaseHeading h2>
             Dungeons
-          </Heading>
+          </BaseHeading>
 
           <div v-for="(expansion, index) in resultsItem" :key="expansion.id" class="mb-12">
             <Ad v-if="index === 1" ad-slot="7513403484" ad-format="fluid" ad-layout-key="-fv+64+31-d5+c4" />
@@ -78,9 +78,9 @@ const resultsItem = computed(() => results.value.map(i => i.item))
               </BaseCardHeader>
               <BaseCardContent>
                 <div v-for="raid in expansion.instances.dungeons" :key="raid.id" class="mb-4">
-                  <Heading h4>
+                  <BaseHeading h4>
                     {{ raid.name }}
-                  </Heading>
+                  </BaseHeading>
 
                   <div class="flex flex-wrap gap-2 mb-2">
                     <BaseButton v-for="instance in raid.encounters" :key="instance.id" as-child>

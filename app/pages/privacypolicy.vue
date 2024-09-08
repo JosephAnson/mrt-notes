@@ -4,9 +4,9 @@
 <template>
   <BaseSection>
     <BaseContainer>
-      <Heading h1>
+      <BaseHeading h1>
         GDPR Compliance Statement
-      </Heading>
+      </BaseHeading>
 
       <div class="prose prose-invert">
         <p>

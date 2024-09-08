@@ -20,9 +20,9 @@ function filterEncounter(encounter: string) {
 <template>
   <BaseSection>
     <BaseContainer>
-      <Heading h1>
+      <BaseHeading h1>
         Find Notes
-      </Heading>
+      </BaseHeading>
 
       <BaseCard class="mb-8">
         <BaseCardBlock>
@@ -33,9 +33,9 @@ function filterEncounter(encounter: string) {
           </form>
 
           <div v-if="encounters" class="flex flex-wrap">
-            <Heading h2 styled="h4">
+            <BaseHeading h2 styled="h4">
               Search by encounter
-            </Heading>
+            </BaseHeading>
             <div>
               <BaseField label="Raids" stacked>
                 <div class="flex flex-wrap gap-2 mb-4">

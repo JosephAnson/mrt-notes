@@ -24,25 +24,25 @@ function onDeleteNote(note: Note) {
       <Ad ad-slot="8629692962" />
 
       <div v-if="profile">
-        <Heading h1>
+        <BaseHeading h1>
           {{ capitalCase(profile?.username || '') }}'s Profile
-        </Heading>
+        </BaseHeading>
 
         <CreateNote v-if="user?.id === profile?.id" class="mb-8" />
 
-        <Heading h2>
+        <BaseHeading h2>
           {{ capitalCase(profile?.username || '') }}'s Notes
-        </Heading>
+        </BaseHeading>
         <div v-if="notes?.length">
           <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
         </div>
-        <Heading v-else h2>
+        <BaseHeading v-else h2>
           {{ profile.username }} doesn't have any notes
-        </Heading>
+        </BaseHeading>
       </div>
-      <Heading v-else h1>
+      <BaseHeading v-else h1>
         No profile found
-      </Heading>
+      </BaseHeading>
     </BaseContainer>
   </BaseSection>
 </template>

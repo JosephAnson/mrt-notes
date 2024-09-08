@@ -7,9 +7,9 @@ definePageMeta({
 <template>
   <BaseSection>
     <BaseContainer>
-      <Heading h1>
+      <BaseHeading h1>
         Team Players
-      </Heading>
+      </BaseHeading>
       <TeamMembers />
     </BaseContainer>
   </BaseSection>

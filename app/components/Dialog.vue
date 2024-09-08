@@ -114,9 +114,9 @@ export default defineComponent({
         >
           <div class="relative w-full h-full max-w-2xl md:h-auto">
             <div class="relative p-4 bg-gray-700 rounded-lg shadow">
-              <Heading v-if="title" p styled="h2">
+              <BaseHeading v-if="title" p styled="h2">
                 {{ title }}
-              </Heading>
+              </BaseHeading>
 
               <section>
                 <p class="mb-2">

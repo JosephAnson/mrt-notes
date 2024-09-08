@@ -34,9 +34,9 @@ watchOnce(
       <BaseContainer>
         <div class="flex flex-col gap-4 md:flex-row justify-between">
           <div>
-            <Heading h1 class="!mb-0">
+            <BaseHeading h1 class="!mb-0">
               Welcome to MRT Notes: Your Ultimate Raid Planning Companion
-            </Heading>
+            </BaseHeading>
           </div>
 
           <BaseButton
@@ -63,9 +63,9 @@ watchOnce(
         <div class="user-information mb-8">
           <BaseCard v-if="!user">
             <BaseCardBlock class="flex items-center">
-              <Heading class="mr-4 !mb-0" h2>
+              <BaseHeading class="mr-4 !mb-0" h2>
                 Login to get started
-              </Heading>
+              </BaseHeading>
               <BaseButton as-child>
                 <NuxtLink to="/login">
                   Login
@@ -81,7 +81,7 @@ watchOnce(
                   <CreateNote />
 
                   <section v-if="notes?.length">
-                    <Heading>My Notes</Heading>
+                    <BaseHeading>My Notes</BaseHeading>
                     <div class="mb-8">
                       <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
                     </div>
@@ -90,7 +90,7 @@ watchOnce(
 
                 <aside class="w-full lg:w-1/3 lg:border-l-2 lg:border-black lg:pl-8">
                   <div class="flex justify-between items-center">
-                    <Heading>Your Team</Heading>
+                    <BaseHeading>Your Team</BaseHeading>
 
                     <BaseButton class="mr-2" to="team">
                       Edit your team
@@ -113,14 +113,14 @@ watchOnce(
           <BaseCard class="mt-4">
             <BaseCardBlock>
               <div class="flex items-center mb-4">
-                <Heading h2 styled="h3" class="!mb-0">
+                <BaseHeading h2 styled="h3" class="!mb-0">
                   Search by encounter
-                </Heading>
+                </BaseHeading>
                 <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters">
                   View all
                 </NuxtLink>
               </div>
-              <Heading>Raids</Heading>
+              <BaseHeading>Raids</BaseHeading>
               <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
                 <BaseButton v-for="encounter in encounters.raids" :key="encounter" as-child>
                   <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
@@ -128,7 +128,7 @@ watchOnce(
                   </NuxtLink>
                 </BaseButton>
               </div>
-              <Heading>Mythic+ Dungeons</Heading>
+              <BaseHeading>Mythic+ Dungeons</BaseHeading>
               <div v-if="encounters?.dungeons" class="flex flex-wrap gap-2 mb-2">
                 <BaseButton v-for="encounter in encounters.dungeons" :key="encounter" as-child>
                   <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
@@ -141,8 +141,8 @@ watchOnce(
         </div>
 
         <div class="md:grid grid-cols-12 gap-8">
-          <RecentlyModifiedNotes class="sm:col-span-12 md:col-span-6" />
-          <RecentlyCreateNotes class="sm:col-span-12 md:col-span-6" />
+          <HomeRecentlyModifiedNotes class="sm:col-span-12 md:col-span-6" />
+          <HomeRecentlyCreateNotes class="sm:col-span-12 md:col-span-6" />
         </div>
       </BaseContainer>
     </div>
@@ -151,7 +151,42 @@ watchOnce(
 
     <BaseSection class="bg-white/5">
       <BaseContainer>
-        <SiteInfo />
+        <div class="prose prose-invert">
+          <BaseHeading h3>
+            Features
+          </BaseHeading>
+          <div class="mt-8">
+            <p>
+              Website dedicated to making raid leaders lives a little easier with mrt note planning, below are some of the
+              features:
+            </p>
+            <ul>
+              <li>Create, share, favorite and export mrt notes</li>
+              <li>Share Profiles</li>
+              <li>Preview Notes</li>
+            </ul>
+            <p>Editor Features:</p>
+            <ul>
+              <li>Based on boss selection automatically generate buttons to add boss spells to your note</li>
+              <li>
+                Auto transform pasted MRT note, current support is:
+                <ul>
+                  <li>Spells</li>
+                  <li>Colors</li>
+                  <li>Raid Markers</li>
+                  <li>Timers</li>
+                </ul>
+              </li>
+              <li>Change color of text</li>
+              <li>Add raid markers</li>
+              <li>Add raid teams members and easier add to note</li>
+              <li>Add time stamps</li>
+              <li>Add spell icons</li>
+              <li>Add spell occurrence</li>
+              <li>Define groups that notes can be assigned to: Tanks, Healers, DPS, individual players</li>
+            </ul>
+          </div>
+        </div>
       </BaseContainer>
     </BaseSection>
   </div>

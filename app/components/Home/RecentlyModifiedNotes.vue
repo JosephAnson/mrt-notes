@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/notes/recentlyCreatedNotes')
+const { data } = await useFetch('/api/notes/recentlyModifiedNotes')
 </script>
 
 <template>
   <section v-if="data">
-    <Heading>Recently Created Notes</Heading>
+    <BaseHeading>Recently Modified Notes</BaseHeading>
     <div class="mb-8">
       <NoteItem
         v-for="note in data"

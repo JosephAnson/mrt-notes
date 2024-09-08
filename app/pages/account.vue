@@ -43,9 +43,9 @@ async function setUsername() {
 <template>
   <BaseSection>
     <BaseContainer v-if="profile">
-      <Heading h1>
+      <BaseHeading h1>
         Account
-      </Heading>
+      </BaseHeading>
 
       <div class="md:grid grid-cols-12 gap-8">
         <div class="col-span-12 xl:col-span-6">

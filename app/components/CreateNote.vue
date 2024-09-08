@@ -18,9 +18,9 @@ async function createNote(name: string) {
 </script>
 
 <template>
-  <Heading h3>
+  <BaseHeading h3>
     Create New Note
-  </Heading>
+  </BaseHeading>
   <form class="flex gap-4" @submit.prevent="createNote(noteName)">
     <BaseField sr-only label="Enter name for note" class="w-full" label-for="create-note">
       <BaseInput v-model="noteName" placeholder="Enter name for note" />

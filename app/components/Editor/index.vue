@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { EditorContent } from '@tiptap/vue-3'
-import type { EncounterSpell } from '~~/server/api/blizzard/encounter/spells/[id]'
 import PlayerTags from '~/components/PlayerTags.vue'
 import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
@@ -10,17 +9,18 @@ import { createEditorSpellIdImageData, useEditor } from '~/utils/editor'
 const props = withDefaults(
   defineProps<{
     modelValue: string
-    spells?: EncounterSpell[] | null
+    encounter?: number | null
     members?: Member[]
   }>(),
   {
     modelValue: '',
-    spells: () => [],
     members: () => [],
   },
 )
 
 const emits = defineEmits(['update:modelValue', 'update:json'])
+
+const { pending: spellsLoading, data: encounterInfo } = await useFetch(() => `/api/blizzard/encounter/spells/${props.encounter}`)
 
 const { modelValue } = toRefs(props)
 
@@ -70,7 +70,7 @@ function setColor(event: Event) {
 
 <template>
   <div class="editor mb-4">
-    <div class="toolbar flex flex-wrap p-1 bg-white/10 rounded gap-1">
+    <div class="toolbar flex flex-wrap p-1 bg-white/10 gap-1">
       <EditorToolbarButton class="relative of-hidden">
         <input
           class="absolute top-0 left-0 w-full h-full opacity-0"
@@ -116,21 +116,24 @@ function setColor(event: Event) {
     <BaseField
       v-if="members?.length"
       label="Players:"
-      class="p-2"
+      class="p-2 mb-0 bg-white/5"
     >
       <PlayerTags :members="members" @click="createPlayerSnippet" />
     </BaseField>
 
     <div class="p-1">
+      <Loading v-if="spellsLoading">
+        Spells Loading
+      </Loading>
       <BaseField
-        v-if="spells?.length"
+        v-else-if="encounterInfo?.spells?.length"
         key="encounter-spells"
         label="Encounter Spells: "
         sr-only
       >
-        <div v-if="spells" class="flex flex-wrap">
+        <div v-if="encounterInfo?.spells" class="flex flex-wrap">
           <div
-            v-for="spell in spells"
+            v-for="spell in encounterInfo?.spells"
             :key="`encounter-spells-${spell.id}`"
             class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-white/10 hover:bg-black rounded px-2"
             @click="

@@ -60,17 +60,15 @@ async function deleteNoteAndRedirect() {
     },
   })
 }
-
-const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `/api/blizzard/encounter/spells/${encounter.value}`)
 </script>
 
 <template>
   <BaseSection>
     <BaseContainer v-if="note">
       <div class="md:flex justify-between mb-4">
-        <Heading h1>
-          Mrt Notes
-        </Heading>
+        <BaseHeading h1>
+          Edit MRT Note
+        </BaseHeading>
 
         <div class="flex items-center gap-2">
           <div v-if="saving" class="flex item-center mr-4">
@@ -96,30 +94,26 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
           <BaseField label="Description" stacked>
             <BaseInput v-model="description" type="textarea" />
           </BaseField>
-          <EncounterSelector
+          <BaseEncounterSelector
             v-model:expansion="expansion"
             v-model:instance="instance"
             v-model:encounter="encounter"
           />
-          <Loading v-if="spellsLoading">
-            Spells Loading
-          </Loading>
         </BaseCardBlock>
       </BaseCard>
       <section>
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
-            <Heading h2>
-              General Tactic
-            </Heading>
-
-            <BaseCard>
+            <BaseCard class="overflow-hidden">
+              <BaseCardHeader>
+                MRT Note Editor
+              </BaseCardHeader>
               <Editor
                 key="main-editor"
                 v-model="editor.value"
                 :members="teamMembersStore.members"
                 class="block"
-                :spells="encounterSpells?.spells"
+                :encounter="encounter"
                 @update:json="editor.json = $event"
               />
             </BaseCard>

@@ -38,14 +38,14 @@ if (!note.value) {
           <div class="mb-4">
             <div class="md:flex justify-between">
               <div class="flex mb-4 md:mb-0">
-                <Heading h1 class="!mb-1">
+                <BaseHeading h1 class="!mb-1">
                   {{ noteName }}
-                </Heading>
+                </BaseHeading>
 
                 <NuxtLink v-if="note.username" :to="`/profile/${note.username}`">
-                  <Heading h2 styled="h1" class="!mb-1">
+                  <BaseHeading h2 styled="h1" class="!mb-1">
                     {{ `&nbsp;by ${capitalCase(note.username)}` }}
-                  </Heading>
+                  </BaseHeading>
                 </NuxtLink>
               </div>
 
@@ -75,12 +75,12 @@ if (!note.value) {
           </section>
         </div>
         <div v-if="note && userNotes?.length" class="sm:col-span-12 md:col-span-3">
-          <Heading v-if="note?.username" h2>
+          <BaseHeading v-if="note?.username" h2>
             {{ capitalCase(note.username) }}'s Notes
-          </Heading>
-          <Heading v-else h2>
+          </BaseHeading>
+          <BaseHeading v-else h2>
             Related Notes
-          </Heading>
+          </BaseHeading>
           <div v-if="userNotes.length" class="overflow-y-auto h-screen">
             <NoteItem v-for="userNote in userNotes" :key="userNote.id" :note="userNote" />
           </div>

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  expansion: number
-  instance: number
-  encounter: number
+  expansion?: number
+  instance?: number
+  encounter?: number
 }>()
 
 const emits = defineEmits(['update:expansion', 'update:instance', 'update:encounter'])

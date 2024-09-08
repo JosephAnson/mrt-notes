@@ -47,9 +47,9 @@ function onDelete() {
       <div class="flex justify-between">
         <div class="mr-4 flex-1">
           <NuxtLink :to="canEdit ? `/note/edit/${props.note.id}` : `/note/${props.note.id}`">
-            <Heading h4 class="line-clamp-3 flex items-center">
+            <BaseHeading h4 class="line-clamp-3 flex items-center">
               {{ props.note.name }}
-            </Heading>
+            </BaseHeading>
           </NuxtLink>
           <div class="flex gap-2 items-center flex-wrap text-gray-300 text-sm">
             <BaseTag as-child>
