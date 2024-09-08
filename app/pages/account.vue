@@ -41,8 +41,8 @@ async function setUsername() {
 </script>
 
 <template>
-  <Section>
-    <Container v-if="profile">
+  <BaseSection>
+    <BaseContainer v-if="profile">
       <Heading h1>
         Account
       </Heading>
@@ -90,6 +90,6 @@ async function setUsername() {
           </div>
         </div>
       </div>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

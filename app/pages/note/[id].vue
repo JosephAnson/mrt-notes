@@ -29,10 +29,10 @@ if (!note.value) {
 </script>
 
 <template>
-  <Section>
+  <BaseSection>
     <Ad ad-slot="9530994485" />
 
-    <Container v-if="note">
+    <BaseContainer v-if="note">
       <div class="md:grid grid-cols-12 gap-8">
         <div class="sm:col-span-12 md:col-span-9">
           <div class="mb-4">
@@ -86,6 +86,6 @@ if (!note.value) {
           </div>
         </div>
       </div>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

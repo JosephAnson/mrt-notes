@@ -45,7 +45,7 @@ router.afterEach(() => {
 
 <template>
   <div class="sticky z-40 top-0 bg-background/80 backdrop-blur-lg border-b border-border">
-    <Container>
+    <BaseContainer>
       <nav class="flex items-center justify-between py-3" aria-label="Global">
         <div class="flex lg:flex-1">
           <NuxtLink
@@ -135,6 +135,6 @@ router.afterEach(() => {
           </div>
         </DialogPanel>
       </Dialog>
-    </Container>
+    </BaseContainer>
   </div>
 </template>

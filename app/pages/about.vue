@@ -1,6 +1,6 @@
 <template>
-  <Section>
-    <Container>
+  <BaseSection>
+    <BaseContainer>
       <div class="prose prose-invert max-w-none">
         <header>
           <Heading h1>
@@ -79,6 +79,6 @@
           </div>
         </section>
       </div>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

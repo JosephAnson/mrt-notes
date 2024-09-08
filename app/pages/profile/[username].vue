@@ -19,8 +19,8 @@ function onDeleteNote(note: Note) {
 </script>
 
 <template>
-  <Section>
-    <Container>
+  <BaseSection>
+    <BaseContainer>
       <Ad ad-slot="8629692962" />
 
       <div v-if="profile">
@@ -43,6 +43,6 @@ function onDeleteNote(note: Note) {
       <Heading v-else h1>
         No profile found
       </Heading>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

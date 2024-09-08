@@ -19,8 +19,8 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
 </script>
 
 <template>
-  <Section>
-    <Container>
+  <BaseSection>
+    <BaseContainer>
       <div class="flex justify-between">
         <Heading h1>
           Playground
@@ -64,6 +64,6 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
           </div>
         </div>
       </section>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

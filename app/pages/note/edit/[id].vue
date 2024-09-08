@@ -65,8 +65,8 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
 </script>
 
 <template>
-  <Section>
-    <Container v-if="note">
+  <BaseSection>
+    <BaseContainer v-if="note">
       <div class="md:flex justify-between mb-4">
         <Heading h1>
           Mrt Notes
@@ -141,6 +141,6 @@ const { pending: spellsLoading, data: encounterSpells } = await useFetch(() => `
           </div>
         </div>
       </section>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

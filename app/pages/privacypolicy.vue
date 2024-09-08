@@ -2,8 +2,8 @@
 </script>
 
 <template>
-  <Section>
-    <Container>
+  <BaseSection>
+    <BaseContainer>
       <Heading h1>
         GDPR Compliance Statement
       </Heading>
@@ -105,6 +105,6 @@
             applicable laws and regulations.</em>
         </p>
       </div>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

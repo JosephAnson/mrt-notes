@@ -18,8 +18,8 @@ function filterEncounter(encounter: string) {
 </script>
 
 <template>
-  <Section>
-    <Container>
+  <BaseSection>
+    <BaseContainer>
       <Heading h1>
         Find Notes
       </Heading>
@@ -61,6 +61,6 @@ function filterEncounter(encounter: string) {
 
         <NoteItem v-for="note in notes" :key="note.id" :note="note" />
       </div>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

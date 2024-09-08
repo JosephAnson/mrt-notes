@@ -5,8 +5,8 @@ const email = ref('')
 </script>
 
 <template>
-  <Section class="min-h-[80dvh] flex items-center">
-    <Container>
+  <BaseSection class="min-h-[80dvh] flex items-center">
+    <BaseContainer>
       <BaseCard v-if="!user" class="w-full max-w-sm mx-auto">
         <BaseCardHeader>
           <BaseCardTitle>Login</BaseCardTitle>
@@ -64,6 +64,6 @@ const email = ref('')
           </BaseButton>
         </BaseCardFooter>
       </BaseCard>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

@@ -40,7 +40,7 @@ onMounted(() => {
 
 <template>
   <div class="my-4">
-    <Container>
+    <BaseContainer>
       <ins
         class="adsbygoogle flex justify-center items-center block w-full"
         :data-ad-client="adClient"
@@ -49,7 +49,7 @@ onMounted(() => {
         data-full-width-responsive="false"
         v-bind="attrs"
       />
-    </Container>
+    </BaseContainer>
   </div>
 </template>
 

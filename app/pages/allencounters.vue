@@ -22,8 +22,8 @@ const resultsItem = computed(() => results.value.map(i => i.item))
 </script>
 
 <template>
-  <Section>
-    <Container>
+  <BaseSection>
+    <BaseContainer>
       <div class="flex justify-between mb-8">
         <Heading h1 class="!mb-0">
           Search Expansion
@@ -95,6 +95,6 @@ const resultsItem = computed(() => results.value.map(i => i.item))
           </div>
         </div>
       </div>
-    </Container>
-  </Section>
+    </BaseContainer>
+  </BaseSection>
 </template>

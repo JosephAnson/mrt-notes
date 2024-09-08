@@ -30,8 +30,8 @@ watchOnce(
 
 <template>
   <div>
-    <Section class="bg-white/10">
-      <Container>
+    <BaseSection class="bg-white/10">
+      <BaseContainer>
         <div class="flex flex-col gap-4 md:flex-row justify-between">
           <div>
             <Heading h1 class="!mb-0">
@@ -49,11 +49,11 @@ watchOnce(
             Download MRT WoW Addon
           </BaseButton>
         </div>
-      </Container>
-    </Section>
+      </BaseContainer>
+    </BaseSection>
     <Ad ad-slot="8629692962" />
     <div>
-      <Container>
+      <BaseContainer>
         <BaseNotification v-if="user && !pending && !profile?.username">
           Set your username on your account if you want to share your profile
           <BaseButton to="/account" class="ml-4">
@@ -144,15 +144,15 @@ watchOnce(
           <RecentlyModifiedNotes class="sm:col-span-12 md:col-span-6" />
           <RecentlyCreateNotes class="sm:col-span-12 md:col-span-6" />
         </div>
-      </Container>
+      </BaseContainer>
     </div>
 
     <Ad ad-slot="9899893676" ad-layout="in-article" />
 
-    <Section class="bg-white/5">
-      <Container>
+    <BaseSection class="bg-white/5">
+      <BaseContainer>
         <SiteInfo />
-      </Container>
-    </Section>
+      </BaseContainer>
+    </BaseSection>
   </div>
 </template>

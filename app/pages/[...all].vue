@@ -1,5 +1,7 @@
 <template>
-  <Section>
-    <Container> Page can't be found </Container>
-  </Section>
+  <BaseSection>
+    <BaseContainer>
+      Page can't be found
+    </BaseContainer>
+  </BaseSection>
 </template>
