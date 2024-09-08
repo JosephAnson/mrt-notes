@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useSupabaseUser } from '#imports'
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, TransitionRoot } from '@headlessui/vue'
-import Draggable from 'vuedraggable'
+import { VueDraggable } from 'vue-draggable-plus'
+import { toast } from 'vue-sonner'
 import PlayerTags from '~/components/PlayerTags.vue'
-import { getAllTeamMembers } from '~/services/teamMembers'
-import { type Group, GroupType, type Member } from '~/types'
+import { type Group, GroupType, type GroupTypeUnion, type Member } from '~/types'
 
 const props = defineProps({
   noteId: {
@@ -13,18 +13,19 @@ const props = defineProps({
   },
 })
 
-const groupsStore = useGroupsStore()
 const user = useSupabaseUser()
 
-const { data: members } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
-  watch: [user],
-})
+const { data: groups, refresh } = await useFetch('/api/groups/all', { key: 'groups-all', query: { noteId: props.noteId }, deep: false })
+const { data: members } = await useFetch('/api/team/all', { key: 'team-all', watch: [user], deep: false })
 
-await useAsyncData('groups', async () => await groupsStore.fetchAllGroups(props.noteId))
+const b = ref([])
+syncRef(groups, b, { direction: 'ltr' })
 
 const debouncedUpdateGroups = useDebounceFn(
-  () => {
-    updateGroups(props.noteId, groupsStore.groups)
+  async () => {
+    if (groups.value) {
+      await $fetch('/api/groups/update', { method: 'POST', body: { noteId: props.noteId, groups: groups.value } })
+    }
   },
   DEBOUNCE_TYPING_TIMER,
   { maxWait: 5000 },
@@ -39,42 +40,80 @@ const filteredMembers = computed(() =>
     ),
 )
 
-function getSelectedMembers(players: string[]) {
-  return members.value?.filter(member => players.includes(member.name))
+function getSelectedMembers(players?: string[]) {
+  if (players) {
+    return members.value?.filter(member => players.includes(member.name))
+  }
 }
 
 function onGroupMemberDelete(group: Group, member: Member) {
   group.players = group.players.filter(player => player !== member.name)
 }
+
+async function deleteGroup(id: number) {
+  await $fetch('/api/groups/remove', { method: 'DELETE', body: { id } })
+  await refresh()
+}
+
+async function addGroup(
+  note_id: number,
+  order: number,
+  type: GroupTypeUnion = 'Healers',
+  editor_string = '',
+  players?: string[],
+) {
+  if (user.value) {
+    await $fetch('/api/groups/add', {
+      method: 'POST',
+      body: {
+        note_id,
+        order,
+        type,
+        editor_string,
+        players,
+        user_id: user.value.id,
+      },
+    })
+
+    await refresh()
+  }
+  else {
+    toast.error('Need to be logged in to add group')
+  }
+}
 </script>
 
 <template>
-  <div>
-    <div
-      class="flex justify-between items-center" :class="{
-        'mb-4': groupsStore.groups.length > 0,
-      }"
-    >
+  <div v-if="groups">
+    <div class="flex justify-between items-center mb-4 last:mb-0">
       <div class="font-bold">
         Add groups to show messages only to certain players
       </div>
       <div class="groups__actions buttons">
-        <BaseButton @click="groupsStore.addGroup(noteId, groupsStore.groups.length + 1)">
+        <BaseButton @click="addGroup(noteId, groups.length + 1)">
           Add Group
         </BaseButton>
       </div>
     </div>
-    <Draggable v-model="groupsStore.groups" handle=".handle" item-key="id" @change="debouncedUpdateGroups">
-      <template #item="{ element }">
+    <VueDraggable
+      v-model="b"
+      class="gap-2 flex flex-col"
+      handle=".handle"
+      @change="debouncedUpdateGroups"
+    >
+      <div
+        v-for="item in b"
+        :key="item.id"
+      >
         <BaseCard>
           <BaseCardBlock class="flex w-full px-2 mb-2">
             <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
 
             <div class="w-full">
               <BaseField label="Type" stacked>
-                <BaseSelect v-model:model-value="element.type" @update:value="debouncedUpdateGroups">
+                <BaseSelect v-model="item.type" @update:model-value="debouncedUpdateGroups">
                   <BaseSelectTrigger>
-                    <BaseSelectValue placeholder="Select a class type" />
+                    <BaseSelectValue placeholder="Select a type" />
                   </BaseSelectTrigger>
                   <BaseSelectContent>
                     <BaseSelectItem v-for="type in GroupType" :key="type" :value="type">
@@ -84,15 +123,19 @@ function onGroupMemberDelete(group: Group, member: Member) {
                 </BaseSelect>
               </BaseField>
 
-              <BaseField v-if="element.type === 'Players'" stacked>
+              <BaseField v-if="item.type === 'Players'" stacked>
                 <BaseField
                   label="Group Players:"
                   class="!mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"
                 >
-                  <PlayerTags :members="getSelectedMembers(element.players)" delete @delete="onGroupMemberDelete(element, $event)" />
+                  <PlayerTags
+                    :members="getSelectedMembers(item.players)"
+                    delete
+                    @delete="onGroupMemberDelete(item, $event)"
+                  />
                 </BaseField>
 
-                <Combobox v-model="element.players" multiple @update:model-value="debouncedUpdateGroups">
+                <Combobox v-model="item.players" multiple @update:model-value="debouncedUpdateGroups">
                   <div class="relative mt-1">
                     <div
                       class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-300 sm:text-sm"
@@ -112,7 +155,7 @@ function onGroupMemberDelete(group: Group, member: Member) {
                           class="absolute z-5 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                         >
                           <div
-                            v-if="filteredMembers.length === 0 && query !== ''"
+                            v-if="filteredMembers?.length === 0 && query !== ''"
                             class="relative cursor-default select-none py-2 px-4 text-gray-700"
                           >
                             Nothing found.
@@ -160,19 +203,19 @@ function onGroupMemberDelete(group: Group, member: Member) {
               </BaseField>
 
               <Editor
-                v-model="element.note.value"
-                :members="element.type === 'Players' ? getSelectedMembers(element.players) : members"
-                @update:json="element.note.json = $event"
+                v-model="item.note.value"
+                :members="item.type === 'Players' ? getSelectedMembers(item.players) : members"
+                @update:json="item.note.json = $event"
                 @update:model-value="debouncedUpdateGroups"
               />
             </div>
 
-            <a class="w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="groupsStore.deleteGroup(element.id)">
+            <a class="w-8 mt-2 ml-2 flex-grow-0 cursor-pointer" @click="deleteGroup(item.id)">
               <Icon name="carbon:trash-can" />
             </a>
           </BaseCardBlock>
         </BaseCard>
-      </template>
-    </Draggable>
+      </div>
+    </VueDraggable>
   </div>
 </template>

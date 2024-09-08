@@ -4,11 +4,12 @@ import type { JSONContent } from '@tiptap/vue-3'
 import { createMRTGroupString, createMRTString, createPreviewString } from '~/utils/createMRTString'
 
 const props = defineProps({
+  noteId: { type: Number },
   noteString: { type: String, default: '' },
   noteJson: Object as PropType<JSONContent>,
 })
 
-const groupsStore = useGroupsStore()
+const { data: groups, refresh } = await useAsyncData('groups', async () => props.noteId ? await getAllGroups(props.noteId) : [], { watch: [() => props.noteId] })
 const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {
@@ -19,7 +20,11 @@ function copyToClipboard(string: string) {
 const preview = computed(() => {
   let preview = `${createPreviewString(props.noteString)}\n`
 
-  for (const group of groupsStore.groups) preview += createPreviewString(group.note.value)
+  if (groups.value) {
+    for (const group of groups.value) {
+      preview += createPreviewString(group.note.value)
+    }
+  }
 
   return preview
 })
@@ -27,7 +32,11 @@ const preview = computed(() => {
 const mrtString = computed(() => {
   let MRTNote = createMRTString(props.noteJson)
 
-  for (const group of groupsStore.groups) MRTNote += createMRTGroupString(group)
+  if (groups.value) {
+    for (const group of groups.value) {
+      MRTNote += createMRTGroupString(group)
+    }
+  }
 
   return MRTNote
 })

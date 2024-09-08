@@ -1,37 +1,35 @@
 <script setup lang="ts">
+import { VueDraggable } from 'vue-draggable-plus'
 import { toast } from 'vue-sonner'
-import Draggable from 'vuedraggable'
 import type { Ref } from 'vue'
-import { addTeamMember, removeTeamMember, updateTeamMembers } from '~/services/teamMembers'
 import type { Member, WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
 const user = useSupabaseUser()
-const { data: members, refresh } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
-  watch: [user],
-})
+const { data: members, refresh } = await useFetch('/api/team/all', { key: 'team-all', watch: [user], deep: false })
 
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
 const debouncedUpdateMembers = useDebounceFn(
   async () => {
-    await updateTeamMembers(members.value)
+    await $fetch('/api/team/update', { method: 'POST', body: members.value })
+    await refresh()
     toast.success('Updated Members')
   },
   DEBOUNCE_TYPING_TIMER,
   { maxWait: 5000 },
 )
 
-async function removeMember(player: Member) {
-  await removeTeamMember(player)
+async function removeMember(member: Member) {
+  await $fetch('/api/team/remove', { method: 'DELETE', body: member })
   await refresh()
-  toast.success(`Removed: ${player.name}`)
+  toast.success(`Removed: ${member.name}`)
 }
 
 async function addMember(playerName: string, playerClass: WowClassesUnion) {
   if (members.value) {
-    const teamMember = await addTeamMember(playerName, playerClass, members.value.length + 1)
+    const teamMember = await $fetch('/api/team/add', { method: 'POST', body: { playerName, playerClass, order: members.value.length + 1 } })
 
     if (teamMember) {
       await refresh()
@@ -65,24 +63,26 @@ async function addMember(playerName: string, playerClass: WowClassesUnion) {
     </div>
   </BaseField>
 
-  <template v-if="members?.length">
-    <Draggable v-model="members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
-      <template #item="{ element, index }">
+  <div v-if="members?.length">
+    <VueDraggable v-model="members" handle=".handle" class="gap-2 flex flex-col" @change="debouncedUpdateMembers">
+      <div
+        v-for="(item, index) in members"
+        :key="item.id"
+      >
         <BaseCard>
           <BaseCardBlock class="flex justify-between items-center">
             <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
 
             <BaseField class="w-full" :label-for="`player-${index}`" label="Player">
               <div class="flex gap-2 w-full">
-                <BaseInput v-model="element.name" @update:model-value="debouncedUpdateMembers" />
+                <BaseInput v-model="item.name" @update:model-value="debouncedUpdateMembers" />
 
                 <BaseSelect
-                  v-model="element.class"
+                  v-model="item.class"
                   @update:model-value="debouncedUpdateMembers"
                 >
-                  <BaseSelectTrigger :variant="element.class">
-                    <span v-if="element.class">{{ element.class }}</span>
-                    <BaseSelectValue v-else placeholder="Select the class" />
+                  <BaseSelectTrigger :variant="item.class">
+                    <BaseSelectValue placeholder="Select the class" />
                   </BaseSelectTrigger>
                   <BaseSelectContent>
                     <BaseSelectGroup>
@@ -93,14 +93,14 @@ async function addMember(playerName: string, playerClass: WowClassesUnion) {
                   </BaseSelectContent>
                 </BaseSelect>
 
-                <BaseButton variant="destructive" @click="removeMember(element)">
+                <BaseButton variant="destructive" @click="removeMember(item)">
                   Delete
                 </BaseButton>
               </div>
             </BaseField>
           </BaseCardBlock>
         </BaseCard>
-      </template>
-    </Draggable>
-  </template>
+      </div>
+    </VueDraggable>
+  </div>
 </template>

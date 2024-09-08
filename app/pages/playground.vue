@@ -5,9 +5,6 @@ const editor = reactive<EditorData>({
   value: '',
   json: {},
 })
-const groupsStore = useGroupsStore()
-
-groupsStore.clearGroups()
 
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
 

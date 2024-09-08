@@ -13,9 +13,7 @@ const user = useSupabaseUser()
 
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
 const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
-const { data: members } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
-  watch: [user],
-})
+const { data: members } = await useFetch('/api/team/all', { key: 'team-all', watch: [user] })
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)
@@ -134,7 +132,7 @@ async function deleteNoteAndRedirect() {
             </BaseCard>
           </div>
           <div class="sm:col-span-12 md:col-span-6">
-            <EditorNotePreview :note-json="editor.json" :note-string="editor.value" />
+            <EditorNotePreview :note-id="note.id" :note-json="editor.json" :note-string="editor.value" />
           </div>
         </div>
       </section>

@@ -1,12 +1,9 @@
 <script setup lang='ts'>
 import { kebabCase } from 'change-case'
-import { getAllTeamMembers } from '~/services/teamMembers'
 
 const user = useSupabaseUser()
 
-const { data: newMembers } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
-  watch: [user],
-})
+const { data: newMembers } = await useFetch('/api/team/all', { key: 'team-all', watch: [user] })
 </script>
 
 <template>

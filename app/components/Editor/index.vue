@@ -130,6 +130,7 @@ function setColor(event: Event) {
         key="encounter-spells"
         label="Encounter Spells: "
         sr-only
+        class="mb-0"
       >
         <div v-if="encounterInfo?.spells" class="flex flex-wrap">
           <div

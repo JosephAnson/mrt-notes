@@ -1,20 +1,19 @@
-<script lang="ts">
-import { defineComponent, provide } from 'vue'
+<script lang="ts" setup>
+import { provide } from 'vue'
+import type { HTMLAttributes } from 'vue'
 
-export default defineComponent({
-  props: {
-    label: { type: String, default: null },
-    labelFor: { type: String, required: false },
-    srOnly: { type: Boolean, default: false },
-  },
-  setup(props) {
-    provide('labelFor', props.labelFor)
-  },
-})
+const props = defineProps<{
+  label?: string
+  labelFor?: string
+  srOnly?: boolean
+  class?: HTMLAttributes['class']
+}>()
+
+provide('labelFor', props.labelFor)
 </script>
 
 <template>
-  <div class="items-center mb-4 last:mb-0">
+  <div :class="cn('items-center mb-4 last:mb-0', props.class)">
     <BaseLabel v-if="label" :for="labelFor" class="label mr-4 inline-block mb-2" :class="{ 'sr-only': srOnly }">
       {{ label }}
     </BaseLabel>

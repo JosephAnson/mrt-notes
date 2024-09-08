@@ -93,7 +93,7 @@ export async function fetchAllNotesByUserId(user_id: string) {
 
 export async function deleteNote(id: number) {
   const client = useSupabaseClient<Database>()
-  await deleteGroupsWithNoteId(id)
+  await $fetch('/api/groups/removeWithNoteId', { body: { noteId: id } })
 
   await client.from('notes').delete().match({ id })
   toast.success('Note has been deleted')
