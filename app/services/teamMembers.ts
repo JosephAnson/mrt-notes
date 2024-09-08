@@ -18,23 +18,25 @@ export async function getAllTeamMembers() {
   return data
 }
 
-export async function updateTeamMembers(members: Member[]) {
-  const client = useSupabaseClient<Database>()
-  const user = useSupabaseUser()
-  const { data } = await client
-    .from('team_members')
-    .upsert(
-      members.map((member, index) => ({
-        id: member.id,
-        name: member.name,
-        user_id: user.value?.id,
-        order: index,
-        class: member.class,
-      })),
-    )
-    .returns<Member[]>()
-    .select(teamMembersColumns)
-  return data
+export async function updateTeamMembers(members?: Member[] | null) {
+  if (members) {
+    const client = useSupabaseClient<Database>()
+    const user = useSupabaseUser()
+    const { data } = await client
+      .from('team_members')
+      .upsert(
+        members.map((member, index) => ({
+          id: member.id,
+          name: member.name,
+          user_id: user.value?.id,
+          order: index,
+          class: member.class,
+        })),
+      )
+      .returns<Member[]>()
+      .select(teamMembersColumns)
+    return data
+  }
 }
 
 export async function addTeamMember(playerName: string, playerClass: WowClassesUnion, order: number) {

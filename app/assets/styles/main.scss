@@ -39,8 +39,4 @@ $wow-colors: (
   .has-wow-text-#{$name} {
     color: $color !important;
   }
-
-  .has-wow-background-#{$name} {
-    background-color: $color !important;
-  }
 }

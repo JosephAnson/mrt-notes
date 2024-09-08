@@ -22,7 +22,7 @@ function onDelete(teamMember: Member) {
     <BaseTag
       v-for="teamMember in props.members"
       :key="teamMember.id"
-      :class="`has-wow-text-${teamMember.class?.replace(' ', '-').toLowerCase()}`"
+      :variant="teamMember.class"
       class="cursor-pointer"
       @click.prevent="onClick(teamMember)"
     >

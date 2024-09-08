@@ -33,7 +33,7 @@ export const wowColors = {
 export const wowColorsVariants = {
   'Death Knight': 'bg-[#C41F3B] text-white',
   'Druid': 'bg-[#FF7D0A] text-white',
-  'Hunter': 'bg-[#ABD473] text-white',
+  'Hunter': 'bg-[#ABD473] text-black',
   'Mage': 'bg-[#69CCF0] text-white',
   'Monk': 'bg-[#00FF96] text-black',
   'Paladin': 'bg-[#F58CBA] text-white',

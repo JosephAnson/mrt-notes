@@ -1,23 +1,44 @@
 <script setup lang="ts">
-import { kebabCase } from 'change-case'
+import { toast } from 'vue-sonner'
 import Draggable from 'vuedraggable'
 import type { Ref } from 'vue'
-import type { WowClassesUnion } from '~/types'
+import { addTeamMember, removeTeamMember, updateTeamMembers } from '~/services/teamMembers'
+import type { Member, WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
-const teamMembersStore = useTeamMembersStore()
-await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
+const user = useSupabaseUser()
+const { data: members, refresh } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
+  watch: [user],
+})
 
 const playerName = ref('')
 const playerClass: Ref<WowClassesUnion> = ref('Death Knight')
 
 const debouncedUpdateMembers = useDebounceFn(
-  () => {
-    teamMembersStore.updateMembers()
+  async () => {
+    await updateTeamMembers(members.value)
+    toast.success('Updated Members')
   },
   DEBOUNCE_TYPING_TIMER,
   { maxWait: 5000 },
 )
+
+async function removeMember(player: Member) {
+  await removeTeamMember(player)
+  await refresh()
+  toast.success(`Removed: ${player.name}`)
+}
+
+async function addMember(playerName: string, playerClass: WowClassesUnion) {
+  if (members.value) {
+    const teamMember = await addTeamMember(playerName, playerClass, members.value.length + 1)
+
+    if (teamMember) {
+      await refresh()
+      toast.success(`Added Member: ${teamMember.name}`)
+    }
+  }
+}
 </script>
 
 <template>
@@ -25,8 +46,8 @@ const debouncedUpdateMembers = useDebounceFn(
     <div class="flex w-full gap-4">
       <BaseInput v-model="playerName" />
 
-      <BaseSelect v-model="playerClass" :class="`has-wow-background-${kebabCase(playerClass)}`">
-        <BaseSelectTrigger>
+      <BaseSelect v-model="playerClass">
+        <BaseSelectTrigger :variant="playerClass">
           <BaseSelectValue placeholder="Select the class" />
         </BaseSelectTrigger>
         <BaseSelectContent>
@@ -38,16 +59,16 @@ const debouncedUpdateMembers = useDebounceFn(
         </BaseSelectContent>
       </BaseSelect>
 
-      <BaseButton @click="teamMembersStore.addMember(playerName, playerClass)">
+      <BaseButton @click="addMember(playerName, playerClass)">
         Add
       </BaseButton>
     </div>
   </BaseField>
 
-  <template v-if="teamMembersStore.members?.length">
-    <Draggable v-model="teamMembersStore.members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
+  <template v-if="members?.length">
+    <Draggable v-model="members" handle=".handle" item-key="id" @change="debouncedUpdateMembers">
       <template #item="{ element, index }">
-        <BaseCard class="mb-2">
+        <BaseCard>
           <BaseCardBlock class="flex justify-between items-center">
             <Icon name="carbon:draggable" class="mr-2 text-2xl handle" />
 
@@ -56,12 +77,12 @@ const debouncedUpdateMembers = useDebounceFn(
                 <BaseInput v-model="element.name" @update:model-value="debouncedUpdateMembers" />
 
                 <BaseSelect
-                  :model-value="element.class" class="mr-2"
-                  :class="`has-wow-background-${kebabCase(element.class)}`"
+                  v-model="element.class"
                   @update:model-value="debouncedUpdateMembers"
                 >
-                  <BaseSelectTrigger>
-                    <BaseSelectValue placeholder="Select the class" />
+                  <BaseSelectTrigger :variant="element.class">
+                    <span v-if="element.class">{{ element.class }}</span>
+                    <BaseSelectValue v-else placeholder="Select the class" />
                   </BaseSelectTrigger>
                   <BaseSelectContent>
                     <BaseSelectGroup>
@@ -72,7 +93,7 @@ const debouncedUpdateMembers = useDebounceFn(
                   </BaseSelectContent>
                 </BaseSelect>
 
-                <BaseButton class="delete" @click="teamMembersStore.removeMember(element)">
+                <BaseButton variant="destructive" @click="removeMember(element)">
                   Delete
                 </BaseButton>
               </div>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useSupabaseUser } from '#imports'
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, TransitionRoot } from '@headlessui/vue'
 import Draggable from 'vuedraggable'
 import PlayerTags from '~/components/PlayerTags.vue'
+import { getAllTeamMembers } from '~/services/teamMembers'
 import { type Group, GroupType, type Member } from '~/types'
 
 const props = defineProps({
@@ -12,8 +14,11 @@ const props = defineProps({
 })
 
 const groupsStore = useGroupsStore()
-const teamMembersStore = useTeamMembersStore()
-const { members } = storeToRefs(teamMembersStore)
+const user = useSupabaseUser()
+
+const { data: members } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
+  watch: [user],
+})
 
 await useAsyncData('groups', async () => await groupsStore.fetchAllGroups(props.noteId))
 
@@ -29,13 +34,13 @@ const query = ref('')
 const filteredMembers = computed(() =>
   query.value === ''
     ? members.value
-    : members.value.filter(member =>
+    : members.value?.filter(member =>
       member.name.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, '')),
     ),
 )
 
 function getSelectedMembers(players: string[]) {
-  return members.value.filter(member => players.includes(member.name))
+  return members.value?.filter(member => players.includes(member.name))
 }
 
 function onGroupMemberDelete(group: Group, member: Member) {

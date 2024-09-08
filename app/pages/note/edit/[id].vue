@@ -9,10 +9,13 @@ definePageMeta({
 })
 
 const route = useRoute('note-edit-id')
+const user = useSupabaseUser()
 
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
 const { data: note } = await useAsyncData('notes', async () => await getNote(getRouterParamsAsString(route.params.id)))
-const teamMembersStore = useTeamMembersStore()
+const { data: members } = await useAsyncData('teamMembers', async () => await getAllTeamMembers(), {
+  watch: [user],
+})
 
 const name = ref(note.value?.name || '')
 const saving = ref(false)
@@ -111,7 +114,7 @@ async function deleteNoteAndRedirect() {
               <Editor
                 key="main-editor"
                 v-model="editor.value"
-                :members="teamMembersStore.members"
+                :members="members"
                 class="block"
                 :encounter="encounter"
                 @update:json="editor.json = $event"
