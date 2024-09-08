@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
+import { wowColorsVariants } from '~/utils/config'
 
 type TagVariants = VariantProps<typeof tagVariants>
 
 const props = defineProps<{
   variant?: TagVariants['variant']
   class?: HTMLAttributes['class']
+  size?: HTMLAttributes['size']
 }>()
 
 const tagVariants = cva(
@@ -20,17 +22,25 @@ const tagVariants = cva(
         secondary: 'bg-secondary text-secondary-foreground',
         muted: 'bg-muted text-muted-foreground',
         ghost: 'ring-primary ring-2',
+        ...wowColorsVariants,
+      },
+      size: {
+        xs: 'text-xs',
+        sm: 'text-sm',
+        base: 'text-base',
+        lg: 'text-lg',
       },
     },
     defaultVariants: {
       variant: 'muted',
+      size: 'xs',
     },
   },
 )
 </script>
 
 <template>
-  <Primitive :class="cn(tagVariants({ variant }), props.class)">
+  <Primitive :class="cn(tagVariants({ variant, size }), props.class)">
     <slot />
   </Primitive>
 </template>

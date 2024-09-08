@@ -1,9 +1,7 @@
 <script lang="ts" setup async>
-import { kebabCase } from 'change-case'
 import type { Note } from '~/types'
 
 const user = useSupabaseUser()
-const teamMembersStore = useTeamMembersStore()
 
 const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
@@ -12,20 +10,9 @@ const { data: profile, pending } = await useFetch(`/api/profile/${user.value?.id
   watch: [user],
 })
 
-await useAsyncData('teamMembers', async () => await teamMembersStore.fetchAllTeamMembers())
-
 function onDeleteNote(note: Note) {
   notes.value = notes.value?.filter(n => n.id !== note.id)
 }
-
-// Watch to see if user changes to re-fetch notes
-watchOnce(
-  () => user.value,
-  async () => {
-    await teamMembersStore.fetchAllTeamMembers()
-  },
-  { deep: true },
-)
 </script>
 
 <template>
@@ -87,23 +74,17 @@ watchOnce(
                 </div>
 
                 <aside class="w-full lg:w-1/3 lg:border-l-2 lg:border-black lg:pl-8">
-                  <div class="flex justify-between items-center">
+                  <div class="flex justify-between items-center mb-4">
                     <BaseHeading>Your Team</BaseHeading>
 
-                    <BaseButton class="mr-2" to="team">
-                      Edit your team
+                    <BaseButton class="mr-2" as-child>
+                      <NuxtLink to="/team">
+                        Edit your team
+                      </NuxtLink>
                     </BaseButton>
                   </div>
 
-                  <ul>
-                    <li
-                      v-for="member in teamMembersStore.members"
-                      :key="member.id"
-                      :class="`leading-[2] has-wow-text-${kebabCase(member.class)}`"
-                    >
-                      {{ member.name }}
-                    </li>
-                  </ul>
+                  <TeamList />
                 </aside>
               </div>
             </BaseCardBlock>
