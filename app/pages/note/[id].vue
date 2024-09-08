@@ -71,7 +71,7 @@ if (!note.value) {
             </div>
           </div>
           <section>
-            <NotePreview :note-json="json" :note-string="editorString" />
+            <EditorNotePreview :note-json="json" :note-string="editorString" />
           </section>
         </div>
         <div v-if="note && userNotes?.length" class="sm:col-span-12 md:col-span-3">

@@ -6,7 +6,8 @@ export const cardVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-card text-card-foreground ',
+        filled: 'bg-card text-card-foreground',
+        muted: 'bg-muted text-muted-foreground',
         destructive: 'bg-destructive text-destructive-foreground',
         outline: 'border border-input bg-background',
         secondary: 'bg-secondary text-secondary-foreground',
@@ -14,7 +15,7 @@ export const cardVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'outline',
     },
   },
 )

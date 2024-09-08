@@ -131,7 +131,7 @@ async function deleteNoteAndRedirect() {
             </BaseCard>
           </div>
           <div class="sm:col-span-12 md:col-span-6">
-            <NotePreview :note-json="editor.json" :note-string="editor.value" />
+            <EditorNotePreview :note-json="editor.json" :note-string="editor.value" />
           </div>
         </div>
       </section>

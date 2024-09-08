@@ -80,12 +80,10 @@ watchOnce(
                 <div class="w-full lg:w-2/3 lg:pr-8">
                   <CreateNote />
 
-                  <section v-if="notes?.length">
+                  <div v-if="notes?.length">
                     <BaseHeading>My Notes</BaseHeading>
-                    <div class="mb-8">
-                      <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
-                    </div>
-                  </section>
+                    <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
+                  </div>
                 </div>
 
                 <aside class="w-full lg:w-1/3 lg:border-l-2 lg:border-black lg:pl-8">
