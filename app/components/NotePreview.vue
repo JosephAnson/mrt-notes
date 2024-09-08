@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { JSONContent } from '@tiptap/vue-3'
 import { toast } from 'vue-sonner'
+import type { JSONContent } from '@tiptap/vue-3'
 import { createMRTGroupString, createMRTString, createPreviewString } from '~/utils/createMRTString'
 
 const props = defineProps({

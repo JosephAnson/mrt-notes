@@ -3,8 +3,6 @@ import { toast } from 'vue-sonner'
 
 const emits = defineEmits(['input'])
 
-const modalActive = ref(false)
-
 const spellOccurrence = reactive({
   timeAfterSpellStarted: '00:10',
   occurrence: 1,
@@ -17,17 +15,17 @@ function createSpellOccurrenceSnippet() {
   toast.success(`Snippet entered is: ${insertString}`)
 
   emits('input', insertString)
-
-  modalActive.value = false
 }
 </script>
 
 <template>
-  <EditorToolbarButton href="#" @click="modalActive = true">
-    <slot />
-  </EditorToolbarButton>
+  <BaseDialogDrawer @save="createSpellOccurrenceSnippet()">
+    <template #trigger>
+      <EditorToolbarButton>
+        <slot />
+      </EditorToolbarButton>
+    </template>
 
-  <Modal v-model:active="modalActive">
     <SpellIdInput v-model="spellOccurrence.spellId" />
 
     <BaseField label="Enter the Time after spell cast? {00:10}" stacked>
@@ -37,14 +35,5 @@ function createSpellOccurrenceSnippet() {
     <BaseField label="Enter the cast number?" stacked>
       <BaseInput v-model="spellOccurrence.occurrence" />
     </BaseField>
-
-    <footer>
-      <BaseButton class="mr-2" @click="modalActive = false">
-        Cancel
-      </BaseButton>
-      <BaseButton @click="createSpellOccurrenceSnippet">
-        Done
-      </BaseButton>
-    </footer>
-  </Modal>
+  </BaseDialogDrawer>
 </template>

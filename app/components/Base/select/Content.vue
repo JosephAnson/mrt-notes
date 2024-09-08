@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
 import {
   SelectContent,
   type SelectContentEmits,
@@ -8,6 +7,7 @@ import {
   SelectViewport,
   useForwardPropsEmits,
 } from 'radix-vue'
+import { computed, type HTMLAttributes } from 'vue'
 
 defineOptions({
   inheritAttrs: false,

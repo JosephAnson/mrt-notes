@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
 import { Dialog } from '#components'
+import { createApp } from 'vue'
 
 interface DialogProps {
   title?: string | null

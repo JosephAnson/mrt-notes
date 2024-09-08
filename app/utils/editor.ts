@@ -1,16 +1,16 @@
 import { Color } from '@tiptap/extension-color'
 import Image from '@tiptap/extension-image'
 import TextStyle from '@tiptap/extension-text-style'
-import type { Node, Slice } from '@tiptap/pm/model'
 import { Fragment } from '@tiptap/pm/model'
 import StarterKit from '@tiptap/starter-kit'
-import type { Editor, JSONContent } from '@tiptap/vue-3'
 import { useEditor as tiptapUseEditor } from '@tiptap/vue-3'
-import type { Ref } from 'vue'
 import { toast } from 'vue-sonner'
-import { IMAGE_MARKER, IMAGE_SPELLID } from './constants'
+import type { Node, Slice } from '@tiptap/pm/model'
+import type { Editor, JSONContent } from '@tiptap/vue-3'
+import type { Ref } from 'vue'
 import type { SpellIdInformation } from '~/types'
 import { convertRgbColorsToHex } from '~/utils/convertRgbColorsToHex'
+import { IMAGE_MARKER, IMAGE_SPELLID } from './constants'
 
 export function createEditorSpellIdImageData(icon: string, spellId: string | number) {
   return {

@@ -1,8 +1,8 @@
-import type { Database } from '~/supabase.types'
-import type { Note, NotesAndProfile } from '~/types'
+import { serverSupabaseClient } from '#supabase/server'
 import { NOTE_COLUMNS } from '~~/app/utils/constants'
 import { createNote } from '~~/app/utils/createNote'
-import { serverSupabaseClient } from '#supabase/server'
+import type { Database } from '~/supabase.types'
+import type { Note, NotesAndProfile } from '~/types'
 
 export default cachedEventHandler(
   async (event): Promise<Note[]> => {

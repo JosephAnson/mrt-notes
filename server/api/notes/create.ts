@@ -1,6 +1,6 @@
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
-import type { Database } from '~/supabase.types'
 import { NOTE_COLUMNS } from '~~/app/utils/constants'
+import type { Database } from '~/supabase.types'
 
 const defaultEditorValue
   = 'Fight summary<br><br><br>'

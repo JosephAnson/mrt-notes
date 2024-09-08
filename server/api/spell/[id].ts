@@ -1,5 +1,5 @@
-import type { SpellIdInformation } from '~~/app/types'
 import { SPELL_INFO_BASE_URL } from '~~/app/utils/constants'
+import type { SpellIdInformation } from '~~/app/types'
 
 interface Response extends SpellIdInformation {
   error: string

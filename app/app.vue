@@ -13,7 +13,7 @@ useHead({
 </script>
 
 <template>
-  <div>
+  <div vaul-drawer-wrapper>
     <TheHeader />
     <NuxtPage />
     <TheFooter />

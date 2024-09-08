@@ -1,5 +1,5 @@
-import type { Member, WowClassesUnion } from '~/types'
 import type { Database } from '~/supabase.types'
+import type { Member, WowClassesUnion } from '~/types'
 
 const teamMembersColumns = 'id, name, class'
 

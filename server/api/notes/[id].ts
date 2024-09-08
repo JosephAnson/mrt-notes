@@ -1,8 +1,8 @@
 import { serverSupabaseClient } from '#supabase/server'
-import type { Database } from '~/supabase.types'
-import type { Note, NotesAndProfile } from '~/types'
 import { NOTE_COLUMNS } from '~~/app/utils/constants'
 import { createNote } from '~~/app/utils/createNote'
+import type { Database } from '~/supabase.types'
+import type { Note, NotesAndProfile } from '~/types'
 
 export default eventHandler(async (event): Promise<Note> => {
   if (!event.context.params?.id) {

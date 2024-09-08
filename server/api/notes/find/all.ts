@@ -1,7 +1,7 @@
-import type { Database } from '~~/app/supabase.types'
-import type { NotesAndProfile } from '~~/app/types'
 import { NOTE_COLUMNS } from '~~/app/utils/constants'
 import { createNote } from '~~/app/utils/createNote'
+import type { Database } from '~~/app/supabase.types'
+import type { NotesAndProfile } from '~~/app/types'
 
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-expect-error

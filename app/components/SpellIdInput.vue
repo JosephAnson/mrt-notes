@@ -25,7 +25,7 @@ watch(spellIDInformation, () => emit('spellIDInformation', spellIDInformation))
     :icon="spellIDInformation.icon"
     :tooltip="spellIDInformation.tooltip"
   />
-  <BaseField label="Enter a spell id?" stacked>
+  <BaseField label="Enter a spell id?">
     <BaseInput v-model="modelValue" placeholder="Add in a spell id" />
   </BaseField>
 </template>
