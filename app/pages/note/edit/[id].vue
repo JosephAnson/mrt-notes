@@ -46,20 +46,13 @@ function save() {
 }
 
 async function deleteNoteAndRedirect() {
-  openDialog({
-    message: 'Are you sure you want to delete the note?',
-    cancelText: 'No',
-    confirmText: 'Yes',
-    onConfirm: async () => {
-      toast.success('Note has been deleted')
+  toast.success('Note has been deleted')
 
-      if (note.value) {
-        const router = useRouter()
-        await deleteNoteApi(note.value.id)
-        router.push('/')
-      }
-    },
-  })
+  if (note.value) {
+    const router = useRouter()
+    await deleteNoteApi(note.value.id)
+    await router.push('/')
+  }
 }
 </script>
 
@@ -78,9 +71,32 @@ async function deleteNoteAndRedirect() {
             </p>
             <div class="i-carbon-catalog animate-spin h-6 w-6" />
           </div>
-          <BaseButton variant="destructive" @click="deleteNoteAndRedirect">
-            Delete Note
-          </BaseButton>
+
+          <BaseAlertDialog>
+            <BaseAlertDialogTrigger>
+              <BaseButton variant="destructive">
+                Delete Note
+              </BaseButton>
+            </BaseAlertDialogTrigger>
+            <BaseAlertDialogContent>
+              <BaseAlertDialogHeader>
+                <BaseAlertDialogTitle>Are you sure you want to delete the note?</BaseAlertDialogTitle>
+                <BaseAlertDialogDescription>
+                  This action cannot be undone. This will permanently delete your account
+                  and remove your data from our servers.
+                </BaseAlertDialogDescription>
+              </BaseAlertDialogHeader>
+              <BaseAlertDialogFooter>
+                <BaseAlertDialogCancel>Cancel</BaseAlertDialogCancel>
+                <BaseAlertDialogAction
+                  variant="destructive"
+                  @click="deleteNoteAndRedirect"
+                >
+                  Delete Note
+                </BaseAlertDialogAction>
+              </BaseAlertDialogFooter>
+            </BaseAlertDialogContent>
+          </BaseAlertDialog>
           <BaseButton @click="save">
             Save Note
           </BaseButton>

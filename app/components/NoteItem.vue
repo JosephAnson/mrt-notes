@@ -26,18 +26,11 @@ const updatedOn = useTimeAgo(props.note.updated_at)
 
 const canEdit = computed(() => isUsers && props.showEdit)
 
-function onDelete() {
-  openDialog({
-    message: 'Are you sure you want to delete the note?',
-    cancelText: 'No',
-    confirmText: 'Yes',
-    onConfirm: async () => {
-      if (props.note) {
-        await deleteNote(props.note.id)
-        emits('delete', props.note)
-      }
-    },
-  })
+async function onDelete() {
+  if (props.note) {
+    await deleteNote(props.note.id)
+    emits('delete', props.note)
+  }
 }
 </script>
 
@@ -77,13 +70,31 @@ function onDelete() {
             </NuxtLink>
           </BaseButton>
 
-          <BaseButton
-            v-if="isUsers && props.showDelete"
-            variant="destructive"
-            @click="onDelete"
-          >
-            Delete Note
-          </BaseButton>
+          <BaseAlertDialog v-if="isUsers && props.showDelete">
+            <BaseAlertDialogTrigger>
+              <BaseButton variant="destructive">
+                Delete Note
+              </BaseButton>
+            </BaseAlertDialogTrigger>
+            <BaseAlertDialogContent>
+              <BaseAlertDialogHeader>
+                <BaseAlertDialogTitle>Are you sure you want to delete the note?</BaseAlertDialogTitle>
+                <BaseAlertDialogDescription>
+                  This action cannot be undone. This will permanently delete your account
+                  and remove your data from our servers.
+                </BaseAlertDialogDescription>
+              </BaseAlertDialogHeader>
+              <BaseAlertDialogFooter>
+                <BaseAlertDialogCancel>Cancel</BaseAlertDialogCancel>
+                <BaseAlertDialogAction
+                  variant="destructive"
+                  @click="onDelete"
+                >
+                  Delete Note
+                </BaseAlertDialogAction>
+              </BaseAlertDialogFooter>
+            </BaseAlertDialogContent>
+          </BaseAlertDialog>
         </div>
       </div>
     </BaseCardBlock>
