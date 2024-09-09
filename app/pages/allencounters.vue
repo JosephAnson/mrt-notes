@@ -53,7 +53,7 @@ const resultsItem = computed(() => results.value.map(i => i.item))
                   </BaseHeading>
 
                   <div class="flex flex-wrap gap-2 mb-2">
-                    <BaseButton v-for="instance in raid.encounters" :key="instance.id" as-child>
+                    <BaseButton v-for="instance in raid.encounters" :key="instance.id" as-child size="sm">
                       <NuxtLink :to="`/search?q=${instance.name}`">
                         {{ instance.name }}
                       </NuxtLink>
@@ -83,7 +83,7 @@ const resultsItem = computed(() => results.value.map(i => i.item))
                   </BaseHeading>
 
                   <div class="flex flex-wrap gap-2 mb-2">
-                    <BaseButton v-for="instance in raid.encounters" :key="instance.id" as-child>
+                    <BaseButton v-for="instance in raid.encounters" :key="instance.id" as-child size="sm">
                       <NuxtLink :to="`/search?q=${instance.name}`">
                         {{ instance.name }}
                       </NuxtLink>

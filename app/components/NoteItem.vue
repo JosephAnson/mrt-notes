@@ -44,7 +44,7 @@ async function onDelete() {
               {{ props.note.name }}
             </BaseHeading>
           </NuxtLink>
-          <div class="flex gap-2 items-center flex-wrap text-gray-300 text-sm">
+          <div class="flex gap-2 gap-y-1 items-center flex-wrap text-gray-300 text-sm">
             <BaseTag as-child>
               <NuxtLink v-if="props.note.username" class="flex items-center" :to="`/profile/${props.note.username}`">
                 <Icon name="carbon:user" class="inline-block mr-1" /> {{ props.note.username }}

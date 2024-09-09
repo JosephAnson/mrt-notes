@@ -25,16 +25,7 @@ const email = ref('')
           </BaseCardFooter>
         </form>
         <BaseCardFooter class="flex flex-col space-y-4">
-          <div class="relative w-full">
-            <div class="absolute inset-0 flex items-center">
-              <span class="w-full border-t" />
-            </div>
-            <div class="relative flex justify-center text-xs uppercase">
-              <span class="px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
-          </div>
+          <BaseSeparator label="Or continue with" />
           <div class="flex flex-col gap-4 w-full">
             <BaseButton
               variant="discord"

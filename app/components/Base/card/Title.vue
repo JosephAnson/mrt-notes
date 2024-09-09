@@ -1,17 +1,23 @@
 <script setup lang="ts">
+import { Primitive, type PrimitiveProps } from 'radix-vue'
 import type { HTMLAttributes } from 'vue'
 
-const props = defineProps<{
+interface Props extends PrimitiveProps {
   class?: HTMLAttributes['class']
-}>()
+}
+const props = withDefaults(defineProps<Props>(), {
+  as: 'h3',
+})
 </script>
 
 <template>
-  <h3
+  <Primitive
+    :as="as"
+    :as-child="asChild"
     :class="
       cn('text-2xl font-semibold tracking-tight', props.class)
     "
   >
     <slot />
-  </h3>
+  </Primitive>
 </template>

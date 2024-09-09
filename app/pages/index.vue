@@ -61,62 +61,72 @@ function onDeleteNote(note: Note) {
             </BaseCardBlock>
           </BaseCard>
 
-          <BaseCard v-if="user" class="mt-4">
-            <BaseCardBlock>
-              <div class="flex flex-wrap">
-                <div class="w-full lg:w-2/3 lg:pr-8">
-                  <CreateNote />
+          <div class="md:flex gap-4">
+            <div>
+              <BaseCard v-if="user">
+                <BaseCardBlock>
+                  <div class="flex flex-wrap">
+                    <div class="w-full lg:w-2/3 lg:pr-8">
+                      <CreateNote />
 
-                  <div v-if="notes?.length">
-                    <BaseHeading>My Notes</BaseHeading>
-                    <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
+                      <div v-if="notes?.length">
+                        <BaseHeading>My Notes</BaseHeading>
+                        <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <aside class="w-full lg:w-1/3 lg:border-l-2 lg:border-black lg:pl-8">
-                  <div class="flex justify-between items-center mb-4">
-                    <BaseHeading>Your Team</BaseHeading>
-
-                    <BaseButton class="mr-2" as-child>
-                      <NuxtLink to="/team">
-                        Edit your team
+                </BaseCardBlock>
+              </BaseCard>
+              <BaseCard class="mt-4">
+                <BaseCardBlock>
+                  <div class="flex items-center mb-4">
+                    <BaseHeading h2 styled="h3" class="!mb-0">
+                      Search by encounter
+                    </BaseHeading>
+                    <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="/allencounters">
+                      View all
+                    </NuxtLink>
+                  </div>
+                  <BaseHeading>Raids</BaseHeading>
+                  <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
+                    <BaseButton v-for="encounter in encounters.raids" :key="encounter.id" size="sm" as-child>
+                      <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
+                        {{ encounter.name }}
                       </NuxtLink>
                     </BaseButton>
                   </div>
+                  <BaseHeading>Mythic+ Dungeons</BaseHeading>
+                  <div v-if="encounters?.dungeons" class="flex flex-wrap gap-2 mb-2">
+                    <BaseButton v-for="encounter in encounters.dungeons" :key="encounter.id" size="sm" as-child>
+                      <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
+                        {{ encounter.name }}
+                      </NuxtLink>
+                    </BaseButton>
+                  </div>
+                </BaseCardBlock>
+              </BaseCard>
+            </div>
+            <BaseCard v-if="user" class="lg:w-1/2">
+              <BaseCardHeader class="flex justify-between">
+                <div class="flex justify-between gap-4 items-center">
+                  <BaseCardTitle as-child>
+                    <BaseHeading h2 styled="h3" class="!mb-0">
+                      Your Team
+                    </BaseHeading>
+                  </BaseCardTitle>
 
-                  <TeamList />
-                </aside>
-              </div>
-            </BaseCardBlock>
-          </BaseCard>
-          <BaseCard class="mt-4">
-            <BaseCardBlock>
-              <div class="flex items-center mb-4">
-                <BaseHeading h2 styled="h3" class="!mb-0">
-                  Search by encounter
-                </BaseHeading>
-                <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="allencounters">
-                  View all
-                </NuxtLink>
-              </div>
-              <BaseHeading>Raids</BaseHeading>
-              <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
-                <BaseButton v-for="encounter in encounters.raids" :key="encounter" as-child>
-                  <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
-                    {{ encounter.name }}
-                  </NuxtLink>
-                </BaseButton>
-              </div>
-              <BaseHeading>Mythic+ Dungeons</BaseHeading>
-              <div v-if="encounters?.dungeons" class="flex flex-wrap gap-2 mb-2">
-                <BaseButton v-for="encounter in encounters.dungeons" :key="encounter" as-child>
-                  <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
-                    {{ encounter.name }}
-                  </NuxtLink>
-                </BaseButton>
-              </div>
-            </BaseCardBlock>
-          </BaseCard>
+                  <BaseButton as-child>
+                    <NuxtLink to="/team">
+                      Edit your team
+                    </NuxtLink>
+                  </BaseButton>
+                </div>
+              </BaseCardHeader>
+              <BaseCardContent>
+                <TeamList />
+              </BaseCardContent>
+            </BaseCard>
+          </div>
         </div>
 
         <div class="md:grid grid-cols-12 gap-8">

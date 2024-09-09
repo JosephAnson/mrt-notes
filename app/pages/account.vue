@@ -39,27 +39,30 @@ async function setUsername() {
 <template>
   <BaseSection>
     <BaseContainer v-if="profile">
-      <BaseHeading h1>
-        Account
-      </BaseHeading>
-
-      <div class="md:grid grid-cols-12 gap-8">
-        <div class="col-span-12 xl:col-span-6">
-          <div class="max-w-lg">
-            <BaseField v-if="profile.avatar_url" label-for="avatar" stacked>
-              <img class="w-48 rounded-full" :src="profile.avatar_url">
-            </BaseField>
-
-            <BaseField v-if="profile.username" stacked>
-              <BaseButton as-child>
-                <NuxtLink :to="`/profile/${profile.username}`">
-                  View Profile
-                </NuxtLink>
-              </BaseButton>
-            </BaseField>
+      <BaseCard class="max-w-2xl mx-auto">
+        <BaseCardHeader>
+          <div class="flex items-center space-x-4">
+            <BaseAvatar v-if="profile.avatar_url" class="w-20 h-20">
+              <BaseAvatarImage alt="User" :src="profile.avatar_url" />
+              <BaseAvatarFallback>{{ profile.username }}</BaseAvatarFallback>
+            </BaseAvatar>
+            <div>
+              <BaseCardTitle as-child>
+                <BaseHeading h1 styled="h3" class="mb-0">
+                  Account
+                </BaseHeading>
+              </BaseCardTitle>
+              <BaseCardDescription>Manage your account settings</BaseCardDescription>
+            </div>
+          </div>
+        </BaseCardHeader>
+        <BaseCardContent class="space-y-4">
+          <div class="space-y-2">
             <BaseField v-if="user?.email" label-for="avatar_url" label="Email" stacked>
               <BaseInput id="avatar_url" v-model="user.email" type="text" disabled />
             </BaseField>
+          </div>
+          <div class="space-y-2">
             <BaseField label-for="username" label="Username" stacked>
               <div class="flex">
                 <BaseInput id="username" v-model="username" type="text" class="mr-2" />
@@ -67,25 +70,41 @@ async function setUsername() {
                   :disabled="username === profile.username || !username"
                   @click="username !== profile.username && setUsername()"
                 >
-                  Set Username
+                  {{ profile.username ? ' Change Username' : 'Set Username' }}
                 </BaseButton>
               </div>
             </BaseField>
-            <BaseNotification>
+            <BaseNotification v-if="!profile.username">
               Set a username if you want to share your profile
             </BaseNotification>
-            <BaseField v-if="user" label-for="signup with" label="Signed up with " stacked>
+          </div>
+
+          <BaseField
+            v-if="user"
+            label="Signed up with"
+          >
+            <div class="flex gap-2 flex-wrap">
               <span
                 v-for="provider in user.app_metadata.providers"
                 :key="provider"
-                class="bg-primary-100 p-1 px-2 rounded"
               >
-                {{ provider.toUpperCase() }}
+                <div class="flex items-center gap-2 pt-1 font-bold">
+                  <Icon :name="`bi:${provider}`" />
+                  <span>{{ provider.toUpperCase() }}</span>
+                </div>
               </span>
-            </BaseField>
-          </div>
-        </div>
-      </div>
+            </div>
+          </BaseField>
+        </BaseCardContent>
+        <BaseSeparator />
+        <BaseCardBlock class="flex justify-between">
+          <BaseButton as-child>
+            <NuxtLink :to="`/profile/${profile.username}`">
+              View Profile
+            </NuxtLink>
+          </BaseButton>
+        </BaseCardBlock>
+      </basecard>
     </BaseContainer>
   </BaseSection>
 </template>
