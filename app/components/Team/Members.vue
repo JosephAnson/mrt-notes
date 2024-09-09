@@ -27,11 +27,22 @@ async function removeMember(member: Member) {
   toast.success(`Removed: ${member.name}`)
 }
 
-async function addMember(playerName: string, playerClass: WowClassesUnion) {
+async function addMember(name: string, playerClass: WowClassesUnion) {
   if (members.value) {
-    const teamMember = await $fetch('/api/team/add', { method: 'POST', body: { playerName, playerClass, order: members.value.length + 1 } })
+    const teamMember = await $fetch(
+      '/api/team/add',
+      {
+        method: 'POST',
+        body: {
+          playerName: name,
+          playerClass,
+          order: members.value.length + 1,
+        },
+      },
+    )
 
     if (teamMember) {
+      playerName.value = ''
       await refresh()
       toast.success(`Added Member: ${teamMember.name}`)
     }
@@ -57,7 +68,7 @@ async function addMember(playerName: string, playerClass: WowClassesUnion) {
         </BaseSelectContent>
       </BaseSelect>
 
-      <BaseButton @click="addMember(playerName, playerClass)">
+      <BaseButton :disabled="!playerName" @click="addMember(playerName, playerClass)">
         Add
       </BaseButton>
     </div>
