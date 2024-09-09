@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { updateUsername, usernameExists } from '~/services/profile'
 
 definePageMeta({
   middleware: 'auth',
@@ -8,7 +7,7 @@ definePageMeta({
 
 const user = useSupabaseUser()
 
-const { data: profile } = await useFetch(`/api/profile/${user.value?.id}`, {
+const { data: profile, refresh } = await useFetch(`/api/profile/${user.value?.id}`, {
   headers: useRequestHeaders(['cookie']),
   watch: [user],
 })
@@ -20,19 +19,16 @@ async function setUsername() {
     toast.error('Username cannot be empty!')
   }
   else {
-    const usernameExist = await usernameExists(username.value)
+    const data = await $fetch('/api/profile/updateUsername', { query: { username: username.value } })
 
-    if (usernameExist) {
+    if (!data) {
       toast.error('Username exists try another!')
     }
     else {
-      const user = useSupabaseUser()
-      if (!user.value) throw new Error('User not logged in')
-
-      const data = await updateUsername(username.value, user.value.id)
-
       if (data.username)
         username.value = data.username
+
+      await refresh()
 
       toast.success('Saved username')
     }
