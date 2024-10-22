@@ -43,8 +43,10 @@ function onDeleteNote(note: Note) {
       <BaseContainer>
         <BaseNotification v-if="user && !pending && !profile?.username">
           Set your username on your account if you want to share your profile
-          <BaseButton to="/account" class="ml-4">
-            Set Username
+          <BaseButton as-child>
+            <NuxtLink to="/account" class="ml-4">
+              Set Username
+            </NuxtLink>
           </BaseButton>
         </BaseNotification>
         <div class="user-information mb-8">
