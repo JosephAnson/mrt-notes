@@ -74,14 +74,10 @@ router.afterEach(() => {
           </template>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            class="flex items-center text-sm font-semibold leading-6 text-white mr-4"
-            href="https://github.com/JosephAnson/mrt-notes/issues"
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-          >
+          <Feedback as="a" href="#" class="flex items-center text-sm font-semibold leading-6 text-white mr-4">
             Report issue
-          </a>
+          </Feedback>
+
           <a v-if="!user" class="text-sm font-semibold leading-6 text-white cursor-pointer" @click="login"> Login </a>
           <a v-else class="text-sm font-semibold leading-6 text-white cursor-pointer" @click="logout"> Logout </a>
         </div>
@@ -116,13 +112,16 @@ router.afterEach(() => {
               </div>
               <div class="py-6 space-y-2">
                 <BaseButton
+                  as-child
                   class="!px-2 flex items-center text-center justify-center w-full"
-                  to="https://github.com/JosephAnson/mrt-notes/issues"
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
                 >
-                  <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
-                  Submit issues or request features
+                  <NuxtLink
+                    target="_blank"
+                    rel="noopener noreferrer nofollow" to="https://github.com/JosephAnson/mrt-notes/issues"
+                  >
+                    <span class="i-carbon-logo-github inline-block mr-2 text-xl" />
+                    Submit issues or request features
+                  </NuxtLink>
                 </BaseButton>
                 <BaseButton v-if="!user" class="w-full cursor-pointer" @click="login">
                   Login

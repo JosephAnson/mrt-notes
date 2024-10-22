@@ -5,16 +5,11 @@
   <footer class="py-10">
     <div class="container">
       <div class="md:flex grid gap-2">
-        <BaseButton
-          as="a"
-          variant="ghost"
-          href="https://github.com/JosephAnson/mrt-notes/issues"
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-        >
-          <Icon name="ph:github-logo-duotone" class="i-carbon-logo-github inline-block mr-2 text-xl" />
-          Submit issues or request features
-        </BaseButton>
+        <Feedback as-child>
+          <BaseButton variant="ghost">
+            Submit issues or request features
+          </BaseButton>
+        </Feedback>
         <BaseButton as-child variant="ghost">
           <NuxtLink to="/privacypolicy" aria-label="Twitter Share Button">
             Privacy Policy

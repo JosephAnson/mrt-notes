@@ -20,7 +20,14 @@ const useIdFunction = () => useId()
       <TheHeader />
       <NuxtPage />
       <TheFooter />
-      <TheFeedback />
+      <Feedback>
+        <BaseButton
+          variant="secondary"
+          class="fixed right-0 bottom-20 -translate-y-1/2 rotate-90 origin-top-right !rounded-t-none"
+        >
+          Contact Us
+        </BaseButton>
+      </Feedback>
       <BaseToaster theme="dark" rich-colors class="pointer-events-auto" />
 
       <div class="notices fixed bottom-10 right-10 z-10">
