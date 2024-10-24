@@ -11,11 +11,11 @@ const props = withDefaults(
 
 <template>
   <div
-    class="wowhead-tooltip wowhead-tooltip-width-restriction mb-2 relative"
+    class="wowhead-tooltip wowhead-tooltip-width-restriction mb-2 relative min-w-80 !left-[100%]"
     :class="{ 'pl-12': props.showIcon }"
     :style="{ visibility: 'visible' }"
   >
-    <div v-if="props.showIcon" class="whtt-tooltip-icon !left-0" style="visibility: visible">
+    <div v-if="props.showIcon" class="whtt-tooltip-icon" style="visibility: visible">
       <div class="iconmedium" data-env="live" data-tree="live" data-game="wow" data-type="spell">
         <ins
           :style="`background-image: url('https://wow.zamimg.com/images/wow/icons/medium/${props.icon}.jpg');`"

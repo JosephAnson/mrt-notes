@@ -1,5 +1,5 @@
-import { toast } from 'vue-sonner'
 import type { Ref } from 'vue'
+import { toast } from 'vue-sonner'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
 import { mapNote } from '~/utils/mapNote'
@@ -29,7 +29,7 @@ export async function updateNote({
   encounter,
   instance,
 }: {
-  id: number
+  id?: number
   name: string
   description: string
   editor_string: string
@@ -75,19 +75,15 @@ export async function getAllNotes({ order, limit }: { order?: keyof NotesRow, li
   })
 }
 
-export async function searchAllNotes(name: string) {
+export async function searchAllNotes(encounterId: number) {
   const client = useSupabaseClient<Database>()
-  const query = name.split(' ').join(' OR ')
 
   const { data } = await client
     .from('notes')
     .select(NOTE_COLUMNS)
+    .eq('encounter', encounterId) // Use encounter ID for filtering
     .order('created_at', { ascending: false })
     .limit(50)
-    .textSearch('fts', query, {
-      type: 'websearch',
-      config: 'english',
-    })
     .returns<NotesAndProfile[]>()
 
   if (!data) return []

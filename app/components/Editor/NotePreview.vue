@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
 import type { JSONContent } from '@tiptap/vue-3'
+import { toast } from 'vue-sonner'
 import { createMRTString, createPreviewString } from '~/utils/createMRTString'
 
 const props = defineProps({
@@ -20,7 +20,7 @@ const mrtString = computed(() => createMRTString(props.noteJson))
 </script>
 
 <template>
-  <BaseCard class="mb-4">
+  <BaseCard class="mb-4 overflow-hidden">
     <BaseCardHeader>
       <div class="flex justify-between items-center">
         <div>

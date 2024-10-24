@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { EditorData } from '~/types'
 
+const user = useSupabaseUser()
 const editor = reactive<EditorData>({
   value: '',
   json: {},
@@ -24,7 +25,7 @@ const encounter = ref(encounters.value?.currentInstance?.id)
           Warning this note will not be saved
         </BaseNotification>
       </div>
-      <Ad ad-slot="8629692962" />
+      <Ad ad-slot="9530994485" />
       <BaseCard class="mb-4">
         <BaseCardHeader>Select Encounter</BaseCardHeader>
         <BaseCardContent>
@@ -36,25 +37,27 @@ const encounter = ref(encounters.value?.currentInstance?.id)
         </BaseCardContent>
       </BaseCard>
 
-      <section id="ERT-Editor">
-        <div class="md:grid grid-cols-12 gap-8">
-          <div class="sm:col-span-12 md:col-span-6">
-            <BaseCard>
-              <BaseCardHeader>Input Note</BaseCardHeader>
-              <Editor v-model="editor.value" class="block" :encounter="encounter" @update:json="editor.json = $event" />
-            </BaseCard>
+      <div class="md:grid grid-cols-2 gap-8">
+        <div>
+          <BaseCard class="h-full">
+            <BaseCardHeader>Input Note</BaseCardHeader>
+            <Editor v-model="editor.value" :encounter="encounter" @update:json="editor.json = $event" />
+          </BaseCard>
 
-            <BaseButton as-child>
-              <NuxtLink to="/login">
-                Login for more features
-              </NuxtLink>
-            </BaseButton>
-          </div>
-          <div class="sm:col-span-12 md:col-span-6">
-            <EditorNoteGroupPreview :note-json="editor.json" :note-string="editor.value" :groups="[]" />
-          </div>
+          <BaseButton v-if="!user" as-child>
+            <NuxtLink to="/login">
+              Login for more features
+            </NuxtLink>
+          </BaseButton>
         </div>
-      </section>
+        <EditorNoteGroupPreview :note-json="editor.json" :note-string="editor.value" :groups="[]" />
+      </div>
+
+      <BaseCard v-if="user" class="mt-4">
+        <BaseCardBlock>
+          <TeamMembers />
+        </BaseCardBlock>
+      </BaseCard>
     </BaseContainer>
   </BaseSection>
 </template>

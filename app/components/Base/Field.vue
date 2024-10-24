@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { provide } from 'vue'
 import type { HTMLAttributes } from 'vue'
+import { provide } from 'vue'
 
 const props = defineProps<{
   label?: string

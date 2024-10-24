@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { DrawerTitleProps } from 'vaul-vue'
 import { DrawerTitle } from 'vaul-vue'
 import { computed, type HtmlHTMLAttributes } from 'vue'
-import type { DrawerTitleProps } from 'vaul-vue'
 
 const props = defineProps<DrawerTitleProps & { class?: HtmlHTMLAttributes['class'] }>()
 

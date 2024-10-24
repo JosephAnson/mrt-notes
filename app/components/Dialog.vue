@@ -1,7 +1,7 @@
 <script lang="ts">
-import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
-
 import type { PropType } from 'vue'
+
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-reserved-component-names

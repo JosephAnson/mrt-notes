@@ -163,7 +163,7 @@ function setColor(event: Event) {
           </BaseField>
         </div>
       </div>
-      <div class="pt-0 h-full">
+      <div class="pt-0 h-full overflow-hidden block rounded-b-lg">
         <EditorContent class="editor-content mb-0 bg-white h-full" :editor="editor" />
       </div>
     </div>

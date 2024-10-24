@@ -1,7 +1,7 @@
-import { serverSupabaseClient } from '#supabase/server'
-import { NOTE_COLUMNS } from '~~/app/utils/constants'
 import type { Database } from '~~/app/supabase.types'
 import type { Note, NotesAndProfile } from '~~/app/types'
+import { serverSupabaseClient } from '#supabase/server'
+import { NOTE_COLUMNS } from '~~/app/utils/constants'
 
 import { mapNote } from '~/utils/mapNote'
 

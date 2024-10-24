@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { cva, type VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { wowColorsVariants } from '~/utils/config'
 
 type TagVariants = VariantProps<typeof tagVariants>

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import type { Ref } from 'vue'
 import { useSupabaseUser } from '#imports'
 import { generateJSON } from '@tiptap/html'
 import { capitalCase } from 'change-case'
 import { toast } from 'vue-sonner'
-import type { Ref } from 'vue'
 import type { Note } from '~/types'
 import { editorExtensions } from '~/utils/editor'
 

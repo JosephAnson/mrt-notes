@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { useRouteQuery } from '@vueuse/router'
 import { getAllNotes, searchAllNotes } from '~/services/notes'
-
-const search = useRouteQuery<string>('q', '')
-
-const { data: notes } = await useAsyncData(`notes-${search.value}`, async () => {
-  return search.value?.length ? await searchAllNotes(search.value) : await getAllNotes({ limit: 30 })
-}, {
-  watch: [search],
-})
 
 const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
 
-function filterEncounter(encounter: string) {
-  search.value = encounter
-}
+const expansion = ref(encounters.value?.currentExpansion?.id || '')
+const instance = ref(encounters.value?.currentRaid?.id || '')
+const encounter = ref(encounters.value?.currentInstance?.id || '')
+
+const { data: notes } = await useAsyncData(`notes-${encounter.value}`, async () => {
+  return encounter.value ? await searchAllNotes(encounter.value) : await getAllNotes({ limit: 30 })
+}, {
+  watch: [encounter],
+})
 </script>
 
 <template>
@@ -26,33 +23,12 @@ function filterEncounter(encounter: string) {
 
       <BaseCard class="mb-8">
         <BaseCardBlock>
-          <form class="flex w-full mb-4 gap-3" @submit.prevent>
-            <BaseField stacked label-for="search" label="Search" class="w-full">
-              <BaseInput id="search" v-model="search" type="search" />
-            </BaseField>
-          </form>
-
-          <div v-if="encounters" class="flex flex-wrap">
-            <BaseHeading h2 styled="h4">
-              Search by encounter
-            </BaseHeading>
-            <div>
-              <BaseField label="Raids" stacked>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <BaseButton v-for="encounter in encounters.raids" :key="encounter" size="sm" @click="filterEncounter(encounter.name)">
-                    {{ encounter.name }}
-                  </BaseButton>
-                </div>
-              </BaseField>
-              <BaseField label="Mythic+ Dungeons" stacked>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <BaseButton v-for="encounter in encounters.dungeons" :key="encounter" size="sm" @click="filterEncounter(encounter.name)">
-                    {{ encounter.name }}
-                  </BaseButton>
-                </div>
-              </BaseField>
-            </div>
-          </div>
+          <BaseEncounterSelector
+            v-model:expansion="expansion"
+            v-model:instance="instance"
+            v-model:encounter="encounter"
+            class="w-full"
+          />
         </BaseCardBlock>
       </BaseCard>
 

@@ -3,6 +3,10 @@ import { generateJSON } from '@tiptap/html'
 import { toast } from 'vue-sonner'
 import type { EditorData } from '~/types'
 
+definePageMeta({
+  middleware: 'auth',
+})
+
 const user = useSupabaseUser()
 const router = useRouter()
 
@@ -67,7 +71,7 @@ async function create() {
           </BaseField>
 
           <BaseField label="Description" stacked>
-            <BaseInput v-model="description" type="textarea" />
+            <BaseTextarea v-model="description" type="textarea" />
           </BaseField>
 
           <BaseEncounterSelector

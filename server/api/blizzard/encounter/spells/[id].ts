@@ -1,5 +1,5 @@
-import { useWoWClient } from '../../../../../app/utils/blizzard'
 import type { SpellIdInformation } from '../../../../../app/types'
+import { useWoWClient } from '../../../../../app/utils/blizzard'
 
 export interface EncounterSpell {
   id: number

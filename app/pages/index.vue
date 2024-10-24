@@ -49,73 +49,31 @@ function onDeleteNote(note: Note) {
             </NuxtLink>
           </BaseButton>
         </BaseNotification>
-        <div class="user-information mb-8">
-          <BaseCard v-if="!user">
-            <BaseCardBlock class="flex items-center">
-              <BaseHeading class="mr-4 !mb-0" h2>
-                Login to get started
-              </BaseHeading>
-              <BaseButton as-child>
-                <NuxtLink to="/login">
-                  Login
-                </NuxtLink>
-              </BaseButton>
-            </BaseCardBlock>
-          </BaseCard>
 
-          <div class="md:flex gap-4">
-            <div>
-              <BaseCard v-if="user">
-                <BaseCardBlock>
-                  <CreateNote />
-                </BaseCardBlock>
-              </BaseCard>
-              <BaseCard v-if="user">
-                <BaseCardHeader>
-                  <BaseCardTitle>
-                    My Notes
-                  </BaseCardTitle>
-                </BaseCardHeader>
-                <BaseCardContent v-if="notes?.length">
-                  <NoteItem v-for="note in notes" :key="note.id" class="w-full" :note="note" @delete="onDeleteNote" />
-                </BaseCardContent>
-              </BaseCard>
-              <BaseCard class="mt-4">
-                <BaseCardBlock>
-                  <div class="flex items-center mb-4">
-                    <BaseHeading h2 styled="h3" class="!mb-0">
-                      Search by encounter
-                    </BaseHeading>
-                    <NuxtLink class="ml-6 text-sm font-semibold uppercase" to="/allencounters">
-                      View all
-                    </NuxtLink>
-                  </div>
-                  <BaseHeading>Raids</BaseHeading>
-                  <div v-if="encounters?.raids" class="flex flex-wrap gap-2 mb-4">
-                    <BaseButton v-for="encounter in encounters.raids" :key="encounter.id" size="sm" as-child>
-                      <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
-                        {{ encounter.name }}
-                      </NuxtLink>
-                    </BaseButton>
-                  </div>
-                  <BaseHeading>Mythic+ Dungeons</BaseHeading>
-                  <div v-if="encounters?.dungeons" class="flex flex-wrap gap-2 mb-2">
-                    <BaseButton v-for="encounter in encounters.dungeons" :key="encounter.id" size="sm" as-child>
-                      <NuxtLink :to="`/search?q=${encounter.name}#notelist`">
-                        {{ encounter.name }}
-                      </NuxtLink>
-                    </BaseButton>
-                  </div>
-                </BaseCardBlock>
-              </BaseCard>
-            </div>
-            <BaseCard v-if="user" class="lg:w-1/2">
+        <BaseCard class="max-w-xl mb-8">
+          <BaseCardBlock>
+            <CreateNote />
+          </BaseCardBlock>
+        </BaseCard>
+
+        <div v-if="user && notes?.length" class="user-information mb-8">
+          <div class="md:grid grid-cols-2 gap-4">
+            <BaseCard>
+              <BaseCardHeader>
+                <BaseCardTitle>
+                  My Notes
+                </BaseCardTitle>
+              </BaseCardHeader>
+              <BaseCardContent>
+                <NoteItem v-for="note in notes" :key="note.id" class="w-full" :note="note" @delete="onDeleteNote" />
+              </BaseCardContent>
+            </BaseCard>
+
+            <BaseCard>
               <BaseCardHeader class="flex justify-between">
                 <div class="flex justify-between gap-4 items-center">
-                  <BaseCardTitle as-child>
-                    <BaseHeading h2 styled="h3" class="!mb-0">
-                      Your Team
-                    </BaseHeading>
+                  <BaseCardTitle>
+                    Your Team
                   </BaseCardTitle>
 
                   <BaseButton as-child>

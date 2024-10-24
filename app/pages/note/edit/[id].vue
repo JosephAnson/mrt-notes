@@ -109,7 +109,7 @@ async function deleteNoteAndRedirect() {
             <BaseInput v-model="name" />
           </BaseField>
           <BaseField label="Description" stacked>
-            <BaseInput v-model="description" type="textarea" />
+            <BaseTextarea v-model="description" type="textarea" />
           </BaseField>
           <BaseEncounterSelector
             v-model:expansion="expansion"
