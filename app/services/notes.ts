@@ -2,14 +2,22 @@ import { toast } from 'vue-sonner'
 import type { Ref } from 'vue'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
-import { createNote } from '~/utils/createNote'
+import { mapNote } from '~/utils/mapNote'
 
 export async function getNote(id: string): Promise<Note | undefined> {
   const client = useSupabaseClient<Database>()
   const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).returns<NotesAndProfile[]>().single()
 
   if (!data) return
-  return createNote(data)
+  return mapNote(data)
+}
+
+export async function createNote(name: string) {
+  return await $fetch('/api/notes/create', {
+    query: {
+      name,
+    },
+  })
 }
 
 export async function updateNote({
@@ -32,7 +40,7 @@ export async function updateNote({
   const client = useSupabaseClient<Database>()
   const user = useSupabaseUser()
   if (user.value) {
-    await client
+    return client
       .from('notes')
       .upsert({
         editor_string,
@@ -50,7 +58,7 @@ export async function updateNote({
 }
 
 export function setNotes(store: Ref<Note[]>, newNotes: NotesAndProfile[]) {
-  store.value = newNotes.map(createNote)
+  store.value = newNotes.map(mapNote)
 }
 
 export async function fetchAllUserNotes() {
@@ -84,7 +92,7 @@ export async function searchAllNotes(name: string) {
 
   if (!data) return []
 
-  return data.map(note => createNote(note))
+  return data.map(note => mapNote(note))
 }
 
 export async function fetchAllNotesByUserId(user_id: string) {

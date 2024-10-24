@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
     :as="as"
     :as-child="asChild"
     :class="
-      cn('text-2xl font-semibold tracking-tight', props.class)
+      cn('text-xl font-semibold tracking-tight', props.class)
     "
   >
     <slot />

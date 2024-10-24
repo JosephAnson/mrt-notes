@@ -50,13 +50,13 @@ if (!note.value) {
               </div>
 
               <div class="flex items-center gap-4">
-                <BaseButton v-if="note.username" as-child class="flex">
+                <BaseButton v-if="note.username" variant="outline" as-child class="flex">
                   <NuxtLink :to="`/profile/${note.username}`">
                     Visit User Profile
                   </NuxtLink>
                 </BaseButton>
 
-                <BaseButton v-if="noteIsUsers" as-child class="bg-red-700 flex-shrink-0">
+                <BaseButton v-if="noteIsUsers" as-child class="flex-shrink-0">
                   <NuxtLink :to="`/note/edit/${route.params.id}`">
                     Edit Note
                   </NuxtLink>
@@ -71,7 +71,7 @@ if (!note.value) {
             </div>
           </div>
           <section>
-            <EditorNotePreview :note-id="note.id" :note-json="json" :note-string="editorString" />
+            <EditorNoteGroupPreview :note-id="note.id" :note-json="json" :note-string="editorString" />
           </section>
         </div>
         <div v-if="note && userNotes?.length" class="sm:col-span-12 md:col-span-3">

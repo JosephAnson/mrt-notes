@@ -1,6 +1,6 @@
 import type { Note, NotesAndProfile } from '~/types'
 
-export function createNote(item: NotesAndProfile): Note {
+export function mapNote(item: NotesAndProfile): Note {
   return {
     id: item.id,
     name: item.name,

@@ -35,7 +35,7 @@ async function onDelete() {
 </script>
 
 <template>
-  <BaseCard v-if="props.note" variant="filled">
+  <BaseCard v-if="note" variant="filled">
     <BaseCardBlock>
       <div class="flex justify-between">
         <div class="mr-4 flex-1">

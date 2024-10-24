@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
 import type { JSONContent } from '@tiptap/vue-3'
-import { createMRTGroupString, createMRTString, createPreviewString } from '~/utils/createMRTString'
+import { createMRTString, createPreviewString } from '~/utils/createMRTString'
 
 const props = defineProps({
-  noteId: { type: Number },
   noteString: { type: String, default: '' },
   noteJson: Object as PropType<JSONContent>,
 })
 
-const { data: groups, refresh } = await useAsyncData('groups', async () => props.noteId ? await getAllGroups(props.noteId) : [], { watch: [() => props.noteId] })
 const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {
@@ -17,29 +15,8 @@ function copyToClipboard(string: string) {
   toast.success('Copied to clipboard!')
 }
 
-const preview = computed(() => {
-  let preview = `${createPreviewString(props.noteString)}\n`
-
-  if (groups.value) {
-    for (const group of groups.value) {
-      preview += createPreviewString(group.note.value)
-    }
-  }
-
-  return preview
-})
-
-const mrtString = computed(() => {
-  let MRTNote = createMRTString(props.noteJson)
-
-  if (groups.value) {
-    for (const group of groups.value) {
-      MRTNote += createMRTGroupString(group)
-    }
-  }
-
-  return MRTNote
-})
+const preview = computed(() => `${createPreviewString(props.noteString)}\n`)
+const mrtString = computed(() => createMRTString(props.noteJson))
 </script>
 
 <template>

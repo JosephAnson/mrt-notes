@@ -67,17 +67,18 @@ function onDeleteNote(note: Note) {
             <div>
               <BaseCard v-if="user">
                 <BaseCardBlock>
-                  <div class="flex flex-wrap">
-                    <div class="w-full lg:w-2/3 lg:pr-8">
-                      <CreateNote />
-
-                      <div v-if="notes?.length">
-                        <BaseHeading>My Notes</BaseHeading>
-                        <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
-                      </div>
-                    </div>
-                  </div>
+                  <CreateNote />
                 </BaseCardBlock>
+              </BaseCard>
+              <BaseCard v-if="user">
+                <BaseCardHeader>
+                  <BaseCardTitle>
+                    My Notes
+                  </BaseCardTitle>
+                </BaseCardHeader>
+                <BaseCardContent v-if="notes?.length">
+                  <NoteItem v-for="note in notes" :key="note.id" class="w-full" :note="note" @delete="onDeleteNote" />
+                </BaseCardContent>
               </BaseCard>
               <BaseCard class="mt-4">
                 <BaseCardBlock>

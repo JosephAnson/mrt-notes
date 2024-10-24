@@ -1,8 +1,8 @@
 import { serverSupabaseClient } from '#supabase/server'
 import { NOTE_COLUMNS } from '~~/app/utils/constants'
-import { createNote } from '~~/app/utils/createNote'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile } from '~/types'
+import { mapNote } from '~/utils/mapNote'
 
 export default eventHandler(async (event): Promise<Note> => {
   if (!event.context.params?.id) {
@@ -15,7 +15,12 @@ export default eventHandler(async (event): Promise<Note> => {
   const id = event.context.params.id
 
   const client = await serverSupabaseClient<Database>(event)
-  const { data } = await client.from('notes').select(NOTE_COLUMNS).match({ id }).returns<NotesAndProfile[]>().single() as { data: NotesAndProfile }
+  const { data } = await client
+    .from('notes')
+    .select(NOTE_COLUMNS)
+    .match({ id })
+    .returns<NotesAndProfile[]>()
+    .single() as { data: NotesAndProfile }
 
-  return createNote(data)
+  return mapNote(data)
 })

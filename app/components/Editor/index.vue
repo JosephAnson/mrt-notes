@@ -69,112 +69,114 @@ function setColor(event: Event) {
 </script>
 
 <template>
-  <div class="editor mb-4">
-    <div class="toolbar flex flex-wrap p-1 bg-white/10 gap-1">
-      <EditorToolbarButton class="relative of-hidden">
-        <input
-          class="absolute top-0 left-0 w-full h-full opacity-0"
-          type="color"
-          :value="editor?.getAttributes('textStyle').color"
-          @input="setColor"
-        >
-        <Icon
-          name="carbon:text-color"
-          class="inline-block pointer-events-none"
-          :style="{ color: editor?.getAttributes('textStyle').color }"
-        />
-      </EditorToolbarButton>
-      <EditorToolbarButton
-        v-for="marker in markers"
-        :key="marker.name"
-        @click.stop="addImageToEditor({ src: marker.src, alt: IMAGE_MARKER })"
-      >
-        <img class="object-contain w-full h-full" :src="marker.src">
-      </EditorToolbarButton>
-
-      <EditorTimeModalButton @input="addStringToEditor">
-        Time
-      </EditorTimeModalButton>
-      <EditorSpellModalButton @input="addImageToEditor">
-        Spell ID
-      </EditorSpellModalButton>
-      <EditorSpellOccurranceModalButton @input="addStringToEditor">
-        Spell Occurrence
-      </EditorSpellOccurranceModalButton>
-
-      <EditorToolbarButton :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
-        <Icon name="carbon:undo" class="text-xl" />
-      </EditorToolbarButton>
-      <EditorToolbarButton :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
-        <Icon name="carbon:redo" class="text-xl" />
-      </EditorToolbarButton>
-      <EditorToolbarButton @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
-        <Icon name="carbon:text-clear-format" class="text-xl" />
-      </EditorToolbarButton>
-    </div>
-
-    <BaseField
-      v-if="members?.length"
-      label="Players:"
-      class="p-2 mb-0 bg-white/5"
-    >
-      <PlayerTags :members="members" @click="createPlayerSnippet" />
-    </BaseField>
-
-    <div class="p-1">
-      <Loading v-if="spellsLoading">
-        Spells Loading
-      </Loading>
-      <BaseField
-        v-else-if="encounterInfo?.spells?.length"
-        key="encounter-spells"
-        label="Encounter Spells: "
-        sr-only
-        class="mb-0"
-      >
-        <div v-if="encounterInfo?.spells" class="flex flex-wrap">
-          <div
-            v-for="spell in encounterInfo?.spells"
-            :key="`encounter-spells-${spell.id}`"
-            class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-white/10 hover:bg-black rounded px-2"
-            @click="
-              createSpellSnippet(spell.name, createEditorSpellIdImageData(spell.spellIdInformation.icon, spell.id))
-            "
-          >
-            <img
-              v-if="spell.spellIdInformation"
-              class="w-4 h-4 mr-1"
-              :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
-              :alt="spell.spellIdInformation.name"
+  <div class="editor h-full">
+    <div class="flex flex-col h-full">
+      <div>
+        <div class="toolbar flex flex-wrap p-1 bg-white/10 gap-1">
+          <EditorToolbarButton class="relative of-hidden">
+            <input
+              class="absolute top-0 left-0 w-full h-full opacity-0"
+              type="color"
+              :value="editor?.getAttributes('textStyle').color"
+              @input="setColor"
             >
-
-            <span class="text-[#FFBB33]">{{ spell.name }}</span>
-
-            <SpellInformation
-              class="hidden !absolute top-100% left-0 group-hover:block w-100 !max-w-none"
-              :icon="spell.spellIdInformation.icon"
-              :tooltip="spell.spellIdInformation.tooltip"
-              :show-icon="false"
+            <Icon
+              name="carbon:text-color"
+              class="inline-block pointer-events-none"
+              :style="{ color: editor?.getAttributes('textStyle').color }"
             />
-          </div>
-        </div>
-      </BaseField>
-    </div>
+          </EditorToolbarButton>
+          <EditorToolbarButton
+            v-for="marker in markers"
+            :key="marker.name"
+            @click.stop="addImageToEditor({ src: marker.src, alt: IMAGE_MARKER })"
+          >
+            <img class="object-contain w-full h-full" :src="marker.src">
+          </EditorToolbarButton>
 
-    <div class="p-y2 pt-0">
-      <EditorContent class="editor-content" :editor="editor" />
+          <EditorTimeModalButton @input="addStringToEditor">
+            Time
+          </EditorTimeModalButton>
+          <EditorSpellModalButton @input="addImageToEditor">
+            Spell ID
+          </EditorSpellModalButton>
+          <EditorSpellOccurranceModalButton @input="addStringToEditor">
+            Spell Occurrence
+          </EditorSpellOccurranceModalButton>
+
+          <EditorToolbarButton :disabled="!editor?.can().chain().focus().undo().run()" @click="editor?.chain().focus().undo().run()">
+            <Icon name="carbon:undo" class="text-xl" />
+          </EditorToolbarButton>
+          <EditorToolbarButton :disabled="!editor?.can().chain().focus().redo().run()" @click="editor?.chain().focus().redo().run()">
+            <Icon name="carbon:redo" class="text-xl" />
+          </EditorToolbarButton>
+          <EditorToolbarButton @click="editor?.chain().focus().clearNodes().unsetAllMarks().run()">
+            <Icon name="carbon:text-clear-format" class="text-xl" />
+          </EditorToolbarButton>
+        </div>
+
+        <BaseField
+          v-if="members?.length"
+          label="Players:"
+          class="p-2 mb-0 bg-white/5"
+        >
+          <PlayerTags :members="members" @click="createPlayerSnippet" />
+        </BaseField>
+
+        <div class="p-1">
+          <Loading v-if="spellsLoading">
+            Spells Loading
+          </Loading>
+          <BaseField
+            v-else-if="encounterInfo?.spells?.length"
+            key="encounter-spells"
+            label="Encounter Spells: "
+            sr-only
+            class="mb-0"
+          >
+            <div v-if="encounterInfo?.spells" class="flex flex-wrap">
+              <div
+                v-for="spell in encounterInfo?.spells"
+                :key="`encounter-spells-${spell.id}`"
+                class="flex space-between group cursor-pointer relative mr-1 mb-1 items-center bg-white/10 hover:bg-black rounded px-2"
+                @click="
+                  createSpellSnippet(spell.name, createEditorSpellIdImageData(spell.spellIdInformation.icon, spell.id))
+                "
+              >
+                <img
+                  v-if="spell.spellIdInformation"
+                  class="w-4 h-4 mr-1"
+                  :src="`https://wow.zamimg.com/images/wow/icons/medium/${spell.spellIdInformation.icon}.jpg`"
+                  :alt="spell.spellIdInformation.name"
+                >
+
+                <span class="text-[#FFBB33]">{{ spell.name }}</span>
+
+                <SpellInformation
+                  class="hidden !absolute top-100% left-0 group-hover:block w-100 !max-w-none"
+                  :icon="spell.spellIdInformation.icon"
+                  :tooltip="spell.spellIdInformation.tooltip"
+                  :show-icon="false"
+                />
+              </div>
+            </div>
+          </BaseField>
+        </div>
+      </div>
+      <div class="pt-0 h-full">
+        <EditorContent class="editor-content mb-0 bg-white h-full" :editor="editor" />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .editor-content {
-  background: #eee;
   color: black;
-  border-radius: 2px;
 
   .ProseMirror {
     min-height: 10rem;
+    height: 100%;
     padding: 0.5rem;
   }
 

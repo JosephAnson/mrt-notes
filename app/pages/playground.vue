@@ -51,7 +51,7 @@ const encounter = ref(encounters.value?.currentInstance?.id)
             </BaseButton>
           </div>
           <div class="sm:col-span-12 md:col-span-6">
-            <EditorNotePreview :note-json="editor.json" :note-string="editor.value" :groups="[]" />
+            <EditorNoteGroupPreview :note-json="editor.json" :note-string="editor.value" :groups="[]" />
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
 export const cardVariants = cva(
-  'rounded-lg !border shadow-sm mb-4 last:mb-0',
+  'rounded-lg !border shadow-sm mb-4 last:mb-0 overflow-hidden flex flex-col',
   {
     variants: {
       variant: {
