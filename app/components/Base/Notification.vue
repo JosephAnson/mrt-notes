@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'vue'
 import type { CardVariants } from '~/components/Base/card/_index'
 
-defineProps<{
+const props = defineProps<{
   variant?: CardVariants['variant']
   title?: string
   class?: HTMLAttributes['class']
@@ -10,8 +10,8 @@ defineProps<{
 </script>
 
 <template>
-  <BaseCard :variant="variant">
-    <BaseCardBlock class-name="pb-3">
+  <BaseCard :variant="variant" :class="props.class">
+    <BaseCardBlock class="pb-3">
       <BaseCardTitle v-if="title">
         {{ title }}
       </BaseCardTitle>
