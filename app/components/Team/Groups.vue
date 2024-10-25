@@ -123,7 +123,7 @@ async function addGroup(
                 </BaseSelect>
               </BaseField>
 
-              <BaseField v-if="item.type === 'Players'" stacked>
+              <BaseField v-if="item.type === 'Players'">
                 <BaseField
                   label="Group Players:"
                   class="!mb-2 flex-wrap lg:flex lg:flex-nowrap lg:items-start"

@@ -70,7 +70,7 @@ function setColor(event: Event) {
 
 <template>
   <div class="editor h-full">
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col">
       <div>
         <div class="toolbar flex flex-wrap p-1 bg-white/10 gap-1">
           <EditorToolbarButton class="relative of-hidden">
@@ -123,12 +123,13 @@ function setColor(event: Event) {
           <PlayerTags :members="members" @click="createPlayerSnippet" />
         </BaseField>
 
-        <div class="p-1">
-          <Loading v-if="spellsLoading">
+        <div v-if="spellsLoading" class="p-1">
+          <Loading>
             Spells Loading
           </Loading>
+        </div>
+        <div v-else-if="encounterInfo?.spells?.length" class="p-1">
           <BaseField
-            v-else-if="encounterInfo?.spells?.length"
             key="encounter-spells"
             label="Encounter Spells: "
             sr-only

@@ -24,6 +24,7 @@ watch(spellIDInformation, () => emit('spellIDInformation', spellIDInformation))
     v-if="spellIDInformation && props.modelValue"
     :icon="spellIDInformation.icon"
     :tooltip="spellIDInformation.tooltip"
+    fixed
   />
   <BaseField label="Enter a spell id?">
     <BaseInput v-model="modelValue" placeholder="Add in a spell id" />

@@ -121,7 +121,7 @@ async function deleteNoteAndRedirect() {
       <section>
         <div class="md:grid grid-cols-12 gap-8">
           <div class="sm:col-span-12 md:col-span-6">
-            <BaseCard class="overflow-hidden">
+            <BaseCard>
               <BaseCardHeader>
                 MRT Note Editor
               </BaseCardHeader>
