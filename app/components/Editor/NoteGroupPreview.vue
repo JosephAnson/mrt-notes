@@ -9,7 +9,9 @@ const props = defineProps({
   noteJson: Object as PropType<JSONContent>,
 })
 
-const { data: groups, refresh } = await useAsyncData('groups', async () => props.noteId ? await getAllGroups(props.noteId) : [], { watch: [() => props.noteId] })
+// TODO: renable groups once they're fixed
+// const { data: groups } = await useFetch('/api/groups/all', { key: 'groups-all', query: { noteId: props.noteId }, deep: false, watch: [() => props.noteId] })
+const groups = ref([])
 const { copy, isSupported } = useClipboard()
 
 function copyToClipboard(string: string) {

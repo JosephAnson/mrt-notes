@@ -135,11 +135,13 @@ async function deleteNoteAndRedirect() {
               />
             </BaseCard>
 
-            <BaseCard>
+            <!--
+             <BaseCard>
               <BaseCardBlock>
                 <TeamGroups :note-id="note.id" />
               </BaseCardBlock>
             </BaseCard>
+             -->
 
             <BaseCard>
               <BaseCardBlock>
