@@ -32,7 +32,9 @@ function createParagraphContent(paragraphContent: JSONContent[]) {
 }
 
 export function createPreviewString(string: string) {
-  return string.replace(/\{time:([\s\S]+?)\}/g, '<span style="color: #ffed88;">$1</span> ')
+  return string
+    .replace(/\{time:([\s\S]+?)\}/g, '<span style="color: #ffed88;">$1</span> ')
+    .replaceAll(/\{\/?text\}/g, '')
 }
 
 export function createMRTString(json?: JSONContent) {
