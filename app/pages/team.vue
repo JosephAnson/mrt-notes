@@ -7,10 +7,16 @@ definePageMeta({
 <template>
   <BaseSection>
     <BaseContainer>
-      <BaseHeading h1>
-        Team Players
-      </BaseHeading>
-      <TeamMembers />
+      <BaseCard>
+        <BaseCardHeader>
+          <BaseCardTitle as="h1">
+            Team Players
+          </BaseCardTitle>
+        </BaseCardHeader>
+        <BaseCardContent>
+          <TeamMembers />
+        </BaseCardContent>
+      </BaseCard>
     </BaseContainer>
   </BaseSection>
 </template>

@@ -29,19 +29,6 @@ const useIdFunction = () => useId()
         </BaseButton>
       </Feedback>
       <BaseToaster theme="dark" rich-colors class="pointer-events-auto" />
-
-      <div class="notices fixed bottom-10 right-10 z-10">
-        <UpdateNotification>
-          <div class="prose prose-invert text-sm">
-            <strong class="!mb-1 block">Fixed: Page Loading Issues</strong>
-            <p class="!m-0">
-              Improve stability across the app, thank you to <NuxtLink to="/profile/Skeptikk">
-                Skeptikk
-              </NuxtLink> for reporting these issues.
-            </p>
-          </div>
-        </UpdateNotification>
-      </div>
     </div>
   </ConfigProvider>
 </template>

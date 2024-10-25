@@ -28,17 +28,27 @@ function onDeleteNote(note: Note) {
           {{ capitalCase(profile?.username || '') }}'s Profile
         </BaseHeading>
 
-        <CreateNote v-if="user?.id === profile?.id" class="mb-8" />
+        <BaseCard class="max-w-xl mb-8">
+          <BaseCardBlock>
+            <CreateNote />
+          </BaseCardBlock>
+        </BaseCard>
 
-        <BaseHeading h2>
-          {{ capitalCase(profile?.username || '') }}'s Notes
-        </BaseHeading>
-        <div v-if="notes?.length">
-          <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
+        <div class="user-information mb-8">
+          <BaseCard>
+            <BaseCardHeader>
+              <BaseCardTitle>
+                {{ capitalCase(profile?.username || '') }}'s Notes
+              </BaseCardTitle>
+            </BaseCardHeader>
+            <BaseCardContent v-if="notes?.length">
+              <NoteItem v-for="note in notes" :key="note.id" :note="note" @delete="onDeleteNote" />
+            </BaseCardContent>
+            <BaseCardContent v-else>
+              {{ profile.username }} doesn't have any notes
+            </BaseCardContent>
+          </BaseCard>
         </div>
-        <BaseHeading v-else h2>
-          {{ profile.username }} doesn't have any notes
-        </BaseHeading>
       </div>
       <BaseHeading v-else h1>
         No profile found

@@ -4,8 +4,7 @@ import type { Note } from '~/types'
 const user = useSupabaseUser()
 
 const { data: notes } = await useFetch(`/api/notes/user/${user.value?.id}`)
-const { data: encounters } = await useFetch('/api/blizzard/latestEncounters')
-const { data: profile, pending } = await useFetch(`/api/profile/${user.value?.id}`, {
+const { data: profile } = await useFetch(`/api/profile/${user.value?.id}`, {
   headers: useRequestHeaders(['cookie']),
   watch: [user],
 })
@@ -41,7 +40,7 @@ function onDeleteNote(note: Note) {
     <Ad ad-slot="8629692962" />
     <div>
       <BaseContainer>
-        <BaseNotification v-if="user && !pending && !profile?.username">
+        <BaseNotification v-if="user && !profile?.username">
           Set your username on your account if you want to share your profile
           <BaseButton as-child>
             <NuxtLink to="/account" class="ml-4">
