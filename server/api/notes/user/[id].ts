@@ -18,7 +18,7 @@ export default eventHandler(async (event) => {
     .from('notes')
     .select(NOTE_COLUMNS)
     .eq('user_id', event.context.params.id)
-    .order('created_at')
+    .order('created_at', { ascending: false })
     .returns<NotesAndProfile[]>()
 
   return data?.map(note => mapNote(note))

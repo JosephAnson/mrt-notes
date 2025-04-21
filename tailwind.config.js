@@ -4,9 +4,23 @@ const animate = require('tailwindcss-animate')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
-  safelist: ['dark'],
+  safelist: [
+    'dark',
+    'text-death-knight',
+    'text-druid',
+    'text-hunter',
+    'text-mage',
+    'text-monk',
+    'text-paladin',
+    'text-priest',
+    'text-rogue',
+    'text-shaman',
+    'text-warlock',
+    'text-warrior',
+    'text-evoker',
+    'text-demon-hunter',
+  ],
   prefix: '',
-
   theme: {
     container: {
       center: true,
@@ -16,39 +30,52 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
+        'border': 'hsl(var(--border))',
+        'input': 'hsl(var(--input))',
+        'ring': 'hsl(var(--ring))',
+        'background': 'hsl(var(--background))',
+        'foreground': 'hsl(var(--foreground))',
+        'primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
-        secondary: {
+        'secondary': {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
         },
-        destructive: {
+        'destructive': {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
-        muted: {
+        'muted': {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-        accent: {
+        'accent': {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
-        popover: {
+        'popover': {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
         },
-        card: {
+        'card': {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        'death-knight': '#c41f3b',
+        'druid': '#ff7d0a',
+        'hunter': '#abd473',
+        'mage': '#69ccf0',
+        'monk': '#00ff96',
+        'paladin': '#f58cba',
+        'priest': '#ffffff',
+        'rogue': '#fff569',
+        'shaman': '#0070de',
+        'warlock': '#9482c9',
+        'warrior': '#c79c6e',
+        'evoker': '#33937F',
+        'demon-hunter': '#a330c9',
       },
       borderRadius: {
         xl: 'calc(var(--radius) + 4px)',

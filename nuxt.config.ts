@@ -1,3 +1,5 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -5,26 +7,26 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  extends: [
-    'nuxt-umami',
-  ],
   modules: [
+    'nuxt-umami',
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
     '@pinia/nuxt',
     '@nuxtjs/seo',
-    '@nuxtjs/tailwindcss',
     '@nuxt/image',
     '@nuxt/fonts',
     'radix-vue/nuxt',
     '@nuxt/icon',
   ],
-  appConfig: {
-    umami: {
-      host: 'https://unami.josephanson.com/',
-      id: '15bee164-d93d-4458-8eab-f97bfb6132b2',
-      version: 2,
-    },
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
+  },
+  umami: {
+    host: 'https://unami.josephanson.com/',
+    id: '15bee164-d93d-4458-8eab-f97bfb6132b2',
+    version: 2,
   },
   site: {
     siteUrl: 'https://mrt-notes.josephanson.app/',
@@ -40,7 +42,6 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
-          hid: 'description',
           name: 'description',
           content: 'MRT Notes: Your Ultimate Raid Planning Companion',
         },
@@ -66,7 +67,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['services', 'store'],
   },
-  css: ['~~/app/assets/styles/main.scss', '~~/app/assets/styles/tailwind.css'],
+  css: ['~~/app/assets/styles/tailwind.css'],
   supabase: {
     redirectOptions: {
       login: '/login',
