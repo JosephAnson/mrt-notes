@@ -53,7 +53,7 @@ async function onDelete() {
             <BaseTag>Created: {{ createdOn }}</BaseTag>
             <BaseTag>Updated: {{ updatedOn }}</BaseTag>
           </div>
-          <BaseField v-if="props.note.description" stacked class="line-clamp-3">
+          <BaseField v-if="props.note.description" stacked class="line-clamp-3 text-sm mt-3 text-gray-300">
             <p>{{ props.note.description }}</p>
           </BaseField>
         </div>
