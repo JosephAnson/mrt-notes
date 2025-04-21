@@ -2,25 +2,6 @@
 
 @config '../../../tailwind.config.js';
 
-
-html,
-body,
-#app {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background: #020816;
-  color: #ffffff;
-  font-family: "Montserrat", sans-serif;
-}
-
-.swiper-button-prev,
-.swiper-button-next{
-  &.swiper-button-disabled{
-    display: none;
-  }
-}
-
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -108,5 +89,24 @@ body,
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #020816;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+}
+
+.swiper-button-prev,
+.swiper-button-next{
+  &.swiper-button-disabled{
+    display: none;
   }
 }

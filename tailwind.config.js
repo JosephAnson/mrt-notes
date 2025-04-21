@@ -4,22 +4,6 @@ const animate = require('tailwindcss-animate')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
-  safelist: [
-    'dark',
-    'text-death-knight',
-    'text-druid',
-    'text-hunter',
-    'text-mage',
-    'text-monk',
-    'text-paladin',
-    'text-priest',
-    'text-rogue',
-    'text-shaman',
-    'text-warlock',
-    'text-warrior',
-    'text-evoker',
-    'text-demon-hunter',
-  ],
   prefix: '',
   theme: {
     container: {

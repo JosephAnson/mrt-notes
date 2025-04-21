@@ -1,6 +1,7 @@
 <script lang="ts" setup>
+import type { VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import { wowColorsVariants } from '~/utils/config'
 
 type TagVariants = VariantProps<typeof tagVariants>
@@ -8,7 +9,7 @@ type TagVariants = VariantProps<typeof tagVariants>
 const props = defineProps<{
   variant?: TagVariants['variant']
   class?: HTMLAttributes['class']
-  size?: HTMLAttributes['size']
+  size?: TagVariants['size']
 }>()
 
 const tagVariants = cva(

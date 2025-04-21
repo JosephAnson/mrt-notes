@@ -13,7 +13,6 @@ const { data: newMembers } = await useFetch('/api/team/all', { key: 'team-all', 
         v-for="member in newMembers"
         :key="member.id"
         class="flex"
-        :class="`text-${kebabCase(member.class)}`"
       >
         <BaseTag class="rounded-r-none w-full">
           {{ member.name }}
