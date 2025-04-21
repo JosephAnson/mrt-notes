@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
+import type { Member, WowClassesUnion } from '~/types'
 import { VueDraggable } from 'vue-draggable-plus'
 import { toast } from 'vue-sonner'
-import type { Member, WowClassesUnion } from '~/types'
 import { WowClasses } from '~/types'
 
 const user = useSupabaseUser()

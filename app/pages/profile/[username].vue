@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { capitalCase } from 'change-case'
 import type { Note } from '~/types'
+import { capitalCase } from 'change-case'
 
 const user = useSupabaseUser()
 const route = useRoute('profile-username')

@@ -1,6 +1,6 @@
-import { serverSupabaseClient } from '#supabase/server'
 import type { Database } from '~/supabase.types'
 import type { GroupTypeUnion } from '~/types'
+import { serverSupabaseClient } from '#supabase/server'
 
 const groupColumns = 'id, type, note_id, players, editor_string, order'
 

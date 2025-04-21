@@ -1,5 +1,5 @@
-import { serverSupabaseClient } from '#supabase/server'
 import type { Database } from '~/supabase.types'
+import { serverSupabaseClient } from '#supabase/server'
 
 export default eventHandler(async (event) => {
   const query = getQuery<{ username: string }>(event)

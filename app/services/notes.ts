@@ -1,7 +1,7 @@
 import type { Ref } from 'vue'
-import { toast } from 'vue-sonner'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile, NotesRow } from '~/types'
+import { toast } from 'vue-sonner'
 import { mapNote } from '~/utils/mapNote'
 
 export async function getNote(id: string): Promise<Note | undefined> {

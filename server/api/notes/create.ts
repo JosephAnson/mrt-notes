@@ -1,13 +1,13 @@
+import type { Database } from '~/supabase.types'
 import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
 import { NOTE_COLUMNS } from '~~/app/utils/constants'
-import type { Database } from '~/supabase.types'
 
 const defaultEditorValue
   = 'Fight summary<br><br><br>'
-  + 'All Phases<br><br><br>'
-  + 'Phase 1<br><br><br>'
-  + 'Phase 2<br><br><br>'
-  + 'Phase 3<br><br><br>'
+    + 'All Phases<br><br><br>'
+    + 'Phase 1<br><br><br>'
+    + 'Phase 2<br><br><br>'
+    + 'Phase 3<br><br><br>'
 
 export default eventHandler(async (event) => {
   const query = getQuery<{ name: string }>(event)

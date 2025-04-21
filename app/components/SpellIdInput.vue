@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import SpellInformation from '~/components/SpellInformation.vue'
 import type { SpellIdInformation } from '~/types'
+import SpellInformation from '~/components/SpellInformation.vue'
 
 const props = defineProps({
   modelValue: [String, Number],

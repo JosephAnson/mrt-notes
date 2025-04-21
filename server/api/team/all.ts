@@ -1,6 +1,6 @@
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
 import type { Database } from '~/supabase.types'
 import type { Member } from '~/types'
+import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
 
 const teamMembersColumns = 'id, name, class'
 

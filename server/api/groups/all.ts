@@ -1,7 +1,7 @@
-import { serverSupabaseClient } from '#supabase/server'
-import { generateJSON } from '@tiptap/html'
 import type { Database } from '~/supabase.types'
 import type { Group, GroupTypeUnion } from '~/types'
+import { serverSupabaseClient } from '#supabase/server'
+import { generateJSON } from '@tiptap/html'
 import { editorExtensions } from '~/utils/editor'
 
 const groupColumns = 'id, type, note_id, players, editor_string, order'

@@ -1,5 +1,5 @@
-import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
 import type { Database } from '~/supabase.types'
+import { serverSupabaseClient, serverSupabaseUser } from '#supabase/server'
 
 const profileColumns = 'id, username, avatar_url'
 

@@ -80,8 +80,7 @@ async function onDelete() {
               <BaseAlertDialogHeader>
                 <BaseAlertDialogTitle>Are you sure you want to delete the note?</BaseAlertDialogTitle>
                 <BaseAlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your account
-                  and remove your data from our servers.
+                  This action cannot be undone. This will permanently delete your note.
                 </BaseAlertDialogDescription>
               </BaseAlertDialogHeader>
               <BaseAlertDialogFooter>

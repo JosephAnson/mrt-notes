@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import type { EditorData } from '~/types'
 import { generateJSON } from '@tiptap/html'
 import { toast } from 'vue-sonner'
 import { deleteNote as deleteNoteApi } from '~/services/notes'
-import type { EditorData } from '~/types'
 
 definePageMeta({
   middleware: 'note-edit',
@@ -82,8 +82,7 @@ async function deleteNoteAndRedirect() {
               <BaseAlertDialogHeader>
                 <BaseAlertDialogTitle>Are you sure you want to delete the note?</BaseAlertDialogTitle>
                 <BaseAlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your account
-                  and remove your data from our servers.
+                  This action cannot be undone. This will permanently delete your note.
                 </BaseAlertDialogDescription>
               </BaseAlertDialogHeader>
               <BaseAlertDialogFooter>

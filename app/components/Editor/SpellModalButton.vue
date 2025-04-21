@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { toast } from 'vue-sonner'
 import type { SpellIdInformation } from '~/types'
+import { toast } from 'vue-sonner'
 import { createEditorSpellIdImageData } from '~/utils/editor'
 
 const emits = defineEmits(['input'])

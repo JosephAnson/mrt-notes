@@ -1,11 +1,11 @@
 import type { Database } from '~~/app/supabase.types'
 import type { NotesAndProfile } from '~~/app/types'
-import { NOTE_COLUMNS } from '~~/app/utils/constants'
-import { mapNote } from '~/utils/mapNote'
-
 // eslint-disable-next-line ts/ban-ts-comment
 // @ts-expect-error
 import { serverSupabaseClient } from '#supabase/server'
+import { NOTE_COLUMNS } from '~~/app/utils/constants'
+
+import { mapNote } from '~/utils/mapNote'
 
 type NotesOrder = keyof Database['public']['Tables']['notes']['Row']
 

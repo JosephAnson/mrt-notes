@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { EditorData } from '~/types'
 import { generateJSON } from '@tiptap/html'
 import { toast } from 'vue-sonner'
-import type { EditorData } from '~/types'
 
 definePageMeta({
   middleware: 'auth',

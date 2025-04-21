@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { Member } from '~/types'
 import { EditorContent } from '@tiptap/vue-3'
 import PlayerTags from '~/components/PlayerTags.vue'
-import type { Member } from '~/types'
 import { markers, wowColors } from '~/utils/config'
 import { IMAGE_MARKER } from '~/utils/constants'
 import { createEditorSpellIdImageData, useEditor } from '~/utils/editor'

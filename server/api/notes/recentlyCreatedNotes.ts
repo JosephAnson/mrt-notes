@@ -1,7 +1,7 @@
-import { serverSupabaseClient } from '#supabase/server'
-import { NOTE_COLUMNS } from '~~/app/utils/constants'
 import type { Database } from '~/supabase.types'
 import type { Note, NotesAndProfile } from '~/types'
+import { serverSupabaseClient } from '#supabase/server'
+import { NOTE_COLUMNS } from '~~/app/utils/constants'
 import { mapNote } from '~/utils/mapNote'
 
 export default cachedEventHandler(
