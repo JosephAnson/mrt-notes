@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { cva, type VariantProps } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import type { SelectTriggerProps } from 'radix-vue'
+import type { HTMLAttributes } from 'vue'
+import { cva } from 'class-variance-authority'
 import { ChevronDown } from 'lucide-vue-next'
-import { SelectIcon, SelectTrigger, type SelectTriggerProps, useForwardProps } from 'radix-vue'
-import { computed, type HTMLAttributes } from 'vue'
+import { SelectIcon, SelectTrigger, useForwardProps } from 'radix-vue'
+import { computed } from 'vue'
 import { wowColorsVariants } from '~/utils/config'
 
 const props = defineProps<SelectTriggerProps & {

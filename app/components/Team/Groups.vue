@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { Group, GroupTypeUnion, Member } from '~/types'
 import { useSupabaseUser } from '#imports'
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, TransitionRoot } from '@headlessui/vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { toast } from 'vue-sonner'
 import PlayerTags from '~/components/PlayerTags.vue'
-import { type Group, GroupType, type GroupTypeUnion, type Member } from '~/types'
+import { GroupType } from '~/types'
 
 const props = defineProps({
   noteId: {

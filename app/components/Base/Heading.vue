@@ -24,7 +24,6 @@ const props = defineProps({
   },
   styled: {
     type: String as PropType<HeadingSizesType | null>,
-    validator: (value: HeadingSizesType) => (['h1', 'h2', 'h3', 'h4', 'p'] as HeadingSizesTuple).includes(value),
     default: null,
   },
   class: {
@@ -32,9 +31,7 @@ const props = defineProps({
   },
 })
 
-const HEADING_SIZES = ['h1', 'h2', 'h3', 'h4', 'p'] as const
-type HeadingSizesTuple = typeof HEADING_SIZES
-type HeadingSizesType = HeadingSizesTuple[number]
+type HeadingSizesType = 'h1' | 'h2' | 'h3' | 'h4' | 'p'
 
 const type = computed(() => {
   if (props.h1) return 'h1'

@@ -8,7 +8,7 @@ import { createEditorSpellIdImageData, useEditor } from '~/utils/editor'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string
+    modelValue?: string
     encounter?: number | null
     members?: Member[]
   }>(),

@@ -1,6 +1,4 @@
 <script setup lang='ts'>
-import { kebabCase } from 'change-case'
-
 const user = useSupabaseUser()
 
 const { data: newMembers } = await useFetch('/api/team/all', { key: 'team-all', watch: [user] })

@@ -1,4 +1,4 @@
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-04-21',
   future: {
     compatibilityVersion: 4,
+  },
+  typescript: {
+    typeCheck: true
   },
   modules: [
     'nuxt-umami',

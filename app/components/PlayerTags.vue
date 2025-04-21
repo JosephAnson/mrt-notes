@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import type { Member } from '~/types'
 
-const props = defineProps< {
+const props = defineProps<{
   members: Member[]
   delete?: boolean
 }>()
