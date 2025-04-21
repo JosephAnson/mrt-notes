@@ -4,15 +4,19 @@
   "typescript": true,
   "tsConfigPath": ".nuxt/tsconfig.json",
   "tailwind": {
-    "config": "tailwind.config.js",
+    "config": "",
     "css": "./app/assets/styles/tailwind.css",
     "baseColor": "slate",
-    "cssVariables": true
+    "cssVariables": true,
+    "prefix": ""
   },
   "framework": "nuxt",
   "aliases": {
     "components": "@/components/base",
+    "composables": "@/composables",
     "utils": "@/utils",
-    "ui": "@/components/base"
-  }
+    "ui": "@/components/base",
+    "lib": "@/lib"
+  },
+  "iconLibrary": "lucide"
 }

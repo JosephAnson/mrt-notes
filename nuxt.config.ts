@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  compatibilityDate: '2024-09-01',
+  compatibilityDate: '2025-04-21',
   future: {
     compatibilityVersion: 4,
   },
@@ -26,7 +26,6 @@ export default defineNuxtConfig({
   umami: {
     host: 'https://unami.josephanson.com/',
     id: '15bee164-d93d-4458-8eab-f97bfb6132b2',
-    version: 2,
   },
   site: {
     siteUrl: 'https://mrt-notes.josephanson.app/',
